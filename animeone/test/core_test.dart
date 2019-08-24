@@ -13,7 +13,7 @@ void main() {
 
   test('AnimeParser handles AnimeNotFound correctly', () async {
     // Try parsing a 404 page
-    final parser = new AnimeListParser('https://anime1.me/category/2019%E5%B9%B4%E6%98%A5%E5%AD%A3/%E9%AC%BC%E6%BB%85%E4%B9%8B%E5%88%83/page/9');
+    final parser = new AnimeListParser('https://anime1.me/category/2019%E5%B9%B4%E6%98%A5%E5%AD%A3/%E9%AC%BC%E6%BB%85%E4%B9%8B%E5%88%83/page/9/');
     final doc = await parser.downloadHTML();
     expect(doc == null, isTrue);
   });

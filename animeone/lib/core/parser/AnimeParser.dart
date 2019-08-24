@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -21,18 +19,10 @@ abstract class AnimeParser {
     final response = await http.get(this._link);
 
     if (response.statusCode == 200) {
-      // Try parsing the string
-      var website = parse(response.body);
-      // Make sure this page has content
-      var check404 = website.getElementsByClassName("error-404");
-      log(check404.length.toString());
-      if (check404.length == 0) {
-        return website;
-      } else {
-        return null;
-      }
+      return parse(response.body);
     } else {
-      throw Exception('Failed to load HTML from server');
+      // If it is 404, the status code will tell you
+      return null;
     }
   }
 

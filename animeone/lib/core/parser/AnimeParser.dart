@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:developer';
 
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -25,17 +25,15 @@ abstract class AnimeParser {
       var website = parse(response.body);
       // Make sure this page has content
       var check404 = website.getElementsByClassName("error-404");
-      log(check404.length);
+      log(check404.length.toString());
       if (check404.length == 0) {
         return website;
       } else {
-        throw Exception('404 Anime Not Found');
+        return null;
       }
     } else {
       throw Exception('Failed to load HTML from server');
     }
   }
-
-
 
 }

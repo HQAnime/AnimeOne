@@ -1,4 +1,4 @@
-import 'package:animeone/ui/page/main.dart';
+import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/material.dart';
 
 /// Top level component
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
       ),
-      home: HomePage(title: 'Flutter Demo Home Page'),
+      home: HomePage(),
     );
   }
 }

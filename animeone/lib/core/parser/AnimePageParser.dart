@@ -7,5 +7,7 @@ import 'package:animeone/core/parser/AnimeParser.dart';
 /// The long link can up to 14 episodes and the short one only has one. 
 /// They have a link to all episodes or next episode
 class AnimePageParser extends AnimeParser {
+  
+  AnimePageParser(String link) : super(link);
 
 }

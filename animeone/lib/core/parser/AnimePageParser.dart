@@ -1,4 +1,5 @@
 import 'package:animeone/core/parser/AnimeParser.dart';
+import 'package:html/dom.dart';
 
 /// This class gets all episodes of an anime or just one episode
 /// - https://anime1.me/category/2019年春季/鬼滅之刃/page/0
@@ -9,5 +10,11 @@ import 'package:animeone/core/parser/AnimeParser.dart';
 class AnimePageParser extends AnimeParser {
   
   AnimePageParser(String link) : super(link);
+
+  @override
+  parseHTML(Document body) {
+    // TODO: implement parseHTML
+    return null;
+  }
 
 }

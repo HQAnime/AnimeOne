@@ -26,4 +26,7 @@ abstract class AnimeParser {
     }
   }
 
+  /// All subclasses have different implementations
+  parseHTML(Document body);
+
 }

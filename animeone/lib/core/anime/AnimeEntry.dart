@@ -45,4 +45,6 @@ class AnimeEntry {
     return this.nextEpisode == '/?p=' ? false : true;
   }
 
+  AnimeVideo getVideo() => this.videoLink;
+
 }

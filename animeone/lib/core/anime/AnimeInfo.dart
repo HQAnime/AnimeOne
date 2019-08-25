@@ -1,3 +1,4 @@
+import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';
 
 /// This class parses a Node and stores anime info like anime name, anime link, total episodes, year, season and subtitle group
@@ -14,7 +15,7 @@ class AnimeInfo {
     final list = tr.nodes;
     try {
       this.name = list[0].text;
-      this.link = list[0].nodes[0].attributes["href"];
+      this.link = GlobalData.domain + list[0].nodes[0].attributes["href"];
       this.episode = list[1].text;
       this.year = list[2].text;
       this.season = list[3].text;

@@ -17,9 +17,7 @@ class AnimePageParser extends AnimeParser {
     List<AnimeEntry> list = [];
 
     final elements = body.getElementsByClassName("hentry");
-    elements.forEach((e) {
-      list.add(new AnimeEntry(e));
-    });
+    elements.forEach((e) => list.add(new AnimeEntry(e)));
 
     return list;
   }

@@ -1,3 +1,5 @@
+import 'package:animeone/core/anime/AnimeSchedule.dart';
+import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeParser.dart';
 import 'package:html/dom.dart';
 
@@ -7,19 +9,30 @@ class AnimeScheduleParser extends AnimeParser {
   AnimeScheduleParser(String link) : super(link);
 
   @override
-  parseHTML(Document body) {
-    final elements = body.getElementsByClassName("entry-content");
-    // There should only be one element
-    final content = elements.first.nodes;
-    final first = content[0];
-    
-    // Check if first is <p>
+  List<AnimeSchedule> parseHTML(Document body) {
+    List<AnimeSchedule> schedules = [];
 
-    // If not, second should be the table
+    final tables = body.getElementsByTagName('table');
+    final tbody = tables.first.nodes[1];
+    tbody.nodes.forEach((tr) {
+      // It is in order so use an index to indicate the date
+      var i = 0;
+      tr.nodes.forEach((td) {
+        schedules.add(new AnimeSchedule(td, i++));
+      });
+    });
+
+    return schedules;
   }
 
-  _parseTable() {
-    
+  /// get AnimeVideo from schedule (there might be one)
+  AnimeVideo parseIntroductoryVideo(Document body) {
+    final frames = body.getElementsByTagName('iframe');
+    if (frames.length == 0) {
+      return null;
+    } else {
+      return new AnimeVideo(frames.first.attributes['src']);
+    }
   }
 
 }

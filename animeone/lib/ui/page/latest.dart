@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 class Latest extends StatelessWidget {
   
   final GlobalData global = new GlobalData();
-  final int count = 30;
+  final int count = 100;
 
   @override
   Widget build(BuildContext context) {

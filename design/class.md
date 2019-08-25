@@ -8,4 +8,5 @@
 - AnimeInfo
 - AnimeSeason
 
-# Data?
+# Data
+- GlobalData

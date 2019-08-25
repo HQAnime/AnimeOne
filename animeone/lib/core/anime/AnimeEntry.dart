@@ -1,3 +1,4 @@
+import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
@@ -6,9 +7,9 @@ class AnimeEntry {
   String name;
   String link;
   String postDate;
-  String videoLink;
   String allEpisodes;
   String nextEpisode;
+  AnimeVideo videoLink;
 
   AnimeEntry(Element e) {
     try {  
@@ -21,7 +22,7 @@ class AnimeEntry {
 
       Node content = e.getElementsByClassName('entry-content')[0];
       Node video = content.nodes[0].nodes[0];
-      this.videoLink = video.attributes['src'];
+      this.videoLink = new AnimeVideo(video.attributes['src']);
 
       // Episode links
       Node episode = content.nodes[1];

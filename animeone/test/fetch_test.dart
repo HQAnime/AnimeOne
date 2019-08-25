@@ -1,9 +1,7 @@
-import 'package:animeone/core/json/AnimeInfo.dart';
-/// Test my classes and see if they work as intended
-
 import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// Test my classes related to fetching data from Internet and see if they work as intended
 void main() {
   group("test AnimeParser", () {
     test('basic functionality', () async {

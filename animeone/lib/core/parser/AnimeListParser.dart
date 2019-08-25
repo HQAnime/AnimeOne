@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:animeone/core/json/AnimeInfo.dart';
+import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/core/parser/AnimeParser.dart';
 import 'package:html/dom.dart';
 

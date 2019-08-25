@@ -1,3 +1,4 @@
+import 'package:animeone/core/anime/AnimeSeason.dart';
 import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:html/dom.dart';
 
@@ -7,6 +8,9 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
+
+  static final _season = new AnimeSeason(DateTime.now());
+  String getSeason() => _season.toString();
   
   List<AnimeInfo> _animeList = [];
   List<AnimeInfo> getAnimeList() => this._animeList;
@@ -21,7 +25,7 @@ class GlobalData {
   }
 
   /// Get data from anime1.me
-  void init() async {
+  Future init() async {
     final parser = new AnimeListParser(domain);
     Document doc = await parser.downloadHTML();
     // Check if it is valid

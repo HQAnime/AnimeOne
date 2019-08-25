@@ -11,20 +11,18 @@ class AnimeListParser extends AnimeParser {
   
   @override
   List<AnimeInfo> parseHTML(Document body) {
+    List<AnimeInfo> list = [];
+
     final elements = body.getElementsByClassName("row-hover");
-    if (elements.length > 0) {
-      final e = elements.first;
-      var list = new List<AnimeInfo>();
+    final e = elements.first;
+
+    if (e.hasChildNodes()) {
       e.nodes.forEach((n) {
         list.add(new AnimeInfo(n));
       });
-
-      log(list[0].toString());
-      return list;
-    } else {
-      // Error and return an empty list
-      return [];
     }
+
+    return list;
   }
 
 }

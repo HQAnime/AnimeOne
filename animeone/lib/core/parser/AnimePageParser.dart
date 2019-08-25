@@ -1,3 +1,4 @@
+import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimeParser.dart';
 import 'package:html/dom.dart';
 
@@ -13,8 +14,14 @@ class AnimePageParser extends AnimeParser {
 
   @override
   parseHTML(Document body) {
+    List<AnimeEntry> list = [];
+
     final elements = body.getElementsByClassName("hentry");
-    return null;
+    elements.forEach((e) {
+      list.add(new AnimeEntry(e));
+    });
+
+    return list;
   }
 
 }

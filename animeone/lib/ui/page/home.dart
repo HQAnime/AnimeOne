@@ -1,4 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/ui/page/latest.dart';
+import 'package:animeone/ui/page/schedule.dart';
+import 'package:animeone/ui/page/search.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,9 +19,9 @@ class _HomePageState extends State<HomePage> {
   List<String> tabTitles;
 
   final tabWidgets = <Widget>[
-    Text('0'),
-    Text('1'),
-    Text('2'),
+    Latest(),
+    Search(),
+    Schedule()
   ];
 
   @override

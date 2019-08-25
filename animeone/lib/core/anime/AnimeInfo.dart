@@ -20,6 +20,7 @@ class AnimeInfo {
       this.year = list[2].text;
       this.season = list[3].text;
       this.subtitle = list[4].text;
+      if (this.subtitle == "") this.subtitle = '-';
     } catch (e) {
       throw new Exception('AnimeInfo - Tr has been changed\n${e.toString()}');
     }

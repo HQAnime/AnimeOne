@@ -7,12 +7,32 @@ class AnimeInfoCard extends StatelessWidget {
 
   final AnimeInfo info;
 
-  AnimeInfoCard({Key key, this.info}) : super(key: key);
+  AnimeInfoCard({Key key, @required this.info}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Text(info.name),
+      margin: EdgeInsets.all(8),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          children: <Widget>[
+            Text(info.name),
+            Table(
+              children: [
+                TableRow(
+                  children: [
+                    Text(info.episode, textAlign: TextAlign.center),
+                    Text(info.year, textAlign: TextAlign.center),
+                    Text(info.season, textAlign: TextAlign.center),
+                    Text(info.subtitle, textAlign: TextAlign.center, maxLines: 1),
+                  ]
+                ),
+              ]
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

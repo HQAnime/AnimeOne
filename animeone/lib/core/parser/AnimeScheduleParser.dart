@@ -9,18 +9,13 @@ class AnimeScheduleParser extends AnimeParser {
   @override
   parseHTML(Document body) {
     final elements = body.getElementsByClassName("entry-content");
-    if (elements.length > 0) {
-      // There should only be one element
-      final content = elements.first.nodes;
-      final first = content[0];
-      
-      // Check if first is <p>
+    // There should only be one element
+    final content = elements.first.nodes;
+    final first = content[0];
+    
+    // Check if first is <p>
 
-      // If not, second should be the table
-    } else {
-      // error, entry content not found
-      return null;
-    }
+    // If not, second should be the table
   }
 
   _parseTable() {

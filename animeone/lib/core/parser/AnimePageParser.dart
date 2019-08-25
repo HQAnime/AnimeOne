@@ -13,7 +13,7 @@ class AnimePageParser extends AnimeParser {
   AnimePageParser(String link) : super(link);
 
   @override
-  parseHTML(Document body) {
+  List<AnimeEntry> parseHTML(Document body) {
     List<AnimeEntry> list = [];
 
     final elements = body.getElementsByClassName("hentry");

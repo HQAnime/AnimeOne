@@ -6,10 +6,13 @@ class AnimeSchedule {
 
   String name;
   String link;
-  int day;
+  int weekday;
 
   AnimeSchedule(Node tr, int i) {
-    this.day = i;
+    this.weekday = i;
+    // Fix for Sunday (anime1 puts Sunday first)
+    if (weekday == 0) weekday = 7;
+
     this.name = tr.firstChild.text;
     this.link = GlobalData.domain + tr.firstChild.attributes['href'];
   }

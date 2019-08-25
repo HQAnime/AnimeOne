@@ -1,3 +1,4 @@
+import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSeason.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -32,6 +33,16 @@ void main() {
     test('test site link', () {
       final season = new AnimeSeason(new DateTime(2019, 8, 25));
       expect(season.getLink() == 'https://anime1.me/2019年夏季新番', isTrue);
+    });
+  });
+
+  group('GlobalData', () {
+    test('Singleton', () {
+      var s1 = new GlobalData();
+      var s2 = new GlobalData();
+      // Make sure they are the same
+      expect(identical(s1, s2), isTrue);
+      expect(s1 == s2, isTrue);
     });
   });
 }

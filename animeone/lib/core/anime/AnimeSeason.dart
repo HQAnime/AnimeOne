@@ -1,3 +1,5 @@
+import 'package:animeone/core/GlobalData.dart';
+
 /// This class asks for DateTime to get a string to indicate seasonal anime
 class AnimeSeason {
 
@@ -9,7 +11,7 @@ class AnimeSeason {
   }
 
   String getLink() {
-    return 'https://anime1.me/$this';
+    return '${GlobalData.domain}$this';
   }
 
   @override

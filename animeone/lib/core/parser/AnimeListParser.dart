@@ -22,8 +22,8 @@ class AnimeListParser extends AnimeParser {
       log(list[0].toString());
       return list;
     } else {
-      // Error
-      return null;
+      // Error and return an empty list
+      return [];
     }
   }
 

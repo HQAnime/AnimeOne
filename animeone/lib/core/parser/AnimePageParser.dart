@@ -13,7 +13,7 @@ class AnimePageParser extends AnimeParser {
 
   @override
   parseHTML(Document body) {
-    // TODO: implement parseHTML
+    final elements = body.getElementsByClassName("hentry");
     return null;
   }
 

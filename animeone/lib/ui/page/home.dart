@@ -1,7 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/schedule.dart';
-import 'package:animeone/ui/page/search.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,11 +15,9 @@ class _HomePageState extends State<HomePage> {
   bool loading = true;
 
   GlobalData global;
-  List<String> tabTitles;
 
   final tabWidgets = <Widget>[
     Latest(),
-    Search(),
     Schedule()
   ];
 
@@ -34,8 +31,6 @@ class _HomePageState extends State<HomePage> {
         loading = false;
       });
     });
-
-    this.tabTitles = ["最新動畫", "搜索動畫", global.getSeason()];
   }
 
   @override
@@ -50,18 +45,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       // Load all tabs
       return Scaffold(
-        appBar: AppBar(
-          title: Text(tabTitles[selectedIndex]),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.info_outline),
-              tooltip: "關於AnimeOne",
-              onPressed: () {
-                // Go to information page
-              },
-            ),
-          ],
-        ),
         body: Center(
           child: tabWidgets.elementAt(selectedIndex),
         ),
@@ -70,10 +53,6 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Icon(Icons.image),
               title: Text('最新'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              title: Text('搜索'),
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_view_day),

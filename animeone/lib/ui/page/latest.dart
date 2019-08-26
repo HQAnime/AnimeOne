@@ -1,23 +1,90 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/ui/component/AnimeInfoCard.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class Latest extends StatelessWidget {
+class Latest extends StatefulWidget {
+
+  Latest({Key key}) : super(key: key);
+
+  @override
+  _LatestState createState() => _LatestState();
   
-  final GlobalData global = new GlobalData();
-  final int count = 100;
+}
+
+class _LatestState extends State<Latest> {
+  static GlobalData global = new GlobalData();
+  List<AnimeInfo> list;
+  final hundred = global.getAnimeList().take(100).toList();
+
+  @override
+  void initState() {
+    super.initState();
+    this._resetList();
+  }
+
+  /// Reset list to only 100 items
+  void _resetList() {
+    setState(() {
+      this.list = this.hundred;
+    });
+  }
+
+  /// Filter list by string
+  void _filterList(String t) {
+    if (t == '') this._resetList();
+    else {
+      setState(() {
+        this.list = global.getAnimeList().takeWhile((e) {
+          return e.name.contains(t);
+        }).toList();
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final list = global.getAnimeList().take(count);
-    return Container(
-      child: ListView.builder(
-        itemCount: count,
-        itemBuilder: (context, index) {
-          return AnimeInfoCard(info: list.elementAt(index), index: index);
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Icon(Icons.search),
+            ),
+            Expanded(
+              child: TextField(
+                style: TextStyle(color: Colors.white, fontSize: 17),
+                decoration: InputDecoration.collapsed(
+                  hintText: '快速搜尋',
+                  hintStyle: TextStyle(color: Colors.white, fontSize: 17),
+                ),
+                autocorrect: false,
+                autofocus: false,
+                onChanged: (t) => this._filterList(t),
+              ),
+            )
+          ],
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            tooltip: "關於AnimeOne",
+            onPressed: () {
+              // Go to information page
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        child: ListView.builder(
+          itemCount: this.list.length,
+          itemBuilder: (context, index) {
+            return AnimeInfoCard(info: this.list[index], index: index);
+          },
+        ),
       ),
     );
   }
-
 }

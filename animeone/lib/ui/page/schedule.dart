@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
+import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -103,18 +104,36 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
         ),
         body: TabBarView(
           controller: controller,
-          children: tabs.map((Tab tab) {
-            final String label = tab.text.toLowerCase();
-            return Center(
-              child: Text(
-                'This is the $label tab',
-                style: const TextStyle(fontSize: 36),
-              ),
-            );
-          }).toList(),
+          children: this.renderSchedule()
       ),
       );
     }
+  }
+
+  /// Render schedule to different days
+  List<Widget> renderSchedule() {
+    List<Widget> children = [];
+    for (int i = 0; i < this.tabs.length; i++) {
+      final list = this.schedules.where((s) => s.weekday == i);
+      children.add(
+        ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (c, i) {
+            final item = list.elementAt(i);
+            return SizedBox(
+              height: 48,
+              child: FlatButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: item.link)));
+                },
+                child: Text(item.name, style: TextStyle(fontSize: 17)),
+              ),
+            );
+          },
+        )
+      );
+    }
+    return children;
   }
 
 }

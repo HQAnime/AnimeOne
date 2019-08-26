@@ -22,4 +22,9 @@ class AnimePageParser extends AnimeParser {
     return list;
   }
 
+  /// Get page title to be displayed in app bar
+  String getPageTitle(Document body) {
+    return '';
+  }
+
 }

@@ -1,4 +1,5 @@
 import 'package:animeone/core/anime/AnimeInfo.dart';
+import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,7 +15,9 @@ class AnimeInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       color: index % 2 == 0 ? Colors.white : Colors.grey[200],
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: this.info.link)));
+      },
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(

@@ -1,3 +1,4 @@
+import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:html/dom.dart';
 
@@ -29,10 +30,10 @@ class AnimeEntry {
       episode.nodes.forEach((n) {
         if (n.text.contains('全集')) {
           // Get all episode link
-          this.allEpisodes = n.attributes['href'];
+          this.allEpisodes = GlobalData.domain + n.attributes['href'];
         } else if (n.text.contains('下一集')) {
           // Get next episode link
-          this.nextEpisode = n.attributes['href'];
+          this.nextEpisode = GlobalData.domain + n.attributes['href'];
         }
       });
     } catch (e) {
@@ -42,7 +43,7 @@ class AnimeEntry {
 
   /// If next episode is avaible
   bool hasNextEpisode() {
-    return this.nextEpisode == '/?p=' ? false : true;
+    return this.nextEpisode.endsWith('/?p=') ? false : true;
   }
 
   AnimeVideo getVideo() => this.videoLink;

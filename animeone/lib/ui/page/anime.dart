@@ -1,10 +1,7 @@
-import 'dart:developer';
-import 'dart:developer' as prefix0;
 import 'dart:math';
 
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
-import 'package:animeone/core/parser/AnimeParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:flutter/material.dart';
 
@@ -57,6 +54,9 @@ class _AnimeState extends State<Anime> {
   Widget build(BuildContext context) {
     if (loading) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text('加載中...')
+        ),
         body: Center(
           child: CircularProgressIndicator(),
         ),
@@ -69,10 +69,9 @@ class _AnimeState extends State<Anime> {
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
-            prefix0.log(constraints.maxWidth.toString());
             double imageWidth = constraints.maxWidth / count.toDouble();
             // Calculat ratio
-            double ratio = imageWidth / (imageWidth / 1.777 + 120);
+            double ratio = imageWidth / (imageWidth / 1.777 + 150);
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: count,

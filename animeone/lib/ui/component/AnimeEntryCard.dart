@@ -28,7 +28,7 @@ class AnimeEntryCard extends StatelessWidget {
           Row(
             children: <Widget>[
               this.renderEpisode(this.entry.allEpisodes, '全集連結'),
-              this.renderEpisode(this.entry.nextEpisode, '下一集'),
+              this.entry.hasNextEpisode() ? this.renderEpisode(this.entry.nextEpisode, '下一集') : Text('-')
             ],
           ),
         ],
@@ -43,7 +43,7 @@ class AnimeEntryCard extends StatelessWidget {
         onPressed: () {},
       );
     } else {
-      return Text('');
+      return Text('-');
     }
   }
 

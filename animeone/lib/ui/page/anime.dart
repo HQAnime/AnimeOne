@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:developer' as prefix0;
+import 'dart:math';
 
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
@@ -39,8 +41,6 @@ class _AnimeState extends State<Anime> {
 
   /// Get entries from link (support page)
   void _getEntry() {
-    log(widget.link);
-
     String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/$page';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
@@ -66,12 +66,25 @@ class _AnimeState extends State<Anime> {
         appBar: AppBar(
           title: Text(this.title)
         ),
-        body: ListView.builder(
-          itemCount: this.entries.length,
-          itemBuilder: (context, index) {
-            return AnimeEntryCard(entry: this.entries.elementAt(index));
+        body: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
+            prefix0.log(constraints.maxWidth.toString());
+            double imageWidth = constraints.maxWidth / count.toDouble();
+            // Calculat ratio
+            double ratio = imageWidth / (imageWidth / 1.777 + 120);
+            return GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: count,
+                childAspectRatio: ratio
+              ),
+              itemCount: this.entries.length,
+              itemBuilder: (context, index) {
+                return AnimeEntryCard(entry: this.entries.elementAt(index));
+              },
+            );
           },
-        ),
+        )
       );
     }
   }

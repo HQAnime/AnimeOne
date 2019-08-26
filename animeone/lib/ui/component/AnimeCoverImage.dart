@@ -1,6 +1,7 @@
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
@@ -19,7 +20,9 @@ class AnimeCoverImage extends StatelessWidget {
         ),
         Positioned.fill(
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              launch(video.video);
+            },
             iconSize: 64,
             icon: Icon(Icons.play_circle_outline),
             color: Colors.white,

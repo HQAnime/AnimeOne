@@ -14,13 +14,16 @@ class Schedule extends StatefulWidget {
   
 }
 
-class _ScheduleState extends State<Schedule> {
+class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin {
 
   final global = new GlobalData();
   bool loading = true;
   String link;
   AnimeVideo video;
   List<AnimeSchedule> schedules;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {

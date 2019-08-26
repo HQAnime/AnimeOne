@@ -13,10 +13,14 @@ class Latest extends StatefulWidget {
   
 }
 
-class _LatestState extends State<Latest> {
+class _LatestState extends State<Latest> with AutomaticKeepAliveClientMixin {
+
   static GlobalData global = new GlobalData();
   List<AnimeInfo> list;
   final hundred = global.getAnimeList().take(100).toList();
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -99,4 +103,5 @@ class _LatestState extends State<Latest> {
       );
     }
   }
+
 }

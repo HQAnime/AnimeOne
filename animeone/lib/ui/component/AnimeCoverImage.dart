@@ -23,7 +23,7 @@ class AnimeCoverImage extends StatelessWidget {
             Positioned.fill(
               child: IconButton(
                 onPressed: () {
-                  launch(video.video);
+                  video.launchURL();
                 },
                 iconSize: constraint.maxWidth / 6,
                 icon: Icon(Icons.play_circle_outline),

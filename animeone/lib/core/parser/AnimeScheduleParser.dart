@@ -18,7 +18,8 @@ class AnimeScheduleParser extends AnimeParser {
       // It is in order so use an index to indicate the date
       var i = 0;
       tr.nodes.forEach((td) {
-        schedules.add(new AnimeSchedule(td, i++));
+        AnimeSchedule t = new AnimeSchedule(td, i++);
+        if (t.name != '') schedules.add(t);
       });
     });
 

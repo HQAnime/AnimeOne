@@ -14,7 +14,7 @@ class Schedule extends StatefulWidget {
   
 }
 
-class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin {
+class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin {
 
   final global = new GlobalData();
   bool loading = true;
@@ -22,12 +22,24 @@ class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin 
   AnimeVideo video;
   List<AnimeSchedule> schedules;
 
-  @override
-  bool get wantKeepAlive => true;
+  TabController controller;
+  final List<Tab> tabs = <Tab>[
+    Tab(text: '一'),
+    Tab(text: '二'),
+    Tab(text: '三'),
+    Tab(text: '四'),
+    Tab(text: '五'),
+    Tab(text: '六'),
+    Tab(text: '日'),
+  ];
 
   @override
   void initState() {
     super.initState();
+
+    int weekday = DateTime.now().weekday - 1;
+    controller = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
+
     this.link = GlobalData.domain + global.getSeason();
     final parser = new AnimeScheduleParser(link);
     parser.downloadHTML().then((d) {
@@ -40,6 +52,12 @@ class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin 
   }
 
   @override
+ void dispose() {
+   controller.dispose();
+   super.dispose();
+ }
+
+  @override
   Widget build(BuildContext context) {
     if (loading) {
       return Center(
@@ -48,6 +66,10 @@ class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin 
     } else {
       return Scaffold(
         appBar: AppBar(
+          bottom: TabBar(
+            controller: controller,
+            tabs: tabs,
+          ),
           title: Text(global.getSeason()),
           actions: <Widget>[
             IconButton(
@@ -79,7 +101,18 @@ class _ScheduleState extends State<Schedule> with AutomaticKeepAliveClientMixin 
             )
           ]
         ),
-        
+        body: TabBarView(
+          controller: controller,
+          children: tabs.map((Tab tab) {
+            final String label = tab.text.toLowerCase();
+            return Center(
+              child: Text(
+                'This is the $label tab',
+                style: const TextStyle(fontSize: 36),
+              ),
+            );
+          }).toList(),
+      ),
       );
     }
   }

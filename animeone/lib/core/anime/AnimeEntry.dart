@@ -15,17 +15,17 @@ class AnimeEntry {
     try {  
       Node title = e.getElementsByClassName('entry-title')[0].nodes[0];
       this.name = title.text;
-      this.link = title.attributes['href'];
+      this.link = title.attributes ['href'];
 
       Node post = e.getElementsByClassName('entry-date')[0];
       this.postDate = post.text;
 
       Node content = e.getElementsByClassName('entry-content')[0];
-      Node video = content.nodes[0].nodes[0];
+      Element video = content.nodes[1].firstChild;
       this.videoLink = new AnimeVideo(video.attributes['src']);
 
       // Episode links
-      Node episode = content.nodes[1];
+      Element episode = content.nodes[2];
       episode.nodes.forEach((n) {
         if (n.text.contains('全集')) {
           // Get all episode link

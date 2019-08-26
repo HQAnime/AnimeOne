@@ -24,7 +24,14 @@ class AnimePageParser extends AnimeParser {
 
   /// Get page title to be displayed in app bar
   String getPageTitle(Document body) {
-    return '';
+    final title = body.getElementsByClassName('page-title').first;
+    return title.text;
+  }
+
+  /// Get full link instead of /cat for going toi next page
+  String getFullLink(Document body) {
+    final link = body.getElementsByClassName('cat-links').first;
+    return link.firstChild.attributes['href'];
   }
 
 }

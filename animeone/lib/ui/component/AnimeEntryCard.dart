@@ -42,7 +42,7 @@ class AnimeEntryCard extends StatelessWidget {
       return FlatButton(
         child: Text('全集連結'),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.allEpisodes)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.allEpisodes)));
         },
       );
     } else {
@@ -56,7 +56,7 @@ class AnimeEntryCard extends StatelessWidget {
       return FlatButton(
         child: Text('下一集'),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.nextEpisode)));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.nextEpisode)));
         },
       );
     } else {

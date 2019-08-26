@@ -12,23 +12,27 @@ class AnimeCoverImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset('lib/assets/cover/${video.image}.jpg'),
-        ),
-        Positioned.fill(
-          child: IconButton(
-            onPressed: () {
-              launch(video.video);
-            },
-            iconSize: 64,
-            icon: Icon(Icons.play_circle_outline),
-            color: Colors.white,
-          ),
-        )
-      ]
+    return LayoutBuilder(
+      builder: (context, constraint) {
+        return Stack(
+          children: <Widget>[
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.asset('lib/assets/cover/${video.image}.jpg'),
+            ),
+            Positioned.fill(
+              child: IconButton(
+                onPressed: () {
+                  launch(video.video);
+                },
+                iconSize: constraint.maxWidth / 6,
+                icon: Icon(Icons.play_circle_outline),
+                color: Colors.white,
+              ),
+            )
+          ]
+        );
+      }
     );
   }
 

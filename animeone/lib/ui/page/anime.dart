@@ -25,33 +25,47 @@ class _AnimeState extends State<Anime> {
 
   // Always start from page 1
   String fullLink = '';
-  int page = 1;
   bool loading = true;
+  // paging
+  int page = 1;
+  bool hasMoreData = true;
+  bool canLoadMore = true;
+
   String title;
   AnimePageParser parser;
   List<AnimeEntry> entries = [];
+  ScrollController controller;
 
   @override
   void initState() {
     super.initState();
     this._getEntry();
+    this.controller = new ScrollController()..addListener(() => this.loadMore());
   }
 
   /// Get entries from link (support page)
   void _getEntry() {
-    String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/$page';
+    this.canLoadMore = false;
+    String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/${this.page}';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
-      if (widget.link.contains('cat')) {
-        this.fullLink = this.parser.getFullLink(d);
+      if (d == null) {
+        // Stop loading more data
+        this.hasMoreData = false;
       } else {
-        this.fullLink = widget.link;
+        if (widget.link.contains('cat')) {
+          this.fullLink = this.parser.getFullLink(d);
+        } else {
+          this.fullLink = widget.link;
+        }
+        setState(() {
+          // Append more data
+          this.entries.addAll(this.parser.parseHTML(d));
+          this.title = this.parser.getPageTitle(d);
+          this.loading = false;
+        });
       }
-      setState(() {
-        this.entries = this.parser.parseHTML(d);
-        this.title = this.parser.getPageTitle(d);
-        this.loading = false;
-      });
+      this.canLoadMore = true;
     });
   }
 
@@ -71,9 +85,11 @@ class _AnimeState extends State<Anime> {
         appBar: AppBar(
           title: Text(this.title),
           actions: <Widget>[
+            this.renderSearch(),
             IconButton(
               icon: Icon(Icons.open_in_browser),
               onPressed: () => launch(this.fullLink),
+              tooltip: '用瀏覽器打開',
             )
           ],
         ),
@@ -82,11 +98,24 @@ class _AnimeState extends State<Anime> {
     }
   }
 
+  /// Render a search icon to go to wikipedia
+  Widget renderSearch() {
+    if (this.title != '') {
+      return IconButton(
+        icon: Icon(Icons.search),
+        onPressed: () => launch('https://zh.wikipedia.org/w/index.php?search=${this.title}'),
+        tooltip: '使用維基百科搜索',
+      );
+    } else {
+      return Text('');
+    }
+  }
+
   /// Render differently with different number of elements
   Widget renderBody() {
     if (this.entries.length == 0) {
       return Center(
-        child: Text('位置錯誤 >_<')
+        child: Text('未知錯誤 >_<')
       );
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
@@ -106,18 +135,31 @@ class _AnimeState extends State<Anime> {
           double imageWidth = constraints.maxWidth / count.toDouble();
           // Calculat ratio
           double ratio = imageWidth / (imageWidth / 1.777 + 150);
+
+          int length = this.entries.length;
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: count,
               childAspectRatio: ratio
             ),
-            itemCount: this.entries.length,
+            itemCount: length,
             itemBuilder: (context, index) {
               return AnimeEntryCard(entry: this.entries.elementAt(index));
             },
+            controller: this.controller,
           );
         },
       );
+    }
+  }
+
+  /// Load more anime here
+  void loadMore() {
+    if (controller.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData && !loading) {
+      if (canLoadMore) {
+        this.page += 1;
+        this._getEntry();
+      } 
     }
   }
   

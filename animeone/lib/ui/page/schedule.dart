@@ -126,7 +126,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: item.link)));
                 },
-                child: Text(item.name, style: TextStyle(fontSize: 17)),
+                child: Text(item.name, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
               ),
             );
           },

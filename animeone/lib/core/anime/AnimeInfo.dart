@@ -31,4 +31,10 @@ class AnimeInfo {
     return "Name: $name\nLink: $link\nEpisode: $episode\nYear: $year\nSeason: $season\nSubtitle: $subtitle";
   }
 
+  bool contains(String t) {
+    String tL = t.toLowerCase();
+    String nL = this.name.toLowerCase();
+    return nL.contains(tL);
+  }
+
 }

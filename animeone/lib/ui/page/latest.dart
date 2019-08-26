@@ -33,11 +33,12 @@ class _LatestState extends State<Latest> {
 
   /// Filter list by string
   void _filterList(String t) {
+    // At least two characters
     if (t == '') this._resetList();
-    else {
+    else if (t.length > 1) {
       setState(() {
-        this.list = global.getAnimeList().takeWhile((e) {
-          return e.name.contains(t);
+        this.list = global.getAnimeList().where((e) {
+          return e.contains(t);
         }).toList();
       });
     }
@@ -78,13 +79,24 @@ class _LatestState extends State<Latest> {
         ],
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: this.list.length,
-          itemBuilder: (context, index) {
-            return AnimeInfoCard(info: this.list[index], index: index);
-          },
-        ),
-      ),
+        child: this.renderBody(),
+      )
     );
+  }
+
+  /// render body and deal with 0 result
+  Widget renderBody() {
+    if (this.list.length == 0) {
+      return Center(
+        child: Text('找不到任何東西 (´;ω;`)'),
+      );
+    } else {
+      return ListView.builder(
+        itemCount: this.list.length,
+        itemBuilder: (context, index) {
+          return AnimeInfoCard(info: this.list[index], index: index);
+        },
+      );
+    }
   }
 }

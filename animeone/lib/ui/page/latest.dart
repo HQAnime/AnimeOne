@@ -14,7 +14,7 @@ class Latest extends StatelessWidget {
       child: ListView.builder(
         itemCount: count,
         itemBuilder: (context, index) {
-          return AnimeInfoCard(info: list.elementAt(index));
+          return AnimeInfoCard(info: list.elementAt(index), index: index);
         },
       ),
     );

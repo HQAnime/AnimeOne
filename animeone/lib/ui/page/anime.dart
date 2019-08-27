@@ -123,7 +123,7 @@ class _AnimeState extends State<Anime> {
           return Center(
             child: SizedBox(
               width: constraints.maxHeight,
-              child: AnimeEntryCard(entry: this.entries.first)
+              child: AnimeEntryCard(entry: this.entries.first, showEpisode: true)
             )
           );
         }
@@ -134,7 +134,7 @@ class _AnimeState extends State<Anime> {
           int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
           double imageWidth = constraints.maxWidth / count.toDouble();
           // Calculat ratio
-          double ratio = imageWidth / (imageWidth / 1.777 + 150);
+          double ratio = imageWidth / (imageWidth / 1.777 + 90);
 
           int length = this.entries.length;
           return GridView.builder(

@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 class AnimeEntryCard extends StatelessWidget {
 
   final AnimeEntry entry;
+  final bool showEpisode;
 
-  AnimeEntryCard({Key key, @required this.entry}) : super(key: key);
+  AnimeEntryCard({Key key, @required this.entry, this.showEpisode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class AnimeEntryCard extends StatelessWidget {
   }
 
   Widget renderAllEpisode(BuildContext context) {
-    if (this.entry.allEpisodes != null) {
+    if (this.showEpisode == true && this.entry.allEpisodes != null) {
       return FlatButton(
         child: Text('全集連結'),
         onPressed: () {
@@ -46,13 +47,13 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return Text('-');
+      return Text('');
     }
   }
 
   Widget renderNextEpisode(BuildContext context) {
     // Check if this is the last episode
-    if (this.entry.nextEpisode != null && this.entry.hasNextEpisode()) {
+    if (this.showEpisode == true && this.entry.nextEpisode != null && this.entry.hasNextEpisode()) {
       return FlatButton(
         child: Text('下一集'),
         onPressed: () {
@@ -60,7 +61,7 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return Text('-');
+      return Text('');
     }
   }
 

@@ -16,9 +16,12 @@ class AnimeCoverImage extends StatelessWidget {
       builder: (context, constraint) {
         return Stack(
           children: <Widget>[
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset('lib/assets/cover/${video.image}.jpg'),
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset('lib/assets/cover/${video.image}.jpg'),
+              )
             ),
             Positioned.fill(
               child: IconButton(

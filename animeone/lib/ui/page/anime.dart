@@ -107,7 +107,7 @@ class _AnimeState extends State<Anime> {
         tooltip: '使用維基百科搜索',
       );
     } else {
-      return Text('');
+      return SizedBox.shrink();
     }
   }
 

@@ -47,7 +47,7 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return Text('');
+      return SizedBox.shrink();
     }
   }
 
@@ -61,7 +61,7 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return Text('');
+      return SizedBox.shrink();
     }
   }
 

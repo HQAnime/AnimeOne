@@ -21,13 +21,12 @@ class AnimeEntry {
       Node post = e.getElementsByClassName('entry-date')[0];
       this.postDate = post.text;
 
-      Node content = e.getElementsByClassName('entry-content')[0];
-      Element video = content.nodes[1].firstChild;
+      // Get iframe instead
+      Element video = e.getElementsByTagName('iframe')[0];
       this.videoLink = new AnimeVideo(video.attributes['src']);
 
       // Episode links
-      Element episode = content.nodes[2];
-      episode.nodes.forEach((n) {
+      e.getElementsByTagName('a').forEach((n) {
         if (n.text.contains('全集')) {
           // Get all episode link
           this.allEpisodes = GlobalData.domain + n.attributes['href'];

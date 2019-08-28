@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     this.global = new GlobalData();
     this.global.init().then((_) {
-      this.setState(() {
+      setState(() {
         loading = false;
       });
     });

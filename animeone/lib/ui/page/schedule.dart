@@ -79,7 +79,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
               tooltip: '新番介紹視頻',
               onPressed: () {
                 if (this.video != null) {
-                  Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: this.video)));
+                  this.video.launchURL();
                 } else {
                   showDialog(
                     context: context,

@@ -8,6 +8,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
+  static final version = '0.0.1';
 
   static final _season = new AnimeSeason(DateTime.now());
   String getSeason() => _season.toString();

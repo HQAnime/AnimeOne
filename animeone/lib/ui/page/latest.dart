@@ -1,6 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/ui/component/AnimeInfoCard.dart';
+import 'package:animeone/ui/page/settings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -75,6 +76,9 @@ class _LatestState extends State<Latest> {
             tooltip: "關於AnimeOne",
             onPressed: () {
               // Go to information page
+              Navigator.push(context, new MaterialPageRoute(
+                builder: (context) => Settings()
+              ));
             },
           ),
         ],

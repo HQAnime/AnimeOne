@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   GlobalData global;
 
-  final tabWidgets = <Widget>[
+  final List<Widget> tabWidgets = [
     Latest(),
     Schedule()
   ];
@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
 
     this.global = new GlobalData();
     this.global.init().then((_) {
@@ -46,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       // Load all tabs
       return Scaffold(
         body: Center(
-          child: tabWidgets.elementAt(selectedIndex),
+          child: tabWidgets[selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

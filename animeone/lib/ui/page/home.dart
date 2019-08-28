@@ -16,15 +16,15 @@ class _HomePageState extends State<HomePage> {
 
   GlobalData global;
 
+  final PageStorageBucket tabBucket = PageStorageBucket();
   final List<Widget> tabWidgets = [
-    Latest(),
-    Schedule()
+    Latest(key: PageStorageKey('Latest')),
+    Schedule(key: PageStorageKey('Schedule'))
   ];
 
   @override
   void initState() {
     super.initState();
-
 
     this.global = new GlobalData();
     this.global.init().then((_) {
@@ -46,7 +46,8 @@ class _HomePageState extends State<HomePage> {
     } else {
       // Load all tabs
       return Scaffold(
-        body: Center(
+        body: PageStorage(
+          bucket: this.tabBucket,
           child: tabWidgets[selectedIndex],
         ),
         bottomNavigationBar: BottomNavigationBar(

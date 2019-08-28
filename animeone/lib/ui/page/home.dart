@@ -46,9 +46,9 @@ class _HomePageState extends State<HomePage> {
     } else {
       // Load all tabs
       return Scaffold(
-        body: PageStorage(
-          bucket: this.tabBucket,
-          child: tabWidgets[selectedIndex],
+        body: IndexedStack(
+          index: selectedIndex,
+          children: tabWidgets,
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

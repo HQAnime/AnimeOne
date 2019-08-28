@@ -69,7 +69,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
         appBar: AppBar(
           bottom: TabBar(
             controller: controller,
-            tabs: tabs,
+            tabs: tabs
           ),
           title: Text(global.getSeason()),
           actions: <Widget>[

@@ -21,7 +21,6 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
   bool loading = true;
   String link;
   AnimeVideo video;
-  int weekday = DateTime.now().weekday - 1;
   List<AnimeSchedule> schedules;
 
   TabController controller;
@@ -39,22 +38,18 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
 
-    this.link = GlobalData.domain + global.getSeason();
+    int weekday = DateTime.now().weekday - 1;
     this.controller = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
-    this.controller..addListener(updateIndex);
+
+    this.link = GlobalData.domain + global.getSeason();
     final parser = new AnimeScheduleParser(link);
     parser.downloadHTML().then((d) {
       setState(() {
-        final a = PageStorage.of(context).readState(context);
         this.schedules = parser.parseHTML(d);
         this.video = parser.parseIntroductoryVideo(d);
         this.loading = false;
       });
     });
-  }
-
-  void updateIndex() {
-    this.controller.index += 0;
   }
 
   @override
@@ -80,7 +75,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.play_circle_outline),
-              tooltip: '這裏新番介紹視頻',
+              tooltip: '新番介紹視頻',
               onPressed: () {
                 if (this.video != null) {
                   this.video.launchURL();

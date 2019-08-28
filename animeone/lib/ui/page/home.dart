@@ -10,17 +10,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int selectedIndex = 0;
   bool loading = true;
 
   GlobalData global;
-
-  final PageStorageBucket tabBucket = PageStorageBucket();
-  final List<Widget> tabWidgets = [
-    Latest(key: PageStorageKey('Latest')),
-    Schedule(key: PageStorageKey('Schedule'))
-  ];
 
   @override
   void initState() {
@@ -48,7 +42,10 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         body: IndexedStack(
           index: selectedIndex,
-          children: tabWidgets,
+          children: [
+            Latest(),
+            Schedule(),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[

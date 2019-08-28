@@ -57,10 +57,10 @@ class _LatestState extends State<Latest> {
             ),
             Expanded(
               child: TextField(
-                style: TextStyle(color: Colors.white, fontSize: 17),
+                style: TextStyle(color: Colors.white, fontSize: 20),
                 decoration: InputDecoration.collapsed(
                   hintText: '快速搜尋',
-                  hintStyle: TextStyle(color: Colors.white, fontSize: 17),
+                  hintStyle: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 autocorrect: false,
                 autofocus: false,

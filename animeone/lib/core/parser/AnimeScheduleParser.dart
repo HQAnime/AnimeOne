@@ -15,12 +15,15 @@ class AnimeScheduleParser extends AnimeParser {
     final tables = body.getElementsByTagName('table');
     final tbody = tables.first.nodes[1];
     tbody.nodes.forEach((tr) {
-      // It is in order so use an index to indicate the date
-      var i = 0;
-      tr.nodes.forEach((td) {
-        AnimeSchedule t = new AnimeSchedule(td, i++);
-        if (t.name != '') schedules.add(t);
-      });
+      // Anime1.me is also one line (so check the length to prevent it)
+      if (tr.nodes.length > 1) {
+        // It is in order so use an index to indicate the date
+        int i = 0;
+        tr.nodes.forEach((td) {
+          AnimeSchedule t = new AnimeSchedule(td, i++);
+          if (t.name != '') schedules.add(t);
+        });
+      }
     });
 
     return schedules;

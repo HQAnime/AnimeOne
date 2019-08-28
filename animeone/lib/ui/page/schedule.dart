@@ -3,6 +3,7 @@ import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +79,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
               tooltip: '新番介紹視頻',
               onPressed: () {
                 if (this.video != null) {
-                  this.video.launchURL();
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: this.video)));
                 } else {
                   showDialog(
                     context: context,

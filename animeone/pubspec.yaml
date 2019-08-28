@@ -27,6 +27,8 @@ dependencies:
   http: ^0.12.0+2
   html: ^0.14.0+2
   url_launcher: ^5.1.2
+  chewie: ^0.9.7
+  video_player: ^0.10.2
 
 dev_dependencies:
   flutter_test:

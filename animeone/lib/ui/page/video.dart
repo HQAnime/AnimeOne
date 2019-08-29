@@ -47,11 +47,39 @@ class _VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: Chewie(
           controller: chewie,
         ),
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: IconButton(
+                icon: Icon(Icons.close),
+                tooltip: '關閉視頻',
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+            Expanded(
+              child: IconButton(
+                icon: Icon(Icons.file_download),
+                tooltip: '還不支持下載視頻',
+                onPressed: () {},
+              ),
+            ),
+            Expanded(
+              child: IconButton(
+                icon: Icon(Icons.launch),
+                tooltip: '使用瀏覽器觀看',
+                onPressed: () => widget.video.launchURL(),
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
   

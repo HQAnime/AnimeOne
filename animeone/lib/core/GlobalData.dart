@@ -1,6 +1,7 @@
 import 'package:animeone/core/anime/AnimeSeason.dart';
 import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:html/dom.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'anime/AnimeInfo.dart';
 
@@ -33,6 +34,12 @@ class GlobalData {
     if (doc != null) {
       this._animeList = parser.parseHTML(doc);
     }
+  }
+
+  /// launch wikipedia page for anime
+  void getWikipediaLink(String name) {
+    final link = 'https://zh.wikipedia.org/w/index.php?search=$name';
+    launch(link);
   }
 
 }

@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
+import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/cupertino.dart';
@@ -121,15 +122,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
           itemCount: list.length,
           itemBuilder: (c, i) {
             final item = list.elementAt(i);
-            return SizedBox(
-              height: 48,
-              child: FlatButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: item.link)));
-                },
-                child: Text(item.name, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
-              ),
-            );
+            return AnimeScheduleTile(schedule: item);
           },
         )
       );

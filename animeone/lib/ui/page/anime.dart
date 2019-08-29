@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
@@ -22,6 +23,8 @@ class Anime extends StatefulWidget {
 }
 
 class _AnimeState extends State<Anime> {
+
+  final global = new GlobalData();
 
   // Always start from page 1
   String fullLink = '';
@@ -103,7 +106,7 @@ class _AnimeState extends State<Anime> {
     if (this.title != '') {
       return IconButton(
         icon: Icon(Icons.search),
-        onPressed: () => launch('https://zh.wikipedia.org/w/index.php?search=${this.title}'),
+        onPressed: () => global.getWikipediaLink(this.title),
         tooltip: '使用維基百科搜索',
       );
     } else {

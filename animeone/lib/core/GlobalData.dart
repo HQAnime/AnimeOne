@@ -12,7 +12,9 @@ class GlobalData {
   static final version = '0.0.1';
 
   static final _season = new AnimeSeason(DateTime.now());
-  String getSeason() => _season.toString();
+  String getSeasonName() => _season.toString();
+  String getScheduleLink() => _season.getLink();
+  String getSeasonLink() => _season.getAnimeLink();
   
   List<AnimeInfo> _animeList = [];
   List<AnimeInfo> getAnimeList() => this._animeList;

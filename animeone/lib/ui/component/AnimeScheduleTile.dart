@@ -38,7 +38,7 @@ class AnimeScheduleTile extends StatelessWidget {
           ),
         ),
         IconButton(
-          tooltip: '使用維基百科',
+          tooltip: '維基百科',
           icon: Icon(Icons.info_outline),
           onPressed: () => global.getWikipediaLink(schedule.name),
         )

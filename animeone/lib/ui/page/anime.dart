@@ -56,7 +56,8 @@ class _AnimeState extends State<Anime> {
         // Stop loading more data
         this.hasMoreData = false;
       } else {
-        if (widget.link.contains('cat')) {
+        // Category also contains cat so you need to make it longer
+        if (widget.link.contains('/?cat=')) {
           this.fullLink = this.parser.getFullLink(d);
         } else {
           this.fullLink = widget.link;

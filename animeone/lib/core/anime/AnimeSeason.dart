@@ -14,6 +14,11 @@ class AnimeSeason {
     return '${GlobalData.domain}$this';
   }
 
+  /// Link for Anime page to use
+  String getAnimeLink() {
+    return '${GlobalData.domain}category/$this'.replaceFirst('新番', '');
+  }
+
   @override
   String toString() {
     int year = this._date.year;

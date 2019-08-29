@@ -43,7 +43,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     int weekday = DateTime.now().weekday - 1;
     this.controller = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
 
-    this.link = GlobalData.domain + global.getSeason();
+    this.link = global.getScheduleLink();
     final parser = new AnimeScheduleParser(link);
     parser.downloadHTML().then((d) {
       setState(() {
@@ -73,7 +73,14 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
             controller: controller,
             tabs: tabs
           ),
-          title: Text(global.getSeason()),
+          title: InkWell(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Anime(link: global.getSeasonLink())
+              ));
+            },
+            child: Text(global.getSeasonName() + ' >'),
+          ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.play_circle_outline),

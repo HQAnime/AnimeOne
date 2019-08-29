@@ -48,13 +48,19 @@ class _AnimeState extends State<Anime> {
 
   /// Get entries from link (support page)
   void _getEntry() {
-    this.canLoadMore = false;
+    setState(() {
+      this.canLoadMore = false;
+    });
+
     String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/${this.page}';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
         // Stop loading more data
         this.hasMoreData = false;
+        setState(() {
+          this.canLoadMore = true;          
+        });
       } else {
         // Category also contains cat so you need to make it longer
         if (widget.link.contains('/?cat=')) {
@@ -67,9 +73,9 @@ class _AnimeState extends State<Anime> {
           this.entries.addAll(this.parser.parseHTML(d));
           this.title = this.parser.getPageTitle(d);
           this.loading = false;
+          this.canLoadMore = true;
         });
       }
-      this.canLoadMore = true;
     });
   }
 
@@ -138,22 +144,41 @@ class _AnimeState extends State<Anime> {
           int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
           double imageWidth = constraints.maxWidth / count.toDouble();
           // Calculat ratio
-          double ratio = imageWidth / (imageWidth / 1.777 + 90);
+          double ratio = imageWidth / (imageWidth / 1.777 + 92);
 
           int length = this.entries.length;
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: count,
-              childAspectRatio: ratio
-            ),
-            itemCount: length,
-            itemBuilder: (context, index) {
-              return AnimeEntryCard(entry: this.entries.elementAt(index));
-            },
-            controller: this.controller,
+          return Stack(
+            children: <Widget>[
+              GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: count,
+                  childAspectRatio: ratio
+                ),
+                itemCount: length,
+                itemBuilder: (context, index) {
+                  return AnimeEntryCard(entry: this.entries.elementAt(index));
+                },
+                controller: this.controller,
+              ),
+              this.loadDivider()
+            ],
           );
         },
       );
+    }
+  }
+
+  Widget loadDivider() {
+    if (!this.loading && !this.canLoadMore) {
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      return SizedBox.shrink();
     }
   }
 

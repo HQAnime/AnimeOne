@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/latest.dart';
+import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
 import 'package:flutter/material.dart';
 
@@ -44,17 +45,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           index: selectedIndex,
           children: [
             Latest(),
+            AnimeList(),
             Schedule(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.image),
+              icon: Icon(Icons.new_releases),
               title: Text('最新'),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_view_day),
+              icon: Icon(Icons.list),
+              title: Text('動畫列表'),
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
               title: Text('時間表'),
             ),
           ],

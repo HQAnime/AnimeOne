@@ -4,7 +4,7 @@ import 'package:html/dom.dart';
 
 import 'AnimeParser.dart';
 
-/// This class get anime schedule and possibly an introductory video
+/// This class get recent anime
 class AnimeRecentParser extends AnimeParser {
   
   AnimeRecentParser(String link) : super(link);

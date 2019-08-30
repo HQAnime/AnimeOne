@@ -1,6 +1,6 @@
 import 'package:html/dom.dart';
 
-/// This class parses a Node and stores anime info like anime name, anime link, total episodes, year, season and subtitle group
+/// This class parses a Node and stores anime recent (only name and link)
 class AnimeRecent {
 
   String name;

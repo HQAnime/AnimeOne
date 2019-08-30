@@ -4,6 +4,8 @@ import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'AnimeButton.dart';
+
 class AnimeScheduleTile extends StatelessWidget {
   
   final AnimeSchedule schedule;
@@ -16,26 +18,7 @@ class AnimeScheduleTile extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: SizedBox(
-            height: 48,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: schedule.link)));
-              },
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Text(
-                    schedule.name, 
-                    maxLines: 1,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)
-                  ),
-                ),
-              ),
-            ),
-          ),
+          child: new AnimeButton(recent: schedule),
         ),
         IconButton(
           tooltip: '維基百科',

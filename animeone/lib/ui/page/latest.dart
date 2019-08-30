@@ -1,8 +1,8 @@
 import 'package:animeone/core/GlobalData.dart';
-import 'package:animeone/core/anime/AnimeInfo.dart';
-import 'package:animeone/ui/component/AnimeInfoCard.dart';
-import 'package:animeone/ui/page/settings.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:animeone/core/anime/AnimeRecent.dart';
+import 'package:animeone/core/parser/AnimeRecentParser.dart';
+import 'package:animeone/ui/component/AnimeRecentTile.dart';
+import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
@@ -15,91 +15,45 @@ class Latest extends StatefulWidget {
 }
 
 class _LatestState extends State<Latest> {
-
-  static GlobalData global = new GlobalData();
-  List<AnimeInfo> list;
-  final all = global.getAnimeList();
+ 
+  AnimeRecentParser parser;
+  bool loading = true;
+  List<AnimeRecent> list = [];
 
   @override
   void initState() {
     super.initState();
-    this._resetList();
-  }
 
-  /// Reset list to only 100 items
-  void _resetList() {
-    setState(() {
-      this.list = this.all;
-    });
-  }
-
-  /// Filter list by string
-  void _filterList(String t) {
-    // At least two characters
-    if (t == '') this._resetList();
-    else if (t.length > 1) {
+    this.parser = new AnimeRecentParser(GlobalData.domain + '留言板');
+    this.parser.downloadHTML().then((d) {
       setState(() {
-        this.list = this.all.where((e) {
-          return e.contains(t);
-        }).toList();
+        this.list = this.parser.parseHTML(d);       
+        this.loading = false; 
       });
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: Icon(Icons.search),
-            ),
-            Expanded(
-              child: TextField(
-                style: TextStyle(color: Colors.white, fontSize: 20),
-                decoration: InputDecoration.collapsed(
-                  hintText: '快速搜尋',
-                  hintStyle: TextStyle(color: Colors.white, fontSize: 20),
-                ),
-                autocorrect: false,
-                autofocus: false,
-                onChanged: (t) => this._filterList(t),
-              ),
-            )
-          ],
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info_outline),
-            tooltip: "關於AnimeOne",
-            onPressed: () {
-              // Go to information page
-              Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => Settings()
-              ));
-            },
-          ),
-        ],
+        title: Text('最新動畫'),
       ),
-      body: Container(
+      body: Center(
         child: this.renderBody(),
       )
     );
   }
 
-  /// render body and deal with 0 result
   Widget renderBody() {
-    if (this.list.length == 0) {
-      return Center(
-        child: Text('找不到任何東西 (´;ω;`)'),
-      );
+    if (loading) {
+      return CircularProgressIndicator();
     } else {
       return ListView.builder(
-        itemCount: this.list.length,
+        itemCount: list.length,
         itemBuilder: (context, index) {
-          return AnimeInfoCard(info: this.list[index], index: index);
+          return AnimeRecentTile(recent: list.elementAt(index));
         },
       );
     }

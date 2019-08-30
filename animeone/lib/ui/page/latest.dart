@@ -18,7 +18,7 @@ class _LatestState extends State<Latest> {
 
   static GlobalData global = new GlobalData();
   List<AnimeInfo> list;
-  final hundred = global.getAnimeList().take(100).toList();
+  final all = global.getAnimeList();
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _LatestState extends State<Latest> {
   /// Reset list to only 100 items
   void _resetList() {
     setState(() {
-      this.list = this.hundred;
+      this.list = this.all;
     });
   }
 
@@ -39,7 +39,7 @@ class _LatestState extends State<Latest> {
     if (t == '') this._resetList();
     else if (t.length > 1) {
       setState(() {
-        this.list = global.getAnimeList().where((e) {
+        this.list = this.all.where((e) {
           return e.contains(t);
         }).toList();
       });

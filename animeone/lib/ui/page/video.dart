@@ -28,10 +28,7 @@ class _VideoState extends State<Video> {
       aspectRatio: 16 / 9,
       autoPlay: true,
       errorBuilder: (context, msg) {
-        return FlatButton(
-          onPressed: () => widget.video.launchURL(),
-          child: Text('無法加載視頻，使用瀏覽器播放'),
-        );
+        return Text('無法加載視頻，使用瀏覽器播放', style: TextStyle(color: Colors.white));
       },
       looping: false,
     );

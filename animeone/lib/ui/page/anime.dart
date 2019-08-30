@@ -144,7 +144,7 @@ class _AnimeState extends State<Anime> {
           int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
           double imageWidth = constraints.maxWidth / count.toDouble();
           // Calculat ratio
-          double ratio = imageWidth / (imageWidth / 1.777 + 92);
+          double ratio = imageWidth / (imageWidth / 1.777 + 90);
 
           int length = this.entries.length;
           return Stack(
@@ -172,10 +172,7 @@ class _AnimeState extends State<Anime> {
     if (!this.loading && !this.canLoadMore) {
       return Align(
         alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: CircularProgressIndicator(),
-        ),
+        child: LinearProgressIndicator(),
       );
     } else {
       return SizedBox.shrink();

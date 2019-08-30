@@ -14,4 +14,20 @@ abstract class AnimeBasic {
   bool valid() {
     return name != null && name.trim().length > 0;
   }
+
+  /// Move episode number in front ([12] xxxx)
+  String formattedName() {
+    if (name.endsWith(']')) {
+      var group = name.split(' ');
+      String tag = group.removeLast();
+      String rest = group.join(' ');
+      String last = '$tag $rest';
+
+      // Double check the tag is in front now
+      if (last.startsWith('[')) return last;
+      return name;
+    } else {
+      return name;
+    }
+  }
 }

@@ -20,7 +20,11 @@ class AnimeEntryCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Text(this.entry.name, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700), maxLines: 2),
+            child: Text(
+              this.entry.formattedName(), 
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700), 
+              maxLines: 1
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8),

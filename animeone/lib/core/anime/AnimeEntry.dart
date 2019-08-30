@@ -1,12 +1,11 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
-class AnimeEntry {
+class AnimeEntry extends AnimeBasic {
 
-  String name;
-  String link;
   String postDate;
   String allEpisodes;
   String nextEpisode;

@@ -21,7 +21,7 @@ class AnimeScheduleParser extends AnimeParser {
         int i = 0;
         tr.nodes.forEach((td) {
           AnimeSchedule t = new AnimeSchedule(td, i++);
-          if (t.name != '') schedules.add(t);
+          if (t.valid()) schedules.add(t);
         });
       }
     });

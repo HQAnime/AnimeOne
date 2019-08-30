@@ -1,13 +1,11 @@
 import 'package:animeone/core/GlobalData.dart';
-import 'package:animeone/core/anime/AnimeRecent.dart';
+import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:html/dom.dart';
 
 /// This class saves anime name, link and schedule (0 - 6)
-class AnimeSchedule extends AnimeRecent {
+class AnimeSchedule extends AnimeBasic {
 
   int weekday;
-
-  AnimeSchedule(Node tr) : super(tr);
 
   AnimeSchedule(Node tr, int i) {
     this.weekday = i;

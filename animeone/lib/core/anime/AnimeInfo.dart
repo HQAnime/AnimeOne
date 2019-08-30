@@ -1,11 +1,11 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';
 
-/// This class parses a Node and stores anime info like anime name, anime link, total episodes, year, season and subtitle group
-class AnimeInfo {
+import 'AnimeBasic.dart';
 
-  String name;
-  String link;
+/// This class parses a Node and stores anime info like anime name, anime link, total episodes, year, season and subtitle group
+class AnimeInfo extends AnimeBasic {
+
   String episode;
   String year;
   String season;
@@ -29,12 +29,6 @@ class AnimeInfo {
   @override
   String toString() {
     return "Name: $name\nLink: $link\nEpisode: $episode\nYear: $year\nSeason: $season\nSubtitle: $subtitle";
-  }
-
-  bool contains(String t) {
-    String tL = t.toLowerCase();
-    String nL = this.name.toLowerCase();
-    return nL.contains(tL);
   }
 
 }

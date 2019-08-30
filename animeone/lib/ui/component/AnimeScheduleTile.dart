@@ -18,7 +18,7 @@ class AnimeScheduleTile extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: new AnimeButton(recent: schedule),
+          child: new AnimeButton(basic: schedule),
         ),
         IconButton(
           tooltip: '維基百科',

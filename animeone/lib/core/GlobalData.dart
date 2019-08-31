@@ -7,6 +7,7 @@ import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
+import 'package:flutter/widgets.dart';
 import 'package:html/dom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -59,6 +60,10 @@ class GlobalData {
     bool shouldUpdate = false;
 
     prefs = await SharedPreferences.getInstance();
+    // Check if data are stored properly
+    // prefs.getKeys().forEach((k) {
+    //   debugPrint('$k ${prefs.get(k)}');
+    // });
 
     String update = prefs.getString(lastUpdate);
     if (update == null) {
@@ -83,6 +88,7 @@ class GlobalData {
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
     } else {
       // Load from storage
+    
       List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
       savedAnimeList.forEach((json) {
         this._animeList.add(AnimeInfo.fromJson(json)); 

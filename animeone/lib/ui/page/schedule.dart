@@ -4,7 +4,6 @@ import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
-import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

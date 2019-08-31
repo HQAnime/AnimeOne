@@ -1,8 +1,6 @@
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {

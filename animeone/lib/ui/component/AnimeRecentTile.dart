@@ -1,8 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
-import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/ui/component/AnimeButton.dart';
-import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

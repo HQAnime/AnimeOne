@@ -59,7 +59,6 @@ class GlobalData {
     bool shouldUpdate = false;
 
     prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
 
     String update = prefs.getString(lastUpdate);
     if (update == null) {
@@ -84,9 +83,17 @@ class GlobalData {
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
     } else {
       // Load from storage
-      this._animeList = jsonDecode(prefs.getString(animeList));
-      this._animeScheduleList = jsonDecode(prefs.getString(animeScedule));
-      this._introductory = jsonDecode(prefs.getString(scheduleIntroVide));
+      List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
+      savedAnimeList.forEach((json) {
+        this._animeList.add(AnimeInfo.fromJson(json)); 
+      });
+
+      List<dynamic> savedScheduleList = jsonDecode(prefs.getString(animeScedule));
+      savedScheduleList.forEach((json) {
+        this._animeScheduleList.add(AnimeSchedule.fromJson(json)); 
+      });
+
+      this._introductory = AnimeVideo.fromJson(jsonDecode(prefs.getString(scheduleIntroVide)));
     }
 
     // Load recent anime, you always need to load this

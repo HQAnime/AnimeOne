@@ -19,7 +19,6 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin {
 
   final global = new GlobalData();
-  bool loading = true;
   String link;
   AnimeVideo video;
   List<AnimeSchedule> schedules;
@@ -42,14 +41,9 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     int weekday = DateTime.now().weekday - 1;
     this.controller = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
 
-    this.link = global.getScheduleLink();
-    final parser = new AnimeScheduleParser(link);
-    parser.downloadHTML().then((d) {
-      setState(() {
-        this.schedules = parser.parseHTML(d);
-        this.video = parser.parseIntroductoryVideo(d);
-        this.loading = false;
-      });
+    setState(() {
+      this.schedules = this.global.getScheduleList();
+      this.video = this.global.getIntroVideo();
     });
   }
 
@@ -61,61 +55,55 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          bottom: TabBar(
-            controller: controller,
-            tabs: tabs
-          ),
-          title: InkWell(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => Anime(link: global.getSeasonLink())
-              ));
-            },
-            child: Text(global.getSeasonName() + ' >'),
-          ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.play_circle_outline),
-              tooltip: '新番介紹視頻',
-              onPressed: () {
-                if (this.video != null) {
-                  this.video.launchURL();
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('AnimeOne'),
-                        content: Text('沒有發現介紹視頻'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text('這樣啊'),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      );
-                    }
-                  );
-                }
-              },
-            )
-          ]
-        ),
-        body: TabBarView(
+    return Scaffold(
+      appBar: AppBar(
+        bottom: TabBar(
           controller: controller,
-          children: this.renderSchedule()
+          tabs: tabs
+        ),
+        title: InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Anime(link: global.getSeasonLink())
+            ));
+          },
+          child: Text(global.getSeasonName() + ' >'),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.play_circle_outline),
+            tooltip: '新番介紹視頻',
+            onPressed: () {
+              if (this.video != null) {
+                this.video.launchURL();
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('AnimeOne'),
+                      content: Text('沒有發現介紹視頻'),
+                      actions: <Widget>[
+                        FlatButton(
+                          child: Text('這樣啊'),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    );
+                  }
+                );
+              }
+            },
+          )
+        ]
       ),
-      );
-    }
+      body: TabBarView(
+        controller: controller,
+        children: this.renderSchedule()
+      ),
+    );
   }
 
   /// Render schedule to different days

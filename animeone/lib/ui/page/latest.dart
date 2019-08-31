@@ -15,14 +15,16 @@ class Latest extends StatefulWidget {
 
 class _LatestState extends State<Latest> {
  
-  AnimeRecentParser parser;
-  bool loading = true;
+  bool loading = false;
   List<AnimeRecent> list = [];
+  final global = new GlobalData();
 
   @override
   void initState() {
     super.initState();
-    this.loadRecentAnime();
+    setState(() {
+      this.list = global.getRecentList();
+    });
   }
 
   /// Load or refresh latest anime
@@ -32,11 +34,10 @@ class _LatestState extends State<Latest> {
       this.loading = true;
     });
 
-    this.parser = new AnimeRecentParser(GlobalData.domain + '留言板');
-    this.parser.downloadHTML().then((d) {
+    global.getRecentAnime().then((d) {
       setState(() {
-        this.list = this.parser.parseHTML(d);       
-        this.loading = false; 
+        this.list = global.getRecentList();  
+        this.loading = false;
       });
     });
   }

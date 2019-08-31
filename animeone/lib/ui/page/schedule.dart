@@ -1,7 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
-import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/cupertino.dart';

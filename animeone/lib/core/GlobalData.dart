@@ -4,10 +4,11 @@ import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeSeason.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/other/GithubUpdate.dart';
 import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
-import 'package:flutter/widgets.dart';
+import 'package:animeone/core/parser/GithubParser.dart';
 import 'package:html/dom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -18,7 +19,9 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '0.0.3';
+  static final version = '0.0.2';
+
+  static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
 
   // Relating to local data
   SharedPreferences prefs;
@@ -45,6 +48,10 @@ class GlobalData {
   AnimeRecentParser _recentParser;
   List<AnimeRecent> _recentList = [];
   List<AnimeRecent> getRecentList() => this._recentList;
+
+  // Relating to Github update
+  GithubUpdate _update;
+  GithubUpdate getGithubUpdate() => this._update;
 
   // Singleton pattern 
   GlobalData._init();
@@ -86,6 +93,9 @@ class GlobalData {
       await this._getAnimeScedule();
       prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
+
+      // Check for update
+      await this._checkGithubUpdate();
     } else {
       // Load everything from storage
       List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
@@ -101,8 +111,15 @@ class GlobalData {
       this._introductory = AnimeVideo.fromJson(jsonDecode(prefs.getString(scheduleIntroVide)));
     }
 
+
     // Load recent anime, you always need to load this
     await this.getRecentAnime();
+  }
+
+  Future _checkGithubUpdate() async {
+    final parser = new GithubParser(githubRelease);
+    Document body = await parser.downloadHTML();
+    this._update = parser.parseHTML(body);
   }
 
   Future _getAnimeList() async {

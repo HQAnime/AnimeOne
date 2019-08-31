@@ -1,6 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
-import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:flutter/material.dart';
 

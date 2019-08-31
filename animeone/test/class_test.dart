@@ -45,4 +45,22 @@ void main() {
       expect(s1 == s2, isTrue);
     });
   });
+
+  group('String compare', () {
+    test('0.0.3 > 0.0.2', () {
+      expect('0.0.3'.compareTo('0.0.2') > 0, isTrue);
+    });
+
+    test('0.1.3 > 0.0.3', () {
+      expect('0.1.3'.compareTo('0.0.3') > 0, isTrue);
+    });
+
+    test('1.0.3 > 0.1.2', () {
+      expect('1.0.3'.compareTo('0.1.2') > 0, isTrue);
+    });
+
+    test('1.1.0 > 1.0.1', () {
+      expect('1.1.0'.compareTo('1.0.1') > 0, isTrue);
+    });
+  });
 }

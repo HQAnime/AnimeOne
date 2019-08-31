@@ -23,6 +23,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     this.global = new GlobalData();
     this.global.init().then((_) {
+      final update = global.getGithubUpdate();
+      if (update != null) {
+        update.checkUpdate(context);
+      }
+
       setState(() {
         loading = false;
       });
@@ -58,9 +63,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget renderBody() {
     if (this.loading) {
       return Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 8,
-        )
+        child: CircularProgressIndicator()
       );
     } else {
       return IndexedStack(

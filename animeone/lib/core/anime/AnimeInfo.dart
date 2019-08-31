@@ -29,8 +29,8 @@ class AnimeInfo extends AnimeBasic {
   @override
   bool contains(String t) {
     if (super.contains(t) || 
-        this.year.contains(t) ||
-        this.season.contains(t) ||
+        (this.year + this.season).contains(t) ||
+        this.episode.contains(t) ||
         this.subtitle.contains(t)) {
       return true;
     }

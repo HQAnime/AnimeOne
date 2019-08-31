@@ -54,29 +54,19 @@ class GlobalData {
     return _instance;
   }
 
-  /// Encode anything into a json string
-  String _encode(Object obj) {
-    if (obj == null) return obj;
-    return jsonEncode(obj);
-  }
-
-  /// Decode json string
-  Object _decode(String json) {
-    if (json == null) return json;
-    return jsonDecode(json);
-  }
-
   /// Get data from anime1.me if necessary
   Future init() async {
     bool shouldUpdate = false;
 
     prefs = await SharedPreferences.getInstance();
-    DateTime update = _decode(prefs.getString(lastUpdate));
+    await prefs.clear();
+
+    String update = prefs.getString(lastUpdate);
     if (update == null) {
-      prefs.setString(lastUpdate, this._encode(DateTime.now().toString()));
+      prefs.setString(lastUpdate, DateTime.now().toIso8601String());
       shouldUpdate = true;
     } else {
-      final diff = DateTime.now().difference(update);
+      final diff = DateTime.now().difference(DateTime.parse(update));
       // Check for update once a wekk
       if (diff.inDays >= 7) {
         shouldUpdate = true;
@@ -87,16 +77,16 @@ class GlobalData {
     if (shouldUpdate) {
       // Load anime list
       await this._getAnimeList();
-      prefs.setString(animeList, this._encode(this._animeList));
+      prefs.setString(animeList, jsonEncode(this._animeList));
       // Load anime schedule
       await this._getAnimeScedule();
-      prefs.setString(animeScedule, this._encode(this._animeScheduleList));
-      prefs.setString(scheduleIntroVide, this._encode(this._introductory));
+      prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
+      prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
     } else {
       // Load from storage
-      this._animeList = this._decode(prefs.getString(animeList));
-      this._animeScheduleList = this._decode(prefs.getString(animeScedule));
-      this._introductory = this._decode(prefs.getString(scheduleIntroVide));
+      this._animeList = jsonDecode(prefs.getString(animeList));
+      this._animeScheduleList = jsonDecode(prefs.getString(animeScedule));
+      this._introductory = jsonDecode(prefs.getString(scheduleIntroVide));
     }
 
     // Load recent anime, you always need to load this

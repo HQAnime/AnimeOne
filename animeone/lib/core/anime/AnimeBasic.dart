@@ -10,6 +10,12 @@ abstract class AnimeBasic {
     return nL.contains(tL);
   }
 
+  AnimeBasic.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    name = json['name'];
+    link = json['link'];
+  } 
+
   /// Check if name is loaded and not null
   bool valid() {
     return name != null && name.trim().length > 0;

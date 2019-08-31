@@ -15,6 +15,16 @@ class AnimeVideo {
     this.image = _covers[Random().nextInt(5)];
   }
 
+  AnimeVideo.fromJson(Map<String, dynamic> json) : 
+    video = json['video'],
+    image = json['image'];
+
+  Map<String, dynamic> toJson() =>
+  {
+    'video': video,
+    'image': image,
+  };
+
   void launchURL() {
     launch(this.video);
   }

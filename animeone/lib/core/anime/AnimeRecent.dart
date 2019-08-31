@@ -4,7 +4,7 @@ import 'package:html/dom.dart';
 /// This class parses a Node and stores anime recent (only name and link)
 class AnimeRecent extends AnimeBasic {
 
-  AnimeRecent(Node tr) {
+  AnimeRecent(Node tr) : super.fromJson(null) {
     final anime = tr.firstChild;
     try {
       this.name = anime.text;

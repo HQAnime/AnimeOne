@@ -11,7 +11,7 @@ class AnimeEntry extends AnimeBasic {
   String nextEpisode;
   AnimeVideo videoLink;
 
-  AnimeEntry(Element e) {
+  AnimeEntry(Element e) : super.fromJson(null) {
     try {  
       Node title = e.getElementsByClassName('entry-title')[0].nodes[0];
       this.name = title.text;

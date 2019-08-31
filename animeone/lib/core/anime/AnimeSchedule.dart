@@ -7,7 +7,7 @@ class AnimeSchedule extends AnimeBasic {
 
   int weekday;
 
-  AnimeSchedule(Node tr, int i) {
+  AnimeSchedule(Node tr, int i): super.fromJson(null) {
     this.weekday = i;
     // Fix for Sunday (anime1 puts Sunday first)
     if (weekday == 0) weekday = 7;
@@ -19,4 +19,16 @@ class AnimeSchedule extends AnimeBasic {
       this.link = GlobalData.domain + tr.firstChild.attributes['href'];
     }
   }
+
+  AnimeSchedule.fromJson(Map<String, dynamic> json) : 
+    weekday = json['weekday'],
+    super.fromJson(json);
+
+  Map<String, dynamic> toJson() =>
+  {
+    'weekday': weekday,
+    'name': name,
+    'link': link
+  };
+
 }

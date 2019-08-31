@@ -11,7 +11,7 @@ class AnimeInfo extends AnimeBasic {
   String season;
   String subtitle;
 
-  AnimeInfo(Node tr) {
+  AnimeInfo(Node tr) : super.fromJson(null) {
     final list = tr.nodes;
     try {
       this.name = list[0].text;
@@ -25,6 +25,23 @@ class AnimeInfo extends AnimeBasic {
       throw new Exception('AnimeInfo - Tr has been changed\n${e.toString()}');
     }
   }
+
+  AnimeInfo.fromJson(Map<String, dynamic> json) : 
+    episode = json['episode'],
+    year = json['year'],
+    season = json['season'],
+    subtitle = json['subtitle'],
+    super.fromJson(json);
+
+  Map<String, dynamic> toJson() =>
+  {
+    'subtitle': subtitle,
+    'season': season,
+    'year': year,
+    'episode': episode,
+    'name': name,
+    'link': link
+  };
 
   @override
   String toString() {

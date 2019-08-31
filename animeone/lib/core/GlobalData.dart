@@ -18,7 +18,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '0.0.2';
+  static final version = '0.0.3';
 
   // Relating to local data
   SharedPreferences prefs;
@@ -87,8 +87,7 @@ class GlobalData {
       prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
     } else {
-      // Load from storage
-    
+      // Load everything from storage
       List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
       savedAnimeList.forEach((json) {
         this._animeList.add(AnimeInfo.fromJson(json)); 

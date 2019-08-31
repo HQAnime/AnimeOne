@@ -58,7 +58,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget renderBody() {
     if (this.loading) {
       return Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(
+          strokeWidth: 8,
+        )
       );
     } else {
       return IndexedStack(

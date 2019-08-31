@@ -26,6 +26,18 @@ class AnimeInfo extends AnimeBasic {
     }
   }
 
+  @override
+  bool contains(String t) {
+    if (super.contains(t) || 
+        this.year.contains(t) ||
+        this.season.contains(t) ||
+        this.subtitle.contains(t)) {
+      return true;
+    }
+
+    return false;
+  }
+
   AnimeInfo.fromJson(Map<String, dynamic> json) : 
     episode = json['episode'],
     year = json['year'],

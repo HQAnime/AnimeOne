@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeSeason.dart';
@@ -18,10 +20,11 @@ class GlobalData {
   static final version = '0.0.2';
 
   // Relating to local data
-  final prefs = SharedPreferences.getInstance();
+  SharedPreferences prefs;
   static final lastUpdate = 'AnimeOne:LastUpdate';
-  static final animeList = 'AnimeOne:LastUpdate';
-  static final animeScedule = 'AnimeOne:LastUpdate';
+  static final animeList = 'AnimeOne:AnimeList';
+  static final animeScedule = 'AnimeOne:AnimeScedule';
+  static final scheduleIntroVide = 'AnimeOne:SceduleIntroVideo';
 
   // Relating to seasonal anime
   static final _season = new AnimeSeason(DateTime.now());
@@ -51,16 +54,53 @@ class GlobalData {
     return _instance;
   }
 
+  /// Encode anything into a json string
+  String _encode(Object obj) {
+    if (obj == null) return obj;
+    return jsonEncode(obj);
+  }
+
+  /// Decode json string
+  Object _decode(String json) {
+    if (json == null) return json;
+    return jsonDecode(json);
+  }
+
   /// Get data from anime1.me if necessary
   Future init() async {
-    // Load anime list
-    this._getAnimeList();
+    bool shouldUpdate = false;
 
-    // Load anime schedule
-    this._getAnimeScedule();
+    prefs = await SharedPreferences.getInstance();
+    DateTime update = _decode(prefs.getString(lastUpdate));
+    if (update == null) {
+      prefs.setString(lastUpdate, this._encode(DateTime.now().toString()));
+      shouldUpdate = true;
+    } else {
+      final diff = DateTime.now().difference(update);
+      // Check for update once a wekk
+      if (diff.inDays >= 7) {
+        shouldUpdate = true;
+      }
+    }
 
-    // Load recent anime 
-    this.getRecentAnime();
+    // Get new data and save them locally
+    if (shouldUpdate) {
+      // Load anime list
+      await this._getAnimeList();
+      prefs.setString(animeList, this._encode(this._animeList));
+      // Load anime schedule
+      await this._getAnimeScedule();
+      prefs.setString(animeScedule, this._encode(this._animeScheduleList));
+      prefs.setString(scheduleIntroVide, this._encode(this._introductory));
+    } else {
+      // Load from storage
+      this._animeList = this._decode(prefs.getString(animeList));
+      this._animeScheduleList = this._decode(prefs.getString(animeScedule));
+      this._introductory = this._decode(prefs.getString(scheduleIntroVide));
+    }
+
+    // Load recent anime, you always need to load this
+    await this.getRecentAnime();
   }
 
   Future _getAnimeList() async {

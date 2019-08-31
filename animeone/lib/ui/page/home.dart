@@ -31,42 +31,43 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: this.renderBody(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.new_releases),
+            title: Text('最新'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            title: Text('動畫列表'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            title: Text('時間表'),
+          ),
+        ],
+        currentIndex: selectedIndex,
+        onTap: onItemTapped,
+      ),
+    );
+  }
+
+  /// Loading or index stacked
+  Widget renderBody() {
     if (this.loading) {
-      // Simply show an empty view with a loading indicator
-      return Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+      return Center(
+        child: CircularProgressIndicator(),
       );
     } else {
-      // Load all tabs
-      return Scaffold(
-        body: IndexedStack(
-          index: selectedIndex,
-          children: [
-            Latest(),
-            AnimeList(),
-            Schedule(),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.new_releases),
-              title: Text('最新'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.list),
-              title: Text('動畫列表'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today),
-              title: Text('時間表'),
-            ),
-          ],
-          currentIndex: selectedIndex,
-          onTap: onItemTapped,
-        ),
+      return IndexedStack(
+        index: selectedIndex,
+        children: [
+          Latest(),
+          AnimeList(),
+          Schedule(),
+        ],
       );
     }
   }

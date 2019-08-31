@@ -23,6 +23,15 @@ class _LatestState extends State<Latest> {
   @override
   void initState() {
     super.initState();
+    this.loadRecentAnime();
+  }
+
+  /// Load or refresh latest anime
+  void loadRecentAnime() {
+    // Reset to loading
+    setState(() {
+      this.loading = true;
+    });
 
     this.parser = new AnimeRecentParser(GlobalData.domain + '留言板');
     this.parser.downloadHTML().then((d) {
@@ -39,11 +48,18 @@ class _LatestState extends State<Latest> {
     return Scaffold(
       appBar: AppBar(
         title: Text('最新動畫'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () => this.loadRecentAnime(),
+          )
+        ],
       ),
       body: Center(
         child: this.renderBody(),
       )
     );
+
   }
 
   Widget renderBody() {

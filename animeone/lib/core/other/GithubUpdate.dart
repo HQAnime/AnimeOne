@@ -29,7 +29,7 @@ class GithubUpdate {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('$version'),
+            title: Text('v$version'),
             content: Text(whatsnew),
             actions: <Widget>[
               FlatButton(

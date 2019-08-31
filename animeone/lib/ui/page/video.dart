@@ -12,7 +12,6 @@ class Video extends StatefulWidget {
   _VideoState createState() => _VideoState();
 
 }
-
 class _VideoState extends State<Video> {
 
   VideoPlayerController videoController;
@@ -28,7 +27,7 @@ class _VideoState extends State<Video> {
       aspectRatio: 16 / 9,
       autoPlay: true,
       errorBuilder: (context, msg) {
-        return Text('無法加載視頻，使用瀏覽器播放', style: TextStyle(color: Colors.white));
+        return Text('無法加載視頻\n使用瀏覽器播放', style: TextStyle(color: Colors.white));
       },
       looping: false,
     );
@@ -46,9 +45,18 @@ class _VideoState extends State<Video> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Chewie(
-          controller: chewie,
-        ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return Center(
+              child: SizedBox(
+                width: constraints.maxHeight,
+                child: Chewie(
+                  controller: chewie,
+                ),
+              )
+            );
+          }
+        )
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

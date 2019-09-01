@@ -98,7 +98,7 @@ class _AnimeState extends State<Anime> {
             this.renderSearch(),
             IconButton(
               icon: Icon(Icons.open_in_browser),
-              onPressed: () => launch(this.fullLink),
+              onPressed: () => launch(this.fullLink, forceWebView: true),
               tooltip: '用瀏覽器打開',
             )
           ],

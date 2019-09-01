@@ -148,7 +148,7 @@ class GlobalData {
   /// launch wikipedia page for anime
   void getWikipediaLink(String name) {
     final link = 'https://zh.wikipedia.org/w/index.php?search=$name';
-    launch(link);
+    launch(link, forceWebView: true);
   }
 
 }

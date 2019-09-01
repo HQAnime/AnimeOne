@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget renderBody() {
     if (this.error != '') {
       return Center(
-        child: Text('無法加載數據\n\n$error', textAlign: TextAlign.center)
+        child: Text('無法加載數據 >_<\n\n$error', textAlign: TextAlign.center)
       );
     } else if (this.loading) {
       return Center(

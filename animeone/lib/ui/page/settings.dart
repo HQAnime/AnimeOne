@@ -36,7 +36,7 @@ class Settings extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              launch('https://61.uy/d');
+              launch('https://github.com/HenryQuan/AnimeOne');
             },
             title: Text('軟件源代碼'),
             subtitle: Text('https://github.com/HenryQuan/AnimeOne'),

@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int selectedIndex = 0;
   bool loading = true;
+  String error = '';
 
   GlobalData global;
 
@@ -30,6 +31,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
       setState(() {
         loading = false;
+      });
+    }).catchError((e) {
+      setState(() {
+        error = e.toString();
       });
     });
   }
@@ -61,7 +66,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   /// Loading or index stacked
   Widget renderBody() {
-    if (this.loading) {
+    if (this.error != '') {
+      return Center(
+        child: Text('無法加載數據\n\n$error', textAlign: TextAlign.center)
+      );
+    } else if (this.loading) {
       return Center(
         child: CircularProgressIndicator()
       );

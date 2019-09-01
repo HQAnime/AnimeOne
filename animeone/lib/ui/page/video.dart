@@ -27,7 +27,7 @@ class _VideoState extends State<Video> {
       aspectRatio: 16 / 9,
       autoPlay: true,
       errorBuilder: (context, msg) {
-        return Text('無法加載視頻\n使用瀏覽器播放', style: TextStyle(color: Colors.white));
+        return Text('無法加載視頻\n使用瀏覽器播放\n\n$msg', style: TextStyle(color: Colors.white));
       },
       looping: false,
     );

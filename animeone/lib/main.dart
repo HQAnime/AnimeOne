@@ -13,11 +13,13 @@ class MyApp extends StatelessWidget {
     primarySwatch: Colors.pink
   );
 
+  final hour = DateTime.now().hour;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AnimeOne',
-      theme: darkTheme,
+      theme: hour > 17 ? darkTheme : lightTheme,
       home: HomePage(),
     );
   }

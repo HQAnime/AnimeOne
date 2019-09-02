@@ -147,7 +147,8 @@ class GlobalData {
 
   /// launch wikipedia page for anime
   void getWikipediaLink(String name) {
-    final link = 'https://zh.wikipedia.org/w/index.php?search=$name';
+    // Somehow I need to encode on IOS but not on Android
+    final link = Uri.encodeFull('https://zh.wikipedia.org/w/index.php?search=$name');
     launch(link, forceWebView: true);
   }
 

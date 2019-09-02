@@ -31,6 +31,18 @@ If you prefer watching anime with English subtitle, you might consider [AnimeGo]
 ## 下載安裝
 安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS則需要自己使用Xcode進行編譯。
 
+### Xcode如何編譯
+- 在電腦上安裝Flutter以及Xcode
+- 使用`flutter doctor`指令來檢查是否設置成功
+- 進入`animeone`文件夾（注意是小寫）
+- 使用`flutter build ios --release`獲得release包 （如果代碼沒有變化的話，只需要運行一次）
+- 進入Xcode打開ios文件夾下的`Runner.xcworkspace`
+- 在暫停按鈕旁邊選擇`RunnerRelease`
+- 點擊運行按鈕
+- 等一會兒
+- App打開
+- 每七天重複一次
+
 ## 支持
 - 給Repo一個星星
 - 上面的Sponsor按鈕

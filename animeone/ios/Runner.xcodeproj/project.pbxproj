@@ -89,7 +89,6 @@
 				F9C8F63A9C7D44E7826265A0 /* Pods-Runner.release.xcconfig */,
 				71D511F8634EBAE3A5AE92B5 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -393,6 +392,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.henryquan.github.animeone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -523,6 +523,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.henryquan.github.animeone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -547,6 +548,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.henryquan.github.animeone;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

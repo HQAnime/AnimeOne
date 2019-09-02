@@ -11,7 +11,7 @@ class VideoSourceParser extends AnimeParser {
 
     final sources = body.getElementsByTagName('source');
     if (sources.length > 0) {
-      // It has source
+      // It has a source tag
       videoSrc = sources.first.attributes['src']; 
     } else {
       // Use regex to parse source

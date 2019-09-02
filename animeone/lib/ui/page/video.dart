@@ -29,6 +29,7 @@ class _VideoState extends State<Video> {
     this.parser.downloadHTML().then((body) {
       String link = this.parser.parseHTML(body);
       if (link == null) {
+        // If parser fails to get the link, pop and use browser
         Navigator.pop(context);
         launch(widget.video.video);
         dispose();

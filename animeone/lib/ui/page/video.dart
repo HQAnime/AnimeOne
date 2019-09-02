@@ -1,6 +1,8 @@
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class Video extends StatefulWidget {
@@ -16,21 +18,37 @@ class _VideoState extends State<Video> {
 
   VideoPlayerController videoController;
   ChewieController chewie;
+  VideoSourceParser parser;
+  String downloadLink;
 
   @override
   void initState() {
     super.initState();
-    this.videoController = VideoPlayerController.network(widget.video.video + '.m3u8');
-    this.chewie = ChewieController(
-      videoPlayerController: videoController,
-      allowedScreenSleep: false,
-      aspectRatio: 16 / 9,
-      autoPlay: true,
-      errorBuilder: (context, msg) {
-        return Text('無法加載視頻\n使用瀏覽器播放\n\n$msg', style: TextStyle(color: Colors.white));
-      },
-      looping: false,
-    );
+
+    this.parser = new VideoSourceParser(widget.video.video);
+    this.parser.downloadHTML().then((body) {
+      String link = this.parser.parseHTML(body);
+      if (link == null) {
+        Navigator.pop(context);
+        launch(widget.video.video);
+        dispose();
+      } else {
+        this.downloadLink = link;
+        setState(() {
+          this.videoController = VideoPlayerController.network(link);
+          this.chewie = ChewieController(
+            videoPlayerController: videoController,
+            allowedScreenSleep: false,
+            aspectRatio: 16 / 9,
+            autoPlay: true,
+            errorBuilder: (context, msg) {
+              return Text('無法加載視頻\n使用瀏覽器播放\n\n$msg', style: TextStyle(color: Colors.white));
+            },
+            looping: false,
+          );
+        });
+      }
+    });
   }
 
   @override
@@ -45,18 +63,7 @@ class _VideoState extends State<Video> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return Center(
-              child: SizedBox(
-                width: constraints.maxHeight,
-                child: Chewie(
-                  controller: chewie,
-                ),
-              )
-            );
-          }
-        )
+        child: this.renderBody()
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -86,6 +93,25 @@ class _VideoState extends State<Video> {
         ),
       )
     );
+  }
+
+  renderBody() {
+    if (this.chewie != null) {
+      return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Center(
+            child: SizedBox(
+              width: constraints.maxHeight,
+              child: Chewie(
+                controller: chewie,
+              ),
+            )
+          );
+        }
+      );
+    } else {
+      return CircularProgressIndicator();
+    }
   }
   
 }

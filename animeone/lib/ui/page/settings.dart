@@ -42,6 +42,19 @@ class Settings extends StatelessWidget {
             subtitle: Text('https://github.com/HenryQuan/AnimeOne'),
           ),
           ListTile(
+            title: Text('開源許可證'),
+            subtitle: Text('查看所有開源許可證'),
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute<void>(
+                builder: (BuildContext context) => LicensePage(
+                  applicationName: 'AnimeOne',
+                  applicationVersion: GlobalData.version,
+                  applicationLegalese: '開源許可證',
+                )
+              ));
+            },
+          ),
+          ListTile(
             title: Text('軟件版本'),
             subtitle: Text(GlobalData.version),
           ),

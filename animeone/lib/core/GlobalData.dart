@@ -19,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '0.0.3';
+  static final version = '1.0.0';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
 
@@ -149,7 +149,7 @@ class GlobalData {
   void getWikipediaLink(String name) {
     // Somehow I need to encode on IOS but not on Android
     final link = Uri.encodeFull('https://zh.wikipedia.org/w/index.php?search=$name');
-    launch(link, forceWebView: true);
+    launch(link);
   }
 
 }

@@ -19,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '1.0.0';
+  static final version = '1.0.1';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
 
@@ -80,6 +80,8 @@ class GlobalData {
       final diff = DateTime.now().difference(DateTime.parse(update));
       // Check for update once a wekk
       if (diff.inDays >= 7) {
+        // Remember to save new date!
+        prefs.setString(lastUpdate, DateTime.now().toIso8601String());
         shouldUpdate = true;
       }
     }

@@ -1,4 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
@@ -15,9 +16,7 @@ class Settings extends StatelessWidget {
       body: Column(
         children: <Widget>[
           ListTile(
-            onTap: () {
-              launch('https://61.uy/d');
-            },
+            onTap: () => launch('https://61.uy/d'),
             title: Text('官方Discord伺服器'),
             subtitle: Text('https://61.uy/d'),
           ),
@@ -34,11 +33,11 @@ class Settings extends StatelessWidget {
               launch('https://github.com/HenryQuan/AnimeOne');
             },
             title: Text('軟件源代碼'),
-            subtitle: Text('https://github.com/HenryQuan/AnimeOne'),
+            subtitle: Text('源代碼在GitHub上開放，歡迎Pull Request'),
           ),
           ListTile(
             title: Text('開源許可證'),
-            subtitle: Text('查看所有開源許可證'),
+            subtitle: Text('查看所有的開源許可證'),
             onTap: () {
               Navigator.push(context, MaterialPageRoute<void>(
                 builder: (BuildContext context) => LicensePage(
@@ -55,7 +54,7 @@ class Settings extends StatelessWidget {
               launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]');
             },
             title: Text('電子郵件'),
-            subtitle: Text('聯係本軟件開發者'),
+            subtitle: Text('聯係本軟件的開發者'),
           ),
           ListTile(
             onTap: () {
@@ -66,10 +65,11 @@ class Settings extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Share.share(GlobalData.latestRelease);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Support()));
             },
             title: Text('支持開發'),
             subtitle: Text('特別喜歡本APP的話，可以支持一下'),
+            trailing: Icon(Icons.favorite, color: Colors.red),
           ),
           ListTile(
             title: Text('軟件版本'),

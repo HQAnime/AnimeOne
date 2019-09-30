@@ -28,13 +28,7 @@ class Settings extends StatelessWidget {
             title: Text('官方網站 - 關於'),
             subtitle: Text('官方網站的聯繫方式和捐款'),
           ),
-          ListTile(
-            onTap: () {
-              launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]');
-            },
-            title: Text('電子郵件'),
-            subtitle: Text('聯係本軟件開發者'),
-          ),
+          Divider(),
           ListTile(
             onTap: () {
               launch('https://github.com/HenryQuan/AnimeOne');
@@ -55,12 +49,27 @@ class Settings extends StatelessWidget {
               ));
             },
           ),
+          Divider(),
+          ListTile(
+            onTap: () {
+              launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]');
+            },
+            title: Text('電子郵件'),
+            subtitle: Text('聯係本軟件開發者'),
+          ),
           ListTile(
             onTap: () {
               Share.share(GlobalData.latestRelease);
             },
-            title: Text('分享APP'),
+            title: Text('分享軟件'),
             subtitle: Text('喜歡本APP的話，可以分享給朋友們'),
+          ),
+          ListTile(
+            onTap: () {
+              Share.share(GlobalData.latestRelease);
+            },
+            title: Text('支持開發'),
+            subtitle: Text('特別喜歡本APP的話，可以支持一下'),
           ),
           ListTile(
             title: Text('軟件版本'),

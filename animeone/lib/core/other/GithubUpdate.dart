@@ -26,12 +26,17 @@ class GithubUpdate {
     if (version.compareTo(GlobalData.version) > 0) {
       showDialog(
         context: context,
-        barrierDismissible: true,
+        // Prevent accidental dismiss
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('v$version'),
             content: Text(whatsnew),
             actions: <Widget>[
+              FlatButton(
+                child: Text('關閉'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
               FlatButton(
                 child: Text('立即下載'),
                 onPressed: () {

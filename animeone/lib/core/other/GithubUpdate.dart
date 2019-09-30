@@ -23,6 +23,11 @@ class GithubUpdate {
 
   /// Check if version is current and launch the link if so
   void checkUpdate(BuildContext context) {
+    // Only Android devices can download new apk
+    bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
+    String extraInfo = '';
+    if (isAndroid) extraInfo = '\n請重新編譯APP';
+
     if (version.compareTo(GlobalData.version) > 0) {
       showDialog(
         context: context,
@@ -31,19 +36,20 @@ class GithubUpdate {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('v$version'),
-            content: Text(whatsnew),
+            content: Text(whatsnew + extraInfo),
             actions: <Widget>[
               FlatButton(
                 child: Text('關閉'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              FlatButton(
+              // Render nothing for non-android devices
+              isAndroid ? FlatButton(
                 child: Text('立即下載'),
                 onPressed: () {
                   launch(link);
                   Navigator.of(context).pop();
                 },
-              ),
+              ) : SizedBox.shrink(),
             ],
           );
         },

@@ -19,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '1.0.1';
+  static final version = '1.0.2';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
 
@@ -77,12 +77,21 @@ class GlobalData {
       prefs.setString(lastUpdate, DateTime.now().toIso8601String());
       shouldUpdate = true;
     } else {
-      final diff = DateTime.now().difference(DateTime.parse(update));
-      // Check for update once a wekk
-      if (diff.inDays >= 7) {
-        // Remember to save new date!
-        prefs.setString(lastUpdate, DateTime.now().toIso8601String());
-        shouldUpdate = true;
+      final now = DateTime.now();
+      if (now.day == 1) {
+        // Update if today is 1st Jan/Apr/Jul/Oct
+        final newSeasonMonth = [1, 4, 7, 10];
+        if (newSeasonMonth.indexOf(now.month) > -1) {
+          shouldUpdate = true;
+        }
+      } else {
+        final diff = now.difference(DateTime.parse(update));
+        // Check for update once a wekk
+        if (diff.inDays >= 7) {
+          // Remember to save new date!
+          prefs.setString(lastUpdate, now.toIso8601String());
+          shouldUpdate = true;
+        }
       }
     }
 

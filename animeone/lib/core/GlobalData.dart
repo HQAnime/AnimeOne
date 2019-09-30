@@ -22,6 +22,7 @@ class GlobalData {
   static final version = '1.0.2';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
+  static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
   // Relating to local data
   SharedPreferences prefs;

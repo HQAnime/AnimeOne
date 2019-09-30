@@ -1,6 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
@@ -53,6 +54,13 @@ class Settings extends StatelessWidget {
                 )
               ));
             },
+          ),
+          ListTile(
+            onTap: () {
+              Share.share(GlobalData.latestRelease);
+            },
+            title: Text('分享APP'),
+            subtitle: Text('喜歡本APP的話，可以分享給朋友們'),
           ),
           ListTile(
             title: Text('軟件版本'),

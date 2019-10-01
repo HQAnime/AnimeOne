@@ -16,7 +16,11 @@ class AnimeSchedule extends AnimeBasic {
     // Same are empty
     if (tr.firstChild != null) {
       this.name = tr.firstChild.text;
-      this.link = GlobalData.domain + tr.firstChild.attributes['href'];
+      // They haven't put the link so be careful
+      String link = tr.firstChild.attributes['href'];
+      if (link != null) {
+        this.link = GlobalData.domain + link;
+      }
     }
   }
 

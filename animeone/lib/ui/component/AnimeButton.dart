@@ -15,7 +15,10 @@ class AnimeButton extends StatelessWidget {
       height: 48,
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: basic.link)));
+          // It might be null
+          if (basic.link != null) {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: basic.link)));
+          }
         },
         child: Align(
           alignment: Alignment.centerLeft,

@@ -101,13 +101,15 @@ class GlobalData {
       // Load anime list
       await this._getAnimeList();
       prefs.setString(animeList, jsonEncode(this._animeList));
+
+      // Check for update first to make sure you don't messed up auto update
+      await this._checkGithubUpdate();
+
       // Load anime schedule
       await this._getAnimeScedule();
       prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
 
-      // Check for update
-      await this._checkGithubUpdate();
     } else {
       // Load everything from storage
       List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));

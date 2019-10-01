@@ -83,6 +83,7 @@ class GlobalData {
         // Update if today is 1st Jan/Apr/Jul/Oct
         final newSeasonMonth = [1, 4, 7, 10];
         if (newSeasonMonth.indexOf(now.month) > -1) {
+          prefs.setString(lastUpdate, now.toIso8601String());
           shouldUpdate = true;
         }
       } else {
@@ -98,12 +99,12 @@ class GlobalData {
 
     // Get new data and save them locally
     if (shouldUpdate) {
+      // Check for update first to make sure you don't messed up auto update
+      await this._checkGithubUpdate();
+      
       // Load anime list
       await this._getAnimeList();
       prefs.setString(animeList, jsonEncode(this._animeList));
-
-      // Check for update first to make sure you don't messed up auto update
-      await this._checkGithubUpdate();
 
       // Load anime schedule
       await this._getAnimeScedule();

@@ -45,7 +45,7 @@ class _AnimeListState extends State<AnimeList> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.info_outline, color: Colors.pink),
+            icon: Icon(Icons.info_outline),
             tooltip: "關於AnimeOne",
             onPressed: () {
               // Go to information page

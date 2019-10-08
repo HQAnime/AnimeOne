@@ -27,7 +27,7 @@ class _AnimeListState extends State<AnimeList> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 8),
-              child: Icon(Icons.search),
+              child: Icon(Icons.search, size: 32),
             ),
             Expanded(
               child: TextField(

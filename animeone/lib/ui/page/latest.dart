@@ -50,6 +50,7 @@ class _LatestState extends State<Latest> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.refresh),
+            tooltip: '刷新最新動畫',
             onPressed: () => this.loadRecentAnime(),
           )
         ],

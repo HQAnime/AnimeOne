@@ -61,13 +61,23 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
           controller: controller,
           tabs: tabs
         ),
-        title: InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => Anime(link: global.getSeasonLink())
-            ));
-          },
-          child: Text(global.getSeasonName() + ' >'),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 8),
+          child: SizedBox.fromSize(
+            size: Size.fromWidth(200),
+            child: MaterialButton(
+              color: Colors.white,
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Anime(link: global.getSeasonLink(), seasonal: true)
+                ));
+              },
+              child: Text(
+                global.getSeasonName(),
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black87)
+              ),
+            ),
+          ),
         ),
         actions: <Widget>[
           IconButton(

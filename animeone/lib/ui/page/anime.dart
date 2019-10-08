@@ -5,7 +5,6 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// This class handles anime page
 /// - One episode
@@ -14,8 +13,9 @@ import 'package:url_launcher/url_launcher.dart';
 class Anime extends StatefulWidget {
   
   final String link;
+  final bool seasonal;
 
-  Anime({Key key, @required this.link}): super(key: key);
+  Anime({Key key, @required this.link, this.seasonal}): super(key: key);
 
   @override
   _AnimeState createState() => _AnimeState();
@@ -58,6 +58,7 @@ class _AnimeState extends State<Anime> {
       if (d == null) {
         // Stop loading more data
         this.hasMoreData = false;
+
         setState(() {
           this.canLoadMore = true;          
         });
@@ -68,6 +69,7 @@ class _AnimeState extends State<Anime> {
         } else {
           this.fullLink = widget.link;
         }
+
         setState(() {
           // Append more data
           this.entries.addAll(this.parser.parseHTML(d));
@@ -105,7 +107,7 @@ class _AnimeState extends State<Anime> {
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (this.title != '') {
+    if (this.title != '' && widget.seasonal == null) {
       return IconButton(
         icon: Icon(Icons.search),
         onPressed: () => global.getWikipediaLink(this.title),
@@ -138,8 +140,11 @@ class _AnimeState extends State<Anime> {
         builder: (BuildContext context, BoxConstraints constraints) {
           int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
           double imageWidth = constraints.maxWidth / count.toDouble();
+          // Adjust offset
+          double offset = 95;
+          if (widget.seasonal != null) offset = 125;
           // Calculat ratio
-          double ratio = imageWidth / (imageWidth / 1.777 + 90);
+          double ratio = imageWidth / (imageWidth / 1.777 + offset);
 
           int length = this.entries.length;
           return Stack(
@@ -151,7 +156,7 @@ class _AnimeState extends State<Anime> {
                 ),
                 itemCount: length,
                 itemBuilder: (context, index) {
-                  return AnimeEntryCard(entry: this.entries.elementAt(index));
+                  return AnimeEntryCard(entry: this.entries.elementAt(index), showEpisode: widget.seasonal == null ? false : true);
                 },
                 controller: this.controller,
               ),

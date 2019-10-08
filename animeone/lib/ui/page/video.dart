@@ -43,7 +43,11 @@ class _VideoState extends State<Video> {
             aspectRatio: 16 / 9,
             autoPlay: true,
             errorBuilder: (context, msg) {
-              return Text('無法加載視頻\n使用瀏覽器播放\n\n$msg', style: TextStyle(color: Colors.white));
+              return Text(
+                '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
+                style: TextStyle(color: Colors.white), 
+                textAlign: TextAlign.center
+              );
             },
             looping: false,
           );
@@ -76,20 +80,20 @@ class _VideoState extends State<Video> {
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            Expanded(
-              child: IconButton(
-                icon: Icon(Icons.file_download),
-                tooltip: '還不支持下載視頻',
-                onPressed: () {},
-              ),
-            ),
-            Expanded(
-              child: IconButton(
-                icon: Icon(Icons.launch),
-                tooltip: '使用瀏覽器觀看',
-                onPressed: () => widget.video.launchURL(),
-              ),
-            ),
+            // Expanded(
+            //   child: IconButton(
+            //     icon: Icon(Icons.file_download),
+            //     tooltip: '還不支持下載視頻',
+            //     onPressed: () {},
+            //   ),
+            // ),
+            // Expanded(
+            //   child: IconButton(
+            //     icon: Icon(Icons.launch),
+            //     tooltip: '使用瀏覽器觀看',
+            //     onPressed: () => widget.video.launchURL(),
+            //   ),
+            // ),
           ],
         ),
       )

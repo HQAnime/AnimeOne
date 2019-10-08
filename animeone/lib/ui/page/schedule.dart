@@ -63,8 +63,8 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
         ),
         title: Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 8),
-          child: SizedBox.fromSize(
-            size: Size.fromWidth(200),
+          child: FractionallySizedBox(
+            widthFactor: 0.618,
             child: MaterialButton(
               color: Colors.white,
               onPressed: () {

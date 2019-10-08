@@ -19,6 +19,9 @@ class _AnimeListState extends State<AnimeList> {
   List<AnimeInfo> list;
   final all = global.getAnimeList();
 
+  // Maybe in the future
+  final quickFilters = ['劇場版', '連載中', 'OVA'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +61,7 @@ class _AnimeListState extends State<AnimeList> {
       ),
       body: Container(
         child: this.renderBody(),
-      )
+      ),
     );
   }
 
@@ -88,7 +91,7 @@ class _AnimeListState extends State<AnimeList> {
   void _filterList(String t) {
     // At least two characters
     if (t == '') this._resetList();
-    else if (t.length > 1) {
+    else if (t.length > 0) {
       setState(() {
         this.list = this.all.where((e) {
           return e.contains(t);

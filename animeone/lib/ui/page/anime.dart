@@ -95,12 +95,7 @@ class _AnimeState extends State<Anime> {
         appBar: AppBar(
           title: Text(this.title),
           actions: <Widget>[
-            this.renderSearch(),
-            IconButton(
-              icon: Icon(Icons.open_in_browser),
-              onPressed: () => launch(this.fullLink),
-              tooltip: '用瀏覽器打開',
-            )
+            this.renderSearch()
           ],
         ),
         body: this.renderBody()

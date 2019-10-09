@@ -13,7 +13,7 @@ class Settings extends StatelessWidget {
       appBar: AppBar(
         title: Text('關於AnimeOne'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           ListTile(
             onTap: () => launch('https://61.uy/d'),

@@ -12,7 +12,7 @@ class Support extends StatelessWidget {
       appBar: AppBar(
         title: Text('支持AnimeOne'),
       ),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           ListTile(
             title: Text('PayPal'),

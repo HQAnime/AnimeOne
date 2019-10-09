@@ -59,8 +59,16 @@ class _AnimeListState extends State<AnimeList> {
           ),
         ],
       ),
-      body: Container(
-        child: this.renderBody(),
+      body: Column(
+        children: [
+          SizedBox.fromSize(
+            size: Size.fromHeight(32),
+            child: this.renderQuickFilter(),
+          ),
+          Expanded(
+            child: this.renderBody(),
+          ),
+        ]
       ),
     );
   }
@@ -69,6 +77,18 @@ class _AnimeListState extends State<AnimeList> {
   void initState() {
     super.initState();
     this._resetList();
+  }
+
+  /// render a list of quick filter
+  Widget renderQuickFilter() {
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: <Widget>[
+        Text('Hello'),
+        Text('Hello'),
+        Text('Hello'),
+      ]
+    );
   }
 
   /// render body and deal with 0 result

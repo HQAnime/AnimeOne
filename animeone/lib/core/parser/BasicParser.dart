@@ -4,13 +4,13 @@ import 'package:http/http.dart' as http;
 
 /// This is the parent of all parsers and it handles 404 not found. 
 /// This is also the termination point of next page or back to home
-abstract class AnimeParser {
+abstract class BasicParser {
 
   String _link;
   /// Get the link for current page
   String getLink() => this._link;
 
-  AnimeParser(String link) {
+  BasicParser(String link) {
     this._link = link;
   }
 

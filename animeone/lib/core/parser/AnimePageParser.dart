@@ -1,5 +1,5 @@
 import 'package:animeone/core/anime/AnimeEntry.dart';
-import 'package:animeone/core/parser/AnimeParser.dart';
+import 'package:animeone/core/parser/BasicParser.dart';
 import 'package:html/dom.dart';
 
 /// This class gets all episodes of an anime or just one episode
@@ -8,7 +8,7 @@ import 'package:html/dom.dart';
 /// 
 /// The long link can up to 14 episodes and the short one only has one. 
 /// They have a link to all episodes or next episode
-class AnimePageParser extends AnimeParser {
+class AnimePageParser extends BasicParser {
   
   AnimePageParser(String link) : super(link);
 

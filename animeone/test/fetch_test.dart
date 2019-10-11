@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Test my classes related to fetching data from Internet and see if they work as intended
 void main() {
-  group("test AnimeParser", () {
+  group("test BasicParser", () {
     test('basic functionality', () async {
       // Try parsing home page
       final parser = new AnimeListParser('https://anime1.me/');

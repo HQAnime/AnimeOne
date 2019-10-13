@@ -2,10 +2,10 @@
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:html/dom.dart';
 
-import 'AnimeParser.dart';
+import 'BasicParser.dart';
 
 /// This class get recent anime
-class AnimeRecentParser extends AnimeParser {
+class AnimeRecentParser extends BasicParser {
   
   AnimeRecentParser(String link) : super(link);
 

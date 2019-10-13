@@ -1,10 +1,10 @@
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
-import 'package:animeone/core/parser/AnimeParser.dart';
+import 'package:animeone/core/parser/BasicParser.dart';
 import 'package:html/dom.dart';
 
 /// This class get anime schedule and possibly an introductory video
-class AnimeScheduleParser extends AnimeParser {
+class AnimeScheduleParser extends BasicParser {
   
   AnimeScheduleParser(String link) : super(link);
 

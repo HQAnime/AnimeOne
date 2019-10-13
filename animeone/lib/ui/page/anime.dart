@@ -138,7 +138,7 @@ class _AnimeState extends State<Anime> {
     } else {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          int count = max(min((constraints.maxWidth / 300).floor(), 7), 1);
+          int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
           double imageWidth = constraints.maxWidth / count.toDouble();
           // Adjust offset
           double offset = 90;

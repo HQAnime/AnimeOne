@@ -1,5 +1,5 @@
 # Parser
-- AnimeParser
+- BasicParser
    - AnimeListParser
    - AnimeScheduleParser
    - AnimePageParser

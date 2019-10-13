@@ -1,7 +1,7 @@
-import 'package:animeone/core/parser/AnimeParser.dart';
+import 'package:animeone/core/parser/BasicParser.dart';
 import 'package:html/dom.dart';
 
-class VideoSourceParser extends AnimeParser {
+class VideoSourceParser extends BasicParser {
   
   VideoSourceParser(String link) : super(link);
   

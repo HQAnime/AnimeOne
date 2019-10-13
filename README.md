@@ -22,7 +22,7 @@ If you prefer watching anime with English subtitle, you might consider [AnimeGo]
 這是因爲動畫列表以及新番時間表并不會每天都更新，
 所以APP也沒有理由每次開打都重新下載一遍數據。
 
-## 截圖
+## 截圖 (1.0.3版本之前)
 <div>
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/1.jpg" width="180px" height="320px" />
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/2.jpg" width="180px" height="320px" />

@@ -1,3 +1,3 @@
-{"version": "1.0.2", 
- "link": "https://github.com/HenryQuan/AnimeOne/releases/download/1.0.2/app-release.apk", 
- "new": "- 修復數據加載\n- 增加分享與支持APP\n- 改善界面互動"}
+{"version": "1.0.3", 
+ "link": "https://github.com/HenryQuan/AnimeOne/releases/download/1.0.3/app-release.apk", 
+ "new": "- 改善無障礙功能 (Accessibility)\n- 改善快速搜索\n- 修復BUG"}

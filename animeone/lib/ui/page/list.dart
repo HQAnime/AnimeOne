@@ -20,7 +20,12 @@ class _AnimeListState extends State<AnimeList> {
   final all = global.getAnimeList();
 
   // Maybe in the future
-  final quickFilters = ['劇場版', '連載中', 'OVA', 'OAD'];
+  final quickFilters = [
+    '連載中', 
+    '劇場版', 
+    'OVA', 
+    'OAD'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -92,17 +97,23 @@ class _AnimeListState extends State<AnimeList> {
               final filter = this.quickFilters[index];
               return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
-                child: ActionChip(
-                  label: Text(filter), 
-                  onPressed: () => this._filterList(filter),
-                ),
+                child: Tooltip(
+                  message: '搜索 $filter 動畫',
+                  child: ActionChip(
+                    label: Text(filter), 
+                    onPressed: () => this._filterList(filter),
+                  ),
+                )
               );
             }
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () => this._resetList(),
+        Tooltip(
+          message: '重設整個列表',
+          child: IconButton(
+            icon: Icon(Icons.close),
+            onPressed: () => this._resetList(),
+          ),
         )
       ],
     );

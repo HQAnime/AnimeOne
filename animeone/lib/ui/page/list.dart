@@ -20,7 +20,7 @@ class _AnimeListState extends State<AnimeList> {
   final all = global.getAnimeList();
 
   // Maybe in the future
-  final quickFilters = ['劇場版', '連載中', 'OVA'];
+  final quickFilters = ['劇場版', '連載中', 'OVA', 'OAD'];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _AnimeListState extends State<AnimeList> {
       body: Column(
         children: [
           SizedBox.fromSize(
-            size: Size.fromHeight(32),
+            size: Size.fromHeight(48),
             child: this.renderQuickFilter(),
           ),
           Expanded(
@@ -81,13 +81,27 @@ class _AnimeListState extends State<AnimeList> {
 
   /// render a list of quick filter
   Widget renderQuickFilter() {
-    return ListView(
-      scrollDirection: Axis.horizontal,
+    return Row(
       children: <Widget>[
-        Text('Hello'),
-        Text('Hello'),
-        Text('Hello'),
-      ]
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: this.quickFilters.length,
+            itemBuilder: (context, index) {
+              // Get current filter
+              final filter = this.quickFilters[index];
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                child: ActionChip(
+                  label: Text(filter), 
+                  onPressed: () => this._filterList(filter),
+                ),
+              );
+            }
+          ),
+        ),
+        Text('Hello')
+      ],
     );
   }
 

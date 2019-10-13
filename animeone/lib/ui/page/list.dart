@@ -100,7 +100,10 @@ class _AnimeListState extends State<AnimeList> {
             }
           ),
         ),
-        Text('Hello')
+        IconButton(
+          icon: Icon(Icons.close),
+          onPressed: () => this._resetList(),
+        )
       ],
     );
   }

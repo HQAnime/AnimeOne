@@ -1,10 +1,10 @@
 # AnimeOne
 <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/design/logo/Logo.png" width="200px" height="200px" />
 
-AnimeOne不是官方APP。這是我自己用Flutter寫的三方APP。我的第一個React Native的APP是用來看動漫的，第一個Flutter的APP也是用來看動漫的。これは運命かもしれない。我剛剛學習了[COMP2511](https://www.handbook.unsw.edu.au/undergraduate/courses/2019/COMP2511/)，正好可以用來練手。
-Flutter非常的好用，比起React Native我覺得最大的進步就是編譯方面。我沒有一次因爲編譯不通過而苦惱。大多數時間可以專心寫代碼而且調試也非常的棒。可惜APP應該是無法上架應用商店的，我之後也許會和站長交流一下。
+**AnimeOne不是官方APP**。這是我使用Flutter製作的第三方APP。第一個React Native的APP是用來看動漫的，第一個Flutter的APP也是用來看動漫的。これは運命かもしれない。不久之前，我學習了[COMP2511](https://www.handbook.unsw.edu.au/undergraduate/courses/2019/COMP2511/)，正好用這個App來練手。
+總的來講，Flutter非常好用，比起React Native我覺得最大的進步就是編譯方面。我沒有一次會因爲編譯不通過而苦惱。大多數時間可以專心寫代碼而且調試也非常棒。但是APP應該是無法上架應用商店的，我之後也許會和站長交流一下。
 
-If you prefer watching anime with English subtitle, you might consider [AnimeGo](https://github.com/HenryQuan/AnimeGo).
+If you prefer watching anime with English subtitles, you might consider [AnimeGo](https://github.com/HenryQuan/AnimeGo).
 
 ## 功能
 - 最新動畫
@@ -17,10 +17,17 @@ If you prefer watching anime with English subtitle, you might consider [AnimeGo]
 - 自動夜間模式
 
 ## 關於
-目前版本已經可以正常使用。
-有一些數據會到本地本地（每七天會更新一次數據）。
+目前版本已經可以正常使用，有任何問題的話可以使用issues。
+有一些數據會到本地本地（每七天會更新一次數據，1月/4月/7月/10月1日會自動更新）。
 這是因爲動畫列表以及新番時間表并不會每天都更新，
 所以APP也沒有理由每次開打都重新下載一遍數據。
+
+## **安卓權限**
+AnimeOne不需要任何權限（除網絡連接）
+
+## **隱私條款**
+AnimeOne不會收集用戶的任何數據，
+GitHub會紀錄APK下載次數以及頁面觀看次數和Clone次數。
 
 ## 截圖 (1.0.3版本之前)
 <div>
@@ -32,7 +39,7 @@ If you prefer watching anime with English subtitle, you might consider [AnimeGo]
 </div>
 
 ## 下載安裝
-安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS則需要自己使用Xcode進行編譯。
+安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS則需要自己使用Xcode進行編譯（也後也許會提供IPA包）。
 
 ### Xcode如何編譯
 - 在電腦上安裝Flutter以及Xcode

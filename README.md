@@ -39,7 +39,7 @@ GitHub會紀錄APK下載次數以及頁面觀看次數和Clone次數。
 </div>
 
 ## 下載安裝
-安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS則需要自己使用Xcode進行編譯（也後也許會提供IPA包）。
+安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS則需要自己使用Xcode進行編譯（以後也許會提供IPA包）。
 
 ### Xcode如何編譯
 - 在電腦上安裝Flutter以及Xcode

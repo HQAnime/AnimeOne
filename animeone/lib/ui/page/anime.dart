@@ -142,7 +142,7 @@ class _AnimeState extends State<Anime> {
             int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
             double imageWidth = constraints.maxWidth / count.toDouble();
             // Adjust offset
-            double offset = 90;
+            double offset = 93;
             if (widget.seasonal != null) offset = 125;
             // Calculat ratio
             double ratio = imageWidth / (imageWidth / 1.777 + offset);

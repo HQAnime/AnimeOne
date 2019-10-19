@@ -26,7 +26,7 @@ class GithubUpdate {
     // Only Android devices can download new apk
     bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
     String extraInfo = '';
-    if (isAndroid) extraInfo = '\n請重新編譯APP';
+    if (!isAndroid) extraInfo = '\n請重新編譯APP';
 
     if (version.compareTo(GlobalData.version) > 0) {
       showDialog(

@@ -167,4 +167,9 @@ class GlobalData {
     launch(link);
   }
 
+  /// get a string like https://youtube.com/watch?v=xxx
+  String getYouTubeLink(String vid) {
+    return 'https://youtube.com/watch?v=' + vid;
+  }
+
 }

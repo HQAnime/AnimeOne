@@ -52,15 +52,19 @@ class _AnimeListState extends State<AnimeList> {
           ],
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.info_outline),
-            tooltip: "關於AnimeOne",
-            onPressed: () {
-              // Go to information page
-              Navigator.push(context, new MaterialPageRoute(
-                builder: (context) => Settings()
-              ));
-            },
+          Ink.image(
+            image: AssetImage('lib/assets/icon/logo.png'),
+            width: 64,
+            height: 64,
+            child: InkWell(
+              onTap: () {
+                // Go to information page
+                Navigator.push(context, new MaterialPageRoute(
+                  builder: (context) => Settings()
+                ));
+              },
+              child: null,
+            ),
           ),
         ],
       ),

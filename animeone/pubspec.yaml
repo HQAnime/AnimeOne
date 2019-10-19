@@ -11,7 +11,7 @@ description: An unofficial app for anime1.me
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.3+1
+version: 1.0.4+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -25,12 +25,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   
   http: ^0.12.0+2
-  html: ^0.14.0+2
-  url_launcher: ^5.1.2
-  chewie: ^0.9.7
-  video_player: ^0.10.2
-  shared_preferences: ^0.5.3+4
-  share: ^0.6.2+1
+  html: ^0.14.0+3
+  url_launcher: ^5.2.3
+  chewie: ^0.9.8+1
+  video_player: ^0.10.2+5
+  shared_preferences: ^0.5.3+5
+  share: ^0.6.2+4
 
 dev_dependencies:
   flutter_test:

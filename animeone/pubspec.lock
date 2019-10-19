@@ -28,7 +28,7 @@ packages:
       name: chewie
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.7"
+    version: "0.9.8+1"
   collection:
     dependency: transitive
     description:
@@ -66,7 +66,7 @@ packages:
       name: html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.14.0+2"
+    version: "0.14.0+3"
   http:
     dependency: "direct main"
     description:
@@ -136,14 +136,14 @@ packages:
       name: share
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2+1"
+    version: "0.6.2+4"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.3+4"
+    version: "0.5.3+5"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -204,7 +204,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.2"
+    version: "5.2.3"
   vector_math:
     dependency: transitive
     description:
@@ -218,7 +218,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.2"
+    version: "0.10.2+5"
 sdks:
-  dart: ">=2.2.2 <3.0.0"
-  flutter: ">=1.6.0 <2.0.0"
+  dart: ">=2.3.0 <3.0.0"
+  flutter: ">=1.9.1+hotfix.4 <2.0.0"

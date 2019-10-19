@@ -66,11 +66,13 @@ class _LatestState extends State<Latest> {
     if (loading) {
       return CircularProgressIndicator();
     } else {
-      return ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return AnimeRecentTile(recent: list.elementAt(index));
-        },
+      return SafeArea(
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (context, index) {
+            return AnimeRecentTile(recent: list.elementAt(index));
+          },
+        ),
       );
     }
   }

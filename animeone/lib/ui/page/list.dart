@@ -56,15 +56,18 @@ class _AnimeListState extends State<AnimeList> {
             image: AssetImage('lib/assets/icon/logo.png'),
             width: 64,
             height: 64,
-            child: InkWell(
-              onTap: () {
-                // Go to information page
-                Navigator.push(context, new MaterialPageRoute(
-                  builder: (context) => Settings()
-                ));
-              },
-              child: null,
-            ),
+            child: Tooltip(
+              message: '關於AnimeOne',
+              child: InkWell(
+                onTap: () {
+                  // Go to information page
+                  Navigator.push(context, new MaterialPageRoute(
+                    builder: (context) => Settings()
+                  ));
+                },
+                child: null,
+              ),
+            )
           ),
         ],
       ),
@@ -90,36 +93,38 @@ class _AnimeListState extends State<AnimeList> {
 
   /// render a list of quick filter
   Widget renderQuickFilter() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: this.quickFilters.length,
-            itemBuilder: (context, index) {
-              // Get current filter
-              final filter = this.quickFilters[index];
-              return Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
-                child: Tooltip(
-                  message: '搜索 $filter 動畫',
-                  child: ActionChip(
-                    label: Text(filter), 
-                    onPressed: () => this._filterList(filter),
-                  ),
-                )
-              );
-            }
+    return SafeArea(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: this.quickFilters.length,
+              itemBuilder: (context, index) {
+                // Get current filter
+                final filter = this.quickFilters[index];
+                return Padding(
+                  padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                  child: Tooltip(
+                    message: '搜索 $filter 動畫',
+                    child: ActionChip(
+                      label: Text(filter), 
+                      onPressed: () => this._filterList(filter),
+                    ),
+                  )
+                );
+              }
+            ),
           ),
-        ),
-        Tooltip(
-          message: '重設整個列表',
-          child: IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () => this._resetList(),
-          ),
-        )
-      ],
+          Tooltip(
+            message: '重設整個列表',
+            child: IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => this._resetList(),
+            ),
+          )
+        ],
+      ),
     );
   }
 

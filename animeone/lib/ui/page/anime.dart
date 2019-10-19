@@ -136,34 +136,36 @@ class _AnimeState extends State<Anime> {
         }
       );
     } else {
-      return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
-          double imageWidth = constraints.maxWidth / count.toDouble();
-          // Adjust offset
-          double offset = 90;
-          if (widget.seasonal != null) offset = 125;
-          // Calculat ratio
-          double ratio = imageWidth / (imageWidth / 1.777 + offset);
+      return SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
+            double imageWidth = constraints.maxWidth / count.toDouble();
+            // Adjust offset
+            double offset = 90;
+            if (widget.seasonal != null) offset = 125;
+            // Calculat ratio
+            double ratio = imageWidth / (imageWidth / 1.777 + offset);
 
-          int length = this.entries.length;
-          return Stack(
-            children: <Widget>[
-              GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: count,
-                  childAspectRatio: ratio
+            int length = this.entries.length;
+            return Stack(
+              children: <Widget>[
+                GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: count,
+                    childAspectRatio: ratio
+                  ),
+                  itemCount: length,
+                  itemBuilder: (context, index) {
+                    return AnimeEntryCard(entry: this.entries.elementAt(index), showEpisode: widget.seasonal == null ? false : true);
+                  },
+                  controller: this.controller,
                 ),
-                itemCount: length,
-                itemBuilder: (context, index) {
-                  return AnimeEntryCard(entry: this.entries.elementAt(index), showEpisode: widget.seasonal == null ? false : true);
-                },
-                controller: this.controller,
-              ),
-              this.loadDivider()
-            ],
-          );
-        },
+                this.loadDivider()
+              ],
+            );
+          },
+        ),
       );
     }
   }

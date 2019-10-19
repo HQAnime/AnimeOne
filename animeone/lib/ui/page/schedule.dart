@@ -125,12 +125,14 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     for (int i = 0; i < this.tabs.length; i++) {
       final list = this.schedules.where((s) => s.weekday == i);
       children.add(
-        ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (c, i) {
-            final item = list.elementAt(i);
-            return AnimeScheduleTile(schedule: item);
-          },
+        SafeArea(
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (c, i) {
+              final item = list.elementAt(i);
+              return AnimeScheduleTile(schedule: item);
+            },
+          ),
         )
       );
     }

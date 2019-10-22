@@ -72,6 +72,11 @@ class Settings extends StatelessWidget {
             trailing: Icon(Icons.favorite, color: Colors.red),
           ),
           ListTile(
+            title: Text('數據更新加速器'),
+            subtitle: Text('如果數據最近沒有更新，點擊這裏提前數據更新'),
+            onTap: () => GlobalData().updateLastUpdate(),
+          ),
+          ListTile(
             title: Text('軟件版本'),
             subtitle: Text(GlobalData.version),
           ),

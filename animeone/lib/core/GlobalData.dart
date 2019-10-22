@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
@@ -23,6 +24,9 @@ class GlobalData {
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
+
+  /// If update date is boosted
+  bool hadBoosted = false;
 
   // Relating to local data
   SharedPreferences prefs;
@@ -175,6 +179,23 @@ class GlobalData {
   /// send an email to HenryQuan
   void sendEmail(String extra) {
     launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra');
+  }
+
+  /// update last updated date to 6 days ago so tomorrow data will be updated
+  void updateLastUpdate() async {
+    if (!this.hadBoosted) {
+      prefs = await SharedPreferences.getInstance();
+      final update = prefs.getString(lastUpdate);
+      final now = DateTime.now();
+      final diff = now.difference(DateTime.parse(update)).inDays;
+      // only 3, 4 and 5 days -> 1 day
+      if (diff > 2 && diff < 6) {
+        // the date should be 6 days ago
+        final booster = now.subtract(Duration(days: 6));
+        prefs.setString(lastUpdate, booster.toIso8601String());
+        this.hadBoosted = true;
+      }
+    }
   }
 
 }

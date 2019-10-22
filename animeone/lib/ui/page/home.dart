@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
@@ -12,7 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  int selectedIndex = 0;
+  // Randomly choose a tab
+  int selectedIndex = Random().nextInt(3);
   bool loading = true;
   String error = '';
 
@@ -21,6 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
 
     this.global = new GlobalData();
     this.global.init().then((_) {

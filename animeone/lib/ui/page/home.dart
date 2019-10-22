@@ -28,6 +28,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
 
     this.global = new GlobalData();
+    this._loadData();
+  }
+
+  void _loadData() {
+    // Reset everything
+    setState(() {
+      loading = true;
+      error = '';
+    });
+
     this.global.init().then((_) {
       final update = global.getGithubUpdate();
       if (update != null) {
@@ -71,15 +81,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   /// Loading or index stacked
   Widget renderBody() {
-    if (this.error == '') {
-      return Column(
+    if (this.error != '') {
+      return Stack(
         children: <Widget>[
-          Expanded(
-            child: Center(
-              child: Text('AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error', textAlign: TextAlign.center),
+          Center(
+            child: Text(
+            'AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error',
+            textAlign: TextAlign.center
             ),
           ),
-          EmailButton(message: error),
+          Positioned(
+            right: 16,
+            top: 36,
+            child: IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () => this._loadData()
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: EmailButton(message: error),
+          )
         ],
       );
     } else if (this.loading) {

@@ -172,4 +172,9 @@ class GlobalData {
     return 'https://youtube.com/watch?v=' + vid;
   }
 
+  /// send an email to HenryQuan
+  void sendEmail(String extra) {
+    launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra');
+  }
+
 }

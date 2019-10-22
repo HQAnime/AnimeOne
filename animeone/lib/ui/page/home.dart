@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/ui/component/EmailButton.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
@@ -70,9 +71,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   /// Loading or index stacked
   Widget renderBody() {
-    if (this.error != '') {
-      return Center(
-        child: Text('無法加載數據 >_<\n\n$error', textAlign: TextAlign.center)
+    if (this.error == '') {
+      return Column(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: Text('AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error', textAlign: TextAlign.center),
+            ),
+          ),
+          EmailButton(message: error),
+        ],
       );
     } else if (this.loading) {
       return Center(

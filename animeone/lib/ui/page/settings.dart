@@ -51,7 +51,7 @@ class Settings extends StatelessWidget {
           Divider(),
           ListTile(
             onTap: () {
-              launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]');
+              GlobalData().sendEmail('');
             },
             title: Text('電子郵件'),
             subtitle: Text('聯係本軟件的開發者'),

@@ -93,10 +93,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Positioned(
             right: 16,
             top: 36,
-            child: IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () => this._loadData()
-            ),
+            child: Tooltip(
+              message: '重新加載數據',
+              child: IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () => this._loadData()
+              ),
+            )
           ),
           Align(
             alignment: Alignment.bottomCenter,

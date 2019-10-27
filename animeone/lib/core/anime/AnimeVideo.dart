@@ -8,7 +8,8 @@ class AnimeVideo {
   String video;
   int image;
 
-  final _covers = [5, 6, 7, 8, 9];
+  // From 3 -> 9
+  final _covers = List.generate(7, (i) => i + 3);
 
   AnimeVideo(String video) {
     this.video = video;

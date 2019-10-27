@@ -27,10 +27,17 @@ class AnimeEntry extends AnimeBasic {
         Element video = iframe[0];
         this.videoLink = new AnimeVideo(video.attributes['src']);
       } else {
-        // It is a YouTube preview
-        Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-        final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
-        this.videoLink = new AnimeVideo(link);
+        // Get loadView button
+        var loadBtn = e.getElementsByClassName('loadvideo');
+        if (loadBtn.length > 0) {
+          Element btn = loadBtn[0];
+          this.videoLink = new AnimeVideo(btn.attributes['data-src']);
+        } else {
+          // It is a YouTube preview
+          Element youtube = e.getElementsByClassName('youtubePlayer')[0];
+          final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
+          this.videoLink = new AnimeVideo(link);
+        }
       }
 
       // Episode links

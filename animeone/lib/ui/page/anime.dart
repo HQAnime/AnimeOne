@@ -34,6 +34,9 @@ class _AnimeState extends State<Anime> {
   bool hasMoreData = true;
   bool canLoadMore = true;
 
+  // Catch error messages
+  String hasError = '';
+
   String title;
   AnimePageParser parser;
   List<AnimeEntry> entries = [];
@@ -78,6 +81,11 @@ class _AnimeState extends State<Anime> {
           this.canLoadMore = true;
         });
       }
+    }).catchError((error) {
+      // Something is broken
+      setState(() {
+        this.hasError = error;
+      });
     });
   }
 
@@ -86,10 +94,19 @@ class _AnimeState extends State<Anime> {
     if (loading) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('加載中...')
+          title: Text('努力加載中...')
         ),
         body: Center(
           child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (hasError != '') {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('加载失败 QAQ')
+        ),
+        body: Center(
+          child: Text('錯誤信息：' + this.hasError)
         ),
       );
     } else {

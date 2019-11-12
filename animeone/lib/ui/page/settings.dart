@@ -36,6 +36,13 @@ class Settings extends StatelessWidget {
             subtitle: Text('源代碼在GitHub上開放，歡迎Pull Request'),
           ),
           ListTile(
+            onTap: () {
+              launch('https://github.com/HenryQuan/AnimeOne/blob/master/README.md#%E9%9A%B1%E7%A7%81%E6%A2%9D%E6%AC%BE');
+            },
+            title: Text('隱私條款'),
+            subtitle: Text('AnimeOne不會收集用戶的任何數據'),
+          ),
+          ListTile(
             title: Text('開源許可證'),
             subtitle: Text('查看所有的開源許可證'),
             onTap: () {
@@ -72,9 +79,13 @@ class Settings extends StatelessWidget {
             trailing: Icon(Icons.favorite, color: Colors.red),
           ),
           ListTile(
-            title: Text('數據更新加速器'),
+            title: Text('檢查軟件更新'),
             subtitle: Text('如果數據最近沒有更新，點擊這裏提前數據更新'),
-            onTap: () => GlobalData().updateLastUpdate(),
+            onTap: () {
+              GlobalData().checkGithubUpdate().then((r) {
+                GlobalData().getGithubUpdate().checkUpdate(context);
+              });
+            },
           ),
           ListTile(
             title: Text('軟件版本'),

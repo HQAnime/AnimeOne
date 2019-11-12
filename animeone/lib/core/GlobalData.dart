@@ -25,8 +25,8 @@ class GlobalData {
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
-  /// If update date is boosted
-  bool hadBoosted = false;
+  /// if update has been checked
+  bool hasUpdate = false;
 
   // Relating to local data
   SharedPreferences prefs;
@@ -104,7 +104,7 @@ class GlobalData {
     // Get new data and save them locally
     if (shouldUpdate) {
       // Check for update first to make sure you don't messed up auto update
-      await this._checkGithubUpdate();
+      await this.checkGithubUpdate();
       
       // Load anime list
       await this._getAnimeList();
@@ -135,10 +135,13 @@ class GlobalData {
     await this.getRecentAnime();
   }
 
-  Future _checkGithubUpdate() async {
-    final parser = new GithubParser(githubRelease);
-    Document body = await parser.downloadHTML();
-    this._update = parser.parseHTML(body);
+  Future checkGithubUpdate() async {
+    if (!this.hasUpdate) {
+      final parser = new GithubParser(githubRelease);
+      Document body = await parser.downloadHTML();
+      this._update = parser.parseHTML(body);
+      this.hasUpdate = true;
+    }
   }
 
   Future _getAnimeList() async {
@@ -179,23 +182,6 @@ class GlobalData {
   /// send an email to HenryQuan
   void sendEmail(String extra) {
     launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra');
-  }
-
-  /// update last updated date to 6 days ago so tomorrow data will be updated
-  void updateLastUpdate() async {
-    if (!this.hadBoosted) {
-      prefs = await SharedPreferences.getInstance();
-      final update = prefs.getString(lastUpdate);
-      final now = DateTime.now();
-      final diff = now.difference(DateTime.parse(update)).inDays;
-      // only 3, 4 and 5 days -> 1 day
-      if (diff > 2 && diff < 6) {
-        // the date should be 6 days ago
-        final booster = now.subtract(Duration(days: 6));
-        prefs.setString(lastUpdate, booster.toIso8601String());
-        this.hadBoosted = true;
-      }
-    }
   }
 
 }

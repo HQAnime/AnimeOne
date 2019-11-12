@@ -34,7 +34,7 @@ class AnimeCoverImage extends StatelessWidget {
                   },
                   iconSize: constraint.maxWidth / 6,
                   icon: Icon(Icons.play_circle_outline),
-                  color: Colors.white,
+                  color: Colors.pink,
                 ),
               )
             ]

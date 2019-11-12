@@ -28,7 +28,7 @@ class AnimeEntryCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Text(this.entry.postDate, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
+            child: Text(this.entry.getEnhancedDate(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
           ),
           AnimeCoverImage(video: this.entry.getVideo()),
           Row(

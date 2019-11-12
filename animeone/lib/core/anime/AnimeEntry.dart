@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
@@ -53,6 +55,35 @@ class AnimeEntry extends AnimeBasic {
     } catch (e) {
       throw new Exception('AnimeEntry - Format changed\n${e.toString()}');
     }
+  }
+
+  /// Date + how many days ago
+  /// - 一天前
+  /// 一周前
+  /// - 一個月前
+  /// - 一年之前
+  String getEnhancedDate() {
+    String enhanced = '';
+
+    var date = DateTime.parse(this.postDate);
+    int dayDiff = date.difference(DateTime.now()).inDays.abs();
+    log(dayDiff.toString());
+
+    if (dayDiff == 0) {
+      enhanced = '今天';
+    } else if (dayDiff == 1) {
+      enhanced = '昨天';
+    } else if (dayDiff < 7) {
+      enhanced = '${dayDiff}天前';
+    } else if (dayDiff < 28) {
+      enhanced = '${(dayDiff / 7).round()}周前';
+    } else if (dayDiff < 365) {
+      enhanced = '${(dayDiff / 30).toStringAsFixed(1)}個月前'; // is this a good idea??
+    } else {
+      enhanced = '${(dayDiff / 365).toStringAsFixed(1)}年前';
+    }
+
+    return this.postDate + ' | $enhanced';
   }
 
   /// If next episode is avaible

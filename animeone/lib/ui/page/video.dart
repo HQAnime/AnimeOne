@@ -76,13 +76,16 @@ class _VideoState extends State<Video> {
       DeviceOrientation.landscapeRight,
     ]);
 
+    this.disposeThis();
+    super.dispose();
+  }
+
+  void disposeThis() {
     if (this.chewie != null) {
       // It might not be used
       this.videoController.dispose();
       this.chewie.dispose();
     }
-
-    super.dispose();
   }
 
   @override
@@ -109,17 +112,17 @@ class _VideoState extends State<Video> {
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
-              Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.launch),
-                  tooltip: '使用瀏覽器觀看',
-                  onPressed: () {
-                    this.setState(() {
-                      this.canUseChewie = false;
-                    });
-                  },
-                ),
-              ),
+              // Expanded(
+              //   child: IconButton(
+              //     icon: Icon(Icons.launch),
+              //     tooltip: '使用瀏覽器觀看',
+              //     onPressed: () {
+              //       this.setState(() {
+              //         this.canUseChewie = false;
+              //       });
+              //     },
+              //   ),
+              // ),
             ],
           ),
         )
@@ -128,14 +131,17 @@ class _VideoState extends State<Video> {
       // Load webpage in app
       return Padding(
         padding: const EdgeInsets.only(top: 24),
-        child: WebviewScaffold(
-          url: widget.video.video,
-          withZoom: false,
-          withLocalStorage: true,
-          hidden: true,
-          initialChild: Container(
-            color: Colors.black,
-            child: this.renderIndicator()
+        child: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: WebviewScaffold(
+            url: widget.video.video,
+            withZoom: false,
+            withLocalStorage: true,
+            hidden: true,
+            initialChild: Container(
+              color: Colors.black,
+              child: this.renderIndicator()
+            ),
           ),
         ),
       );

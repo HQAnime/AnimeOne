@@ -87,7 +87,7 @@ class Settings extends StatelessWidget {
                   subtitle: Text('如果數據最近沒有更新，點擊這裏提前數據更新'),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {
-                      GlobalData().getGithubUpdate().checkUpdate(context);
+                      GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
                   },
                 ),

@@ -22,18 +22,18 @@ class GithubUpdate {
   };
 
   /// Check if version is current and launch the link if so
-  void checkUpdate(BuildContext context) {
+  void checkUpdate(BuildContext context, {bool showAlertWhenNoUpdate = false}) {
     // Only Android devices can download new apk
     bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
     String extraInfo = '';
     if (!isAndroid) extraInfo = '\n請重新編譯APP';
 
-    showDialog(
-      context: context,
-      // Prevent accidental dismiss
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        if (version.compareTo(GlobalData.version) > 0) {
+    if (version.compareTo(GlobalData.version) > 0) {
+      showDialog(
+        context: context,
+        // Prevent accidental dismiss
+        barrierDismissible: false,
+        builder: (BuildContext context) {
           // Has update now
           return AlertDialog(
             title: Text('v$version'),
@@ -53,9 +53,17 @@ class GithubUpdate {
               ) : SizedBox.shrink(),
             ],
           );
-        } else {
+        },
+      );
+    } else if (showAlertWhenNoUpdate) {
+      // This should only shown in settings
+      showDialog(
+        context: context,
+        // Prevent accidental dismiss
+        barrierDismissible: false,
+        builder: (BuildContext context) {
           // No update
-            return AlertDialog(
+          return AlertDialog(
             title: Text('v$version'),
             content: Text('沒有發現更新，目前已經是最新版本'),
             actions: <Widget>[
@@ -65,9 +73,9 @@ class GithubUpdate {
               ),
             ],
           );
-        }
-      },
-    );
+        },
+      );
+    }
   }
 
 }

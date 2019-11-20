@@ -28,46 +28,46 @@ class GithubUpdate {
     String extraInfo = '';
     if (!isAndroid) extraInfo = '\n請重新編譯APP';
 
-      showDialog(
-        context: context,
-        // Prevent accidental dismiss
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          if (version.compareTo(GlobalData.version) > 0) {
-            // Has update now
+    showDialog(
+      context: context,
+      // Prevent accidental dismiss
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        if (version.compareTo(GlobalData.version) > 0) {
+          // Has update now
+          return AlertDialog(
+            title: Text('v$version'),
+            content: Text(whatsnew + extraInfo),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('關閉'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              // Render nothing for non-android devices
+              isAndroid ? FlatButton(
+                child: Text('立即下載'),
+                onPressed: () {
+                  launch(link);
+                  Navigator.of(context).pop();
+                },
+              ) : SizedBox.shrink(),
+            ],
+          );
+        } else {
+          // No update
             return AlertDialog(
-              title: Text('v$version'),
-              content: Text(whatsnew + extraInfo),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('關閉'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-                // Render nothing for non-android devices
-                isAndroid ? FlatButton(
-                  child: Text('立即下載'),
-                  onPressed: () {
-                    launch(link);
-                    Navigator.of(context).pop();
-                  },
-                ) : SizedBox.shrink(),
-              ],
-            );
-          } else {
-            // No update
-             return AlertDialog(
-              title: Text('v$version'),
-              content: Text('沒有發現更新，目前已經是最新版本'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('關閉'),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            );
-          }
-        },
-      );
+            title: Text('v$version'),
+            content: Text('沒有發現更新，目前已經是最新版本'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('關閉'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        }
+      },
+    );
   }
 
 }

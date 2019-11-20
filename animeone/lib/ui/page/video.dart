@@ -68,12 +68,6 @@ class _VideoState extends State<Video> {
 
   @override
   void dispose() {
-    if (this.chewie != null) {
-      // It might not be used
-      this.videoController.dispose();
-      this.chewie.dispose();
-    }
-
     // Reset rotation
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -81,6 +75,12 @@ class _VideoState extends State<Video> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+
+    if (this.chewie != null) {
+      // It might not be used
+      this.videoController.dispose();
+      this.chewie.dispose();
+    }
 
     super.dispose();
   }
@@ -109,20 +109,17 @@ class _VideoState extends State<Video> {
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
-              // Expanded(
-              //   child: IconButton(
-              //     icon: Icon(Icons.file_download),
-              //     tooltip: '還不支持下載視頻',
-              //     onPressed: () {},
-              //   ),
-              // ),
-              // Expanded(
-              //   child: IconButton(
-              //     icon: Icon(Icons.launch),
-              //     tooltip: '使用瀏覽器觀看',
-              //     onPressed: () => widget.video.launchURL(),
-              //   ),
-              // ),
+              Expanded(
+                child: IconButton(
+                  icon: Icon(Icons.launch),
+                  tooltip: '使用瀏覽器觀看',
+                  onPressed: () {
+                    this.setState(() {
+                      this.canUseChewie = false;
+                    });
+                  },
+                ),
+              ),
             ],
           ),
         )
@@ -130,7 +127,7 @@ class _VideoState extends State<Video> {
     } else {
       // Load webpage in app
       return Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 24),
         child: WebviewScaffold(
           url: widget.video.video,
           withZoom: false,
@@ -138,9 +135,7 @@ class _VideoState extends State<Video> {
           hidden: true,
           initialChild: Container(
             color: Colors.black,
-            child: Center(
-              child: Text('加载中。。。'),
-            ),
+            child: this.renderIndicator()
           ),
         ),
       );
@@ -162,8 +157,14 @@ class _VideoState extends State<Video> {
         }
       );
     } else {
-      return CircularProgressIndicator();
+      return this.renderIndicator();
     }
+  }
+
+  renderIndicator() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
   }
   
 }

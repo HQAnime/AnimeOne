@@ -20,7 +20,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '1.0.4';
+  static final version = '1.0.5';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';

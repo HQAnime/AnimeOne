@@ -4,7 +4,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:video_player/video_player.dart';
 
 class Video extends StatefulWidget {
@@ -34,6 +33,8 @@ class _VideoState extends State<Video> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    // Fullscreen mode
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
     this.parser = new VideoSourceParser(widget.video.video);
     this.parser.downloadHTML().then((body) {
@@ -75,6 +76,8 @@ class _VideoState extends State<Video> {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+    // Reset UI overlay
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
     this.disposeThis();
     super.dispose();
@@ -99,50 +102,42 @@ class _VideoState extends State<Video> {
       // Use the player
       return Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: this.renderBody()
-        ),
-        bottomNavigationBar: BottomAppBar(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: IconButton(
-                  icon: Icon(Icons.close),
-                  tooltip: '關閉視頻',
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              // Expanded(
-              //   child: IconButton(
-              //     icon: Icon(Icons.launch),
-              //     tooltip: '使用瀏覽器觀看',
-              //     onPressed: () {
-              //       this.setState(() {
-              //         this.canUseChewie = false;
-              //       });
-              //     },
-              //   ),
-              // ),
-            ],
-          ),
-        )
+        body: this.renderBody(),
+        // bottomNavigationBar: BottomAppBar(
+        //   child: Row(
+        //     children: <Widget>[
+        //       Expanded(
+        //         child: IconButton(
+        //           icon: Icon(Icons.close),
+        //           tooltip: '關閉視頻',
+        //           onPressed: () => Navigator.pop(context),
+        //         ),
+        //       ),
+        //       Expanded(
+        //         child: IconButton(
+        //           icon: Icon(Icons.launch),
+        //           tooltip: '使用瀏覽器觀看',
+        //           onPressed: () {
+        //             this.setState(() {
+        //               this.canUseChewie = false;
+        //             });
+        //           },
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // )
       );
     } else {
       // Load webpage in app
-      return Padding(
-        padding: const EdgeInsets.only(top: 24),
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: WebviewScaffold(
-            url: widget.video.video,
-            withZoom: false,
-            withLocalStorage: true,
-            hidden: true,
-            initialChild: Container(
-              color: Colors.black,
-              child: this.renderIndicator()
-            ),
-          ),
+      return WebviewScaffold(
+        url: widget.video.video,
+        withZoom: false,
+        withLocalStorage: true,
+        hidden: true,
+        initialChild: Container(
+          color: Colors.black,
+          child: this.renderIndicator()
         ),
       );
     }
@@ -150,17 +145,10 @@ class _VideoState extends State<Video> {
 
   renderBody() {
     if (this.chewie != null) {
-      return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Center(
-            child: SizedBox(
-              width: constraints.maxHeight,
-              child: Chewie(
-                controller: chewie,
-              ),
-            )
-          );
-        }
+      return SizedBox.expand(
+        child: Chewie(
+          controller: chewie,
+        ),
       );
     } else {
       return this.renderIndicator();

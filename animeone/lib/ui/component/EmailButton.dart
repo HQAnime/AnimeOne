@@ -24,11 +24,11 @@ class EmailButton extends StatelessWidget {
                 content: Text('請不要重複發送多個報告！'),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('發送'),
+                    child: Text('發送郵件📧'),
                     onPressed: () => GlobalData().sendEmail(message),
                   ),
                   FlatButton(
-                    child: Text('取消'),
+                    child: Text('取消❌'),
                     onPressed: () => Navigator.pop(context),
                   )
                 ],

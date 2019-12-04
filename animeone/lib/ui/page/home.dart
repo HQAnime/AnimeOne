@@ -85,10 +85,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return Stack(
         children: <Widget>[
           Center(
-            child: Text(
-            'AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error',
-            textAlign: TextAlign.center
-            ),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error',
+                  textAlign: TextAlign.center
+                ),
+                FlatButton(
+                  child: Text('檢查更新'),
+                  onPressed: () {
+                    GlobalData().checkGithubUpdate().then((_) {
+                      GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
+                    });
+                  },
+                )
+              ],
+            )
           ),
           Positioned(
             right: 16,

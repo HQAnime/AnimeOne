@@ -14,7 +14,28 @@ class EmailButton extends StatelessWidget {
         color: Theme.of(context).accentColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
         onPressed: () {
-          GlobalData().sendEmail(message);
+          // Just to make sure the user doesn't send multiple emails
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('關於發送報告'),
+                content: Text('請不要重複發送多個報告！'),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('發送'),
+                    onPressed: () => GlobalData().sendEmail(message),
+                  ),
+                  FlatButton(
+                    child: Text('取消'),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                ],
+              );
+            }
+          );
+          
         },
         child: Text('發送報告'),
       )

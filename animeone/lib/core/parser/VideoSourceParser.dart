@@ -4,13 +4,6 @@ import 'package:html/dom.dart';
 class VideoSourceParser extends BasicParser {
   
   VideoSourceParser(String link) : super(link);
-
-  @override
-  Future<Document> downloadHTML() {
-    // Don't parse YouTube
-    if (this.getLink().contains('youtube.com')) return Future.value(null);
-    else return super.downloadHTML();
-  }
   
   @override
   String parseHTML(Document body) {

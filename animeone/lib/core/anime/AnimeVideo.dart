@@ -30,4 +30,9 @@ class AnimeVideo {
     launch(this.video);
   }
 
+  /// Check if this is a youtube link
+  bool isYoutube() {
+    return this.video.contains('youtube');
+  }
+
 }

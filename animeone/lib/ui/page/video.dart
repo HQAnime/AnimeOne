@@ -28,43 +28,48 @@ class _VideoState extends State<Video> {
   void initState() {
     super.initState();
 
-    // Landscape only
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    // Fullscreen mode
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    if (widget.video.isYoutube()) {
+      // Just use broswer for youtube links
+      widget.video.launchURL();
+    } else {
+      // Landscape only
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+      // Fullscreen mode
+      SystemChrome.setEnabledSystemUIOverlays([]);
 
-    this.parser = new VideoSourceParser(widget.video.video);
-    this.parser.downloadHTML().then((body) {
-      String link = this.parser.parseHTML(body);
-      if (link != null) {
-        this.downloadLink = link;
+      this.parser = new VideoSourceParser(widget.video.video);
+      this.parser.downloadHTML().then((body) {
+        String link = this.parser.parseHTML(body);
+        if (link != null) {
+          this.downloadLink = link;
+          setState(() {
+            this.canUseChewie = true;
+            this.videoController = VideoPlayerController.network(link);
+            this.chewie = ChewieController(
+              videoPlayerController: videoController,
+              allowedScreenSleep: false,
+              aspectRatio: 16 / 9,
+              autoPlay: true,
+              errorBuilder: (context, msg) {
+                return Text(
+                  '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
+                  style: TextStyle(color: Colors.white), 
+                  textAlign: TextAlign.center
+                );
+              },
+              looping: false,
+            );
+          });
+        }
+
         setState(() {
-          this.canUseChewie = true;
-          this.videoController = VideoPlayerController.network(link);
-          this.chewie = ChewieController(
-            videoPlayerController: videoController,
-            allowedScreenSleep: false,
-            aspectRatio: 16 / 9,
-            autoPlay: true,
-            errorBuilder: (context, msg) {
-              return Text(
-                '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
-                style: TextStyle(color: Colors.white), 
-                textAlign: TextAlign.center
-              );
-            },
-            looping: false,
-          );
+          this.isLoading = false;
         });
-      }
-
-      setState(() {
-        this.isLoading = false;
       });
-    });
+    }
   }
 
   @override

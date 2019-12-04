@@ -84,16 +84,12 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   title: Text('檢查軟件更新'),
-                  subtitle: Text('如果數據最近沒有更新，點擊這裏提前數據更新'),
+                  subtitle: Text(GlobalData.version),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {
                       GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
                   },
-                ),
-                ListTile(
-                  title: Text('軟件版本'),
-                  subtitle: Text(GlobalData.version),
                 ),
               ],
             ),

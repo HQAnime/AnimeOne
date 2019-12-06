@@ -6,6 +6,7 @@ import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -86,19 +87,53 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         children: <Widget>[
           Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'AnimeOne無法加載數據 >_<\n請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題也有可能是APP的問題）\n\n$error',
-                  textAlign: TextAlign.center
+                  '無法加載數據 :(',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline,
+                ),
+                Text(
+                  '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox.fromSize(size: Size.fromHeight(24)),
+                Text(
+                  '錯誤消息!',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '$error',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+                SizedBox.fromSize(size: Size.fromHeight(24)),
+                Text(
+                  '那現在怎麽辦？',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline,
                 ),
                 FlatButton(
-                  child: Text('檢查更新'),
+                  child: Text('使用瀏覽器打開 Anime1.me'),
+                  onPressed: () => launch(GlobalData.domain),
+                ),
+                Text('或者',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                FlatButton(
+                  child: Text('檢查 APP 是否有更新'),
                   onPressed: () {
                     GlobalData().checkGithubUpdate().then((_) {
                       GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
                   },
-                )
+                ),
               ],
             )
           ),

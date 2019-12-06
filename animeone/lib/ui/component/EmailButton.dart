@@ -11,7 +11,6 @@ class EmailButton extends StatelessWidget {
     return FractionallySizedBox(
       widthFactor: 0.618,
       child: RaisedButton(
-        color: Theme.of(context).accentColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
         onPressed: () {
           // Just to make sure the user doesn't send multiple emails
@@ -21,14 +20,14 @@ class EmailButton extends StatelessWidget {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: Text('關於發送報告'),
-                content: Text('請不要重複發送多個報告！'),
+                content: Text('請先嘗試重新啓動APP，如果問題依然存在，再發送郵件。報告只會包括錯誤信息，請不要重複發送多個報告！'),
                 actions: <Widget>[
                   FlatButton(
-                    child: Text('發送郵件📧'),
+                    child: Text('發送郵件'),
                     onPressed: () => GlobalData().sendEmail(message),
                   ),
                   FlatButton(
-                    child: Text('取消❌'),
+                    child: Text('取消'),
                     onPressed: () => Navigator.pop(context),
                   )
                 ],

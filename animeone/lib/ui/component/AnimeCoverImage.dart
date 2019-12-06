@@ -30,7 +30,11 @@ class AnimeCoverImage extends StatelessWidget {
                 child: IconButton(
                   onPressed: () {
                     // video.launchURL();
-                    Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: this.video)));
+                    if (video.isYoutube()) {
+                      video.launchURL();
+                    } else {
+                      Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: this.video)));
+                    }
                   },
                   iconSize: constraint.maxWidth / 6,
                   icon: Icon(Icons.play_circle_outline),

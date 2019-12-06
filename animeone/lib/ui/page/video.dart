@@ -28,20 +28,16 @@ class _VideoState extends State<Video> {
   void initState() {
     super.initState();
 
-    if (widget.video.isYoutube()) {
-      // Just use broswer for youtube links
-      widget.video.launchURL();
-    } else {
-      // Landscape only
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      // Fullscreen mode
-      SystemChrome.setEnabledSystemUIOverlays([]);
+    // Landscape only
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+    // Fullscreen mode
+    SystemChrome.setEnabledSystemUIOverlays([]);
 
-      this.parser = new VideoSourceParser(widget.video.video);
-      this.parser.downloadHTML().then((body) {
+    this.parser = new VideoSourceParser(widget.video.video);
+    this.parser.downloadHTML().then((body) {
         String link = this.parser.parseHTML(body);
         if (link != null) {
           this.downloadLink = link;
@@ -69,7 +65,6 @@ class _VideoState extends State<Video> {
           this.isLoading = false;
         });
       });
-    }
   }
 
   @override

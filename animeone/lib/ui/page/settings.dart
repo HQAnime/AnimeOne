@@ -83,7 +83,7 @@ class Settings extends StatelessWidget {
                   subtitle: Text('喜歡本APP的話，可以分享給朋友們'),
                 ),
                 ListTile(
-                  title: Text('檢查軟件更新'),
+                  title: Text('軟件更新'),
                   subtitle: Text(GlobalData.version),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {

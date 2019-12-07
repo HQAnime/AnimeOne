@@ -1,3 +1,3 @@
-{"version": "1.0.5", 
- "link": "https://github.com/HenryQuan/AnimeOne/releases/download/1.0.5/app-release.apk", 
- "new": "- 播放按鈕變成粉色\n- 增加檢查更新按鈕\n- 增加隱私條款\n- 改善日期顯示\n- 播放視頻時自動橫屏\n- 在APP内播放視頻\n"}
+{"version": "1.0.6", 
+ "link": "https://github.com/HenryQuan/AnimeOne/releases/download/1.0.6/app-release.apk", 
+ "new": "- 優化加載失敗界面\n- 改善檢查更新的文字描述\n- 視頻自動進入全屏模式\n- 更好的觀看體驗"}

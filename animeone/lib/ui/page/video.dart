@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:chewie/chewie.dart';
@@ -103,30 +105,7 @@ class _VideoState extends State<Video> {
       return Scaffold(
         backgroundColor: Colors.black,
         body: this.renderBody(),
-        // bottomNavigationBar: BottomAppBar(
-        //   child: Row(
-        //     children: <Widget>[
-        //       Expanded(
-        //         child: IconButton(
-        //           icon: Icon(Icons.close),
-        //           tooltip: '關閉視頻',
-        //           onPressed: () => Navigator.pop(context),
-        //         ),
-        //       ),
-        //       Expanded(
-        //         child: IconButton(
-        //           icon: Icon(Icons.launch),
-        //           tooltip: '使用瀏覽器觀看',
-        //           onPressed: () {
-        //             this.setState(() {
-        //               this.canUseChewie = false;
-        //             });
-        //           },
-        //         ),
-        //       ),
-        //     ],
-        //   ),
-        // )
+        bottomNavigationBar: this.renderClose(),
       );
     } else {
       // Load webpage in app
@@ -139,7 +118,30 @@ class _VideoState extends State<Video> {
           color: Colors.black,
           child: this.renderIndicator()
         ),
+        bottomNavigationBar: this.renderClose(),
       );
+    }
+  }
+
+  /// Only render a close button for IOS
+  renderClose() {
+    if (Platform.isIOS) {
+      return BottomAppBar(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: IconButton(
+                icon: Icon(Icons.close),
+                tooltip: '關閉視頻',
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // return nothing
+      return SizedBox.shrink();
     }
   }
 

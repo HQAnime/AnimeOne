@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // Randomly choose a tab
-  int selectedIndex = Random().nextInt(3);
+  int selectedIndex = 0;
   bool loading = true;
   String error = '';
 

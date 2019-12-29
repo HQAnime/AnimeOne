@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';

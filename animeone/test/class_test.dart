@@ -62,6 +62,11 @@ void main() {
     test('1.1.0 > 1.0.1', () {
       expect('1.1.0'.compareTo('1.0.1') > 0, isTrue);
     });
+
+    test('1.1.10 > 1.1.9', () {
+      // This doesn't work... so avoid 10 or just use other methods
+      expect('1.1.10'.compareTo('1.1.9') > 0, isFalse);
+    });
   });
 
   group('Update Test', () {

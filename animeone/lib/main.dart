@@ -15,7 +15,9 @@ class MyApp extends StatelessWidget {
     primarySwatch: Colors.pink,
   );
 
-  final useDark = DateTime.now().hour > 17;
+  static final _hour = DateTime.now().hour;
+  // From 6pm to 6am for dark mode
+  final useDark = _hour > 17 || _hour < 7;
 
   @override
   Widget build(BuildContext context) {

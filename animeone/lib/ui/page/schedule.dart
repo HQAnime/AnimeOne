@@ -136,7 +136,13 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
         )
       );
     }
-    return children;
+
+    // return something else if children is empty
+    if (children.length == 0) {
+      return [Text('沒有發現任何數據 >_<')];
+    } else {
+      return children;
+    }
   }
 
 }

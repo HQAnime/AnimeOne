@@ -115,6 +115,10 @@ class GlobalData {
       prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
 
     } else {
+      // if anime list has been loaded but somehow, it failed
+      // you need to reset the list so that it won't have duplicates
+      this._resetList();
+
       // Load everything from storage
       List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
       savedAnimeList.forEach((json) {
@@ -132,6 +136,11 @@ class GlobalData {
 
     // Load recent anime, you always need to load this
     await this.getRecentAnime();
+  }
+
+  void _resetList() {
+    this._animeList = [];
+    this._animeScheduleList = [];
   }
 
   Future checkGithubUpdate() async {

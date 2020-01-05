@@ -24,7 +24,11 @@ class _AnimeListState extends State<AnimeList> {
     '連載中', 
     '劇場版', 
     'OVA', 
-    'OAD'
+    'OAD',
+    '春',
+    '夏',
+    '秋',
+    '冬',
   ];
 
   @override

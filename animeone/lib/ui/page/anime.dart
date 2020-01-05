@@ -37,7 +37,7 @@ class _AnimeState extends State<Anime> {
   // Catch error messages
   String hasError = '';
 
-  String title;
+  String title = '加載失敗了...';
   AnimePageParser parser;
   List<AnimeEntry> entries = [];
   ScrollController controller;
@@ -63,7 +63,8 @@ class _AnimeState extends State<Anime> {
         this.hasMoreData = false;
 
         setState(() {
-          this.canLoadMore = true;          
+          this.canLoadMore = true;
+          this.loading = false;
         });
       } else {
         // Category also contains cat so you need to make it longer
@@ -139,7 +140,7 @@ class _AnimeState extends State<Anime> {
   Widget renderBody() {
     if (this.entries.length == 0) {
       return Center(
-        child: Text('未知錯誤 >_<')
+        child: Text('未知錯誤 >_<\n應該是頁面不存在吧', textAlign: TextAlign.center)
       );
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
@@ -200,7 +201,7 @@ class _AnimeState extends State<Anime> {
 
   /// Load more anime here
   void loadMore() {
-    if (controller.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData && !loading) {
+    if (controller.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData) {
       if (canLoadMore) {
         this.page += 1;
         this._getEntry();

@@ -18,7 +18,6 @@ class AnimePageParser extends BasicParser {
 
     final elements = body.getElementsByClassName("hentry");
     elements.forEach((e) => list.add(new AnimeEntry(e)));
-
     return list;
   }
 

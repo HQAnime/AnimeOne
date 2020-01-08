@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   void _loadData() {
     // Reset everything
-    setState(() {
+    setState(() { 
       loading = true;
       error = '';
     });

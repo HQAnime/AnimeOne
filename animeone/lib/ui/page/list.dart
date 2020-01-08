@@ -20,15 +20,11 @@ class _AnimeListState extends State<AnimeList> {
   final all = global.getAnimeList();
 
   // Maybe in the future
-  final quickFilters = [
+  List<String> quickFilters = [
     '連載中', 
     '劇場版', 
     'OVA', 
-    'OAD',
-    '春',
-    '夏',
-    '秋',
-    '冬',
+    'OAD'
   ];
 
   @override

@@ -18,6 +18,16 @@ class AnimeButton extends StatelessWidget {
           // It might be null
           if (basic.link != null) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: basic.link)));
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                // Has update now
+                return AlertDialog(
+                  content: Text('動畫還沒有更新第一集 >_<', textAlign: TextAlign.center),
+                );
+              },
+            );
           }
         },
         child: Align(

@@ -19,8 +19,24 @@ class AnimeSeason {
     return '${GlobalData.domain}category/$this'.replaceFirst('新番', '');
   }
 
-  @override
-  String toString() {
+  /// some preset filters
+  List<String> getQuickFilters() {
+    List<String> filters = [
+      '連載中', 
+      '劇場版', 
+      'OVA', 
+      'OAD'
+    ];
+
+    // Add recent 4 seasons
+    for (int i = 0; i < 4; i++) {
+      
+    }
+
+    return filters;
+  }
+
+  List<int> _getYearAndSeason() {
     int year = this._date.year;
     int month = this._date.month;
 
@@ -30,7 +46,14 @@ class AnimeSeason {
     else if (month < 10) season = 2;
     else season = 3;
 
-    return '${year}年${this._seasons[season]}新番';
+    return [year, season];
+  }
+
+  @override
+  String toString() {
+    var yas = this._getYearAndSeason();
+
+    return '${yas[0]}年${this._seasons[yas[1]]}新番';
   }
 
 }

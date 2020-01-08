@@ -112,11 +112,22 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
           )
         ]
       ),
-      body: TabBarView(
+      body: this.renderBody(),
+    );
+  }
+
+  /// Render body depending on whether there are data
+  Widget renderBody() {
+    if (this.schedules.length > 0) {
+      return TabBarView(
         controller: controller,
         children: this.renderSchedule()
-      ),
-    );
+      );
+    } else {
+      return Center(
+        child: Text('竟然沒有數據 (´;ω;`)'),
+      );
+    }
   }
 
   /// Render schedule to different days
@@ -137,12 +148,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
       );
     }
 
-    // return something else if children is empty
-    if (children.length == 0) {
-      return [Text('沒有發現任何數據 >_<')];
-    } else {
-      return children;
-    }
+    return children;
   }
 
 }

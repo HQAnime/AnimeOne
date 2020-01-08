@@ -65,6 +65,11 @@ class _LatestState extends State<Latest> {
   Widget renderBody() {
     if (loading) {
       return CircularProgressIndicator();
+    } else if (list.length == 0) {
+      // If somehow we cannot get recent anime
+      return Center(
+        child: Text('讀取竟然失敗 -_-'),
+      );
     } else {
       return SafeArea(
         child: ListView.builder(

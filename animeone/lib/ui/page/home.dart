@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-
     this.global = new GlobalData();
     this._loadData();
   }

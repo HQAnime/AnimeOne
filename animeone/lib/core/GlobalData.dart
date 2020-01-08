@@ -170,7 +170,7 @@ class GlobalData {
 
   /// Load recent anime
   Future getRecentAnime() async {
-    this._recentParser = new AnimeRecentParser(GlobalData.domain + '留言板');
+    this._recentParser = new AnimeRecentParser(GlobalData.domain + '關於');
     final body = await this._recentParser.downloadHTML();
     this._recentList = this._recentParser.parseHTML(body);
   }

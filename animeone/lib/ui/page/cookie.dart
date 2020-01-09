@@ -1,6 +1,8 @@
+import 'dart:async';
+
 import 'package:animeone/core/GlobalData.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class CookiePage extends StatefulWidget {
   CookiePage({Key key}) : super(key: key);
@@ -10,31 +12,34 @@ class CookiePage extends StatefulWidget {
 }
 
 class _CookiePageState extends State<CookiePage> {
-  final webview = FlutterWebviewPlugin();
-
+  final Completer<WebViewController> _controller = Completer<WebViewController>();
+  WebViewController c;
+      
   @override
   Widget build(BuildContext context) {
-    webview.onUrlChanged.listen((s) async {
-      print(s);
-      var a = await webview.getCookies();
-      
-      a.forEach((k, v) {
-        print('$k $v');
-      });
-
-      // Clean this
-      GlobalData.requestCookieLink = '';
-      Navigator.pop(context);
-    });
-
-    return WebviewScaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: Text('檢查瀏覽器中'),
+        title: Text('檢查瀏覽器中...'),
       ),
-      url: GlobalData.requestCookieLink,
-      withZoom: false,
-      withLocalStorage: true,
-      hidden: true,
+      // We're using a Builder here so we have a context that is below the Scaffold
+      // to allow calling Scaffold.of(context) so we can show a snackbar.
+      body: Builder(builder: (BuildContext context) {
+        return WebView(
+          initialUrl: GlobalData.requestCookieLink,
+          javascriptMode: JavascriptMode.unrestricted,
+          onWebViewCreated: (WebViewController webViewController) {
+            _controller.complete(webViewController);
+            this.c = webViewController;
+          },
+          onPageStarted: (String url) {
+            print('Page started loading: $url');
+          },
+          onPageFinished: (String url) {
+            print('Page finished loading: $url');
+          },
+          gestureNavigationEnabled: true,
+        );
+      }),
     );
   }
 }

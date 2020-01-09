@@ -125,7 +125,7 @@ class _AnimeState extends State<Anime> {
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (this.title != '' && widget.seasonal == null) {
+    if (this.title != '' && widget.seasonal == null && this.title != '加載失敗了...') {
       return IconButton(
         icon: Icon(Icons.search),
         onPressed: () => global.getWikipediaLink(this.title),

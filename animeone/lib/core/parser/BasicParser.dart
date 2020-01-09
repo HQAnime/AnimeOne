@@ -19,7 +19,7 @@ abstract class BasicParser {
   Future<Document> downloadHTML() async {
     Map<String, String> requestHeaders = {
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
-      'Cookie': 'cf_clearance=0e4df1df533c8d5572352e4086692e8086fa02e0-1578528286-0-150; __cfduid=db2810e9e9a96c7a4b9ba7eb707c37bbc1578528286; videopassword=0; _ga=GA1.2.1767190019.1578528286; _gid=GA1.2.735201353.1578528286; _gat=1',
+      'Cookie': '__cfduid=db8a26736d5c93da668062dc09551f88a1578089782; _ga=GA1.2.1558854639.1578089782; videopassword=0; cf_clearance=31dd67786c96bf54e97b2f6cfda727475da812b5-1578537055-0-150',
     };
 
     final response = await http.get(

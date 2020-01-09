@@ -1,6 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
+import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
@@ -67,9 +68,7 @@ class _LatestState extends State<Latest> {
       return CircularProgressIndicator();
     } else if (list.length == 0) {
       // If somehow we cannot get recent anime
-      return Center(
-        child: Text('讀取竟然失敗 -_-'),
-      );
+      return ErrorButton();
     } else {
       return SafeArea(
         child: ListView.builder(

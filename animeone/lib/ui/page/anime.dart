@@ -4,6 +4,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
+import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
 
 /// This class handles anime page
@@ -106,9 +107,7 @@ class _AnimeState extends State<Anime> {
         appBar: AppBar(
           title: Text('加载失败 QAQ')
         ),
-        body: Center(
-          child: Text('錯誤信息：' + this.hasError)
-        ),
+        body: ErrorButton(msg: this.hasError)
       );
     } else {
       return Scaffold(

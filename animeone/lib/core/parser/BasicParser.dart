@@ -22,7 +22,7 @@ abstract class BasicParser {
   Future<Document> downloadHTML() async {
     Map<String, String> requestHeaders = {
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
-      'cookie': 'cf_clearance=89dbe0ef81f0a8050c97bfef77bfd8dc3fff92b0-1578540415-0-150; __cfduid=deeb0601818e4cfd72fced2ffdc4821d01578540415; videopassword=0',
+      'Cookie': 'videopassword=0; _ga=GA1.2.1415236250.1578544688; _gid=GA1.2.585141214.1578544688; _gat=1',
     };
 
     try {
@@ -35,7 +35,7 @@ abstract class BasicParser {
         return parse(response.body);
       } else if (response.statusCode == 503) {
         // Need to get cookie
-        GlobalData.needCookie = true;
+        GlobalData.requestCookieLink = this._link;
         return null;
       } else {
         // If it is 404, the status code will tell you

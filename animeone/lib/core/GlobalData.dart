@@ -27,7 +27,7 @@ class GlobalData {
   /// if update has been checked
   bool hasUpdate = false;
   /// A flag to check if cookie is necessary
-  static bool needCookie = false;
+  static String requestCookieLink = '';
 
   // Relating to local data
   SharedPreferences prefs;

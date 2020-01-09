@@ -138,9 +138,7 @@ class _AnimeState extends State<Anime> {
   /// Render differently with different number of elements
   Widget renderBody() {
     if (this.entries.length == 0) {
-      return Center(
-        child: Text('未知錯誤 >_<\n應該是頁面不存在吧', textAlign: TextAlign.center)
-      );
+      return ErrorButton();
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

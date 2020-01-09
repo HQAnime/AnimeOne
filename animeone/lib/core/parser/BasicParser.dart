@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -22,15 +24,23 @@ abstract class BasicParser {
       'Cookie': '__cfduid=db8a26736d5c93da668062dc09551f88a1578089782; _ga=GA1.2.1558854639.1578089782; videopassword=0; cf_clearance=31dd67786c96bf54e97b2f6cfda727475da812b5-1578537055-0-150',
     };
 
-    final response = await http.get(
-      this._link,
-      headers: requestHeaders,
-    );
+    try {
+      final response = await http.get(
+        this._link,
+        headers: requestHeaders,
+      ).timeout(Duration(seconds: 5));
 
-    if (response.statusCode == 200) {
-      return parse(response.body);
-    } else {
-      // If it is 404, the status code will tell you
+      if (response.statusCode == 200) {
+        return parse(response.body);
+      } else if (response.statusCode == 503) {
+        // Need to get cookie
+        return Document.html('503');
+      } else {
+        // If it is 404, the status code will tell you
+        return null;
+      }
+    } catch (e) {
+      print(e);
       return null;
     }
   }

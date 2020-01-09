@@ -12,11 +12,20 @@ abstract class BasicParser {
 
   BasicParser(String link) {
     this._link = link;
+    print(this._link);
   }
 
   /// Download HTML string from link
   Future<Document> downloadHTML() async {
-    final response = await http.get(this._link);
+    Map<String, String> requestHeaders = {
+      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
+      'Cookie': 'cf_clearance=0e4df1df533c8d5572352e4086692e8086fa02e0-1578528286-0-150; __cfduid=db2810e9e9a96c7a4b9ba7eb707c37bbc1578528286; videopassword=0; _ga=GA1.2.1767190019.1578528286; _gid=GA1.2.735201353.1578528286; _gat=1',
+    };
+
+    final response = await http.get(
+      this._link,
+      headers: requestHeaders,
+    );
 
     if (response.statusCode == 200) {
       return parse(response.body);

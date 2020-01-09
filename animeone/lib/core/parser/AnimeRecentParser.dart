@@ -19,8 +19,9 @@ class AnimeRecentParser extends BasicParser {
       list.first.nodes.forEach((tr) {
         recent.add(new AnimeRecent(tr));
       });
-    } catch (e) {
+    } catch (e, s) {
       print('Recent is currently not accessible');
+      print(s);
     }
 
     return recent;

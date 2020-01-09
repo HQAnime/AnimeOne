@@ -31,7 +31,7 @@ dependencies:
   video_player: ^0.10.2+5
   shared_preferences: ^0.5.3+5
   share: ^0.6.2+4
-  flutter_webview_plugin: ^0.3.9+1
+  flutter_webview_plugin: ^0.3.10+1
 
 dev_dependencies:
   flutter_test:

@@ -19,13 +19,7 @@ class _AnimeListState extends State<AnimeList> {
   List<AnimeInfo> list;
   final all = global.getAnimeList();
 
-  // Maybe in the future
-  List<String> quickFilters = [
-    '連載中', 
-    '劇場版', 
-    'OVA', 
-    'OAD'
-  ];
+  final quickFilters = global.getQuickFilters();
 
   @override
   Widget build(BuildContext context) {

@@ -39,6 +39,7 @@ class GlobalData {
   String getSeasonName() => _season.toString();
   String getScheduleLink() => _season.getLink();
   String getSeasonLink() => _season.getAnimeLink();
+  List<String> getQuickFilters() => _season.getQuickFilters();
   
   // Relating to anime list (it won't be changed)
   List<AnimeInfo> _animeList = [];

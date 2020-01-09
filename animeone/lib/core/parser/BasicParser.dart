@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
@@ -21,7 +22,7 @@ abstract class BasicParser {
   Future<Document> downloadHTML() async {
     Map<String, String> requestHeaders = {
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
-      'Cookie': '__cfduid=db8a26736d5c93da668062dc09551f88a1578089782; _ga=GA1.2.1558854639.1578089782; videopassword=0; cf_clearance=31dd67786c96bf54e97b2f6cfda727475da812b5-1578537055-0-150',
+      'cookie': 'cf_clearance=89dbe0ef81f0a8050c97bfef77bfd8dc3fff92b0-1578540415-0-150; __cfduid=deeb0601818e4cfd72fced2ffdc4821d01578540415; videopassword=0',
     };
 
     try {
@@ -34,7 +35,8 @@ abstract class BasicParser {
         return parse(response.body);
       } else if (response.statusCode == 503) {
         // Need to get cookie
-        return Document.html('503');
+        GlobalData.needCookie = true;
+        return null;
       } else {
         // If it is 404, the status code will tell you
         return null;

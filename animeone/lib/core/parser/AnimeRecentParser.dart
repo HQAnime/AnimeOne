@@ -13,16 +13,11 @@ class AnimeRecentParser extends BasicParser {
   List<AnimeRecent> parseHTML(Document body) {
     List<AnimeRecent> recent = [];
 
-    try {
-      final widgets = body.getElementsByClassName('widget-area');
-      final list = widgets.first.getElementsByTagName('ul');
-      list.first.nodes.forEach((tr) {
-        recent.add(new AnimeRecent(tr));
-      });
-    } catch (e, s) {
-      print('Recent is currently not accessible');
-      print(s);
-    }
+    final widgets = body.getElementsByClassName('widget-area');
+    final list = widgets.first.getElementsByTagName('ul');
+    list.first.nodes.forEach((tr) {
+      recent.add(new AnimeRecent(tr));
+    });
 
     return recent;
   }

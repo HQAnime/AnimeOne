@@ -112,12 +112,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 SizedBox.fromSize(size: Size.fromHeight(24)),
                 Text(
-                  '那現在怎麽辦？',
+                  '現在怎麽辦？',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline,
                 ),
                 FlatButton(
-                  child: Text('使用瀏覽器打開 Anime1.me'),
+                  child: Text('使用瀏覽器打開 anime1.me'),
                   onPressed: () => launch(GlobalData.domain),
                 ),
                 Text('或者',

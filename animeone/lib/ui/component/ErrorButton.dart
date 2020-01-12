@@ -10,9 +10,10 @@ class ErrorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String finalMsg = '讀取竟然失敗了...\n';
+    String finalMsg = '404 無法加載\n';
     return Center(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(finalMsg, textAlign: TextAlign.center),
           this.renderFixButton(context)

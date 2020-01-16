@@ -21,8 +21,9 @@ abstract class BasicParser {
   /// Download HTML string from link
   Future<Document> downloadHTML() async {
     Map<String, String> requestHeaders = {
-      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36',
-      'Cookie': 'videopassword=0; _ga=GA1.2.1415236250.1578544688; _gid=GA1.2.585141214.1578544688; _gat=1',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
     };
 
     try {

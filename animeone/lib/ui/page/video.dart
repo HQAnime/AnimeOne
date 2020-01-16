@@ -38,8 +38,12 @@ class _VideoState extends State<Video> {
     // Fullscreen mode
     SystemChrome.setEnabledSystemUIOverlays([]);
 
-    this.parser = new VideoSourceParser(widget.video.video);
-    this.parser.downloadHTML().then((body) {
+    // Check if we are using web
+    const bool kIsWeb = identical(0, 0.0);
+    if (!kIsWeb) {
+      // Only request if we are not web
+      this.parser = new VideoSourceParser(widget.video.video);
+      this.parser.downloadHTML().then((body) {
         String link = this.parser.parseHTML(body);
         if (link != null) {
           this.downloadLink = link;
@@ -62,11 +66,12 @@ class _VideoState extends State<Video> {
             );
           });
         }
-
-        setState(() {
-          this.isLoading = false;
-        });
       });
+    }
+
+    setState(() {
+      this.isLoading = false;
+    });
   }
 
   @override

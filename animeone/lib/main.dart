@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'AnimeOne',
       theme: useDark ? darkTheme : lightTheme,
-      darkTheme: darkTheme,
+      // darkTheme: darkTheme,
       home: HomePage(),
     );
   }

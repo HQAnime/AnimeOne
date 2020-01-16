@@ -19,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '1.0.7';
+  static final version = '1.0.7.1';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
@@ -79,8 +79,18 @@ class GlobalData {
     //   debugPrint('$k ${prefs.get(k)}');
     // });
 
+    // Check if this is the new version
+    String newVersion = prefs.getString(version);
+    if (newVersion == null) {
+      // Only update once when there is a new update
+      prefs.setString(version, 'ok');
+      shouldUpdate = true;
+    }
+
+    // Get last updated date
     String update = prefs.getString(lastUpdate);
     if (update == null) {
+      // Init update
       prefs.setString(lastUpdate, DateTime.now().toIso8601String());
       shouldUpdate = true;
     } else {

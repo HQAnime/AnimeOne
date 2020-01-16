@@ -28,7 +28,7 @@ class GithubUpdate {
     String extraInfo = '';
     if (!isAndroid) extraInfo = '\n請重新編譯APP';
 
-    if (version.compareTo(GlobalData.version) > 0) {
+    if (version != GlobalData.version) {
       showDialog(
         context: context,
         // Prevent accidental dismiss

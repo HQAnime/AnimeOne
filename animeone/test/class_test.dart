@@ -48,24 +48,27 @@ void main() {
 
   group('String compare', () {
     test('0.0.3 > 0.0.2', () {
-      expect('0.0.3'.compareTo('0.0.2') > 0, isTrue);
+      expect('0.0.3' != '0.0.2', isTrue);
     });
 
     test('0.1.3 > 0.0.3', () {
-      expect('0.1.3'.compareTo('0.0.3') > 0, isTrue);
+      expect('0.1.3' != '0.0.3', isTrue);
     });
 
     test('1.0.3 > 0.1.2', () {
-      expect('1.0.3'.compareTo('0.1.2') > 0, isTrue);
+      expect('1.0.3' != '0.1.2', isTrue);
     });
 
     test('1.1.0 > 1.0.1', () {
-      expect('1.1.0'.compareTo('1.0.1') > 0, isTrue);
+      expect('1.1.0' != '1.0.1', isTrue);
     });
 
     test('1.1.10 > 1.1.9', () {
-      // This doesn't work... so avoid 10 or just use other methods
-      expect('1.1.10'.compareTo('1.1.9') > 0, isFalse);
+      expect('1.1.10' != '1.1.9', isTrue);
+    });
+
+    test('Legacy 1.0.7.1 > 1.0.7', () {
+      expect('1.0.7.1'.compareTo('1.0.7') > 0, isTrue);
     });
   });
 

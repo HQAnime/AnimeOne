@@ -10,7 +10,8 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 494,
+    icon: __dirname + '/icons/win/app.ico',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }

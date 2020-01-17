@@ -6,15 +6,31 @@ const path = require('path')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+const windowHeight = 800;
+const windowWeight = windowHeight;
+
 function createWindow () {
+  let hour = (new Date()).getHours();
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 494,
-    icon: __dirname + '/icons/win/app.ico',
+    width: windowHeight,
+    height: windowWeight,
+    // Adjust background colour so that it looks better when resized
+    backgroundColor: hour > 17 || hour < 7 ? '#282828' : '#FFFFFF',
+    icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    show: false,
+    autoHideMenuBar: true
+  })
+
+  // mainWindow.setMenuBarVisibility(false)
+
+  // Prevent white splash
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
   })
 
   // and load the index.html of the app.
@@ -42,6 +58,20 @@ app.on('window-all-closed', function () {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') app.quit()
+})
+
+/**
+ * counter of broswer window
+ */
+let counter = 0
+app.on('browser-window-created', (e, w) => {
+  if (counter++ > 0) {
+    w.setSize(windowHeight, windowWeight)
+
+    // let the new window cover main window
+    let pos = mainWindow.getPosition();
+    w.setPosition(pos[0], pos[1])
+  }
 })
 
 app.on('activate', function () {

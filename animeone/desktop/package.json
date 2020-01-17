@@ -24,9 +24,6 @@
     "electron-packager": "^14.2.0"
   },
   "build": {
-    "appId": "org.github.henryquan.animeone",
-    "mac": {
-      "category": "your.app.category.type"
-    }
+    "appId": "org.github.henryquan.animeone"
   }
 }

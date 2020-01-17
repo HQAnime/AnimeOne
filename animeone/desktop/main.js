@@ -18,16 +18,14 @@ function createWindow () {
     height: windowWeight,
     // Adjust background colour so that it looks better when resized
     backgroundColor: hour > 17 || hour < 7 ? '#282828' : '#FFFFFF',
-    icon: path.join(__dirname, 'assets/icons/64x64.png'),
+    icon: path.join(__dirname, 'assets/icons/icon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
     show: false,
     autoHideMenuBar: true
   })
-
-  // mainWindow.setMenuBarVisibility(false)
-
+  
   // Prevent white splash
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()

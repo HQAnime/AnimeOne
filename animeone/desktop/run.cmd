@@ -1,0 +1,2 @@
+@ECHO off
+electron .

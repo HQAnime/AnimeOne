@@ -21,16 +21,23 @@ abstract class BasicParser {
   /// Download HTML string from link
   Future<Document> downloadHTML() async {
     Map<String, String> requestHeaders = {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
     };
+
+    if (!this._link.contains('github')) {
+      print(this._link);
+      requestHeaders = {
+        'Access-Control-Allow-Origin': '127.0.0.1:',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Methods': 'HEAD, GET, POST, PUT, PATCH, DELETE',
+        'Access-Control-Allow-Headers': 'Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control'
+      };
+    }
 
     try {
       final response = await http.get(
         this._link,
         headers: requestHeaders,
-      ).timeout(Duration(seconds: 5));
+      ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
         return parse(response.body);

@@ -1,7 +1,7 @@
 {
   "name": "animeone",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "The desktop port of AnimeOne",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
@@ -14,12 +14,19 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Yiheng",
+  "license": "MIT",
+  "url": "https://github.com/HenryQuan",
   "devDependencies": {
     "electron": "^7.1.9",
     "electron-builder": "^22.2.0",
     "electron-icon-maker": "0.0.4",
     "electron-packager": "^14.2.0"
+  },
+  "build": {
+    "appId": "org.github.henryquan.animeone",
+    "mac": {
+      "category": "your.app.category.type"
+    }
   }
 }

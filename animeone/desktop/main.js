@@ -18,7 +18,7 @@ function createWindow () {
     height: windowWeight,
     // Adjust background colour so that it looks better when resized
     backgroundColor: hour > 17 || hour < 7 ? '#282828' : '#FFFFFF',
-    icon: path.join(__dirname, 'assets/icons/icon.ico'),
+    icon: path.join(__dirname, 'assets/icons/icon'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },

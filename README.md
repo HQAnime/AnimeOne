@@ -38,7 +38,9 @@ GitHub 會紀錄 APK 下載次數以及頁面觀看次數和 Clone 次數。
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/2.jpg" width="400px" height="400px" />
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/3.jpg" width="400px" height="400px" />
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/4.jpg" width="400px" height="400px" />
-  <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/5.jpg" width="400px" height="400px" />
+  <a href="https://i.animeone.me/Y8muG">
+    <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/5.jpg" width="400px" height="400px" />
+  </a>
 </div>
 
 ## 下載安裝

@@ -62,12 +62,14 @@ app.on('window-all-closed', function () {
  * counter of broswer window
  */
 let counter = 0
-app.on('browser-window-created', (e, w) => {
+app.on('browser-window-created', (_, w) => {
   if (counter++ > 0) {
-    w.setSize(windowHeight, windowWeight)
+    // same size with main window
+    let sized = mainWindow.getSize()
+    w.setSize(sized[0], sized[1])
 
     // let the new window cover main window
-    let pos = mainWindow.getPosition();
+    let pos = mainWindow.getPosition()
     w.setPosition(pos[0], pos[1])
   }
 })

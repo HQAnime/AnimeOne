@@ -32,7 +32,7 @@ AnimeOne 不需要任何權限（除網絡連接）
 AnimeOne APP本身 不會收集用戶的任何數據，
 GitHub 會紀錄 APK 下載次數以及頁面觀看次數和 Clone 次數。
 
-## 截圖 (1.0.3版本之前)
+## 截圖 (桌面版 1.0.7)
 <div>
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/1.jpg" width="180px" height="320px" />
   <img src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/screenshot/2.jpg" width="180px" height="320px" />

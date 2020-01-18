@@ -4,7 +4,7 @@
 - 運行 `build_desktop.cmd`
 - 然後進入 desktop 文件夾 `cd desktop/`
 - 安裝包 `npm install` （不安裝也可以運行）
-- 運行 `run.cmd`
+- 運行 `icon_maker.cmd` -> 運行 `run.cmd`
 - AnimeOne 桌面應該會打開
 - 如果需要生成 Release 包，運行 `packager.cmd` 即可
 

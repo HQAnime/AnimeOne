@@ -51,18 +51,18 @@ GitHub 會紀錄 APK 下載次數以及頁面觀看次數和 Clone 次數。
 - 進入 `animeone` 文件夾（注意是小寫）
 - 使用 `flutter build ios --release` 獲得 release 包（如果代碼沒有變化的話，只需要運行一次）
 - 進入 Xcode 打開 ios 文件夾下的 `Runner.xcworkspace`
-- 在暫停按鈕旁邊選擇 `RunnerRelease`
-- 點擊運行按鈕
-- 等待 Xcode 編譯
-- App 會自動安裝並且打開
+- 在暫停按鈕旁邊選擇 `RunnerRelease` （如果沒有的話，需要修改 Runner 的 schema？，把 debug 變成 release 即可）
+- 連接 IOS 設備（十分重要）
+- 點擊運行按鈕 -> 等待 Xcode 編譯 -> App 會自動安裝到設備並且打開
 - 需要每七天重複一次（開發者帳號是一直有效的）
 
-### 桌面版
+### [桌面版](https://github.com/HenryQuan/AnimeOne/tree/master/animeone/desktop#%E5%A6%82%E4%BD%95%E7%B7%A8%E8%AD%AF%E6%A1%8C%E9%9D%A2%E7%89%88)
 目前還在Alpha階段，將會支持 Linux、Mac 以及 Windows。
 
 ### 網頁版
-[點擊進入]()
+暫無（估計也不會有了吧）
 
 ## 支持
 - 給 Repo 一顆星星
 - 上面的 Sponsor 按鈕（捐助）
+- App 内的捐助

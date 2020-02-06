@@ -17,7 +17,7 @@ class MainActivity: FlutterActivity() {
         // Add method channel to receive calls from Flutter side
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, animeOneChannel).setMethodCallHandler { call, result ->
             // Note: this method is invoked on the main thread
-            if (call.method == "bypassBrowserCheck") {
+            if (call.method == "getAnimeOneCookie") {
                 // Grab the cookie for anime1.me
                 val cookies: String = CookieManager.getInstance().getCookie(homePage)
                 result.success(cookies)

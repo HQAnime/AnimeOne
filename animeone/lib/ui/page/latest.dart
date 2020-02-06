@@ -4,6 +4,8 @@ import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
 
+import 'cookie.dart';
+
 class Latest extends StatefulWidget {
 
   Latest({Key key}) : super(key: key);
@@ -44,7 +46,6 @@ class _LatestState extends State<Latest> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text('最新動畫'),
@@ -80,5 +81,8 @@ class _LatestState extends State<Latest> {
       );
     }
   }
-
 }
+
+// FlatButton(onPressed: () {
+//   Navigator.push(context, MaterialPageRoute(builder: (context) => CookiePage()));
+// }, child: Text('Cookie')) 

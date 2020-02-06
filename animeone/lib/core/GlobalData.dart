@@ -9,6 +9,7 @@ import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/core/parser/GithubParser.dart';
+import 'package:flutter/services.dart';
 import 'package:html/dom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,6 +24,9 @@ class GlobalData {
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
+
+  // This is a channel to connect with native side
+  static final nativeChannel = MethodChannel('org.github.henryquan.animeone');
 
   /// if update has been checked
   bool hasUpdate = false;

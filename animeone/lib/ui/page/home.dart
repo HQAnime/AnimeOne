@@ -27,10 +27,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     this.global = new GlobalData();
     this._loadData();
-
-    GlobalData.nativeChannel.invokeMethod('getAnimeOneCookie').then((cookie) {
-      print(cookie);
-    });
   }
 
   void _loadData() {

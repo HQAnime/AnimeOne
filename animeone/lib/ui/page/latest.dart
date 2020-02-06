@@ -58,7 +58,7 @@ class _LatestState extends State<Latest> {
         ],
       ),
       body: Center(
-        child: this.renderBody(),
+        child: this.testNative(),
       )
     );
 
@@ -81,8 +81,12 @@ class _LatestState extends State<Latest> {
       );
     }
   }
-}
 
-// FlatButton(onPressed: () {
-//   Navigator.push(context, MaterialPageRoute(builder: (context) => CookiePage()));
-// }, child: Text('Cookie')) 
+  Widget testNative() {
+    return FlatButton(onPressed: () {
+      GlobalData.nativeChannel.invokeMethod('getAnimeOneCookie').then((cookie) {
+        print(cookie);
+      });
+    }, child: Text('Cookie'));
+  }
+}

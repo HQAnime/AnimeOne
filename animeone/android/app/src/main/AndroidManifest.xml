@@ -27,8 +27,11 @@
         </activity>
         <activity
             android:name=".WebviewActivity"
-            android:theme="@style/Theme.AppCompat">
-
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:configChanges="keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

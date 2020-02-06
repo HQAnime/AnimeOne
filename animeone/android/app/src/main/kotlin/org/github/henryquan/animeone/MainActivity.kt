@@ -21,8 +21,8 @@ class MainActivity: FlutterActivity() {
             // Note: this method is invoked on the main thread
             if (call.method == "getAnimeOneCookie") {
                 // Grab the cookie for anime1.me
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"))
-                startActivity(browserIntent)
+                val webviewIntent = Intent(this, WebviewActivity::class.java)
+                startActivity(webviewIntent)
 
                 //val cookies: String = CookieManager.getInstance().getCookie(homePage)
                 result.success("native view")

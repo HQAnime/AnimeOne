@@ -1,5 +1,4 @@
 import 'package:animeone/core/GlobalData.dart';
-import 'package:animeone/ui/page/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -27,7 +26,7 @@ class ErrorButton extends StatelessWidget {
       // Get cookie
       return MaterialButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => CookiePage()));
+          // Navigator.push(context, MaterialPageRoute(builder: (context) => CookiePage()));
         },
         child: Text('一鍵修復'),
       );

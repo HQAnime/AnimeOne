@@ -25,9 +25,6 @@ class GlobalData {
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
-  // This is a channel to connect with native side
-  static final nativeChannel = MethodChannel('org.github.henryquan.animeone');
-
   /// if update has been checked
   bool hasUpdate = false;
   /// A flag to check if cookie is necessary

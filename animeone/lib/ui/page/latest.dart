@@ -1,10 +1,9 @@
+import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
-
-import 'cookie.dart';
 
 class Latest extends StatefulWidget {
 
@@ -58,7 +57,7 @@ class _LatestState extends State<Latest> {
         ],
       ),
       body: Center(
-        child: this.testNative(),
+        child: this.renderBody(),
       )
     );
 
@@ -84,9 +83,14 @@ class _LatestState extends State<Latest> {
 
   Widget testNative() {
     return FlatButton(onPressed: () {
-      GlobalData.nativeChannel.invokeMethod('getAnimeOneCookie').then((cookie) {
-        print(cookie);
-        GlobalData.nativeChannel.invokeMethod('restart');
+      final one = AnimeOne();
+      one.getAnimeOneCookie().then((cookie) {
+        String cookieStr = cookie;
+        print(cookieStr);
+        if (cookieStr.contains('__cfduid')) {
+          // Ask if they want to try and fix it
+          one.restartApp();
+        }
       });
     }, child: Text('Cookie'));
   }

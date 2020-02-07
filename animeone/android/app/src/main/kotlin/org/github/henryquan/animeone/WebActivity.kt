@@ -23,6 +23,11 @@ class WebActivity : AppCompatActivity() {
         // Load homepage
         webview.loadUrl(homePage)
     }
+
+    override fun onBackPressed() {
+        // You cannot go back with back button
+        return
+    }
 }
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {

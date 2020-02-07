@@ -1,5 +1,6 @@
 package org.github.henryquan.animeone
 
+import android.content.Intent
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebView
@@ -7,6 +8,8 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 
 class WebActivity : AppCompatActivity() {
+    private val homePage = "https://anime1.me"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.webview)
@@ -18,13 +21,16 @@ class WebActivity : AppCompatActivity() {
         val client = WebClient(this)
         webview.webViewClient = client
         // Load anime1.me
-        webview.loadUrl("https://anime1.me")
+        webview.loadUrl(homePage)
     }
 }
 
-class WebClient(val activity: AppCompatActivity) : WebViewClient() {
+class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
         val cookie = CookieManager.getInstance().getCookie(url)
+        val main = Intent(this.activity, MainActivity::class.java)
+        main.putExtra("cookie", cookie)
+        this.activity.setResult(1111, main)
         this.activity.finish()
     }
 }

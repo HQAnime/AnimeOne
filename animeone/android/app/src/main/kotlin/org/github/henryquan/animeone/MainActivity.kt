@@ -23,6 +23,9 @@ class MainActivity: FlutterActivity() {
                 // Grab the cookie for anime1.me
                 val webIntent = Intent(this.context, WebActivity::class.java)
                 startActivityForResult(webIntent, webRequestCode)
+            } else if (call.method == "restartAnimeOne") {
+                this.finish()
+                this.startActivity(this.intent)
             } else {
                 result.notImplemented()
             }

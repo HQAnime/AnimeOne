@@ -86,6 +86,7 @@ class _LatestState extends State<Latest> {
     return FlatButton(onPressed: () {
       GlobalData.nativeChannel.invokeMethod('getAnimeOneCookie').then((cookie) {
         print(cookie);
+        GlobalData.nativeChannel.invokeMethod('restart');
       });
     }, child: Text('Cookie'));
   }

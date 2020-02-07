@@ -20,7 +20,7 @@ class WebActivity : AppCompatActivity() {
         // Set up client to get cookie
         val client = WebClient(this)
         webview.webViewClient = client
-        // Load anime1.me
+        // Load homepage
         webview.loadUrl(homePage)
     }
 }

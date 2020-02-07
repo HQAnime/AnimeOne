@@ -1,7 +1,8 @@
 package org.github.henryquan.animeone
 
 import android.content.Intent
-import android.net.Uri
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -20,11 +21,8 @@ class MainActivity: FlutterActivity() {
             // Note: this method is invoked on the main thread
             if (call.method == "getAnimeOneCookie") {
                 // Grab the cookie for anime1.me
-                val webviewIntent = Intent(this.context, WebviewActivity::class.java)
-                startActivity(webviewIntent)
-
-                //val cookies: String = CookieManager.getInstance().getCookie(homePage)
-                result.success("native view")
+                val webIntent = Intent(this.context, WebActivity::class.java)
+                startActivity(webIntent)
             } else {
                 result.notImplemented()
             }

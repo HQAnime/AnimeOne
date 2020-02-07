@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WebviewActivity"
+            android:name=".WebActivity"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:configChanges="keyboardHidden|orientation">
             <intent-filter>

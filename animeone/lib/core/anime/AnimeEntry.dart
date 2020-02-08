@@ -14,44 +14,50 @@ class AnimeEntry extends AnimeBasic {
   AnimeVideo videoLink;
 
   AnimeEntry(Element e) : super.fromJson(null) {
-    try {  
-      Node title = e.getElementsByClassName('entry-title')[0].nodes[0];
-      this.name = title.text;
-      this.link = title.attributes ['href'];
+    try {
+      // There are rare occasions where you need to enter password
+      List<Element> entryTitle = e.getElementsByClassName('entry-title');
+      if (entryTitle.length > 0) {
+        Node title = entryTitle[0].nodes[0];
+        this.name = title.text;
+        this.link = title.attributes ['href'];
 
-      Node post = e.getElementsByClassName('entry-date')[0];
-      this.postDate = post.text;
+        Node post = e.getElementsByClassName('entry-date')[0];
+        this.postDate = post.text;
 
-      // Get iframe instead
-      var iframe = e.getElementsByTagName('iframe');
-      if (iframe.length > 0) {
-        // There are exceptions where iframe is not used
-        Element video = iframe[0];
-        this.videoLink = new AnimeVideo(video.attributes['src']);
-      } else {
-        // Get loadView button
-        var loadBtn = e.getElementsByClassName('loadvideo');
-        if (loadBtn.length > 0) {
-          Element btn = loadBtn[0];
-          this.videoLink = new AnimeVideo(btn.attributes['data-src']);
+        // Get iframe instead
+        var iframe = e.getElementsByTagName('iframe');
+        if (iframe.length > 0) {
+          // There are exceptions where iframe is not used
+          Element video = iframe[0];
+          this.videoLink = new AnimeVideo(video.attributes['src']);
         } else {
-          // It is a YouTube preview
-          Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-          final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
-          this.videoLink = new AnimeVideo(link);
+          // Get loadView button
+          var loadBtn = e.getElementsByClassName('loadvideo');
+          if (loadBtn.length > 0) {
+            Element btn = loadBtn[0];
+            this.videoLink = new AnimeVideo(btn.attributes['data-src']);
+          } else {
+            // It is a YouTube preview
+            Element youtube = e.getElementsByClassName('youtubePlayer')[0];
+            final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
+            this.videoLink = new AnimeVideo(link);
+          }
         }
-      }
 
-      // Episode links
-      e.getElementsByTagName('a').forEach((n) {
-        if (n.text.contains('全集')) {
-          // Get all episode link
-          this.allEpisodes = GlobalData.domain + n.attributes['href'];
-        } else if (n.text.contains('下一集')) {
-          // Get next episode link
-          this.nextEpisode = GlobalData.domain + n.attributes['href'];
-        }
-      });
+        // Episode links
+        e.getElementsByTagName('a').forEach((n) {
+          if (n.text.contains('全集')) {
+            // Get all episode link
+            this.allEpisodes = GlobalData.domain + n.attributes['href'];
+          } else if (n.text.contains('下一集')) {
+            // Get next episode link
+            this.nextEpisode = GlobalData.domain + n.attributes['href'];
+          }
+        });
+      } else {
+        // You will need to enter the password but I cannot actually encounter this even with vpn
+      }
     } catch (e) {
       throw new Exception('AnimeEntry - Format changed\n${e.toString()}');
     }

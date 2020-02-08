@@ -95,7 +95,12 @@ class AnimeEntry extends AnimeBasic {
 
   /// If next episode is avaible
   bool hasNextEpisode() {
-    return this.nextEpisode.endsWith('/?p=') ? false : true;
+    return !this.nextEpisode.endsWith('/?p=');
+  }
+
+  /// In certain regions, password is needed due to copyright protection
+  bool needPassword() {
+    return this.videoLink == null;
   }
 
   AnimeVideo getVideo() => this.videoLink;

@@ -30,7 +30,7 @@ class AnimeEntryCard extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(this.entry.getEnhancedDate(), style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300)),
           ),
-          AnimeCoverImage(video: this.entry.getVideo()),
+          AnimeCoverImage(video: this.entry.needPassword() ? null : this.entry.getVideo()),
           Row(
             children: <Widget>[
               this.renderAllEpisode(context),
@@ -42,6 +42,7 @@ class AnimeEntryCard extends StatelessWidget {
     );
   }
 
+  /// Render all episode if exists or should be shown
   Widget renderAllEpisode(BuildContext context) {
     if (this.showEpisode == true && this.entry.allEpisodes != null) {
       return FlatButton(
@@ -55,6 +56,7 @@ class AnimeEntryCard extends StatelessWidget {
     }
   }
 
+  /// Render next episode if exists or should be shown
   Widget renderNextEpisode(BuildContext context) {
     // Check if this is the last episode
     if (this.showEpisode == true && this.entry.nextEpisode != null && this.entry.hasNextEpisode()) {

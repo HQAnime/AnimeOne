@@ -44,7 +44,9 @@ class AnimeCoverImage extends StatelessWidget {
           '啓動瀏覽器輸入密碼',
           style: TextStyle(backgroundColor: Colors.pink, color: Colors.white, fontSize: 18),  
         ),
-        onPressed: () {},
+        onPressed: () {
+          video.launchURL();
+        },
       );
     } else {
       return IconButton(

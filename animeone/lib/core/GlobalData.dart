@@ -36,6 +36,7 @@ class GlobalData {
   static final animeList = 'AnimeOne:AnimeList';
   static final animeScedule = 'AnimeOne:AnimeScedule';
   static final scheduleIntroVide = 'AnimeOne:SceduleIntroVideo';
+  static final oneCookie = 'AnimeOne:OneCookie';
 
   // Relating to seasonal anime
   static final _season = new AnimeSeason(DateTime.now());
@@ -56,6 +57,13 @@ class GlobalData {
   AnimeRecentParser _recentParser;
   List<AnimeRecent> _recentList = [];
   List<AnimeRecent> getRecentList() => this._recentList;
+  // Saved cookie for animeon
+  String _cookie;
+  String getCookie() => _cookie;
+  void updateCookie(String cookie) {
+    _cookie = cookie;
+    prefs.setString(oneCookie, jsonEncode(cookie));
+  }
 
   // Relating to Github update
   GithubUpdate _update;
@@ -79,6 +87,12 @@ class GlobalData {
     // prefs.getKeys().forEach((k) {
     //   debugPrint('$k ${prefs.get(k)}');
     // });
+
+    // Get saved cookie
+    String savedCookie = prefs.getString(oneCookie);
+    if (savedCookie != null) {
+      this._cookie = savedCookie;
+    }
 
     // Check if this is the new version
     String newVersion = prefs.getString(version);

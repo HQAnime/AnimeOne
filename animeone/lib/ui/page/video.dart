@@ -18,7 +18,6 @@ class Video extends StatefulWidget {
 
 }
 class _VideoState extends State<Video> {
-
   VideoPlayerController videoController;
   ChewieController chewie;
   VideoSourceParser parser;

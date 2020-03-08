@@ -97,6 +97,7 @@ class _LatestState extends State<Latest> {
         String cookieStr = cookie;
         print(cookieStr);
         if (cookieStr.contains('__cfduid')) {
+          global.updateCookie(cookieStr);
           // Ask if they want to try and fix it
           one.restartApp();
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Modify this file to customize your launch splash screen -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/pink" />
+    <item android:drawable="@color/black" />
 <!--    <item android:top="32dp" android:bottom="64dp" android:left="64dp" android:right="64dp">-->
 <!--        <bitmap android:src="@mipmap/ic_launcher_round" android:gravity="center"/>-->
 <!--    </item>-->

@@ -3,6 +3,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
+import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
@@ -55,6 +56,14 @@ class _LatestState extends State<Latest> {
             onPressed: () => this.loadRecentAnime(),
           )
         ],
+        leading: IconButton(
+          icon: Icon(Icons.favorite),
+          tooltip: '支持發開',
+          onPressed: () {
+            // Push to support page
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Support()));
+          },
+        ),
       ),
       body: Center(
         child: this.renderBody(),

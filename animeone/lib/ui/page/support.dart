@@ -24,6 +24,10 @@ class Support extends StatelessWidget {
             subtitle: Text('長期且穩定'),
             onTap: () => launch('https://patreon.com/HenryQuan'),
           ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text('非常感謝您的支持！'),
+          )
         ],
       )
     );

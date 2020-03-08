@@ -25,6 +25,9 @@ class _VideoState extends State<Video> {
   bool canUseChewie = false;
   bool isLoading = true;
 
+  /// How fast user could adjust the video
+  final adjustmentSpeed = 20;
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +53,8 @@ class _VideoState extends State<Video> {
             allowedScreenSleep: false,
             aspectRatio: 16 / 9,
             autoPlay: true,
+            showControls: true,
+            showControlsOnInitialize: true,
             errorBuilder: (context, msg) {
               return Text(
                 '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
@@ -146,14 +151,42 @@ class _VideoState extends State<Video> {
 
   renderBody() {
     if (this.chewie != null) {
-      return SizedBox.expand(
-        child: Chewie(
-          controller: chewie,
-        ),
+      return Stack(
+        children: <Widget>[
+          Expanded(
+            child: Chewie(
+              controller: chewie,
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  onTap: null,
+                  onDoubleTap: () => this.updatePotision(false)
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: null,
+                  onDoubleTap: () => this.updatePotision(true)
+                ),
+              ),
+            ],
+          )
+        ],
       );
     } else {
       return this.renderIndicator();
     }
+  }
+
+  /// Update current position (forward or backward)
+  updatePotision(bool forward) {
+    this.videoController.position.then((value) {
+      final adjustment = Duration(seconds: this.adjustmentSpeed);
+      this.chewie.seekTo(forward ? value + adjustment : value - adjustment);
+    });
   }
 
   renderIndicator() {

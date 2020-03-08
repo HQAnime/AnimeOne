@@ -25,6 +25,9 @@ If you prefer watching anime with English subtitles, you might consider [AnimeGo
 這是因爲動畫列表以及新番時間表并不會每天都更新，
 所以 APP 也沒有理由每次開打都重新下載一遍數據。
 
+## **年齡限制**
+最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。
+
 ## **安卓權限**
 AnimeOne 不需要任何權限（除網絡連接）
 

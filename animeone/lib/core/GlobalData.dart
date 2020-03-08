@@ -37,6 +37,7 @@ class GlobalData {
   static final animeScedule = 'AnimeOne:AnimeScedule';
   static final scheduleIntroVide = 'AnimeOne:SceduleIntroVideo';
   static final oneCookie = 'AnimeOne:OneCookie';
+  static final ageRestriction = 'AnimeOne:AgeRestriction';
 
   // Relating to seasonal anime
   static final _season = new AnimeSeason(DateTime.now());
@@ -64,6 +65,13 @@ class GlobalData {
     _cookie = cookie;
     prefs.setString(oneCookie, jsonEncode(cookie));
   }
+  // Age restriction
+  bool _showAgeAlert = false;
+  bool showShowAgeAlert() => _showAgeAlert;
+  void updateAgeAlert() {
+    _showAgeAlert = false;
+    prefs.setString(ageRestriction, jsonEncode(false));
+  }
 
   // Relating to Github update
   GithubUpdate _update;
@@ -87,6 +95,12 @@ class GlobalData {
     // prefs.getKeys().forEach((k) {
     //   debugPrint('$k ${prefs.get(k)}');
     // });
+
+    // Whether an age alert shoud be shown
+    String ageAlert = prefs.get(ageRestriction);
+    if (ageAlert == null) {
+      this._showAgeAlert = true;
+    }
 
     // Get saved cookie
     String savedCookie = prefs.getString(oneCookie);

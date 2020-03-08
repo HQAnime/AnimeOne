@@ -36,10 +36,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       error = '';
     });
 
+    // Init if not and check for update
     this.global.init().then((_) {
       final update = global.getGithubUpdate();
       if (update != null) {
         update.checkUpdate(context);
+      }
+
+      if (global.showShowAgeAlert()) {
+        // Show the alert
+        showDialog(
+          context: context,
+          // Prevent accidental dismiss
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            // No update
+            return AlertDialog(
+              title: Text('關於年齡限制'),
+              content: Text('最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。'),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('好的'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    // Don't show this again
+                    global.updateAgeAlert();
+                  },
+                ),
+              ],
+            );
+          },
+        );
       }
 
       setState(() {

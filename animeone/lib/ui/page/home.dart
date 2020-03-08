@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/component/EmailButton.dart';
+import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
@@ -124,6 +125,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 SizedBox.fromSize(size: Size.fromHeight(24)),
+                // ErrorButton(),
                 Text(
                   '錯誤消息!',
                   textAlign: TextAlign.center,

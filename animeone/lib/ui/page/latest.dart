@@ -89,19 +89,4 @@ class _LatestState extends State<Latest> {
       );
     }
   }
-
-  Widget testNative() {
-    return FlatButton(onPressed: () {
-      final one = AnimeOne();
-      one.getAnimeOneCookie().then((cookie) {
-        String cookieStr = cookie;
-        print(cookieStr);
-        if (cookieStr.contains('__cfduid')) {
-          global.updateCookie(cookieStr);
-          // Ask if they want to try and fix it
-          one.restartApp();
-        }
-      });
-    }, child: Text('Cookie'));
-  }
 }

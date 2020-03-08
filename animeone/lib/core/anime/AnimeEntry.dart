@@ -81,13 +81,13 @@ class AnimeEntry extends AnimeBasic {
     } else if (dayDiff == 1) {
       enhanced = '昨天';
     } else if (dayDiff < 7) {
-      enhanced = '${dayDiff}天前';
+      enhanced = '$dayDiff 天前';
     } else if (dayDiff < 28) {
-      enhanced = '${(dayDiff / 7).round()}周前';
+      enhanced = '${(dayDiff / 7).round()} 周前';
     } else if (dayDiff < 365) {
-      enhanced = '${(dayDiff / 30).toStringAsFixed(1)}個月前'; // is this a good idea??
+      enhanced = '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
     } else {
-      enhanced = '${(dayDiff / 365).toStringAsFixed(1)}年前';
+      enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
     }
 
     return this.postDate + ' | $enhanced';

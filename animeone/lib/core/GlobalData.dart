@@ -9,7 +9,6 @@ import 'package:animeone/core/parser/AnimeListParser.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/core/parser/GithubParser.dart';
-import 'package:flutter/services.dart';
 import 'package:html/dom.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
 
   static final domain = 'https://anime1.me/';
-  static final version = '1.0.7.1';
+  static final version = '1.0.8';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';

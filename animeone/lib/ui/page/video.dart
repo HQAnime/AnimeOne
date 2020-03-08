@@ -162,13 +162,11 @@ class _VideoState extends State<Video> {
             children: <Widget>[
               Expanded(
                 child: GestureDetector(
-                  onTap: null,
                   onDoubleTap: () => this.updatePotision(false)
                 ),
               ),
               Expanded(
                 child: GestureDetector(
-                  onTap: null,
                   onDoubleTap: () => this.updatePotision(true)
                 ),
               ),
@@ -184,6 +182,7 @@ class _VideoState extends State<Video> {
   /// Update current position (forward or backward)
   updatePotision(bool forward) {
     this.videoController.position.then((value) {
+      // Don't need to care about whether it is zero or max length
       final adjustment = Duration(seconds: this.adjustmentSpeed);
       this.chewie.seekTo(forward ? value + adjustment : value - adjustment);
     });

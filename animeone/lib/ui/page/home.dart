@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Text(
                   '無法加載數據 :(',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Text(
                   '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
@@ -127,7 +127,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Text(
                   '錯誤消息!',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Text(
                   '現在怎麽辦？',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 FlatButton(
                   child: Text('使用瀏覽器打開 anime1.me'),

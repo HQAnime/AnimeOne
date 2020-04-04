@@ -15,22 +15,22 @@ class MyApp extends StatelessWidget {
     primarySwatch: Colors.pink,
   );
 
-  static final _hour = DateTime.now().hour;
-  // From 6pm to 6am for dark mode
-  final useDark = _hour > 17 || _hour < 7;
+  // static final _hour = DateTime.now().hour;
+  // // From 6pm to 6am for dark mode
+  // final useDark = _hour > 17 || _hour < 7;
 
   @override
   Widget build(BuildContext context) {
     // Setup navigation bar colour 
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: useDark ? Colors.grey[900] : Colors.grey[50],
-      systemNavigationBarIconBrightness: useDark ? Brightness.light : Brightness.dark
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   systemNavigationBarColor: useDark ? Colors.grey[900] : Colors.grey[50],
+    //   systemNavigationBarIconBrightness: useDark ? Brightness.light : Brightness.dark
+    // ));
 
     return MaterialApp(
       title: 'AnimeOne',
-      theme: useDark ? darkTheme : lightTheme,
-      // darkTheme: darkTheme,
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: HomePage(),
     );
   }

@@ -164,11 +164,11 @@ class _VideoState extends State<Video> {
 
   /// Update current position (forward or backward)
   updatePotision(bool forward) {
-    this.videoController.position.then((value) {
-      // Don't need to care about whether it is zero or max length
-      final adjustment = Duration(seconds: this.adjustmentSpeed);
-      this.chewie.seekTo(forward ? value + adjustment : value - adjustment);
-    });
+    // this.videoController.position.then((value) {
+    //   // Don't need to care about whether it is zero or max length
+    //   final adjustment = Duration(seconds: this.adjustmentSpeed);
+    //   this.chewie.seekTo(forward ? value + adjustment : value - adjustment);
+    // });
   }
 
   renderIndicator() {

@@ -22,6 +22,7 @@ class _VideoState extends State<Video> {
   ChewieController chewie;
   VideoSourceParser parser;
   String downloadLink;
+  final isIOS = Platform.isIOS;
   bool canUseChewie = false;
   bool isLoading = true;
 
@@ -39,38 +40,44 @@ class _VideoState extends State<Video> {
     ]);
     // Fullscreen mode
     SystemChrome.setEnabledSystemUIOverlays([]);
-
-    this.parser = new VideoSourceParser(widget.video.video);
-    this.parser.downloadHTML().then((body) {
-      String link = this.parser.parseHTML(body);
-      if (link != null) {
-        this.downloadLink = link;
+  
+    // Just use the native player for IOS
+    if (!isIOS) {
+      this.parser = new VideoSourceParser(widget.video.video);
+      this.parser.downloadHTML().then((body) {
+        String link = this.parser.parseHTML(body);
+        if (link != null) {
+          this.downloadLink = link;
+          setState(() {
+            this.canUseChewie = true;
+            this.videoController = VideoPlayerController.network(link);
+            this.chewie = ChewieController(
+              videoPlayerController: videoController,
+              allowedScreenSleep: false,
+              aspectRatio: 16 / 9,
+              autoPlay: true,
+              showControls: true,
+              showControlsOnInitialize: true,
+              errorBuilder: (context, msg) {
+                return Text(
+                  '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
+                  style: TextStyle(color: Colors.white), 
+                  textAlign: TextAlign.center
+                );
+              },
+              looping: false,
+            );
+          });
+        }
         setState(() {
-          this.canUseChewie = true;
-          this.videoController = VideoPlayerController.network(link);
-          this.chewie = ChewieController(
-            videoPlayerController: videoController,
-            allowedScreenSleep: false,
-            aspectRatio: 16 / 9,
-            autoPlay: true,
-            showControls: true,
-            showControlsOnInitialize: true,
-            errorBuilder: (context, msg) {
-              return Text(
-                '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
-                style: TextStyle(color: Colors.white), 
-                textAlign: TextAlign.center
-              );
-            },
-            looping: false,
-          );
+          this.isLoading = false;
         });
-      }
-
+      });
+    } else {
       setState(() {
         this.isLoading = false;
       });
-    });
+    }
   }
 
   @override
@@ -114,15 +121,14 @@ class _VideoState extends State<Video> {
     } else {
       // Load webpage in app
       return WebviewScaffold(
+        appBar: isIOS ? AppBar() : null,
         url: widget.video.video,
         withZoom: false,
         withLocalStorage: true,
         hidden: true,
         initialChild: Container(
-          color: Colors.black,
           child: this.renderIndicator()
         ),
-        bottomNavigationBar: this.renderClose(),
       );
     }
   }
@@ -193,5 +199,4 @@ class _VideoState extends State<Video> {
       child: CircularProgressIndicator(),
     );
   }
-  
 }

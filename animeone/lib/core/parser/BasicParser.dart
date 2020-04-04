@@ -14,7 +14,7 @@ abstract class BasicParser {
   /// Get the link for current page
   String getLink() => this._link;
 
-  BasicParser(String link, {String cookie = ''}) {
+  BasicParser(String link, {String cookie = 'videopassword=0'}) {
     this._link = link;
     this._cookie = cookie;
     print(this._link);

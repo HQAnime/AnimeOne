@@ -22,7 +22,7 @@ class _VideoState extends State<Video> {
   ChewieController chewie;
   VideoSourceParser parser;
   String downloadLink;
-  final isIOS = !Platform.isIOS;
+  final isIOS = Platform.isIOS;
   bool canUseChewie = false;
   bool isLoading = true;
 

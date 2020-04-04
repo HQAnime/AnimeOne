@@ -1,7 +1,6 @@
 import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 /// Top level component
 class MyApp extends StatelessWidget {

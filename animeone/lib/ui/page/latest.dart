@@ -1,4 +1,3 @@
-import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';

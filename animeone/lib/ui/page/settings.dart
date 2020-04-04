@@ -70,6 +70,21 @@ class Settings extends StatelessWidget {
                 Divider(),
                 ListTile(
                   onTap: () {
+                    launch(GlobalData.eminaOne);
+                  },
+                  title: Text('下載  Emina One '),
+                  subtitle: Text('splitline 製作的 anime1 app'),
+                ),
+                ListTile(
+                  onTap: () {
+                    launch(GlobalData.animeGo);
+                  },
+                  title: Text('下載 AnimeGo'),
+                  subtitle: Text('非官方 gogoanime app (還在開發中)'),
+                ),
+                Divider(),
+                ListTile(
+                  onTap: () {
                     GlobalData().sendEmail('');
                   },
                   title: Text('電子郵件'),

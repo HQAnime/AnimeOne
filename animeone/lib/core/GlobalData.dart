@@ -24,6 +24,9 @@ class GlobalData {
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
+  static final eminaOne = 'https://github.com/splitline/emina-one';
+  static final animeGo = 'https://github.com/HenryQuan/AnimeGo';
+
   /// if update has been checked
   bool hasUpdate = false;
   /// A flag to check if cookie is necessary

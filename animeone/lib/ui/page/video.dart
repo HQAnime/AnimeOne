@@ -1,12 +1,9 @@
 import 'dart:io';
 
 import 'package:animeone/core/anime/AnimeVideo.dart';
-import 'package:animeone/core/parser/VideoSourceParser.dart';
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import 'package:video_player/video_player.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
   
@@ -18,16 +15,8 @@ class Video extends StatefulWidget {
 
 }
 class _VideoState extends State<Video> {
-  VideoPlayerController videoController;
-  ChewieController chewie;
-  VideoSourceParser parser;
-  String downloadLink;
   final isIOS = Platform.isIOS;
-  bool canUseChewie = false;
-  bool isLoading = true;
-
-  /// How fast user could adjust the video
-  final adjustmentSpeed = 20;
+  bool loading = true;
 
   @override
   void initState() {
@@ -40,44 +29,6 @@ class _VideoState extends State<Video> {
     ]);
     // Fullscreen mode
     SystemChrome.setEnabledSystemUIOverlays([]);
-  
-    // Just use the native player for IOS
-    if (!isIOS) {
-      this.parser = new VideoSourceParser(widget.video.video);
-      this.parser.downloadHTML().then((body) {
-        String link = this.parser.parseHTML(body);
-        if (link != null) {
-          this.downloadLink = link;
-          setState(() {
-            this.canUseChewie = true;
-            this.videoController = VideoPlayerController.network(link);
-            this.chewie = ChewieController(
-              videoPlayerController: videoController,
-              allowedScreenSleep: false,
-              aspectRatio: 16 / 9,
-              autoPlay: true,
-              showControls: true,
-              showControlsOnInitialize: true,
-              errorBuilder: (context, msg) {
-                return Text(
-                  '無法加載視頻\n請截圖并且聯係開發者\n鏈接:$link\n\n$msg', 
-                  style: TextStyle(color: Colors.white), 
-                  textAlign: TextAlign.center
-                );
-              },
-              looping: false,
-            );
-          });
-        }
-        setState(() {
-          this.isLoading = false;
-        });
-      });
-    } else {
-      setState(() {
-        this.isLoading = false;
-      });
-    }
   }
 
   @override
@@ -92,88 +43,50 @@ class _VideoState extends State<Video> {
     // Reset UI overlay
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
 
-    this.disposeThis();
     super.dispose();
-  }
-
-  void disposeThis() {
-    if (this.chewie != null) {
-      // It might not be used
-      this.videoController.dispose();
-      this.chewie.dispose();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (this.isLoading) {
-      // Still loading
+    // Load webpage in app
+    return Scaffold(
+      appBar: isIOS ? AppBar() : null,
+      body: Container(
+        color: Colors.black,
+        child: buildBody(),
+      ),
+    );
+  }
+
+  Widget buildBody() {
+    return Stack(
+      children: <Widget>[
+        Center(
+          child: AspectRatio(
+            aspectRatio: 16 / 9,
+            child: WebView(
+              onPageFinished: (url) {
+                print('done');
+                setState(() {
+                  loading = false;
+                });
+              },
+              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
+              initialUrl: widget.video.video,
+              javascriptMode: JavascriptMode.unrestricted,
+            ),
+          ),
+        ),
+        buildLoading()
+      ],
+    );
+  }
+
+  Widget buildLoading() {
+    if (loading) {
       return Center(
         child: CircularProgressIndicator(),
       );
-    } else if (this.canUseChewie) {
-      // Use the player
-      return Scaffold(
-        backgroundColor: Colors.black,
-        body: this.renderBody(),
-      );
-    } else {
-      // Load webpage in app
-      return WebviewScaffold(
-        appBar: isIOS ? AppBar() : null,
-        url: widget.video.video,
-        withZoom: false,
-        withLocalStorage: true,
-        hidden: true,
-        initialChild: Container(
-          child: this.renderIndicator()
-        ),
-      );
-    }
-  }
-
-  renderBody() {
-    if (this.chewie != null) {
-      return Stack(
-        children: <Widget>[
-          Expanded(
-            child: Chewie(
-              controller: chewie,
-            ),
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onDoubleTap: () => this.updatePotision(false)
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onDoubleTap: () => this.updatePotision(true)
-                ),
-              ),
-            ],
-          )
-        ],
-      );
-    } else {
-      return this.renderIndicator();
-    }
-  }
-
-  /// Update current position (forward or backward)
-  updatePotision(bool forward) {
-    // this.videoController.position.then((value) {
-    //   // Don't need to care about whether it is zero or max length
-    //   final adjustment = Duration(seconds: this.adjustmentSpeed);
-    //   this.chewie.seekTo(forward ? value + adjustment : value - adjustment);
-    // });
-  }
-
-  renderIndicator() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
+    } else return SizedBox.shrink();
   }
 }

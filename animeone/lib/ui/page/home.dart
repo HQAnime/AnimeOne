@@ -1,6 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/component/EmailButton.dart';
-import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';

@@ -22,7 +22,7 @@ class _VideoState extends State<Video> {
   ChewieController chewie;
   VideoSourceParser parser;
   String downloadLink;
-  final isIOS = Platform.isIOS;
+  final isIOS = !Platform.isIOS;
   bool canUseChewie = false;
   bool isLoading = true;
 
@@ -116,7 +116,6 @@ class _VideoState extends State<Video> {
       return Scaffold(
         backgroundColor: Colors.black,
         body: this.renderBody(),
-        bottomNavigationBar: this.renderClose(),
       );
     } else {
       // Load webpage in app
@@ -130,28 +129,6 @@ class _VideoState extends State<Video> {
           child: this.renderIndicator()
         ),
       );
-    }
-  }
-
-  /// Only render a close button for IOS
-  renderClose() {
-    if (Platform.isIOS) {
-      return BottomAppBar(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: IconButton(
-                icon: Icon(Icons.close),
-                tooltip: '關閉視頻',
-                onPressed: () => Navigator.pop(context),
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      // return nothing
-      return SizedBox.shrink();
     }
   }
 

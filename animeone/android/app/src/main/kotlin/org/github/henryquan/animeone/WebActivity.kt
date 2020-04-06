@@ -33,7 +33,7 @@ class WebActivity : AppCompatActivity() {
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
-        val cookie = CookieManager.getInstance().getCookie(url)
+        val cookie = CookieManager.getInstance().getCookie("https://anime1.me")
         val main = Intent(this.activity, MainActivity::class.java)
         main.putExtra("cookie", cookie)
         this.activity.setResult(1111, main)

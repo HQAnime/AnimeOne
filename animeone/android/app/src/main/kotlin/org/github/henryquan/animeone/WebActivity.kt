@@ -8,11 +8,11 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 
 class WebActivity : AppCompatActivity() {
-    private val homePage = "https://anime1.me"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.webview)
+
 
         // Load the webview loads anime1.me
         val webview = findViewById<WebView>(R.id.webview)
@@ -20,8 +20,9 @@ class WebActivity : AppCompatActivity() {
         // Set up client to get cookie
         val client = WebClient(this)
         webview.webViewClient = client
-        // Load homepage
-        webview.loadUrl(homePage)
+        // Load whichever page that needs cookie
+        val link = intent.getStringExtra("link")
+        webview.loadUrl(link)
     }
 
     override fun onBackPressed() {

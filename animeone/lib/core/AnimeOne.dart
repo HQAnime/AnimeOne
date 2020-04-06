@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animeone/core/GlobalData.dart';
 import 'package:flutter/services.dart';
 
 /// This class communicates with native code
@@ -12,9 +13,9 @@ class AnimeOne {
     return Platform.isAndroid;
   }
 
-  Future _invokeMethod(String method) {
+  Future _invokeMethod(String method, [dynamic arguments]) {
     if (this._isSupported()) {
-      return nativeChannel.invokeMethod(method);
+      return nativeChannel.invokeMethod(method, arguments);
     }
 
     return null;
@@ -27,6 +28,6 @@ class AnimeOne {
 
   /// Popup native browser and get cookie from webview
   Future getAnimeOneCookie() {
-    return this._invokeMethod('getAnimeOneCookie');
+    return this._invokeMethod('getAnimeOneCookie', {'link': GlobalData.requestCookieLink});
   }
 }

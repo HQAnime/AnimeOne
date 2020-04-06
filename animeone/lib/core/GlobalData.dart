@@ -62,9 +62,12 @@ class GlobalData {
   List<AnimeRecent> getRecentList() => this._recentList;
   // Saved cookie for animeon
   String _cookie;
-  String getCookie() => _cookie;
+  /// Use videopassword as the default cookie
+  String getCookie() => _cookie ?? 'videopassword=0';
   void updateCookie(String cookie) {
     _cookie = cookie;
+    // Add video password if not included
+    if (!cookie.contains('videopassword')) _cookie += '; videopassword=0';
     prefs.setString(oneCookie, jsonEncode(cookie));
   }
   // Age restriction
@@ -176,7 +179,6 @@ class GlobalData {
 
       this._introductory = AnimeVideo.fromJson(jsonDecode(prefs.getString(scheduleIntroVide)));
     }
-
 
     // Load recent anime, you always need to load this
     await this.getRecentAnime();

@@ -14,9 +14,9 @@ abstract class BasicParser {
   /// Get the link for current page
   String getLink() => this._link;
 
-  BasicParser(String link, {String cookie = 'videopassword=0'}) {
+  BasicParser(String link) {
     this._link = link;
-    this._cookie = cookie;
+    this._cookie = GlobalData().getCookie();
     print(this._link);
   }
 
@@ -24,7 +24,8 @@ abstract class BasicParser {
   Future<Document> downloadHTML() async {
     try {
       Map<String, String> requestHeaders = {
-        'Cookie': _cookie,
+        'cookie': _cookie,
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36',
       };
       
       final response = await http.get(

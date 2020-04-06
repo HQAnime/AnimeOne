@@ -22,6 +22,11 @@ class MainActivity: FlutterActivity() {
             if (call.method == "getAnimeOneCookie") {
                 // Grab the cookie for anime1.me
                 val webIntent = Intent(this.context, WebActivity::class.java)
+
+                // Grab the link, we need to request
+                val link = call.argument<String>("link")
+                webIntent.putExtra("link", link)
+
                 startActivityForResult(webIntent, webRequestCode)
             } else if (call.method == "restartAnimeOne") {
                 this.finish()

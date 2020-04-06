@@ -1,3 +1,4 @@
+import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/component/EmailButton.dart';
 import 'package:animeone/ui/page/latest.dart';
@@ -157,6 +158,57 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     GlobalData().checkGithubUpdate().then((_) {
                       GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
+                  },
+                ),
+                Text('或者',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                FlatButton(
+                  child: Text('嘗試修復問題 (Beta)', style: TextStyle(fontWeight: FontWeight.bold)),
+                  onPressed: () {
+                    if (GlobalData.requestCookieLink.length > 0) {
+                      final channel = AnimeOne();
+                      channel.getAnimeOneCookie().then((cookie) {
+                        if (cookie is String && cookie.length > 0 && cookie.contains('cf_clearance')) {
+                          print(cookie);
+                          GlobalData().updateCookie(cookie);
+                          showDialog(
+                            context: context,
+                            builder: (c) => AlertDialog(
+                              title: Text('修復成功'),
+                              content: Text('重新啓動 APP？'),
+                              actions: <Widget>[
+                                FlatButton(onPressed: () => channel.restartApp(), child: Text('好的')),
+                                FlatButton(onPressed: () => Navigator.pop(context), child: Text('之後')),
+                              ],
+                            )
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (c) => AlertDialog(
+                              title: Text('修復失敗'),
+                              content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
+                              actions: <Widget>[
+                                FlatButton(onPressed: () => Navigator.pop(context), child: Text('好的')),
+                              ],
+                            )
+                          );
+                        }
+                      });
+                    } else {
+                      // This should be a request error
+                      showDialog(
+                        context: context,
+                        builder: (c) => AlertDialog(
+                          title: Text('沒有發現任何問題'),
+                          content: Text('應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。'),
+                          actions: <Widget>[
+                            FlatButton(onPressed: () => Navigator.pop(context), child: Text('好的')),
+                          ],
+                        )
+                      );
+                    }
                   },
                 ),
               ],

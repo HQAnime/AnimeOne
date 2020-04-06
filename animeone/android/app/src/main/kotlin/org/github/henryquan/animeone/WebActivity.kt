@@ -47,9 +47,12 @@ class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
         println(url)
         println(linkEncoded)
         if (link == url) return
+
+        val userAgent = view?.settings?.userAgentString ?: ""
         val cookie = CookieManager.getInstance().getCookie(url)
         val main = Intent(this.activity, MainActivity::class.java)
         main.putExtra("cookie", cookie)
+        main.putExtra("agent", userAgent)
         this.activity.setResult(1111, main)
         this.activity.finish()
     }

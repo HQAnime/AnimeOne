@@ -27,7 +27,6 @@ abstract class BasicParser {
       Map<String, String> requestHeaders = {
         'cookie': _cookie,
         'user-agent': 'Mozilla/5.0 (Linux; Android 9; SM-A705FN) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36',
-        'referer': 'https://anime1.me/',
       };
       
       final response = await http.get(

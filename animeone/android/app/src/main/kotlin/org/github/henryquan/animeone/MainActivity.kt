@@ -41,7 +41,8 @@ class MainActivity: FlutterActivity() {
         if (this.methodResult != null) {
             if (resultCode == this.webRequestCode) {
                 val cookie = data?.getStringExtra("cookie")
-                this.methodResult.success(cookie)
+                val agent = data?.getStringExtra("agent")
+                this.methodResult.success(listOf(cookie, agent))
             }
         }
     }

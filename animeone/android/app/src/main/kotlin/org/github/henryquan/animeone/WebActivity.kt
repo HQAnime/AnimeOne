@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import java.net.URLEncoder
 
 lateinit var link: String
 
@@ -42,7 +42,10 @@ class WebActivity : AppCompatActivity() {
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
     override fun onPageFinished(view: WebView?, url: String?) {
+        val linkEncoded = URLEncoder.encode(link, "utf-8").replace("%2F", "/").replace("%3A", ":")
+        if (url == linkEncoded) return
         println(url)
+        println(linkEncoded)
         if (link == url) return
         val cookie = CookieManager.getInstance().getCookie(url)
         val main = Intent(this.activity, MainActivity::class.java)

@@ -68,7 +68,7 @@ class GlobalData {
     _cookie = cookie;
     // Add video password if not included
     if (!cookie.contains('videopassword')) _cookie += '; videopassword=0';
-    prefs.setString(oneCookie, jsonEncode(cookie));
+    prefs.setString(oneCookie, cookie);
   }
   // Age restriction
   bool _showAgeAlert = false;
@@ -111,6 +111,7 @@ class GlobalData {
     String savedCookie = prefs.getString(oneCookie);
     if (savedCookie != null) {
       this._cookie = savedCookie;
+      print('Cookie - $savedCookie');
     }
 
     // Check if this is the new version

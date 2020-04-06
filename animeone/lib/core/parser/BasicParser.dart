@@ -17,7 +17,7 @@ abstract class BasicParser {
   BasicParser(String link) {
     this._link = link;
     this._cookie = GlobalData().getCookie();
-    // this._cookie = '__cfduid=dd2dd11780abee190ac8692be811e4cf51567137513; _ga=GA1.2.485272290.1567142333; _gid=GA1.2.294024284.1586136978; cf_clearance=6a4e4b82b234f077e508b8be12b1b61442eac50c-1586136988-0-150; videopassword=0; _gat=1';
+    // this._cookie = '__cfduid=d51d3b47667b64ea1c0278ca1baec11f41583638164; _ga=GA1.2.1712035882.1586138123; _gid=GA1.2.378879752.1586138123; cf_clearance=b92f05ead855fb1ec43fdad0205f81c366c23ce0-1586138131-0-150; videopassword=0';
     print(this._link);
   }
 
@@ -26,7 +26,7 @@ abstract class BasicParser {
     try {
       Map<String, String> requestHeaders = {
         'cookie': _cookie,
-        'user-agent': 'Mozilla/5.0 (Linux; Android 9; ONEPLUS A5000) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.119 Mobile Safari/537.36',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 9; AOSP on IA Emulator Build/PSR1.180720.117) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Mobile Safari/537.36',
         'referer': 'https://anime1.me/',
       };
       
@@ -39,7 +39,6 @@ abstract class BasicParser {
         return parse(response.body);
       } else if (response.statusCode == 503) {
         // Need to get cookie
-        print(response.body);
         GlobalData.requestCookieLink = this._link;
         return null;
       } else {

@@ -1,13 +1,20 @@
 <div align="center">
 <img align='center' src="https://raw.githubusercontent.com/HenryQuan/AnimeOne/master/design/logo/Logo.png" width="200px" height="200px" />
 
-<h1>AnimeOne</h1>
-
-***AnimeOne不是官方 APP***。這是我使用Flutter製作的第三方 APP。第一個 React Native 的 APP 是用來看動漫的，第一個Flutter的APP也是用來看動漫的。これは運命かもしれない。不久之前，我學習了 [COMP2511](https://www.handbook.unsw.edu.au/undergraduate/courses/2019/COMP2511/)，正好用這個App來練手。
-總的來講，Flutter 非常好用，比起 React Native 我覺得最大的進步就是編譯方面。我沒有一次會因爲編譯不通過而苦惱。大多數時間可以專心寫代碼而且調試也非常棒。但是 APP 應該是無法上架應用商店的，我之後也許會和站長交流一下。
+<h1>永遠のAnimeOne</h1>
+AnimeOne 並不是官方的應用程式，這只是我個人的開源項目，因為網站已經關閉所以開發已終止。
 
 If you prefer watching anime with English subtitles, you might consider [AnimeGo](https://github.com/HenryQuan/AnimeGo).
 </div>
+
+<details>
+<summary>
+<i>展开全部</i>
+</summary>
+
+# 簡介
+***AnimeOne不是官方 APP***。這是我使用Flutter製作的第三方 APP。第一個 React Native 的 APP 是用來看動漫的，第一個Flutter的APP也是用來看動漫的。これは運命かもしれない。不久之前，我學習了 [COMP2511](https://www.handbook.unsw.edu.au/undergraduate/courses/2019/COMP2511/)，正好用這個App來練手。
+總的來講，Flutter 非常好用，比起 React Native 我覺得最大的進步就是編譯方面。我沒有一次會因爲編譯不通過而苦惱。大多數時間可以專心寫代碼而且調試也非常棒。
 
 ## 功能
 - 最新動畫
@@ -74,3 +81,5 @@ GitHub 會紀錄 APK 下載次數以及頁面觀看次數和 Clone 次數。
 - 給 Repo 一顆星星
 - 上面的 Sponsor 按鈕（捐助）
 - App 内的捐助
+
+</details>

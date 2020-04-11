@@ -1,4 +1,4 @@
-import 'package:animeone/ui/page/WebsiteClosed.dart';
+import 'WebsiteClosed.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     // ));
 
     return MaterialApp(
-      title: 'AnimeOne',
+      title: '永遠のAnimeOne',
       theme: lightTheme,
       darkTheme: darkTheme,
       home: WebsiteClosed(),

@@ -15,7 +15,7 @@ class AnimeScheduleParser extends BasicParser {
     final tables = body.getElementsByTagName('table');
     final tbody = tables.first.nodes[1];
     tbody.nodes.forEach((tr) {
-      // Anime1.me is also one line (so check the length to prevent it)
+      // anime1.cc is also one line (so check the length to prevent it)
       if (tr.nodes.length > 1) {
         // It is in order so use an index to indicate the date
         int i = 0;

@@ -146,7 +146,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 FlatButton(
-                  child: Text('使用瀏覽器打開 anime1.me'),
+                  child: Text('使用瀏覽器打開 anime1.cc'),
                   onPressed: () => launch(GlobalData.domain),
                 ),
                 Text('或者',
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         context: context,
                         builder: (c) => AlertDialog(
                           title: Text('沒有發現任何問題'),
-                          content: Text('應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。'),
+                          content: Text('應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.cc 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。'),
                           actions: <Widget>[
                             FlatButton(onPressed: () => Navigator.pop(context), child: Text('好的')),
                           ],

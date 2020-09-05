@@ -16,14 +16,14 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.webview)
-        link = intent.getStringExtra("link")
+        link = intent.getStringExtra("link")!!
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().removeAllCookies {
                 println("Cookies are removed? $it")
             }
         }
 
-        // Load the webview loads anime1.me
+        // Load the webview loads anime1.cc
         val webview = findViewById<WebView>(R.id.webview)
         webview.settings.javaScriptEnabled = true
         webview.clearCache(false)

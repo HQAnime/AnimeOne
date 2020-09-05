@@ -18,8 +18,8 @@ import 'anime/AnimeInfo.dart';
 /// A class has constants and also a list of all anime
 class GlobalData {
 
-  static final domain = 'https://anime1.me/';
-  static final version = '1.0.9';
+  static final domain = 'https://anime1.cc/';
+  static final version = '1.1.0';
 
   static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
   static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
@@ -91,7 +91,7 @@ class GlobalData {
     return _instance;
   }
 
-  /// Get data from anime1.me if necessary
+  /// Get data from anime1.cc if necessary
   Future init() async {
     bool shouldUpdate = false;
 
@@ -168,17 +168,20 @@ class GlobalData {
       this._resetList();
 
       // Load everything from storage
-      List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList));
+      List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList) ?? "[]");
       savedAnimeList.forEach((json) {
         this._animeList.add(AnimeInfo.fromJson(json)); 
       });
 
-      List<dynamic> savedScheduleList = jsonDecode(prefs.getString(animeScedule));
+      List<dynamic> savedScheduleList = jsonDecode(prefs.getString(animeScedule) ?? "[]");
       savedScheduleList.forEach((json) {
         this._animeScheduleList.add(AnimeSchedule.fromJson(json)); 
       });
 
-      this._introductory = AnimeVideo.fromJson(jsonDecode(prefs.getString(scheduleIntroVide)));
+      final introductionString = prefs.getString(scheduleIntroVide);
+      if (introductionString != null) {
+        this._introductory = AnimeVideo.fromJson(jsonDecode(introductionString));
+      }
     }
 
     // Load recent anime, you always need to load this
@@ -217,7 +220,7 @@ class GlobalData {
 
   /// Load recent anime
   Future getRecentAnime() async {
-    this._recentParser = new AnimeRecentParser(GlobalData.domain + '關於');
+    this._recentParser = new AnimeRecentParser(GlobalData.domain);
     final body = await this._recentParser.downloadHTML();
     this._recentList = this._recentParser.parseHTML(body);
   }

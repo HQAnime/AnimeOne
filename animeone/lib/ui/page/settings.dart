@@ -34,7 +34,7 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    launch('https://anime1.me/%e9%97%9c%e6%96%bc');
+                    launch('https://anime1.cc/%e9%97%9c%e6%96%bc');
                   },
                   title: Text('官方網站 - 關於'),
                   subtitle: Text('官方網站的聯繫方式和捐款'),

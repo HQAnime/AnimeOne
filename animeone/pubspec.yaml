@@ -1,5 +1,5 @@
 name: animeone
-description: An unofficial app for anime1.me
+description: An unofficial app for anime1.cc
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -11,7 +11,7 @@ description: An unofficial app for anime1.me
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.9+1
+version: 1.1.0+1
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -22,14 +22,14 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.0
   
-  http: ^0.12.0+4
+  http: ^0.12.2
   html: ^0.14.0+3
-  url_launcher: ^5.4.2
-  shared_preferences: ^0.5.6+2
-  share: ^0.6.3+6
-  webview_flutter: ^0.3.19+9
+  url_launcher: ^5.5.2
+  shared_preferences: ^0.5.10
+  share: ^0.6.5
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

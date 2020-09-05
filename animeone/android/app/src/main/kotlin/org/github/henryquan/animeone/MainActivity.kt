@@ -20,7 +20,7 @@ class MainActivity: FlutterActivity() {
             this.methodResult = result
             // Note: this method is invoked on the main thread
             if (call.method == "getAnimeOneCookie") {
-                // Grab the cookie for anime1.me
+                // Grab the cookie for anime1.cc
                 val webIntent = Intent(this.context, WebActivity::class.java)
 
                 // Grab the link, we need to request

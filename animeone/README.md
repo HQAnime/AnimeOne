@@ -1,6 +1,6 @@
 # animeone
 
-An unofficial app for anime1.me
+An unofficial app for anime1.cc
 
 ## How to run it
 1. Setup flutter on your computer

@@ -5,9 +5,9 @@ import 'package:url_launcher/url_launcher.dart';
 /// This class has Github app version and its download link
 class GithubUpdate {
 
-  String version;
-  String link;
-  String whatsnew;
+  String? version;
+  String? link;
+  String? whatsnew;
 
   GithubUpdate.fromJson(Map<String, dynamic> json) : 
     version = json['version'],
@@ -37,7 +37,7 @@ class GithubUpdate {
           // Has update now
           return AlertDialog(
             title: Text('v$version'),
-            content: Text(whatsnew + extraInfo),
+            content: Text(whatsnew! + extraInfo),
             actions: <Widget>[
               FlatButton(
                 child: Text('關閉'),
@@ -47,7 +47,7 @@ class GithubUpdate {
               isAndroid ? FlatButton(
                 child: Text('立即下載'),
                 onPressed: () {
-                  launch(link);
+                  launch(link!);
                   Navigator.of(context).pop();
                 },
               ) : SizedBox.shrink(),

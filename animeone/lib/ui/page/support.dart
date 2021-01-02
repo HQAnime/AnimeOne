@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 /// Support class
 class Support extends StatelessWidget {
 
-  Support({Key key}) : super(key: key);
+  Support({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -7,11 +7,10 @@ import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
 class AnimeEntry extends AnimeBasic {
-
-  String postDate;
-  String allEpisodes;
-  String nextEpisode;
-  AnimeVideo videoLink;
+  late String postDate;
+  String? allEpisodes;
+  String? nextEpisode;
+  AnimeVideo? videoLink;
 
   AnimeEntry(Element e) : super.fromJson(null) {
     try {
@@ -43,7 +42,8 @@ class AnimeEntry extends AnimeBasic {
           } else {
             // It is a YouTube preview
             Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-            final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
+            final link =
+                GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
             this.videoLink = new AnimeVideo(link);
           }
         }
@@ -53,10 +53,10 @@ class AnimeEntry extends AnimeBasic {
       e.getElementsByTagName('a').forEach((n) {
         if (n.text.contains('全集')) {
           // Get all episode link
-          this.allEpisodes = GlobalData.domain + n.attributes['href'];
+          this.allEpisodes = GlobalData.domain + n.attributes['href']!;
         } else if (n.text.contains('下一集')) {
           // Get next episode link
-          this.nextEpisode = GlobalData.domain + n.attributes['href'];
+          this.nextEpisode = GlobalData.domain + n.attributes['href']!;
         }
       });
     } catch (e) {
@@ -85,7 +85,7 @@ class AnimeEntry extends AnimeBasic {
     } else if (dayDiff < 28) {
       enhanced = '${(dayDiff / 7).round()} 周前';
     } else if (dayDiff < 365) {
-      enhanced = '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
+      enhanced = '${(dayDiff / 30).toStringAsFixed(1)} 個月前';
     } else {
       enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
     }
@@ -95,7 +95,7 @@ class AnimeEntry extends AnimeBasic {
 
   /// If next episode is avaible
   bool hasNextEpisode() {
-    return !this.nextEpisode.endsWith('/?p=');
+    return nextEpisode != null && !nextEpisode!.endsWith('/?p=');
   }
 
   /// In certain regions, password is needed due to copyright protection
@@ -103,6 +103,5 @@ class AnimeEntry extends AnimeBasic {
     return this.videoLink == null;
   }
 
-  AnimeVideo getVideo() => this.videoLink;
-
+  AnimeVideo? getVideo() => this.videoLink;
 }

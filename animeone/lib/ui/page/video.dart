@@ -6,14 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
-  
-  final AnimeVideo video;
-  Video({Key key, @required this.video}) : super(key: key);
+  final AnimeVideo? video;
+  Video({Key? key, required this.video}) : super(key: key);
 
   @override
   _VideoState createState() => _VideoState();
-
 }
+
 class _VideoState extends State<Video> {
   final isIOS = Platform.isIOS;
   bool loading = true;
@@ -72,7 +71,7 @@ class _VideoState extends State<Video> {
                 });
               },
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-              initialUrl: widget.video.video,
+              initialUrl: widget.video?.video,
               javascriptMode: JavascriptMode.unrestricted,
             ),
           ),
@@ -87,6 +86,8 @@ class _VideoState extends State<Video> {
       return Center(
         child: CircularProgressIndicator(),
       );
-    } else return SizedBox.shrink();
+    } else {
+      return SizedBox.shrink();
+    }
   }
 }

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class Schedule extends StatefulWidget {
   
-  Schedule({Key key}) : super(key: key);
+  Schedule({Key? key}) : super(key: key);
 
   @override
   _ScheduleState createState() => _ScheduleState();
@@ -19,11 +19,11 @@ class Schedule extends StatefulWidget {
 class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin {
 
   final global = new GlobalData();
-  String link;
-  AnimeVideo video;
-  List<AnimeSchedule> schedules;
+  String? link;
+  AnimeVideo? video;
+  late List<AnimeSchedule> schedules;
 
-  TabController controller;
+  late TabController controller;
   final List<Tab> tabs = <Tab>[
     Tab(text: '一'),
     Tab(text: '二'),

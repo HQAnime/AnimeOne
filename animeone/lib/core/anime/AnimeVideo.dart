@@ -5,13 +5,13 @@ import 'package:url_launcher/url_launcher.dart';
 /// This class save the video link and randomly choose one of the cover images
 class AnimeVideo {
 
-  String video;
-  int image;
+  String? video;
+  int? image;
 
   // From 3 -> 9
   final _covers = List.generate(7, (i) => i + 3);
 
-  AnimeVideo(String video) {
+  AnimeVideo(String? video) {
     this.video = video;
     this.image = _covers[Random().nextInt(5)];
   }
@@ -27,12 +27,12 @@ class AnimeVideo {
   };
 
   void launchURL() {
-    launch(this.video);
+    launch(this.video!);
   }
 
   /// Check if this is a youtube link
   bool isYoutube() {
-    return this.video.contains('youtube');
+    return this.video!.contains('youtube');
   }
 
 }

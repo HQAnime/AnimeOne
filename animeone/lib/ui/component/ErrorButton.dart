@@ -5,9 +5,9 @@ import 'package:flutter/widgets.dart';
 
 class ErrorButton extends StatelessWidget {
 
-  final String msg;
+  final String? msg;
   final global = new GlobalData();
-  ErrorButton({Key key, this.msg}) : super(key: key);
+  ErrorButton({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ErrorButton extends StatelessWidget {
       return MaterialButton(
         onPressed: () {
           final one = AnimeOne();
-          one.getAnimeOneCookie().then((cookie) {
+          one.getAnimeOneCookie()!.then((cookie) {
             String cookieStr = cookie;
             print(cookieStr);
             if (cookieStr.contains('__cfduid')) {

@@ -13,7 +13,7 @@ class AnimeScheduleParser extends BasicParser {
     List<AnimeSchedule> schedules = [];
 
     final tables = body.getElementsByTagName('table');
-    final tbody = tables.first.nodes[1];
+    final Node tbody = tables.first.nodes[1];
     tbody.nodes.forEach((tr) {
       // anime1.me is also one line (so check the length to prevent it)
       if (tr.nodes.length > 1) {
@@ -30,7 +30,7 @@ class AnimeScheduleParser extends BasicParser {
   }
 
   /// get AnimeVideo from schedule (there might be one)
-  AnimeVideo parseIntroductoryVideo(Document body) {
+  AnimeVideo? parseIntroductoryVideo(Document body) {
     final frames = body.getElementsByTagName('iframe');
     if (frames.length == 0) {
       return null;

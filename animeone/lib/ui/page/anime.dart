@@ -13,10 +13,10 @@ import 'package:flutter/material.dart';
 /// - Load next page if possible
 class Anime extends StatefulWidget {
   
-  final String link;
-  final bool seasonal;
+  final String? link;
+  final bool? seasonal;
 
-  Anime({Key key, @required this.link, this.seasonal}): super(key: key);
+  Anime({Key? key, required this.link, this.seasonal}): super(key: key);
 
   @override
   _AnimeState createState() => _AnimeState();
@@ -28,7 +28,7 @@ class _AnimeState extends State<Anime> {
   final global = new GlobalData();
 
   // Always start from page 1
-  String fullLink = '';
+  String? fullLink = '';
   bool loading = true;
   // paging
   int page = 1;
@@ -39,9 +39,9 @@ class _AnimeState extends State<Anime> {
   String hasError = '';
 
   String title = '加載失敗了...';
-  AnimePageParser parser;
+  late AnimePageParser parser;
   List<AnimeEntry> entries = [];
-  ScrollController controller;
+  ScrollController? controller;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _AnimeState extends State<Anime> {
       this.canLoadMore = false;
     });
 
-    String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/${this.page}';
+    String? rLink = this.fullLink == '' ? widget.link : this.fullLink! + '/page/${this.page}';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
@@ -69,7 +69,7 @@ class _AnimeState extends State<Anime> {
         });
       } else {
         // Category also contains cat so you need to make it longer
-        if (widget.link.contains('/?cat=')) {
+        if (widget.link!.contains('/?cat=')) {
           this.fullLink = this.parser.getFullLink(d);
         } else {
           this.fullLink = widget.link;
@@ -198,7 +198,7 @@ class _AnimeState extends State<Anime> {
 
   /// Load more anime here
   void loadMore() {
-    if (controller.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData) {
+    if (controller!.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData) {
       if (canLoadMore) {
         this.page += 1;
         this._getEntry();

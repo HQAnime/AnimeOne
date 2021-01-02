@@ -10,7 +10,7 @@ import 'package:html/dom.dart';
 /// They have a link to all episodes or next episode
 class AnimePageParser extends BasicParser {
   
-  AnimePageParser(String link) : super(link);
+  AnimePageParser(String? link) : super(link);
 
   @override
   List<AnimeEntry> parseHTML(Document body) {
@@ -32,7 +32,7 @@ class AnimePageParser extends BasicParser {
   }
 
   /// Get full link instead of /cat for going toi next page
-  String getFullLink(Document body) {
+  String? getFullLink(Document body) {
     final link = body.getElementsByClassName('cat-links').first;
     return link.nodes[1].attributes['href'];
   }

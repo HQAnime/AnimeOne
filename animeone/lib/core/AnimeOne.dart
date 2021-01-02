@@ -13,7 +13,7 @@ class AnimeOne {
     return Platform.isAndroid;
   }
 
-  Future _invokeMethod(String method, [dynamic arguments]) {
+  Future? _invokeMethod(String method, [dynamic arguments]) {
     if (this._isSupported()) {
       return nativeChannel.invokeMethod(method, arguments);
     }
@@ -22,12 +22,12 @@ class AnimeOne {
   }
 
   /// Restart the app
-  Future restartApp() {
+  Future? restartApp() {
     return this._invokeMethod('restartAnimeOne');
   }
 
   /// Popup native browser and get cookie from webview
-  Future getAnimeOneCookie() {
+  Future? getAnimeOneCookie() {
     return this._invokeMethod('getAnimeOneCookie', {'link': GlobalData.requestCookieLink});
   }
 }

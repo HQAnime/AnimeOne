@@ -14,7 +14,7 @@ description: An unofficial app for anime1.me
 version: 1.1.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -29,7 +29,7 @@ dependencies:
   url_launcher: ^5.5.2
   shared_preferences: ^0.5.10
   share: ^0.6.5
-  webview_flutter: ^0.3.22+1
+  webview_flutter: ^1.0.7
 
 dev_dependencies:
   flutter_test:

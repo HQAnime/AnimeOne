@@ -16,7 +16,7 @@ class WebActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.webview)
-        link = intent.getStringExtra("link")
+        link = intent.getStringExtra("link")!!
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().removeAllCookies {
                 println("Cookies are removed? $it")

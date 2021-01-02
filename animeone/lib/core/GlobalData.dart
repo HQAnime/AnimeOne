@@ -37,7 +37,7 @@ class GlobalData {
   static final lastUpdate = 'AnimeOne:LastUpdate';
   static final animeList = 'AnimeOne:AnimeList';
   static final animeScedule = 'AnimeOne:AnimeScedule';
-  static final scheduleIntroVide = 'AnimeOne:SceduleIntroVideo';
+  static final scheduleIntroVideo = 'AnimeOne:SceduleIntroVideo';
   static final oneCookie = 'AnimeOne:OneCookie';
   static final ageRestriction = 'AnimeOne:AgeRestriction';
 
@@ -160,7 +160,7 @@ class GlobalData {
       // Load anime schedule
       await this._getAnimeScedule();
       prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
-      prefs.setString(scheduleIntroVide, jsonEncode(this._introductory));
+      prefs.setString(scheduleIntroVideo, jsonEncode(this._introductory));
 
     } else {
       // if anime list has been loaded but somehow, it failed
@@ -178,8 +178,9 @@ class GlobalData {
         this._animeScheduleList.add(AnimeSchedule.fromJson(json)); 
       });
 
-      final introductionString = prefs.getString(scheduleIntroVide);
-      if (introductionString != null) {
+      final introductionString = prefs.getString(scheduleIntroVideo);
+      // what ???
+      if (introductionString != null && introductionString != "null") {
         this._introductory = AnimeVideo.fromJson(jsonDecode(introductionString));
       }
     }

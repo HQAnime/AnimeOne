@@ -1,4 +1,3 @@
-import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:html/dom.dart';
 
@@ -9,7 +8,7 @@ class AnimeRecent extends AnimeBasic {
     final anime = tr.firstChild;
     try {
       this.name = anime.text;
-      this.link = GlobalData.domain + anime.attributes['href'].replaceFirst('/', '');
+      this.link = anime.attributes['href'];
     } catch (e) {
       throw new Exception('AnimeRecent - Tr has been changed\n${e.toString()}');
     }

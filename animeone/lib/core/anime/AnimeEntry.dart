@@ -18,7 +18,7 @@ class AnimeEntry extends AnimeBasic {
       // There are rare occasions where you need to enter password
       Node title = e.getElementsByClassName('entry-title')[0].nodes[0];
       this.name = title.text;
-      this.link = title.attributes ['href'];
+      this.link = title.attributes['href'];
 
       Node post = e.getElementsByClassName('entry-date')[0];
       this.postDate = post.text;

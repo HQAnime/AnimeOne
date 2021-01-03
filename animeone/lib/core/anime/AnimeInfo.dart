@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';

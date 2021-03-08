@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:animeone/core/anime/AnimeRecent.dart';
@@ -30,10 +31,10 @@ class GlobalData {
   /// if update has been checked
   bool hasUpdate = false;
   /// A flag to check if cookie is necessary
-  static String requestCookieLink = '';
+  static String? requestCookieLink = '';
 
   // Relating to local data
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   static final lastUpdate = 'AnimeOne:LastUpdate';
   static final animeList = 'AnimeOne:AnimeList';
   static final animeScedule = 'AnimeOne:AnimeScedule';
@@ -52,22 +53,25 @@ class GlobalData {
   List<AnimeInfo> _animeList = [];
   List<AnimeInfo> getAnimeList() => this._animeList;
   // Relating to anime scedule (it doesn't change as well)
-  AnimeVideo _introductory;
-  AnimeVideo getIntroVideo() => this._introductory;
+  AnimeVideo? _introductory;
+  AnimeVideo? getIntroVideo() => this._introductory;
   List<AnimeSchedule> _animeScheduleList = [];
   List<AnimeSchedule> getScheduleList() => this._animeScheduleList;
   // Relating to recent anime
-  AnimeRecentParser _recentParser;
+  late AnimeRecentParser _recentParser;
   List<AnimeRecent> _recentList = [];
   List<AnimeRecent> getRecentList() => this._recentList;
   // Saved cookie for animeon
-  String _cookie;
+  String? _cookie;
   /// Use videopassword as the default cookie
   String getCookie() => _cookie ?? 'videopassword=0';
   void updateCookie(String cookie) {
     _cookie = cookie;
     // Add video password if not included
-    if (!cookie.contains('videopassword')) _cookie += '; videopassword=0';
+    if (!cookie.contains('videopassword')) {
+      _cookie = _cookie! + '; videopassword=0';
+    }
+
     prefs.setString(oneCookie, cookie);
   }
   // Age restriction
@@ -79,8 +83,8 @@ class GlobalData {
   }
 
   // Relating to Github update
-  GithubUpdate _update;
-  GithubUpdate getGithubUpdate() => this._update;
+  GithubUpdate? _update;
+  GithubUpdate? getGithubUpdate() => this._update;
 
   // Singleton pattern 
   GlobalData._init();
@@ -102,20 +106,20 @@ class GlobalData {
     // });
 
     // Whether an age alert shoud be shown
-    String ageAlert = prefs.get(ageRestriction);
+    String? ageAlert = prefs.get(ageRestriction) as String?;
     if (ageAlert == null) {
       this._showAgeAlert = true;
     }
 
     // Get saved cookie
-    String savedCookie = prefs.getString(oneCookie);
+    String? savedCookie = prefs.getString(oneCookie);
     if (savedCookie != null) {
       this._cookie = savedCookie;
       print('Cookie - $savedCookie');
     }
 
     // Check if this is the new version
-    String newVersion = prefs.getString(version);
+    String? newVersion = prefs.getString(version);
     if (newVersion == null) {
       // Only update once when there is a new update
       prefs.setString(version, 'ok');
@@ -123,7 +127,7 @@ class GlobalData {
     }
 
     // Get last updated date
-    String update = prefs.getString(lastUpdate);
+    String? update = prefs.getString(lastUpdate);
     if (update == null) {
       // Init update
       prefs.setString(lastUpdate, DateTime.now().toIso8601String());
@@ -197,7 +201,7 @@ class GlobalData {
   Future checkGithubUpdate() async {
     if (!this.hasUpdate) {
       final parser = new GithubParser(githubRelease);
-      Document body = await parser.downloadHTML();
+      Document? body = await parser.downloadHTML();
       this._update = parser.parseHTML(body);
       this.hasUpdate = true;
     }
@@ -205,7 +209,7 @@ class GlobalData {
 
   Future _getAnimeList() async {
     final parser = new AnimeListParser(domain);
-    Document doc = await parser.downloadHTML();
+    Document? doc = await parser.downloadHTML();
     // Check if it is valid
     if (doc != null) {
       this._animeList = parser.parseHTML(doc);
@@ -227,7 +231,7 @@ class GlobalData {
   }
 
   /// launch wikipedia page for anime
-  void getWikipediaLink(String name) {
+  void getWikipediaLink(String? name) {
     // Somehow I need to encode on IOS but not on Android
     final link = Uri.encodeFull('https://zh.wikipedia.org/w/index.php?search=$name');
     launch(link);
@@ -239,7 +243,7 @@ class GlobalData {
   }
 
   /// send an email to HenryQuan
-  void sendEmail(String extra) {
+  void sendEmail(String? extra) {
     launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra');
   }
 

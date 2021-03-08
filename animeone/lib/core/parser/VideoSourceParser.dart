@@ -6,10 +6,10 @@ class VideoSourceParser extends BasicParser {
   VideoSourceParser(String link) : super(link);
   
   @override
-  String parseHTML(Document body) {
+  String? parseHTML(Document? body) {
     if (body == null) return null;
 
-    String videoSrc;
+    String? videoSrc;
 
     final sources = body.getElementsByTagName('source');
     if (sources.length > 0) {

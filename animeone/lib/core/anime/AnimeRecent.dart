@@ -5,7 +5,7 @@ import 'package:html/dom.dart';
 class AnimeRecent extends AnimeBasic {
 
   AnimeRecent(Node tr) : super.fromJson(null) {
-    final anime = tr.firstChild;
+    final anime = tr.firstChild!;
     try {
       this.name = anime.text;
       this.link = anime.attributes['href'];

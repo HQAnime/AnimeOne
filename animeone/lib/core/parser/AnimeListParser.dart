@@ -8,7 +8,7 @@ class AnimeListParser extends BasicParser {
   AnimeListParser(String link) : super(link);
   
   @override
-  List<AnimeInfo> parseHTML(Document body) {
+  List<AnimeInfo> parseHTML(Document? body) {
     List<AnimeInfo> list = [];
 
     final elements = body.getElementsByClassName("row-hover");

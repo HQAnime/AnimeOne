@@ -3,7 +3,7 @@ import 'package:animeone/core/GlobalData.dart';
 /// This class asks for DateTime to get a string to indicate seasonal anime
 class AnimeSeason {
 
-  DateTime _date;
+  late DateTime _date;
   final _seasons = ['冬季', '春季', '夏季', '秋季'];
   
   AnimeSeason(DateTime date) {

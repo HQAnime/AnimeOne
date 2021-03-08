@@ -102,7 +102,7 @@ class Settings extends StatelessWidget {
                   subtitle: Text(GlobalData.version),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {
-                      GlobalData().getGithubUpdate().checkUpdate(context, showAlertWhenNoUpdate: true);
+                      GlobalData().getGithubUpdate()?.checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
                   },
                 ),

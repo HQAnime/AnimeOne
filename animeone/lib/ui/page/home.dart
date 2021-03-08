@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool loading = true;
   String error = '';
 
-  GlobalData global;
+  late GlobalData global;
 
   @override
   void initState() {
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 onPressed: () {
                   GlobalData().checkGithubUpdate().then((_) {
                     GlobalData()
-                        .getGithubUpdate()
+                        .getGithubUpdate()!
                         .checkUpdate(context, showAlertWhenNoUpdate: true);
                   });
                 },
@@ -171,9 +171,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 child: Text('嘗試修復問題 (Beta)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
-                  if (GlobalData.requestCookieLink.length > 0) {
+                  if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
                     final channel = AnimeOne();
-                    channel.getAnimeOneCookie().then((cookie) {
+                    channel.getAnimeOneCookie()?.then((cookie) {
                       if (cookie is String &&
                           cookie.length > 0 &&
                           cookie.contains('cf_clearance')) {

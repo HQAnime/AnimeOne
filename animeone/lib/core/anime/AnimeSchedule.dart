@@ -5,7 +5,7 @@ import 'package:html/dom.dart';
 /// This class saves anime name, link and schedule (0 - 6)
 class AnimeSchedule extends AnimeBasic {
 
-  int weekday;
+  late int weekday;
 
   AnimeSchedule(Node tr, int i): super.fromJson(null) {
     this.weekday = i;
@@ -15,9 +15,9 @@ class AnimeSchedule extends AnimeBasic {
     
     // Same are empty
     if (tr.firstChild != null) {
-      this.name = tr.firstChild.text;
+      this.name = tr.firstChild?.text;
       // They haven't put the link so be careful
-      String link = tr.firstChild.attributes['href'];
+      String? link = tr.firstChild?.attributes['href'];
       if (link != null) {
         this.link = GlobalData.domain + link;
       }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class AnimeList extends StatefulWidget {
 
-  AnimeList({Key key}) : super(key: key);
+  AnimeList({Key? key}) : super(key: key);
 
   @override
   _AnimeListState createState() => _AnimeListState();
@@ -16,7 +16,7 @@ class AnimeList extends StatefulWidget {
 class _AnimeListState extends State<AnimeList> {
 
   static GlobalData global = new GlobalData();
-  List<AnimeInfo> list;
+  late List<AnimeInfo> list;
   final all = global.getAnimeList();
 
   final quickFilters = global.getQuickFilters();

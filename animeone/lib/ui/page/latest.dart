@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
 
-  Latest({Key key}) : super(key: key);
+  Latest({Key? key}) : super(key: key);
 
   @override
   _LatestState createState() => _LatestState();

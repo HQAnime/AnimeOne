@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 class AnimeEntryCard extends StatelessWidget {
 
   final AnimeEntry entry;
-  final bool showEpisode;
+  final bool? showEpisode;
 
-  AnimeEntryCard({Key key, @required this.entry, this.showEpisode}) : super(key: key);
+  AnimeEntryCard({Key? key, required this.entry, this.showEpisode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class AnimeEntryCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              this.entry.formattedName(), 
+              this.entry.formattedName()!, 
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700), 
               maxLines: 1
             ),

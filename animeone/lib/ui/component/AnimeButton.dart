@@ -7,7 +7,7 @@ class AnimeButton extends StatelessWidget {
 
   final AnimeBasic basic;
   
-  AnimeButton({Key key, @required this.basic}) : super(key: key);
+  AnimeButton({Key? key, required this.basic}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class AnimeButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
-              basic.formattedName(), 
+              basic.formattedName()!, 
               maxLines: 1,
               textAlign: TextAlign.left,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)

@@ -9,7 +9,7 @@ class AnimeScheduleParser extends BasicParser {
   AnimeScheduleParser(String link) : super(link);
 
   @override
-  List<AnimeSchedule> parseHTML(Document body) {
+  List<AnimeSchedule> parseHTML(Document? body) {
     List<AnimeSchedule> schedules = [];
 
     final tables = body.getElementsByTagName('table');
@@ -30,9 +30,9 @@ class AnimeScheduleParser extends BasicParser {
   }
 
   /// get AnimeVideo from schedule (there might be one)
-  AnimeVideo parseIntroductoryVideo(Document body) {
-    final frames = body.getElementsByTagName('iframe');
-    if (frames.length == 0) {
+  AnimeVideo? parseIntroductoryVideo(Document? body) {
+    final frames = body?.getElementsByTagName('iframe');
+    if (frames == null || frames.length == 0) {
       return null;
     } else {
       return new AnimeVideo(frames.first.attributes['src']);

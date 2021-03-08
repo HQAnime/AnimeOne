@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 /// EmailButton class
 class EmailButton extends StatelessWidget {
-  final String message;
-  EmailButton({Key key, this.message}) : super(key: key);
+  final String? message;
+  EmailButton({Key? key, this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

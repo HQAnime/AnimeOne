@@ -10,7 +10,7 @@ class AnimeScheduleTile extends StatelessWidget {
   final AnimeSchedule schedule;
   final GlobalData global = new GlobalData();
 
-  AnimeScheduleTile({Key key, @required this.schedule}) : super(key: key);
+  AnimeScheduleTile({Key? key, required this.schedule}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class AnimeScheduleTile extends StatelessWidget {
           child: new AnimeButton(basic: schedule),
         ),
         IconButton(
-          tooltip: '使用維基百科搜索 動畫' + schedule.name,
+          tooltip: '使用維基百科搜索 動畫' + schedule.name!,
           icon: Icon(Icons.info_outline),
           onPressed: () => global.getWikipediaLink(schedule.name),
         )

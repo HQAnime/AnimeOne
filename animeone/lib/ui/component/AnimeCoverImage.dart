@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
 
-  final AnimeVideo video;
+  final AnimeVideo? video;
 
-  AnimeCoverImage({Key key, @required this.video}) : super(key: key);
+  AnimeCoverImage({Key? key, required this.video}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AnimeCoverImage extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: FittedBox(
-                    child: Image.asset('lib/assets/cover/${video.image}.jpg')
+                    child: Image.asset('lib/assets/cover/${video?.image}.jpg')
                   ),
                 )
               ),
@@ -45,18 +45,19 @@ class AnimeCoverImage extends StatelessWidget {
           style: TextStyle(backgroundColor: Colors.pink, color: Colors.white, fontSize: 18),  
         ),
         onPressed: () {
-          video.launchURL();
+          video?.launchURL();
         },
       );
     } else {
       return IconButton(
         onPressed: () {
           // video.launchURL();
-          if (video.isYoutube()) {
-            video.launchURL();
+          if (video?.isYoutube() ?? false) {
+            video?.launchURL();
           } else {
             if (identical(0, 0.0)) {
-              launch(this.video.video);
+              if (video != null && video!.video != null)
+                launch(video!.video!);
             } else {
               Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: this.video)));
             }

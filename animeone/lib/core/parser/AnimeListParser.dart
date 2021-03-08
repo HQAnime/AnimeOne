@@ -11,11 +11,11 @@ class AnimeListParser extends BasicParser {
   List<AnimeInfo> parseHTML(Document? body) {
     List<AnimeInfo> list = [];
 
-    final elements = body.getElementsByClassName("row-hover");
-    final e = elements.first;
+    final elements = body?.getElementsByClassName("row-hover");
+    final e = elements?.first;
 
-    if (e.hasChildNodes()) {
-      e.nodes.forEach((n) => list.add(new AnimeInfo(n)));
+    if (e?.hasChildNodes() ?? false) {
+      e?.nodes.forEach((n) => list.add(new AnimeInfo(n)));
     }
 
     return list;

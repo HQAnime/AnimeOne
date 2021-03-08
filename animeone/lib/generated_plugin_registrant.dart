@@ -11,7 +11,7 @@ import 'package:url_launcher_web/url_launcher_web.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 // ignore: public_member_api_docs
-void registerPlugins(PluginRegistry registry) {
+void registerPlugins(Registrar registry) {
   SharedPreferencesPlugin.registerWith(registry.registrarFor(SharedPreferencesPlugin));
   UrlLauncherPlugin.registerWith(registry.registrarFor(UrlLauncherPlugin));
   registry.registerMessageHandler();

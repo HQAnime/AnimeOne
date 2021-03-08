@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               content: Text(
                   '最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。'),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text('好的'),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headline5,
               ),
-              FlatButton(
+              TextButton(
                 child: Text('使用瀏覽器打開 anime1.me'),
                 onPressed: () => launch(GlobalData.domain),
               ),
@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 '或者',
                 style: Theme.of(context).textTheme.caption,
               ),
-              FlatButton(
+              TextButton(
                 child: Text('檢查 APP 是否有更新'),
                 onPressed: () {
                   GlobalData().checkGithubUpdate().then((_) {
@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 '或者',
                 style: Theme.of(context).textTheme.caption,
               ),
-              FlatButton(
+              TextButton(
                 child: Text('嘗試修復問題 (Beta)',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
@@ -185,10 +185,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   title: Text('修復成功'),
                                   content: Text('重新啓動 APP？'),
                                   actions: <Widget>[
-                                    FlatButton(
+                                    TextButton(
                                         onPressed: () => channel.restartApp(),
                                         child: Text('好的')),
-                                    FlatButton(
+                                    TextButton(
                                         onPressed: () => Navigator.pop(context),
                                         child: Text('之後')),
                                   ],
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   title: Text('修復失敗'),
                                   content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
                                   actions: <Widget>[
-                                    FlatButton(
+                                    TextButton(
                                         onPressed: () => Navigator.pop(context),
                                         child: Text('好的')),
                                   ],
@@ -216,7 +216,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               content: Text(
                                   '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。'),
                               actions: <Widget>[
-                                FlatButton(
+                                TextButton(
                                     onPressed: () => Navigator.pop(context),
                                     child: Text('好的')),
                               ],

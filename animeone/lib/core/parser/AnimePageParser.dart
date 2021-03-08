@@ -16,8 +16,8 @@ class AnimePageParser extends BasicParser {
   List<AnimeEntry> parseHTML(Document? body) {
     List<AnimeEntry> list = [];
 
-    final elements = body.getElementsByClassName("hentry");
-    elements.forEach((e) => list.add(new AnimeEntry(e)));
+    final elements = body?.getElementsByClassName("hentry");
+    elements?.forEach((e) => list.add(new AnimeEntry(e)));
     return list;
   }
 

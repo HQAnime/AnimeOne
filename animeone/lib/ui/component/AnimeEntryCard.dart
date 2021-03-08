@@ -45,7 +45,7 @@ class AnimeEntryCard extends StatelessWidget {
   /// Render all episode if exists or should be shown
   Widget renderAllEpisode(BuildContext context) {
     if (this.showEpisode == true && this.entry.allEpisodes != null) {
-      return FlatButton(
+      return TextButton(
         child: Text('全集連結'),
         onPressed: () {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.allEpisodes)));
@@ -60,7 +60,7 @@ class AnimeEntryCard extends StatelessWidget {
   Widget renderNextEpisode(BuildContext context) {
     // Check if this is the last episode
     if (this.showEpisode == true && this.entry.nextEpisode != null && this.entry.hasNextEpisode()) {
-      return FlatButton(
+      return TextButton(
         child: Text('下一集'),
         onPressed: () {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Anime(link: this.entry.nextEpisode)));

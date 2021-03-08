@@ -97,7 +97,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
                       title: Text('AnimeOne'),
                       content: Text('沒有發現介紹視頻'),
                       actions: <Widget>[
-                        FlatButton(
+                        TextButton(
                           child: Text('這樣啊'),
                           onPressed: () {
                             Navigator.pop(context);

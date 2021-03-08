@@ -16,8 +16,10 @@ class AnimeInfoCard extends StatelessWidget {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     Color? first = isDark ? Colors.grey[900] : Colors.white;
     Color? second = isDark ? Colors.grey[800] : Colors.grey[200];
-    return FlatButton(
-      color: index % 2 == 0 ? first : second,
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: index % 2 == 0 ? first : second,
+      ),
       onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: this.info.link)));
       },

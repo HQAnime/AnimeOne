@@ -31,7 +31,7 @@ class WebsiteClosed extends StatelessWidget {
               ),
             ),
             Text('如果你喜歡英文字幕的話'),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 launch('https://github.com/HenryQuan/AnimeGo-Re/releases');
               }, 
@@ -39,7 +39,7 @@ class WebsiteClosed extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   launch('https://github.com/HenryQuan/AnimeOne');
                 }, 

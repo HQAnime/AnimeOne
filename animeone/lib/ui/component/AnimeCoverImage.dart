@@ -39,7 +39,7 @@ class AnimeCoverImage extends StatelessWidget {
 
   Widget renderButton(BuildContext context, BoxConstraints constraint) {
     if (this.shouldEnterPassword()) {
-      return FlatButton(
+      return TextButton(
         child: Text(
           '啓動瀏覽器輸入密碼',
           style: TextStyle(backgroundColor: Colors.pink, color: Colors.white, fontSize: 18),  

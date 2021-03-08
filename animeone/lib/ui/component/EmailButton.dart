@@ -22,11 +22,11 @@ class EmailButton extends StatelessWidget {
                 title: Text('關於加載失敗'),
                 content: Text('請先嘗試重新啓動APP，檢查問題依然存在。如果問題依然存在，請一天後再次嘗試，如果還是無法加載的話，再發送郵件。網站有的時候會檢查瀏覽器，所以導致 APP 無法使用。報告只會包括錯誤信息，請不要重複發送多個報告！'),
                 actions: <Widget>[
-                  FlatButton(
+                  TextButton(
                     child: Text('發送郵件'),
                     onPressed: () => GlobalData().sendEmail(message),
                   ),
-                  FlatButton(
+                  TextButton(
                     child: Text('取消'),
                     onPressed: () => Navigator.pop(context),
                   )

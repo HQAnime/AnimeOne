@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 /// Top level component
 class MyApp extends StatelessWidget {
 
-  final darkTheme = ThemeData.dark().copyWith(
+  final darkTheme = ThemeData(
+    primarySwatch: Colors.pink,
+    brightness: Brightness.dark,
     accentColor: Colors.pink,
-    indicatorColor: Colors.pink,
+    textTheme: TextTheme(
+      bodyText1: TextStyle(color: Colors.white70)
+    )
   );
 
   final lightTheme = ThemeData(
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'AnimeOne',
-      theme: lightTheme,
+      theme: darkTheme,
       darkTheme: darkTheme,
       home: HomePage(),
     );

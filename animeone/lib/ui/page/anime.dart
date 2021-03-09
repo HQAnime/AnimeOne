@@ -85,7 +85,7 @@ class _AnimeState extends State<Anime> {
           this.canLoadMore = true;
 
           // Start playing if there is only one entry
-          if (newEntries.length == 1) {
+          if (entries.length == 1 && newEntries.length == 1) {
             Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: newEntries.first.videoLink)));
           }
         });

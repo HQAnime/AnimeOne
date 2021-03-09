@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
     // ));
 
     return MaterialApp(
-      title: '永遠のAnimeOne',
+      title: 'AnimeOne',
       theme: lightTheme,
       darkTheme: darkTheme,
       home: HomePage(),

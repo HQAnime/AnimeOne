@@ -5,6 +5,7 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
+import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 /// This class handles anime page
@@ -56,7 +57,7 @@ class _AnimeState extends State<Anime> {
       this.canLoadMore = false;
     });
 
-    String? rLink = this.fullLink == '' ? widget.link : this.fullLink! + '/page/${this.page}';
+    String? rLink = this.fullLink == '' ? widget.link : this.fullLink ?? '' + '/page/${this.page}';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
@@ -140,12 +141,16 @@ class _AnimeState extends State<Anime> {
     if (this.entries.length == 0) {
       return ErrorButton();
     } else if (this.entries.length == 1) {
+      // Enter the player here
+      final entry = this.entries.first;
+      Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: entry.videoLink)));
+
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Center(
             child: SizedBox(
               width: constraints.maxHeight,
-              child: AnimeEntryCard(entry: this.entries.first, showEpisode: true)
+              child: AnimeEntryCard(entry: entry, showEpisode: true)
             )
           );
         }

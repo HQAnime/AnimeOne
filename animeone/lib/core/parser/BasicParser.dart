@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 abstract class BasicParser {
 
   String? _link;
-  String? _cookie;
+  late String _cookie;
   /// Get the link for current page
   String? getLink() => this._link;
 
@@ -24,14 +24,14 @@ abstract class BasicParser {
   /// Download HTML string from link
   Future<Document?> downloadHTML() async {
     try {
-      Map<String, String?> requestHeaders = {
+      Map<String, String> requestHeaders = {
         'cookie': _cookie,
         'user-agent': 'Mozilla/5.0 (Linux; Android 9; SM-A705FN) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.162 Mobile Safari/537.36',
       };
       
       final response = await http.get(
-        Uri(path: this._link),
-        headers: requestHeaders as Map<String, String>?,
+        Uri.parse(this._link ?? ""),
+        headers: requestHeaders,
       ).timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {

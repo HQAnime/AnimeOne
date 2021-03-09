@@ -76,12 +76,18 @@ class _AnimeState extends State<Anime> {
           this.fullLink = widget.link;
         }
 
+        final newEntries = this.parser.parseHTML(d);
         setState(() {
           // Append more data
-          this.entries.addAll(this.parser.parseHTML(d));
+          this.entries.addAll(newEntries);
           this.title = this.parser.getPageTitle(d);
           this.loading = false;
           this.canLoadMore = true;
+
+          // Start playing if there is only one entry
+          if (newEntries.length == 1) {
+            Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: newEntries.first.videoLink)));
+          }
         });
       }
     }).catchError((error) {
@@ -141,16 +147,12 @@ class _AnimeState extends State<Anime> {
     if (this.entries.length == 0) {
       return ErrorButton();
     } else if (this.entries.length == 1) {
-      // Enter the player here
-      final entry = this.entries.first;
-      Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: entry.videoLink)));
-
       return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
           return Center(
             child: SizedBox(
               width: constraints.maxHeight,
-              child: AnimeEntryCard(entry: entry, showEpisode: true)
+              child: AnimeEntryCard(entry: this.entries.first, showEpisode: true)
             )
           );
         }

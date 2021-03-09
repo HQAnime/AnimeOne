@@ -10,8 +10,10 @@ class EmailButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       widthFactor: 0.618,
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)))
+        ),
         onPressed: () {
           // Just to make sure the user doesn't send multiple emails
           showDialog(

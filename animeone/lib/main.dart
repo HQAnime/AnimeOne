@@ -10,12 +10,13 @@ class MyApp extends StatelessWidget {
     brightness: Brightness.dark,
     accentColor: Colors.pink,
     textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.white70)
+      bodyText1: TextStyle(color: Colors.white)
     )
   );
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
+    primaryColorBrightness: Brightness.dark
   );
 
   // static final _hour = DateTime.now().hour;
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'AnimeOne',
-      theme: darkTheme,
+      theme: lightTheme,
       darkTheme: darkTheme,
       home: HomePage(),
     );

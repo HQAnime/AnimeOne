@@ -35,7 +35,7 @@ class AnimeButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
-              basic.formattedName()!, 
+              basic.formattedName() ?? "賽博朋克", 
               maxLines: 1,
               textAlign: TextAlign.left,
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)

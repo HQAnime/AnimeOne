@@ -1,6 +1,7 @@
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/ui/component/AnimeCoverImage.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
 
 /// Takes an AnimeEntry object and render it to a card
@@ -39,11 +40,14 @@ class AnimeEntryCard extends StatelessWidget {
           AnimeCoverImage(
             video: this.entry.needPassword() ? null : this.entry.getVideo(),
           ),
-          Row(
-            children: <Widget>[
-              this.renderAllEpisode(context),
-              this.renderNextEpisode(context)
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Row(
+              children: <Widget>[
+                this.renderAllEpisode(context),
+                this.renderNextEpisode(context)
+              ],
+            ),
           ),
         ],
       ),
@@ -53,7 +57,7 @@ class AnimeEntryCard extends StatelessWidget {
   /// Render all episode if exists or should be shown
   Widget renderAllEpisode(BuildContext context) {
     if (this.showEpisode == true && this.entry.allEpisodes != null) {
-      return TextButton(
+      return AnimeFlatButton(
         child: Text('全集連結'),
         onPressed: () {
           Navigator.pushReplacement(
@@ -65,7 +69,7 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 
@@ -75,7 +79,7 @@ class AnimeEntryCard extends StatelessWidget {
     if (this.showEpisode == true &&
         this.entry.nextEpisode != null &&
         this.entry.hasNextEpisode()) {
-      return TextButton(
+      return AnimeFlatButton(
         child: Text('下一集'),
         onPressed: () {
           Navigator.pushReplacement(
@@ -87,7 +91,7 @@ class AnimeEntryCard extends StatelessWidget {
         },
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 }

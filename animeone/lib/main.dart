@@ -8,25 +8,23 @@ void main() {
 }
 
 /// Top level component
-class MyApp extends StatelessWidget {
-  final darkTheme = ThemeData(
-    primarySwatch: Colors.pink,
-    brightness: Brightness.dark,
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeData darkTheme = ThemeData.dark().copyWith(
     accentColor: Colors.pink,
-    textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.white),
+    indicatorColor: Colors.pink,
+  );
+
+  ThemeData lightTheme = ThemeData(
+    primarySwatch: Colors.pink,
+    appBarTheme: AppBarTheme(
+      brightness: Brightness.dark,
     ),
   );
-
-  final lightTheme = ThemeData(
-    primarySwatch: Colors.pink,
-    brightness: Brightness.light,
-    primaryColorBrightness: Brightness.dark,
-  );
-
-  // static final _hour = DateTime.now().hour;
-  // // From 6pm to 6am for dark mode
-  // final useDark = _hour > 17 || _hour < 7;
 
   @override
   Widget build(BuildContext context) {

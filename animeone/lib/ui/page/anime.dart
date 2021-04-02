@@ -13,10 +13,16 @@ import 'package:flutter/material.dart';
 /// - All episode
 /// - Load next page if possible
 class Anime extends StatefulWidget {
+  const Anime({
+    Key? key,
+    required this.link,
+    this.seasonal,
+    this.recent,
+  }) : super(key: key);
+
   final String? link;
   final bool? seasonal;
-
-  Anime({Key? key, required this.link, this.seasonal}) : super(key: key);
+  final bool? recent;
 
   @override
   _AnimeState createState() => _AnimeState();
@@ -84,8 +90,10 @@ class _AnimeState extends State<Anime> {
           this.loading = false;
           this.canLoadMore = true;
 
-          // Start playing if there is only one entry
-          if (entries.length == 1 && newEntries.length == 1) {
+          // Start playing if there is only one entry, only for new anime
+          if ((widget.recent ?? false) &&
+              entries.length == 1 &&
+              newEntries.length == 1) {
             Navigator.push(
               context,
               new MaterialPageRoute(
@@ -115,7 +123,9 @@ class _AnimeState extends State<Anime> {
     } else if (hasError != '') {
       return Scaffold(
         appBar: AppBar(title: Text('加载失败 QAQ')),
-        body: ErrorButton(msg: this.hasError),
+        body: Center(
+          child: ErrorButton(msg: this.hasError),
+        ),
       );
     } else {
       return Scaffold(
@@ -139,7 +149,7 @@ class _AnimeState extends State<Anime> {
         tooltip: '使用維基百科搜索',
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 
@@ -202,7 +212,7 @@ class _AnimeState extends State<Anime> {
         child: LinearProgressIndicator(),
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 

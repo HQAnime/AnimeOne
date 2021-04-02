@@ -50,7 +50,7 @@ class GithubUpdate {
                         Navigator.of(context).pop();
                       },
                     )
-                  : SizedBox.shrink(),
+                  : Container(),
             ],
           );
         },

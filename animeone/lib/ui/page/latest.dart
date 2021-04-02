@@ -6,7 +6,7 @@ import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
-  Latest({Key? key}) : super(key: key);
+  const Latest({Key? key}) : super(key: key);
 
   @override
   _LatestState createState() => _LatestState();
@@ -58,7 +58,11 @@ class _LatestState extends State<Latest> {
           onPressed: () {
             // Push to support page
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Support()));
+              context,
+              MaterialPageRoute(
+                builder: (context) => Support(),
+              ),
+            );
           },
         ),
       ),

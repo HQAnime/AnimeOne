@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 /// This a button that accepts AnimeSchedule or AnimeRecent
 class AnimeButton extends StatelessWidget {
-  AnimeButton({
+  const AnimeButton({
     Key? key,
     required this.basic,
+    this.recent,
   }) : super(key: key);
 
   final AnimeBasic basic;
+  final bool? recent;
 
   @override
   Widget build(BuildContext context) {

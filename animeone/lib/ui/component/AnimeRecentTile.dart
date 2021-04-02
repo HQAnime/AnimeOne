@@ -15,6 +15,9 @@ class AnimeRecentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimeButton(basic: recent);
+    return AnimeButton(
+      basic: recent,
+      recent: true,
+    );
   }
 }

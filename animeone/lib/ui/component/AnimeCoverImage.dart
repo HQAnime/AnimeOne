@@ -24,10 +24,13 @@ class AnimeCoverImage extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: FittedBox(
-                  child: Image.asset('lib/assets/cover/${video?.image}.jpg')),
+                child: Image.asset('lib/assets/cover/${video?.image}.jpg'),
+              ),
             ),
           ),
-          Positioned.fill(child: this.renderButton(context, constraint)),
+          Positioned.fill(
+            child: this.renderButton(context, constraint),
+          ),
         ]),
       );
     });

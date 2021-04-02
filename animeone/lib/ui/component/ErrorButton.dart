@@ -16,6 +16,7 @@ class ErrorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     String finalMsg = '404 無法加載\n';
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(finalMsg, textAlign: TextAlign.center),
         this.renderFixButton(),
@@ -42,7 +43,7 @@ class ErrorButton extends StatelessWidget {
         child: Text('啓動自動修復程序'),
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 }

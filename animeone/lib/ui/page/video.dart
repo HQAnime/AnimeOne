@@ -87,6 +87,6 @@ class _VideoState extends State<Video> {
         child: CircularProgressIndicator(),
       );
     } else
-      return SizedBox.shrink();
+      return Container();
   }
 }

@@ -6,7 +6,6 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +16,10 @@ class Settings extends StatelessWidget {
         children: <Widget>[
           ListTile(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Support()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Support()),
+              );
             },
             title: Text('支持開發'),
             subtitle: Text('特別喜歡本APP的話，可以支持一下~~'),
@@ -49,7 +51,9 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    launch('https://github.com/HenryQuan/AnimeOne/blob/master/README.md#%E9%9A%B1%E7%A7%81%E6%A2%9D%E6%AC%BE');
+                    launch(
+                      'https://github.com/HenryQuan/AnimeOne/blob/master/README.md#%E9%9A%B1%E7%A7%81%E6%A2%9D%E6%AC%BE',
+                    );
                   },
                   title: Text('隱私條款'),
                   subtitle: Text('AnimeOne不會收集用戶的任何數據'),
@@ -58,13 +62,16 @@ class Settings extends StatelessWidget {
                   title: Text('開源許可證'),
                   subtitle: Text('查看所有的開源許可證'),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute<void>(
-                      builder: (BuildContext context) => LicensePage(
-                        applicationName: 'AnimeOne',
-                        applicationVersion: GlobalData.version,
-                        applicationLegalese: '開源許可證',
-                      )
-                    ));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (BuildContext context) => LicensePage(
+                          applicationName: 'AnimeOne',
+                          applicationVersion: GlobalData.version,
+                          applicationLegalese: '開源許可證',
+                        ),
+                      ),
+                    );
                   },
                 ),
                 Divider(),
@@ -102,7 +109,9 @@ class Settings extends StatelessWidget {
                   subtitle: Text(GlobalData.version),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {
-                      GlobalData().getGithubUpdate()?.checkUpdate(context, showAlertWhenNoUpdate: true);
+                      GlobalData()
+                          .getGithubUpdate()
+                          ?.checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
                   },
                 ),
@@ -113,5 +122,4 @@ class Settings extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 /// This a button that accepts AnimeSchedule or AnimeRecent
 class AnimeButton extends StatelessWidget {
+  AnimeButton({
+    Key? key,
+    required this.basic,
+  }) : super(key: key);
 
   final AnimeBasic basic;
-  
-  AnimeButton({Key? key, required this.basic}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,12 @@ class AnimeButton extends StatelessWidget {
         onTap: () {
           // It might be null
           if (basic.link != null) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: basic.link)));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Anime(link: basic.link),
+              ),
+            );
           } else {
             showDialog(
               context: context,
@@ -35,10 +42,10 @@ class AnimeButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.only(left: 16),
             child: Text(
-              basic.formattedName() ?? "賽博朋克", 
+              basic.formattedName() ?? "賽博朋克",
               maxLines: 1,
               textAlign: TextAlign.left,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16)
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
           ),
         ),

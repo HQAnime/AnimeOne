@@ -5,7 +5,6 @@ import 'package:html/dom.dart';
 
 /// This class get anime schedule and possibly an introductory video
 class AnimeScheduleParser extends BasicParser {
-  
   AnimeScheduleParser(String link) : super(link);
 
   @override
@@ -38,5 +37,4 @@ class AnimeScheduleParser extends BasicParser {
       return new AnimeVideo(frames.first.attributes['src']);
     }
   }
-
 }

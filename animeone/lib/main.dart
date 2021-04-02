@@ -2,21 +2,26 @@ import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Entry point of this app
+void main() {
+  runApp(MyApp());
+}
+
 /// Top level component
 class MyApp extends StatelessWidget {
-
   final darkTheme = ThemeData(
     primarySwatch: Colors.pink,
     brightness: Brightness.dark,
     accentColor: Colors.pink,
     textTheme: TextTheme(
-      bodyText1: TextStyle(color: Colors.white)
-    )
+      bodyText1: TextStyle(color: Colors.white),
+    ),
   );
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
-    primaryColorBrightness: Brightness.dark
+    brightness: Brightness.light,
+    primaryColorBrightness: Brightness.dark,
   );
 
   // static final _hour = DateTime.now().hour;
@@ -25,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Setup navigation bar colour 
+    // Setup navigation bar colour
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     //   systemNavigationBarColor: useDark ? Colors.grey[900] : Colors.grey[50],
     //   systemNavigationBarIconBrightness: useDark ? Brightness.light : Brightness.dark
@@ -38,10 +43,4 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
     );
   }
-
-}
-
-/// Entry point of this app
-void main() {
-  runApp(MyApp());
 }

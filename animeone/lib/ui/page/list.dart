@@ -5,16 +5,13 @@ import 'package:animeone/ui/page/settings.dart';
 import 'package:flutter/material.dart';
 
 class AnimeList extends StatefulWidget {
-
   AnimeList({Key? key}) : super(key: key);
 
   @override
   _AnimeListState createState() => _AnimeListState();
-  
 }
 
 class _AnimeListState extends State<AnimeList> {
-
   static GlobalData global = new GlobalData();
   late List<AnimeInfo> list;
   final all = global.getAnimeList();
@@ -47,35 +44,35 @@ class _AnimeListState extends State<AnimeList> {
         ),
         actions: <Widget>[
           Ink.image(
-            image: AssetImage('lib/assets/icon/logo.png'),
-            width: 64,
-            height: 64,
-            child: Tooltip(
-              message: '關於AnimeOne',
-              child: InkWell(
-                onTap: () {
-                  // Go to information page
-                  Navigator.push(context, new MaterialPageRoute(
-                    builder: (context) => Settings()
-                  ));
-                },
-                child: null,
-              ),
-            )
-          ),
+              image: AssetImage('lib/assets/icon/logo.png'),
+              width: 64,
+              height: 64,
+              child: Tooltip(
+                message: '關於AnimeOne',
+                child: InkWell(
+                  onTap: () {
+                    // Go to information page
+                    Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => Settings(),
+                      ),
+                    );
+                  },
+                  child: null,
+                ),
+              )),
         ],
       ),
-      body: Column(
-        children: [
-          SizedBox.fromSize(
-            size: Size.fromHeight(48),
-            child: this.renderQuickFilter(),
-          ),
-          Expanded(
-            child: this.renderBody(),
-          ),
-        ]
-      ),
+      body: Column(children: [
+        SizedBox.fromSize(
+          size: Size.fromHeight(48),
+          child: this.renderQuickFilter(),
+        ),
+        Expanded(
+          child: this.renderBody(),
+        ),
+      ]),
     );
   }
 
@@ -102,12 +99,12 @@ class _AnimeListState extends State<AnimeList> {
                   child: Tooltip(
                     message: '搜索 $filter 動畫',
                     child: ActionChip(
-                      label: Text(filter), 
+                      label: Text(filter),
                       onPressed: () => this._filterList(filter),
                     ),
-                  )
+                  ),
                 );
-              }
+              },
             ),
           ),
           Tooltip(
@@ -141,7 +138,8 @@ class _AnimeListState extends State<AnimeList> {
   /// Filter list by string
   void _filterList(String t) {
     // At least two characters
-    if (t == '') this._resetList();
+    if (t == '')
+      this._resetList();
     else if (t.length > 0) {
       setState(() {
         this.list = this.all.where((e) {
@@ -157,5 +155,4 @@ class _AnimeListState extends State<AnimeList> {
       this.list = this.all;
     });
   }
-
 }

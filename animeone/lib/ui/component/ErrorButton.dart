@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ErrorButton extends StatelessWidget {
+  ErrorButton({
+    Key? key,
+    this.msg,
+  }) : super(key: key);
 
   final String? msg;
   final global = new GlobalData();
-  ErrorButton({Key? key, this.msg}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,5 +45,4 @@ class ErrorButton extends StatelessWidget {
       return SizedBox.shrink();
     }
   }
-
 }

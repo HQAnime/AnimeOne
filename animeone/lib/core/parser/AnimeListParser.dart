@@ -4,9 +4,8 @@ import 'package:html/dom.dart';
 
 /// This class parses all anime available from the site
 class AnimeListParser extends BasicParser {
-  
   AnimeListParser(String link) : super(link);
-  
+
   @override
   List<AnimeInfo> parseHTML(Document? body) {
     List<AnimeInfo> list = [];
@@ -20,5 +19,4 @@ class AnimeListParser extends BasicParser {
 
     return list;
   }
-
 }

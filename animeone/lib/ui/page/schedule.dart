@@ -8,16 +8,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Schedule extends StatefulWidget {
-  
   Schedule({Key? key}) : super(key: key);
 
   @override
   _ScheduleState createState() => _ScheduleState();
-  
 }
 
-class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin {
-
+class _ScheduleState extends State<Schedule>
+    with SingleTickerProviderStateMixin {
   final global = new GlobalData();
   String? link;
   AnimeVideo? video;
@@ -39,7 +37,8 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     super.initState();
 
     int weekday = DateTime.now().weekday - 1;
-    this.controller = TabController(vsync: this, length: tabs.length, initialIndex: weekday);
+    this.controller =
+        TabController(vsync: this, length: tabs.length, initialIndex: weekday);
 
     setState(() {
       this.schedules = this.global.getScheduleList();
@@ -57,61 +56,71 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        bottom: TabBar(
-          controller: controller,
-          tabs: tabs
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 8),
-          child: FractionallySizedBox(
-            widthFactor: 0.7,
-            child: MaterialButton(
-              color: Colors.white,
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Anime(link: global.getSeasonLink(), seasonal: true)
-                ));
-              },
-              child: Text(
-                global.getSeasonName(),
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16, color: Colors.black87)
+          bottom: TabBar(
+            controller: controller,
+            tabs: tabs,
+          ),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            child: FractionallySizedBox(
+              widthFactor: 0.7,
+              child: MaterialButton(
+                color: Colors.white,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Anime(link: global.getSeasonLink(), seasonal: true),
+                    ),
+                  );
+                },
+                child: Text(
+                  global.getSeasonName(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.play_circle_outline),
-            tooltip: '新番介紹視頻',
-            onPressed: () {
-              if (this.video != null) {
-                // this.video.launchURL();
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Video(video: this.video)
-                ));
-              } else {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('AnimeOne'),
-                      content: Text('沒有發現介紹視頻'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('這樣啊'),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      ],
-                    );
-                  }
-                );
-              }
-            },
-          )
-        ]
-      ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.play_circle_outline),
+              tooltip: '新番介紹視頻',
+              onPressed: () {
+                if (this.video != null) {
+                  // this.video.launchURL();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Video(video: this.video),
+                    ),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: Text('AnimeOne'),
+                        content: Text('沒有發現介紹視頻'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('這樣啊'),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+            )
+          ]),
       body: this.renderBody(),
     );
   }
@@ -121,7 +130,7 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     if (this.schedules.length > 0) {
       return TabBarView(
         controller: controller,
-        children: this.renderSchedule()
+        children: this.renderSchedule(),
       );
     } else {
       return Center(
@@ -135,20 +144,17 @@ class _ScheduleState extends State<Schedule> with SingleTickerProviderStateMixin
     List<Widget> children = [];
     for (int i = 0; i < this.tabs.length; i++) {
       final list = this.schedules.where((s) => s.weekday == i);
-      children.add(
-        SafeArea(
-          child: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (c, i) {
-              final item = list.elementAt(i);
-              return AnimeScheduleTile(schedule: item);
-            },
-          ),
-        )
-      );
+      children.add(SafeArea(
+        child: ListView.builder(
+          itemCount: list.length,
+          itemBuilder: (c, i) {
+            final item = list.elementAt(i);
+            return AnimeScheduleTile(schedule: item);
+          },
+        ),
+      ));
     }
 
     return children;
   }
-
 }

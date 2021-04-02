@@ -18,7 +18,7 @@ abstract class AnimeBasic {
     if (json == null) return;
     name = json['name'];
     link = json['link'];
-  } 
+  }
 
   /// Check if name is loaded and not null
   bool valid() {

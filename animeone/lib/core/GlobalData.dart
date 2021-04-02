@@ -18,18 +18,20 @@ import 'anime/AnimeInfo.dart';
 
 /// A class has constants and also a list of all anime
 class GlobalData {
-
   static final domain = 'https://anime1.me/';
   static final version = '1.1.1';
 
-  static final githubRelease = 'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
-  static final latestRelease = 'https://github.com/HenryQuan/AnimeOne/releases/latest';
+  static final githubRelease =
+      'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
+  static final latestRelease =
+      'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
   static final eminaOne = 'https://github.com/splitline/emina-one';
   static final animeGo = 'https://github.com/HenryQuan/AnimeGo';
 
   /// if update has been checked
   bool hasUpdate = false;
+
   /// A flag to check if cookie is necessary
   static String? requestCookieLink = '';
 
@@ -48,7 +50,7 @@ class GlobalData {
   String getScheduleLink() => _season.getLink();
   String getSeasonLink() => _season.getAnimeLink();
   List<String> getQuickFilters() => _season.getQuickFilters();
-  
+
   // Relating to anime list (it won't be changed)
   List<AnimeInfo> _animeList = [];
   List<AnimeInfo> getAnimeList() => this._animeList;
@@ -63,6 +65,7 @@ class GlobalData {
   List<AnimeRecent> getRecentList() => this._recentList;
   // Saved cookie for animeon
   String? _cookie;
+
   /// Use videopassword as the default cookie
   String getCookie() => _cookie ?? 'videopassword=0';
   void updateCookie(String cookie) {
@@ -74,6 +77,7 @@ class GlobalData {
 
     prefs.setString(oneCookie, cookie);
   }
+
   // Age restriction
   bool _showAgeAlert = false;
   bool showShowAgeAlert() => _showAgeAlert;
@@ -86,7 +90,7 @@ class GlobalData {
   GithubUpdate? _update;
   GithubUpdate? getGithubUpdate() => this._update;
 
-  // Singleton pattern 
+  // Singleton pattern
   GlobalData._init();
   static final GlobalData _instance = new GlobalData._init();
 
@@ -156,7 +160,7 @@ class GlobalData {
     if (shouldUpdate) {
       // Check for update first to make sure you don't messed up auto update
       await this.checkGithubUpdate();
-      
+
       // Load anime list
       await this._getAnimeList();
       prefs.setString(animeList, jsonEncode(this._animeList));
@@ -165,27 +169,32 @@ class GlobalData {
       await this._getAnimeScedule();
       prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
       prefs.setString(scheduleIntroVideo, jsonEncode(this._introductory));
-
     } else {
       // if anime list has been loaded but somehow, it failed
       // you need to reset the list so that it won't have duplicates
       this._resetList();
 
       // Load everything from storage
-      List<dynamic> savedAnimeList = jsonDecode(prefs.getString(animeList) ?? "[]");
+      List<dynamic> savedAnimeList = jsonDecode(
+        prefs.getString(animeList) ?? "[]",
+      );
       savedAnimeList.forEach((json) {
-        this._animeList.add(AnimeInfo.fromJson(json)); 
+        this._animeList.add(AnimeInfo.fromJson(json));
       });
 
-      List<dynamic> savedScheduleList = jsonDecode(prefs.getString(animeScedule) ?? "[]");
+      List<dynamic> savedScheduleList = jsonDecode(
+        prefs.getString(animeScedule) ?? "[]",
+      );
       savedScheduleList.forEach((json) {
-        this._animeScheduleList.add(AnimeSchedule.fromJson(json)); 
+        this._animeScheduleList.add(AnimeSchedule.fromJson(json));
       });
 
       final introductionString = prefs.getString(scheduleIntroVideo);
       // what ???
       if (introductionString != null && introductionString != "null") {
-        this._introductory = AnimeVideo.fromJson(jsonDecode(introductionString));
+        this._introductory = AnimeVideo.fromJson(
+          jsonDecode(introductionString),
+        );
       }
     }
 
@@ -233,7 +242,9 @@ class GlobalData {
   /// launch wikipedia page for anime
   void getWikipediaLink(String? name) {
     // Somehow I need to encode on IOS but not on Android
-    final link = Uri.encodeFull('https://zh.wikipedia.org/w/index.php?search=$name');
+    final link = Uri.encodeFull(
+      'https://zh.wikipedia.org/w/index.php?search=$name',
+    );
     launch(link);
   }
 
@@ -244,7 +255,8 @@ class GlobalData {
 
   /// send an email to HenryQuan
   void sendEmail(String? extra) {
-    launch('mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra');
+    launch(
+      'mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra',
+    );
   }
-
 }

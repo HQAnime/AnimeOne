@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 class AnimeOne {
   // This is a channel to connect with native side
   static final nativeChannel = MethodChannel('org.github.henryquan.animeone');
-  
+
   /// If native channel is supported
   bool _isSupported() {
     return Platform.isAndroid;
@@ -28,6 +28,9 @@ class AnimeOne {
 
   /// Popup native browser and get cookie from webview
   Future? getAnimeOneCookie() {
-    return this._invokeMethod('getAnimeOneCookie', {'link': GlobalData.requestCookieLink});
+    return this._invokeMethod(
+      'getAnimeOneCookie',
+      {'link': GlobalData.requestCookieLink},
+    );
   }
 }

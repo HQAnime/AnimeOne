@@ -32,17 +32,16 @@ class WebsiteClosed extends StatelessWidget {
             ),
             Text('如果你喜歡英文字幕的話'),
             ElevatedButton(
-              onPressed: () {
-                launch('https://github.com/HenryQuan/AnimeGo-Re/releases');
-              }, 
-              child: Text('下載 AnimeGo')
-            ),
+                onPressed: () {
+                  launch('https://github.com/HenryQuan/AnimeGo-Re/releases');
+                },
+                child: Text('下載 AnimeGo')),
             Padding(
               padding: const EdgeInsets.only(top: 32),
               child: TextButton(
                 onPressed: () {
                   launch('https://github.com/HenryQuan/AnimeOne');
-                }, 
+                },
                 child: Text('https://github.com/HenryQuan/AnimeOne'),
               ),
             ),
@@ -52,10 +51,10 @@ class WebsiteClosed extends StatelessWidget {
             )
           ],
         ),
-      )
+      ),
     );
   }
 }
 
-// 
+//
 // 永遠のAnimeOne

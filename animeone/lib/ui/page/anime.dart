@@ -13,19 +13,16 @@ import 'package:flutter/material.dart';
 /// - All episode
 /// - Load next page if possible
 class Anime extends StatefulWidget {
-  
   final String? link;
   final bool? seasonal;
 
-  Anime({Key? key, required this.link, this.seasonal}): super(key: key);
+  Anime({Key? key, required this.link, this.seasonal}) : super(key: key);
 
   @override
   _AnimeState createState() => _AnimeState();
-
 }
 
 class _AnimeState extends State<Anime> {
-
   final global = new GlobalData();
 
   // Always start from page 1
@@ -48,7 +45,8 @@ class _AnimeState extends State<Anime> {
   void initState() {
     super.initState();
     this._getEntry();
-    this.controller = new ScrollController()..addListener(() => this.loadMore());
+    this.controller = new ScrollController()
+      ..addListener(() => this.loadMore());
   }
 
   /// Get entries from link (support page)
@@ -57,7 +55,9 @@ class _AnimeState extends State<Anime> {
       this.canLoadMore = false;
     });
 
-    String? rLink = this.fullLink == '' ? widget.link : this.fullLink ?? '' + '/page/${this.page}';
+    String? rLink = this.fullLink == ''
+        ? widget.link
+        : this.fullLink ?? '' + '/page/${this.page}';
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
@@ -86,7 +86,12 @@ class _AnimeState extends State<Anime> {
 
           // Start playing if there is only one entry
           if (entries.length == 1 && newEntries.length == 1) {
-            Navigator.push(context, new MaterialPageRoute(builder: (context) => Video(video: newEntries.first.videoLink)));
+            Navigator.push(
+              context,
+              new MaterialPageRoute(
+                builder: (context) => Video(video: newEntries.first.videoLink),
+              ),
+            );
           }
         });
       }
@@ -102,36 +107,32 @@ class _AnimeState extends State<Anime> {
   Widget build(BuildContext context) {
     if (loading) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('努力加載中...')
-        ),
+        appBar: AppBar(title: Text('努力加載中...')),
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else if (hasError != '') {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('加载失败 QAQ')
-        ),
-        body: ErrorButton(msg: this.hasError)
+        appBar: AppBar(title: Text('加载失败 QAQ')),
+        body: ErrorButton(msg: this.hasError),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
           title: Text(this.title),
-          actions: <Widget>[
-            this.renderSearch()
-          ],
+          actions: <Widget>[this.renderSearch()],
         ),
-        body: this.renderBody()
+        body: this.renderBody(),
       );
     }
   }
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (this.title != '' && widget.seasonal == null && this.title != '加載失敗了...') {
+    if (this.title != '' &&
+        widget.seasonal == null &&
+        this.title != '加載失敗了...') {
       return IconButton(
         icon: Icon(Icons.search),
         onPressed: () => global.getWikipediaLink(this.title),
@@ -148,15 +149,14 @@ class _AnimeState extends State<Anime> {
       return ErrorButton();
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Center(
-            child: SizedBox(
-              width: constraints.maxHeight,
-              child: AnimeEntryCard(entry: this.entries.first, showEpisode: true)
-            )
-          );
-        }
-      );
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return Center(
+          child: SizedBox(
+            width: constraints.maxHeight,
+            child: AnimeEntryCard(entry: this.entries.first, showEpisode: true),
+          ),
+        );
+      });
     } else {
       return SafeArea(
         child: LayoutBuilder(
@@ -175,11 +175,14 @@ class _AnimeState extends State<Anime> {
                 GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: count,
-                    childAspectRatio: ratio
+                    childAspectRatio: ratio,
                   ),
                   itemCount: length,
                   itemBuilder: (context, index) {
-                    return AnimeEntryCard(entry: this.entries.elementAt(index), showEpisode: widget.seasonal == null ? false : true);
+                    return AnimeEntryCard(
+                      entry: this.entries.elementAt(index),
+                      showEpisode: widget.seasonal == null ? false : true,
+                    );
                   },
                   controller: this.controller,
                 ),
@@ -205,12 +208,13 @@ class _AnimeState extends State<Anime> {
 
   /// Load more anime here
   void loadMore() {
-    if ((controller?.position.extentAfter ?? 10) < 10 && this.entries.length % 14 == 0 && this.hasMoreData) {
+    if ((controller?.position.extentAfter ?? 10) < 10 &&
+        this.entries.length % 14 == 0 &&
+        this.hasMoreData) {
       if (canLoadMore) {
         this.page += 1;
         this._getEntry();
-      } 
+      }
     }
   }
-  
 }

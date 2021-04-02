@@ -6,11 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'AnimeButton.dart';
 
 class AnimeScheduleTile extends StatelessWidget {
-  
+  AnimeScheduleTile({
+    Key? key,
+    required this.schedule,
+  }) : super(key: key);
+
   final AnimeSchedule schedule;
   final GlobalData global = new GlobalData();
-
-  AnimeScheduleTile({Key? key, required this.schedule}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,5 +29,4 @@ class AnimeScheduleTile extends StatelessWidget {
       ],
     );
   }
-  
 }

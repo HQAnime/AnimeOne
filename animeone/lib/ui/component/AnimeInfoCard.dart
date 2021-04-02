@@ -5,11 +5,14 @@ import 'package:flutter/widgets.dart';
 
 /// Takes an AnimeInfo object and render it to a card
 class AnimeInfoCard extends StatelessWidget {
+  AnimeInfoCard({
+    Key? key,
+    required this.info,
+    required this.index,
+  }) : super(key: key);
 
   final AnimeInfo info;
   final int index;
-
-  AnimeInfoCard({Key? key, required this.info, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +25,17 @@ class AnimeInfoCard extends StatelessWidget {
 
     return TextButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(index % 2 == 0 ? first : second),
+        backgroundColor: MaterialStateProperty.all(
+          index % 2 == 0 ? first : second,
+        ),
       ),
       onPressed: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Anime(link: this.info.link)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Anime(link: this.info.link),
+          ),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(8),
@@ -33,20 +43,22 @@ class AnimeInfoCard extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
-              child: Text(info.name ?? "賽博朋克", maxLines: 1, style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16).merge(textStyle)),
+              child: Text(info.name ?? "賽博朋克",
+                  maxLines: 1,
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16)
+                      .merge(textStyle)),
             ),
-            Table(
-              children: [
-                TableRow(
-                  children: [
-                    Text(info.episode ?? "77", textAlign: TextAlign.center, style: textStyle),
-                    // Cyperpunk?
-                    Text((info.year ?? "2077") + (info.season ?? ""), textAlign: TextAlign.center, style: textStyle),
-                    Text(info.subtitle ?? "", textAlign: TextAlign.center, maxLines: 1, style: textStyle),
-                  ]
-                ),
-              ]
-            ),
+            Table(children: [
+              TableRow(children: [
+                Text(info.episode ?? "77",
+                    textAlign: TextAlign.center, style: textStyle),
+                // Cyperpunk?
+                Text((info.year ?? "2077") + (info.season ?? ""),
+                    textAlign: TextAlign.center, style: textStyle),
+                Text(info.subtitle ?? "",
+                    textAlign: TextAlign.center, maxLines: 1, style: textStyle),
+              ]),
+            ]),
           ],
         ),
       ),

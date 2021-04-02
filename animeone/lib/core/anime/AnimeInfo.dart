@@ -29,7 +29,8 @@ class AnimeInfo extends AnimeBasic {
   bool contains(String t) {
     // emm, any better way of writing this?
     if (super.contains(t)) return true;
-    if (year != null && season != null && (year! + season!).contains(t)) return true;
+    if (year != null && season != null && (year! + season!).contains(t))
+      return true;
     if (episode != null && episode!.contains(t)) return true;
     if (subtitle != null && subtitle!.contains(t)) return true;
 

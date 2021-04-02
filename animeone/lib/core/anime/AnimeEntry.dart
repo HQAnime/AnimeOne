@@ -7,7 +7,6 @@ import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
 class AnimeEntry extends AnimeBasic {
-
   String? postDate;
   String? allEpisodes;
   String? nextEpisode;
@@ -43,7 +42,8 @@ class AnimeEntry extends AnimeBasic {
           } else {
             // It is a YouTube preview
             Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-            final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']!);
+            final link =
+                GlobalData().getYouTubeLink(youtube.attributes['data-vid']!);
             this.videoLink = new AnimeVideo(link);
           }
         }
@@ -85,7 +85,8 @@ class AnimeEntry extends AnimeBasic {
     } else if (dayDiff < 28) {
       enhanced = '${(dayDiff / 7).round()} 周前';
     } else if (dayDiff < 365) {
-      enhanced = '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
+      enhanced =
+          '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
     } else {
       enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
     }

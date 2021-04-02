@@ -111,130 +111,138 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return Stack(
         children: <Widget>[
           Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '無法加載數據 :(',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Text(
-                '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
-              ),
-              SizedBox.fromSize(size: Size.fromHeight(24)),
-              // ErrorButton(),
-              Text(
-                '錯誤消息!',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  '$error',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '無法加載數據 :(',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                Text(
+                  '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),
-              ),
-              SizedBox.fromSize(size: Size.fromHeight(24)),
-              Text(
-                '現在怎麽辦？',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
-              TextButton(
-                child: Text('使用瀏覽器打開 anime1.me'),
-                onPressed: () => launch(GlobalData.domain),
-              ),
-              Text(
-                '或者',
-                style: Theme.of(context).textTheme.caption,
-              ),
-              TextButton(
-                child: Text('檢查 APP 是否有更新'),
-                onPressed: () {
-                  GlobalData().checkGithubUpdate().then((_) {
-                    GlobalData()
-                        .getGithubUpdate()!
-                        .checkUpdate(context, showAlertWhenNoUpdate: true);
-                  });
-                },
-              ),
-              Text(
-                '或者',
-                style: Theme.of(context).textTheme.caption,
-              ),
-              TextButton(
-                child: Text('嘗試修復問題 (Beta)',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
-                    final channel = AnimeOne();
-                    channel.getAnimeOneCookie()?.then((cookie) {
-                      if (cookie is String &&
-                          cookie.length > 0 &&
-                          cookie.contains('cf_clearance')) {
-                        print(cookie);
-                        GlobalData().updateCookie(cookie);
-                        showDialog(
-                            context: context,
-                            builder: (c) => AlertDialog(
-                                  title: Text('修復成功'),
-                                  content: Text('重新啓動 APP？'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                        onPressed: () => channel.restartApp(),
-                                        child: Text('好的')),
-                                    TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('之後')),
-                                  ],
-                                ));
-                      } else {
-                        showDialog(
-                            context: context,
-                            builder: (c) => AlertDialog(
-                                  title: Text('修復失敗'),
-                                  content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                        onPressed: () => Navigator.pop(context),
-                                        child: Text('好的')),
-                                  ],
-                                ));
-                      }
+                SizedBox.fromSize(size: Size.fromHeight(24)),
+                // ErrorButton(),
+                Text(
+                  '錯誤消息!',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '$error',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.caption,
+                  ),
+                ),
+                SizedBox.fromSize(size: Size.fromHeight(24)),
+                Text(
+                  '現在怎麽辦？',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+                TextButton(
+                  child: Text('使用瀏覽器打開 anime1.me'),
+                  onPressed: () => launch(GlobalData.domain),
+                ),
+                Text(
+                  '或者',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                TextButton(
+                  child: Text('檢查 APP 是否有更新'),
+                  onPressed: () {
+                    GlobalData().checkGithubUpdate().then((_) {
+                      GlobalData()
+                          .getGithubUpdate()
+                          ?.checkUpdate(context, showAlertWhenNoUpdate: true);
                     });
-                  } else {
-                    // This should be a request error
-                    showDialog(
-                        context: context,
-                        builder: (c) => AlertDialog(
-                              title: Text('沒有發現任何問題'),
-                              content: Text(
-                                  '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。'),
+                  },
+                ),
+                Text(
+                  '或者',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                TextButton(
+                  child: Text(
+                    '嘗試修復問題 (Beta)',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  onPressed: () {
+                    if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
+                      final channel = AnimeOne();
+                      channel.getAnimeOneCookie()?.then((cookie) {
+                        if (cookie is String &&
+                            cookie.length > 0 &&
+                            cookie.contains('cf_clearance')) {
+                          print(cookie);
+                          GlobalData().updateCookie(cookie);
+                          showDialog(
+                            context: context,
+                            builder: (c) => AlertDialog(
+                              title: Text('修復成功'),
+                              content: Text('重新啓動 APP？'),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () => channel.restartApp(),
+                                    child: Text('好的')),
+                                TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('之後')),
+                              ],
+                            ),
+                          );
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (c) => AlertDialog(
+                              title: Text('修復失敗'),
+                              content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
                               actions: <Widget>[
                                 TextButton(
                                     onPressed: () => Navigator.pop(context),
                                     child: Text('好的')),
                               ],
-                            ));
-                  }
-                },
-              ),
-            ],
-          )),
+                            ),
+                          );
+                        }
+                      });
+                    } else {
+                      // This should be a request error
+                      showDialog(
+                        context: context,
+                        builder: (c) => AlertDialog(
+                          title: Text('沒有發現任何問題'),
+                          content: Text(
+                            '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。',
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('好的'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+          ),
           Positioned(
-              right: 16,
-              top: 36,
-              child: Tooltip(
-                message: '重新加載數據',
-                child: IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: () => this._loadData()),
-              )),
+            right: 16,
+            top: 36,
+            child: Tooltip(
+              message: '重新加載數據',
+              child: IconButton(
+                  icon: Icon(Icons.refresh), onPressed: () => this._loadData()),
+            ),
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: EmailButton(message: error),

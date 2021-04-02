@@ -2,10 +2,9 @@ import 'package:animeone/core/GlobalData.dart';
 
 /// This class asks for DateTime to get a string to indicate seasonal anime
 class AnimeSeason {
-
   late DateTime _date;
   final _seasons = ['冬季', '春季', '夏季', '秋季'];
-  
+
   AnimeSeason(DateTime date) {
     this._date = date;
   }
@@ -21,18 +20,14 @@ class AnimeSeason {
 
   /// some preset filters
   List<String> getQuickFilters() {
-    List<String> filters = [
-      '連載中', 
-      '劇場版', 
-      'OVA', 
-      'OAD'
-    ];
+    List<String> filters = ['連載中', '劇場版', 'OVA', 'OAD'];
 
     // Add recent 4 seasons
     int offset = 0;
     for (int i = 0; i < 4; i++, offset -= 3) {
       // Keep updating the date
-      var temp = this._getYearAndSeason(this._date.add(Duration(days: offset * 30)));
+      var temp =
+          this._getYearAndSeason(this._date.add(Duration(days: offset * 30)));
       filters.add('${temp[0]}${this._seasons[temp[1]][0]}');
     }
 
@@ -44,10 +39,14 @@ class AnimeSeason {
     int month = dt.month;
 
     int season;
-    if (month < 4) season = 0;
-    else if (month < 7) season = 1;
-    else if (month < 10) season = 2;
-    else season = 3;
+    if (month < 4)
+      season = 0;
+    else if (month < 7)
+      season = 1;
+    else if (month < 10)
+      season = 2;
+    else
+      season = 3;
 
     return [year, season];
   }
@@ -58,5 +57,4 @@ class AnimeSeason {
 
     return '${yas[0]}年${this._seasons[yas[1]]}新番';
   }
-
 }

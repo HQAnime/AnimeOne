@@ -3,7 +3,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Support class
 class Support extends StatelessWidget {
-
   Support({Key? key}) : super(key: key);
 
   @override
@@ -29,8 +28,7 @@ class Support extends StatelessWidget {
             child: Text('非常感謝您的支持！'),
           )
         ],
-      )
+      ),
     );
   }
-
 }

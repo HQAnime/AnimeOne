@@ -134,7 +134,7 @@ class _ScheduleState extends State<Schedule>
       );
     } else {
       return Center(
-        child: Text('竟然沒有數據 (´;ω;`)'),
+        child: Text('數據還沒有更新 (´;ω;`)'),
       );
     }
   }

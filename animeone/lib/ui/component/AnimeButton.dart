@@ -24,7 +24,10 @@ class AnimeButton extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Anime(link: basic.link),
+                builder: (context) => Anime(
+                  link: basic.link,
+                  recent: recent,
+                ),
               ),
             );
           } else {

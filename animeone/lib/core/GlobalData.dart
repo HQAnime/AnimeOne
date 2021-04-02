@@ -163,34 +163,40 @@ class GlobalData {
 
       // Load anime list
       await this._getAnimeList();
-      prefs.setString(animeList, jsonEncode(this._animeList));
 
       // Load anime schedule
       await this._getAnimeScedule();
-      prefs.setString(animeScedule, jsonEncode(this._animeScheduleList));
-      prefs.setString(scheduleIntroVideo, jsonEncode(this._introductory));
     } else {
       // if anime list has been loaded but somehow, it failed
       // you need to reset the list so that it won't have duplicates
       this._resetList();
 
       // Load everything from storage
-      List<dynamic> savedAnimeList = jsonDecode(
-        prefs.getString(animeList) ?? "[]",
-      );
-      savedAnimeList.forEach((json) {
-        this._animeList.add(AnimeInfo.fromJson(json));
-      });
+      final animeListJson = prefs.getString(animeList);
+      if (animeListJson == null) {
+        // cache it again if not found
+        await this._getAnimeList();
+      } else {
+        List<dynamic> savedAnimeList = jsonDecode(animeListJson);
+        savedAnimeList.forEach((json) {
+          this._animeList.add(AnimeInfo.fromJson(json));
+        });
+      }
 
-      List<dynamic> savedScheduleList = jsonDecode(
-        prefs.getString(animeScedule) ?? "[]",
-      );
-      savedScheduleList.forEach((json) {
-        this._animeScheduleList.add(AnimeSchedule.fromJson(json));
-      });
+      // Same as anime list
+      final scheduleListJson = prefs.getString(animeScedule);
+      if (scheduleListJson == null) {
+        // cache it again if not found
+        await this._getAnimeScedule();
+      } else {
+        List<dynamic> savedScheduleList = jsonDecode(scheduleListJson);
+        savedScheduleList.forEach((json) {
+          this._animeScheduleList.add(AnimeSchedule.fromJson(json));
+        });
+      }
 
       final introductionString = prefs.getString(scheduleIntroVideo);
-      // what ???
+      // New anime introduction isn't that important so it is fine to fail
       if (introductionString != null && introductionString != "null") {
         this._introductory = AnimeVideo.fromJson(
           jsonDecode(introductionString),
@@ -221,15 +227,22 @@ class GlobalData {
     Document? doc = await parser.downloadHTML();
     // Check if it is valid
     if (doc != null) {
-      this._animeList = parser.parseHTML(doc);
+      _animeList = parser.parseHTML(doc);
+      if (_animeList.length > 0)
+        prefs.setString(animeList, jsonEncode(_animeList));
     }
   }
 
   Future _getAnimeScedule() async {
-    final parser = new AnimeScheduleParser(this.getScheduleLink());
+    final link = this.getScheduleLink();
+    final parser = new AnimeScheduleParser(link);
     final body = await parser.downloadHTML();
-    this._animeScheduleList = parser.parseHTML(body);
-    this._introductory = parser.parseIntroductoryVideo(body);
+    _animeScheduleList = parser.parseHTML(body);
+    _introductory = parser.parseIntroductoryVideo(body);
+    // Only save it if it is valid
+    if (_animeScheduleList.length > 0)
+      prefs.setString(animeScedule, jsonEncode(_animeScheduleList));
+    prefs.setString(scheduleIntroVideo, jsonEncode(_introductory));
   }
 
   /// Load recent anime

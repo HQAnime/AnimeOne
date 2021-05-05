@@ -31,6 +31,9 @@ dependencies:
   share: ^2.0.0
   webview_flutter: ^2.0.2
 
+  # control desktop window
+  desktop_window: ^0.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:animeone/ui/page/home.dart';
+import 'package:desktop_window/desktop_window.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Top level component
 class MyApp extends StatelessWidget {
-
   final darkTheme = ThemeData.dark().copyWith(
     accentColor: Colors.pink,
     indicatorColor: Colors.pink,
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Setup navigation bar colour 
+    // Setup navigation bar colour
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     //   systemNavigationBarColor: useDark ? Colors.grey[900] : Colors.grey[50],
     //   systemNavigationBarIconBrightness: useDark ? Brightness.light : Brightness.dark
@@ -33,10 +35,15 @@ class MyApp extends StatelessWidget {
       home: HomePage(),
     );
   }
-
 }
 
 /// Entry point of this app
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await DesktopWindow.setMinWindowSize(Size(400, 400));
+  }
+
   runApp(MyApp());
 }

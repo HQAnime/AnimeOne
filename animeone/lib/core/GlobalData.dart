@@ -262,8 +262,9 @@ class GlobalData {
   }
 
   /// get a string like https://youtube.com/watch?v=xxx
-  String getYouTubeLink(String vid) {
-    return 'https://youtube.com/watch?v=' + vid;
+  String getYouTubeLink(String? vid) {
+    // you have found an easter egg maybe?
+    return 'https://youtube.com/watch?v=' + (vid ?? 'dQw4w9WgXcQ');
   }
 
   /// send an email to HenryQuan

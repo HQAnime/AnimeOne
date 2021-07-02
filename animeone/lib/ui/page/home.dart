@@ -19,13 +19,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool loading = true;
   String error = '';
 
-  late GlobalData global;
+  final global = GlobalData();
 
   @override
   void initState() {
     super.initState();
 
-    this.global = new GlobalData();
     this._loadData();
   }
 
@@ -240,7 +239,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Tooltip(
               message: '重新加載數據',
               child: IconButton(
-                  icon: Icon(Icons.refresh), onPressed: () => this._loadData()),
+                icon: Icon(Icons.refresh),
+                onPressed: () => this._loadData(),
+              ),
             ),
           ),
           Align(

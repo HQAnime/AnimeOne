@@ -25,7 +25,8 @@ class AnimeVideo {
       };
 
   void launchURL() {
-    launch(this.video!);
+    final video = this.video;
+    if (video != null) launch(video);
   }
 
   /// Check if this is a youtube link

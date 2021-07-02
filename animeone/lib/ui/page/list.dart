@@ -13,7 +13,7 @@ class AnimeList extends StatefulWidget {
 
 class _AnimeListState extends State<AnimeList> {
   static GlobalData global = new GlobalData();
-  late List<AnimeInfo> list;
+  List<AnimeInfo> list = [];
   final all = global.getAnimeList();
 
   final quickFilters = global.getQuickFilters();
@@ -44,24 +44,25 @@ class _AnimeListState extends State<AnimeList> {
         ),
         actions: <Widget>[
           Ink.image(
-              image: AssetImage('lib/assets/icon/logo.png'),
-              width: 64,
-              height: 64,
-              child: Tooltip(
-                message: '關於AnimeOne',
-                child: InkWell(
-                  onTap: () {
-                    // Go to information page
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (context) => Settings(),
-                      ),
-                    );
-                  },
-                  child: null,
-                ),
-              )),
+            image: AssetImage('lib/assets/icon/logo.png'),
+            width: 64,
+            height: 64,
+            child: Tooltip(
+              message: '關於AnimeOne',
+              child: InkWell(
+                onTap: () {
+                  // Go to information page
+                  Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => Settings(),
+                    ),
+                  );
+                },
+                child: null,
+              ),
+            ),
+          ),
         ],
       ),
       body: Column(children: [

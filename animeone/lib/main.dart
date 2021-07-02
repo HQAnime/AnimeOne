@@ -14,13 +14,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeData darkTheme = ThemeData(
+  final darkTheme = ThemeData(
     primarySwatch: Colors.pink,
     brightness: Brightness.dark,
     accentColor: Colors.pink,
   );
 
-  ThemeData lightTheme = ThemeData(
+  final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
     appBarTheme: AppBarTheme(
       brightness: Brightness.dark,

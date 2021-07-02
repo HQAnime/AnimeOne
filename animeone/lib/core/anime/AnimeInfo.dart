@@ -14,7 +14,8 @@ class AnimeInfo extends AnimeBasic {
     final list = tr.nodes;
     try {
       this.name = list[0].text;
-      this.link = GlobalData.domain + list[0].nodes[0].attributes["href"]!;
+      final href = list[0].nodes[0].attributes["href"];
+      if (href != null) this.link = GlobalData.domain + href;
       this.episode = list[1].text;
       this.year = list[2].text;
       this.season = list[3].text;

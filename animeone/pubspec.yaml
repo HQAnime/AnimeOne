@@ -14,7 +14,7 @@ description: An unofficial app for anime1.me
 version: 1.1.1+1
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -23,7 +23,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-  
+
   http: ^0.13.0
   html: ^0.15.0
   url_launcher: ^6.0.2
@@ -40,7 +40,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -48,8 +47,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - lib/assets/icon/
-   - lib/assets/cover/
+    - lib/assets/icon/
+    - lib/assets/cover/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

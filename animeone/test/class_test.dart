@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 /// Test my classes and see if they work as intended
 void main() {
-  group("AnimeSeason", () { 
+  group("AnimeSeason", () {
     test('test spring 4/4/2019', () {
       final season = new AnimeSeason(new DateTime(2019, 4, 4));
       expect(season.toString() == '2019年春季新番', isTrue);
@@ -72,7 +72,5 @@ void main() {
     });
   });
 
-  group('Update Test', () {
-
-  });
+  group('Update Test', () {});
 }

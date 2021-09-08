@@ -61,9 +61,11 @@ class _AnimeState extends State<Anime> {
       this.canLoadMore = false;
     });
 
-    String? rLink = this.fullLink == ''
-        ? widget.link
-        : this.fullLink ?? '' + '/page/${this.page}';
+    String? rLink = widget.link;
+    if (fullLink != null && fullLink != '') {
+      rLink = fullLink! + '/page/${this.page}';
+    }
+
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {

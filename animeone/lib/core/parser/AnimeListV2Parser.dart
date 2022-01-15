@@ -2,10 +2,9 @@ import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/core/parser/BasicParser.dart';
 import 'package:html/dom.dart';
 
-/// This class parses all anime available from the site
-@Deprecated("This class is deprecated, use AnimeListV2Parser instead")
-class AnimeListParser extends BasicParser {
-  AnimeListParser(String link) : super(link);
+/// This class parses all anime available from the site by requesting to https://d1zquzjgwo9yb.cloudfront.net/?_=
+class AnimeListV2Parser extends BasicParser {
+  AnimeListV2Parser(String timeStamp) {}
 
   @override
   List<AnimeInfo> parseHTML(Document? body) {

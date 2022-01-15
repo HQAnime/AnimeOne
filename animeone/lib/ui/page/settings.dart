@@ -1,6 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/support.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';

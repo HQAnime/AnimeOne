@@ -1,7 +1,6 @@
 import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ErrorButton extends StatelessWidget {
   ErrorButton({

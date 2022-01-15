@@ -1,6 +1,6 @@
 import 'package:animeone/ui/page/home.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 /// Entry point of this app
 void main() {
@@ -15,15 +15,17 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final darkTheme = ThemeData(
-    primarySwatch: Colors.pink,
     brightness: Brightness.dark,
-    accentColor: Colors.pink,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.pink,
+      brightness: Brightness.dark,
+    ).copyWith(secondary: Colors.pink),
   );
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
     appBarTheme: AppBarTheme(
-      brightness: Brightness.dark,
+      systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
   );
 

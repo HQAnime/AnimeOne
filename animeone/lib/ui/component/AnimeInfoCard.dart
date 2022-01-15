@@ -2,7 +2,6 @@ import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// Takes an AnimeInfo object and render it to a card
 class AnimeInfoCard extends StatelessWidget {

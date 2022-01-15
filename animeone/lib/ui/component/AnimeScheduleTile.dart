@@ -1,9 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
+import 'package:animeone/ui/component/AnimeButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
-import 'AnimeButton.dart';
 
 class AnimeScheduleTile extends StatelessWidget {
   AnimeScheduleTile({

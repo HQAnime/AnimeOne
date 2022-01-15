@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Colors.pink,
       brightness: Brightness.dark,
-    ).copyWith(secondary: Colors.pink),
+    ),
   );
 
   final lightTheme = ThemeData(

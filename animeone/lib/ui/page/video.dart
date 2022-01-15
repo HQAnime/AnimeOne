@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -13,43 +14,19 @@ class Video extends StatefulWidget {
   _VideoState createState() => _VideoState();
 }
 
-class _VideoState extends State<Video> {
+class _VideoState extends State<Video> with FullscreenPlayer {
   final isIOS = Platform.isIOS;
   bool loading = true;
 
   @override
   void initState() {
     super.initState();
-
-    // Landscape only
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-
-    // Fullscreen mode
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: [],
-    );
+    setLandscape();
   }
 
   @override
   void dispose() {
-    // Reset rotation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-
-    // Reset UI overlay
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.manual,
-      overlays: SystemUiOverlay.values,
-    );
-
+    resetOrientation();
     super.dispose();
   }
 

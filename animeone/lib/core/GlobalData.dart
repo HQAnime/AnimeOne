@@ -6,7 +6,7 @@ import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeSeason.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/other/GithubUpdate.dart';
-import 'package:animeone/core/parser/AnimeListParser.dart';
+import 'package:animeone/core/parser/AnimeListParserV2.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/core/parser/GithubParser.dart';
@@ -223,7 +223,7 @@ class GlobalData {
   }
 
   Future _getAnimeList() async {
-    final parser = new AnimeListParser(domain);
+    final parser = new AnimeListParserV2();
     Document? doc = await parser.downloadHTML();
     // Check if it is valid
     if (doc != null) {

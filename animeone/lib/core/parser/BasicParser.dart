@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';
@@ -38,7 +39,8 @@ abstract class BasicParser {
           .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        return parse(response.body);
+        final encoded = Utf8Encoder().convert(response.body);
+        return parse(encoded);
       } else if (response.statusCode == 503) {
         // Need to get cookie
         GlobalData.requestCookieLink = this._link;

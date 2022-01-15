@@ -45,6 +45,17 @@ class AnimeInfo extends AnimeBasic {
         subtitle = json['subtitle'],
         super.fromJson(json);
 
+  // TODO: this is not correct double check here
+  AnimeInfo.fromList(List list) : super.fromJson(null) {
+    // The ID is the link
+    this.link = 'https://anime1.me/?cat=${list[0]}';
+    this.name = list[1];
+    this.episode = list[2];
+    this.year = list[3];
+    this.season = list[4];
+    this.subtitle = list[5];
+  }
+
   Map<String, dynamic> toJson() => {
         'subtitle': subtitle,
         'season': season,

@@ -19,6 +19,9 @@ class _MyAppState extends State<MyApp> {
     colorScheme: ColorScheme.fromSwatch(
       primarySwatch: Colors.pink,
       brightness: Brightness.dark,
+    ).copyWith(
+      // set navigation tab bar tint colour
+      secondary: Colors.pinkAccent,
     ),
   );
 

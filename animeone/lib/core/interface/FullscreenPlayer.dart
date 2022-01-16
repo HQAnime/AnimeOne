@@ -5,9 +5,8 @@ mixin FullscreenPlayer {
     // Fullscreen mode
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
-      overlays: [
-        SystemUiOverlay.top,
-      ],
+      // Hide the status bar
+      overlays: [],
     );
 
     // Landscape only

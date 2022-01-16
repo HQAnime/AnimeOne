@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {

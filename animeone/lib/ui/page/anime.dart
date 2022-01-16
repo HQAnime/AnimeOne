@@ -92,17 +92,7 @@ class _AnimeState extends State<Anime> {
           this.loading = false;
           this.canLoadMore = true;
 
-          // Start playing if there is only one entry, only for new anime
-          if ((widget.recent ?? false) &&
-              entries.length == 1 &&
-              newEntries.length == 1) {
-            Navigator.push(
-              context,
-              new MaterialPageRoute(
-                builder: (context) => Video(video: newEntries.first.videoLink),
-              ),
-            );
-          }
+          // Don't auto play here, it can be quite annoying
         });
       }
     }).catchError((error) {

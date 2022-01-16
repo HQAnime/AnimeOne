@@ -57,7 +57,7 @@ class AnimeCoverImage extends StatelessWidget {
       return IconButton(
         onPressed: () {
           if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-            video.launchURL();
+            video?.launchURL();
           } else if (video?.isYoutube() ?? false) {
             video?.launchURL();
           } else {

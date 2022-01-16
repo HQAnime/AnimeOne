@@ -7,9 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
-  final AnimeVideo video;
+  AnimeCoverImage({
+    Key? key,
+    required this.video,
+  }) : super(key: key);
 
-  AnimeCoverImage({Key key, @required this.video}) : super(key: key);
+  final AnimeVideo? video;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,8 @@ class AnimeCoverImage extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: FittedBox(
-                  child: Image.asset('lib/assets/cover/${video.image}.jpg')),
+                child: Image.asset('lib/assets/cover/${video?.image}.jpg'),
+              ),
             ),
           ),
           Positioned.fill(
@@ -36,7 +40,7 @@ class AnimeCoverImage extends StatelessWidget {
 
   Widget renderButton(BuildContext context, BoxConstraints constraint) {
     if (this.shouldEnterPassword()) {
-      return FlatButton(
+      return TextButton(
         child: Text(
           '啓動瀏覽器輸入密碼',
           style: TextStyle(
@@ -46,7 +50,7 @@ class AnimeCoverImage extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          video.launchURL();
+          video?.launchURL();
         },
       );
     } else {
@@ -54,11 +58,11 @@ class AnimeCoverImage extends StatelessWidget {
         onPressed: () {
           if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
             video.launchURL();
-          } else if (video.isYoutube()) {
-            video.launchURL();
+          } else if (video?.isYoutube() ?? false) {
+            video?.launchURL();
           } else {
             if (identical(0, 0.0)) {
-              launch(this.video.video);
+              if (video != null && video!.video != null) launch(video!.video!);
             } else {
               Navigator.push(
                 context,

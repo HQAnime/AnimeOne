@@ -13,7 +13,8 @@ void main() {
   testWidgets('Basic checks', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
-    await tester.pump(Duration(seconds: 10));
+    // TODO: UI tests need to be fixed
+    await tester.pump();
 
     // Bottom three taps
     expect(find.byIcon(Icons.list), findsOneWidget);

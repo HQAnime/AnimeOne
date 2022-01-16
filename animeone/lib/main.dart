@@ -2,23 +2,45 @@ import 'dart:io';
 
 import 'package:animeone/ui/page/home.dart';
 import 'package:desktop_window/desktop_window.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+/// Entry point of this app
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // This can be done by changing the native project
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    await DesktopWindow.setMinWindowSize(Size(400, 400));
+  }
+
+  runApp(MyApp());
+}
 
 /// Top level component
-class MyApp extends StatelessWidget {
-  final darkTheme = ThemeData.dark().copyWith(
-    accentColor: Colors.pink,
-    indicatorColor: Colors.pink,
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final darkTheme = ThemeData(
+    brightness: Brightness.dark,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.pink,
+      brightness: Brightness.dark,
+    ).copyWith(
+      // set navigation tab bar tint colour
+      secondary: Colors.pinkAccent,
+    ),
   );
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
+    appBarTheme: AppBarTheme(
+      systemOverlayStyle: SystemUiOverlayStyle.light,
+    ),
   );
-
-  // static final _hour = DateTime.now().hour;
-  // // From 6pm to 6am for dark mode
-  // final useDark = _hour > 17 || _hour < 7;
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +51,10 @@ class MyApp extends StatelessWidget {
     // ));
 
     return MaterialApp(
-      title: '永遠のAnimeOne',
+      title: 'AnimeOne',
       theme: lightTheme,
       darkTheme: darkTheme,
       home: HomePage(),
     );
   }
-}
-
-/// Entry point of this app
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
-    await DesktopWindow.setMinWindowSize(Size(400, 400));
-  }
-
-  runApp(MyApp());
 }

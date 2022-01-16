@@ -6,16 +6,13 @@ import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
-
-  Latest({Key key}) : super(key: key);
+  const Latest({Key? key}) : super(key: key);
 
   @override
   _LatestState createState() => _LatestState();
-  
 }
 
 class _LatestState extends State<Latest> {
- 
   bool loading = false;
   List<AnimeRecent> list = [];
   final global = new GlobalData();
@@ -37,7 +34,7 @@ class _LatestState extends State<Latest> {
 
     global.getRecentAnime().then((d) {
       setState(() {
-        this.list = global.getRecentList();  
+        this.list = global.getRecentList();
         this.loading = false;
       });
     });
@@ -60,15 +57,19 @@ class _LatestState extends State<Latest> {
           tooltip: '支持發開',
           onPressed: () {
             // Push to support page
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Support()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Support(),
+              ),
+            );
           },
         ),
       ),
       body: Center(
         child: this.renderBody(),
-      )
+      ),
     );
-
   }
 
   Widget renderBody() {

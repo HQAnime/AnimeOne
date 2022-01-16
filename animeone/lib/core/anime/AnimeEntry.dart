@@ -7,11 +7,10 @@ import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
 class AnimeEntry extends AnimeBasic {
-
-  String postDate;
-  String allEpisodes;
-  String nextEpisode;
-  AnimeVideo videoLink;
+  String? postDate;
+  String? allEpisodes;
+  String? nextEpisode;
+  AnimeVideo? videoLink;
 
   AnimeEntry(Element e) : super.fromJson(null) {
     try {
@@ -43,7 +42,9 @@ class AnimeEntry extends AnimeBasic {
           } else {
             // It is a YouTube preview
             Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-            final link = GlobalData().getYouTubeLink(youtube.attributes['data-vid']);
+            final link = GlobalData().getYouTubeLink(
+              youtube.attributes['data-vid'],
+            );
             this.videoLink = new AnimeVideo(link);
           }
         }
@@ -51,12 +52,16 @@ class AnimeEntry extends AnimeBasic {
 
       // Episode links
       e.getElementsByTagName('a').forEach((n) {
-        if (n.text.contains('全集')) {
-          // Get all episode link
-          this.allEpisodes = GlobalData.domain + n.attributes['href'];
-        } else if (n.text.contains('下一集')) {
-          // Get next episode link
-          this.nextEpisode = GlobalData.domain + n.attributes['href'];
+        final href = n.attributes['href'];
+        if (href != null) {
+          final episodeLink = GlobalData.domain + href;
+          if (n.text.contains('全集')) {
+            // Get all episode link
+            this.allEpisodes = episodeLink;
+          } else if (n.text.contains('下一集')) {
+            // Get next episode link
+            this.nextEpisode = episodeLink;
+          }
         }
       });
     } catch (e) {
@@ -71,31 +76,40 @@ class AnimeEntry extends AnimeBasic {
   /// - 一年之前
   String getEnhancedDate() {
     String enhanced = '';
+    final postDateString = this.postDate;
+    if (postDateString != null) {
+      final date = DateTime.parse(postDateString);
+      int dayDiff = date.difference(DateTime.now()).inDays.abs();
+      log(dayDiff.toString());
 
-    var date = DateTime.parse(this.postDate);
-    int dayDiff = date.difference(DateTime.now()).inDays.abs();
-    log(dayDiff.toString());
+      if (dayDiff == 0) {
+        enhanced = '今天';
+      } else if (dayDiff == 1) {
+        enhanced = '昨天';
+      } else if (dayDiff < 7) {
+        enhanced = '$dayDiff 天前';
+      } else if (dayDiff < 28) {
+        enhanced = '${(dayDiff / 7).round()} 周前';
+      } else if (dayDiff < 365) {
+        enhanced =
+            '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
+      } else {
+        enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
+      }
 
-    if (dayDiff == 0) {
-      enhanced = '今天';
-    } else if (dayDiff == 1) {
-      enhanced = '昨天';
-    } else if (dayDiff < 7) {
-      enhanced = '$dayDiff 天前';
-    } else if (dayDiff < 28) {
-      enhanced = '${(dayDiff / 7).round()} 周前';
-    } else if (dayDiff < 365) {
-      enhanced = '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
+      return this.postDate! + ' | $enhanced';
     } else {
-      enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
+      return '未知';
     }
-
-    return this.postDate + ' | $enhanced';
   }
 
   /// If next episode is avaible
   bool hasNextEpisode() {
-    return !this.nextEpisode.endsWith('/?p=');
+    if (nextEpisode != null) {
+      return !nextEpisode!.endsWith('/?p=');
+    } else {
+      return false;
+    }
   }
 
   /// In certain regions, password is needed due to copyright protection
@@ -103,6 +117,5 @@ class AnimeEntry extends AnimeBasic {
     return this.videoLink == null;
   }
 
-  AnimeVideo getVideo() => this.videoLink;
-
+  AnimeVideo? getVideo() => this.videoLink;
 }

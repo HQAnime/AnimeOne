@@ -4,22 +4,20 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// This class has Github app version and its download link
 class GithubUpdate {
+  String? version;
+  String? link;
+  String? whatsnew;
 
-  String version;
-  String link;
-  String whatsnew;
+  GithubUpdate.fromJson(Map<String, dynamic> json)
+      : version = json['version'],
+        link = json['link'],
+        whatsnew = json['new'];
 
-  GithubUpdate.fromJson(Map<String, dynamic> json) : 
-    version = json['version'],
-    link = json['link'],
-    whatsnew = json['new'];
-
-  Map<String, dynamic> toJson() =>
-  {
-    'version': version,
-    'link': link,
-    'new': whatsnew
-  };
+  Map<String, dynamic> toJson() => {
+        'version': version,
+        'link': link,
+        'new': whatsnew,
+      };
 
   /// Check if version is current and launch the link if so
   void checkUpdate(BuildContext context, {bool showAlertWhenNoUpdate = false}) {
@@ -37,20 +35,22 @@ class GithubUpdate {
           // Has update now
           return AlertDialog(
             title: Text('v$version'),
-            content: Text(whatsnew + extraInfo),
+            content: Text(whatsnew! + extraInfo),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('關閉'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               // Render nothing for non-android devices
-              isAndroid ? FlatButton(
-                child: Text('立即下載'),
-                onPressed: () {
-                  launch(link);
-                  Navigator.of(context).pop();
-                },
-              ) : SizedBox.shrink(),
+              isAndroid
+                  ? TextButton(
+                      child: Text('立即下載'),
+                      onPressed: () {
+                        launch(link!);
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  : Container(),
             ],
           );
         },
@@ -67,7 +67,7 @@ class GithubUpdate {
             title: Text('v$version'),
             content: Text('沒有發現更新，目前已經是最新版本'),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text('關閉'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -77,5 +77,4 @@ class GithubUpdate {
       );
     }
   }
-
 }

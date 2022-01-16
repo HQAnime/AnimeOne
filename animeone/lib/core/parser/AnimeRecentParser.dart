@@ -8,13 +8,13 @@ class AnimeRecentParser extends BasicParser {
   AnimeRecentParser(String link) : super(link);
 
   @override
-  List<AnimeRecent> parseHTML(Document body) {
+  List<AnimeRecent> parseHTML(Document? body) {
     List<AnimeRecent> recent = [];
 
-    final widgets = body.getElementsByClassName('widget-area');
-    final list = widgets.first.getElementsByTagName('ul');
-    list.first.nodes.forEach((tr) {
-      if (tr.text.trim() != "") {
+    final widgets = body?.getElementsByClassName('widget-area');
+    final list = widgets?.first.getElementsByTagName('ul');
+    list?.first.nodes.forEach((tr) {
+      if (tr.text?.trim() != "") {
         recent.add(new AnimeRecent(tr));
       }
     });

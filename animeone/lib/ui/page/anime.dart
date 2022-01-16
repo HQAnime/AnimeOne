@@ -5,6 +5,7 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
+import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 /// This class handles anime page
@@ -12,23 +13,26 @@ import 'package:flutter/material.dart';
 /// - All episode
 /// - Load next page if possible
 class Anime extends StatefulWidget {
-  
-  final String link;
-  final bool seasonal;
+  const Anime({
+    Key? key,
+    required this.link,
+    this.seasonal,
+    this.recent,
+  }) : super(key: key);
 
-  Anime({Key key, @required this.link, this.seasonal}): super(key: key);
+  final String? link;
+  final bool? seasonal;
+  final bool? recent;
 
   @override
   _AnimeState createState() => _AnimeState();
-
 }
 
 class _AnimeState extends State<Anime> {
-
   final global = new GlobalData();
 
   // Always start from page 1
-  String fullLink = '';
+  String? fullLink = '';
   bool loading = true;
   // paging
   int page = 1;
@@ -39,15 +43,16 @@ class _AnimeState extends State<Anime> {
   String hasError = '';
 
   String title = '加載失敗了...';
-  AnimePageParser parser;
+  late AnimePageParser parser;
   List<AnimeEntry> entries = [];
-  ScrollController controller;
+  ScrollController? controller;
 
   @override
   void initState() {
     super.initState();
     this._getEntry();
-    this.controller = new ScrollController()..addListener(() => this.loadMore());
+    this.controller = new ScrollController()
+      ..addListener(() => this.loadMore());
   }
 
   /// Get entries from link (support page)
@@ -56,7 +61,11 @@ class _AnimeState extends State<Anime> {
       this.canLoadMore = false;
     });
 
-    String rLink = this.fullLink == '' ? widget.link : this.fullLink + '/page/${this.page}';
+    String? rLink = widget.link;
+    if (fullLink != null && fullLink != '') {
+      rLink = fullLink! + '/page/${this.page}';
+    }
+
     this.parser = new AnimePageParser(rLink);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
@@ -69,18 +78,21 @@ class _AnimeState extends State<Anime> {
         });
       } else {
         // Category also contains cat so you need to make it longer
-        if (widget.link.contains('/?cat=')) {
+        if (widget.link?.contains('/?cat=') ?? false) {
           this.fullLink = this.parser.getFullLink(d);
         } else {
           this.fullLink = widget.link;
         }
 
+        final newEntries = this.parser.parseHTML(d);
         setState(() {
           // Append more data
-          this.entries.addAll(this.parser.parseHTML(d));
+          this.entries.addAll(newEntries);
           this.title = this.parser.getPageTitle(d);
           this.loading = false;
           this.canLoadMore = true;
+
+          // Don't auto play here, it can be quite annoying
         });
       }
     }).catchError((error) {
@@ -95,43 +107,41 @@ class _AnimeState extends State<Anime> {
   Widget build(BuildContext context) {
     if (loading) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('努力加載中...')
-        ),
+        appBar: AppBar(title: Text('努力加載中...')),
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else if (hasError != '') {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('加载失败 QAQ')
+        appBar: AppBar(title: Text('加载失败 QAQ')),
+        body: Center(
+          child: ErrorButton(msg: this.hasError),
         ),
-        body: ErrorButton(msg: this.hasError)
       );
     } else {
       return Scaffold(
         appBar: AppBar(
           title: Text(this.title),
-          actions: <Widget>[
-            this.renderSearch()
-          ],
+          actions: <Widget>[this.renderSearch()],
         ),
-        body: this.renderBody()
+        body: this.renderBody(),
       );
     }
   }
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (this.title != '' && widget.seasonal == null && this.title != '加載失敗了...') {
+    if (this.title != '' &&
+        widget.seasonal == null &&
+        this.title != '加載失敗了...') {
       return IconButton(
         icon: Icon(Icons.search),
         onPressed: () => global.getWikipediaLink(this.title),
         tooltip: '使用維基百科搜索',
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 
@@ -141,15 +151,14 @@ class _AnimeState extends State<Anime> {
       return ErrorButton();
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          return Center(
-            child: SizedBox(
-              width: constraints.maxHeight,
-              child: AnimeEntryCard(entry: this.entries.first, showEpisode: true)
-            )
-          );
-        }
-      );
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return Center(
+          child: SizedBox(
+            width: constraints.maxHeight,
+            child: AnimeEntryCard(entry: this.entries.first, showEpisode: true),
+          ),
+        );
+      });
     } else {
       return SafeArea(
         child: LayoutBuilder(
@@ -168,11 +177,14 @@ class _AnimeState extends State<Anime> {
                 GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: count,
-                    childAspectRatio: ratio
+                    childAspectRatio: ratio,
                   ),
                   itemCount: length,
                   itemBuilder: (context, index) {
-                    return AnimeEntryCard(entry: this.entries.elementAt(index), showEpisode: widget.seasonal == null ? false : true);
+                    return AnimeEntryCard(
+                      entry: this.entries.elementAt(index),
+                      showEpisode: widget.seasonal == null ? false : true,
+                    );
                   },
                   controller: this.controller,
                 ),
@@ -192,18 +204,19 @@ class _AnimeState extends State<Anime> {
         child: LinearProgressIndicator(),
       );
     } else {
-      return SizedBox.shrink();
+      return Container();
     }
   }
 
   /// Load more anime here
   void loadMore() {
-    if (controller.position.extentAfter < 10 && this.entries.length % 14 == 0 && this.hasMoreData) {
+    if ((controller?.position.extentAfter ?? 10) < 10 &&
+        this.entries.length % 14 == 0 &&
+        this.hasMoreData) {
       if (canLoadMore) {
         this.page += 1;
         this._getEntry();
-      } 
+      }
     }
   }
-  
 }

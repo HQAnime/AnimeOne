@@ -1,48 +1,31 @@
 import 'dart:io';
 
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
-  
-  final AnimeVideo video;
-  Video({Key key, @required this.video}) : super(key: key);
+  final AnimeVideo? video;
+  Video({Key? key, required this.video}) : super(key: key);
 
   @override
   _VideoState createState() => _VideoState();
-
 }
-class _VideoState extends State<Video> {
+
+class _VideoState extends State<Video> with FullscreenPlayer {
   final isIOS = Platform.isIOS;
   bool loading = true;
 
   @override
   void initState() {
     super.initState();
-
-    // Landscape only
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    // Fullscreen mode
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    setLandscape();
   }
 
   @override
   void dispose() {
-    // Reset rotation
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
-    // Reset UI overlay
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-
+    resetOrientation();
     super.dispose();
   }
 
@@ -72,12 +55,12 @@ class _VideoState extends State<Video> {
                 });
               },
               initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-              initialUrl: widget.video.video,
+              initialUrl: widget.video?.video,
               javascriptMode: JavascriptMode.unrestricted,
             ),
           ),
         ),
-        buildLoading()
+        buildLoading(),
       ],
     );
   }
@@ -87,6 +70,7 @@ class _VideoState extends State<Video> {
       return Center(
         child: CircularProgressIndicator(),
       );
-    } else return SizedBox.shrink();
+    } else
+      return Container();
   }
 }

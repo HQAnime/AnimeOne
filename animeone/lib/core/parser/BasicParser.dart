@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:animeone/core/GlobalData.dart';
 import 'package:html/dom.dart';
@@ -8,13 +9,13 @@ import 'package:http/http.dart' as http;
 /// This is the parent of all parsers and it handles 404 not found.
 /// This is also the termination point of next page or back to home
 abstract class BasicParser {
-  String _link;
-  String _cookie;
+  String? _link;
+  late String _cookie;
 
   /// Get the link for current page
-  String getLink() => this._link;
+  String? getLink() => this._link;
 
-  BasicParser(String link) {
+  BasicParser(String? link) {
     this._link = link;
     this._cookie = GlobalData().getCookie();
     // this._cookie = '__cfduid=d51d3b47667b64ea1c0278ca1baec11f41583638164; _ga=GA1.2.1712035882.1586138123; _gid=GA1.2.378879752.1586138123; cf_clearance=b92f05ead855fb1ec43fdad0205f81c366c23ce0-1586138131-0-150; videopassword=0';
@@ -22,7 +23,7 @@ abstract class BasicParser {
   }
 
   /// Download HTML string from link
-  Future<Document> downloadHTML() async {
+  Future<Document?> downloadHTML() async {
     try {
       Map<String, String> requestHeaders = {
         'cookie': _cookie,
@@ -32,15 +33,14 @@ abstract class BasicParser {
 
       final response = await http
           .get(
-            Uri.parse(this._link),
+            Uri.parse(this._link ?? ""),
             headers: requestHeaders,
           )
-          .timeout(
-            Duration(seconds: 10),
-          );
+          .timeout(Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        return parse(response.body);
+        final encoded = Utf8Encoder().convert(response.body);
+        return parse(encoded);
       } else if (response.statusCode == 503) {
         // Need to get cookie
         GlobalData.requestCookieLink = this._link;
@@ -56,5 +56,5 @@ abstract class BasicParser {
   }
 
   /// All subclasses have different implementations
-  parseHTML(Document body);
+  parseHTML(Document? body);
 }

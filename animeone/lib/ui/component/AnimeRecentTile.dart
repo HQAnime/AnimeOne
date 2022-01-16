@@ -5,15 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AnimeRecentTile extends StatelessWidget {
-  
+  AnimeRecentTile({
+    Key? key,
+    required this.recent,
+  }) : super(key: key);
+
   final AnimeRecent recent;
   final GlobalData global = new GlobalData();
 
-  AnimeRecentTile({Key key, @required this.recent}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return AnimeButton(basic: recent);
+    return AnimeButton(
+      basic: recent,
+      recent: true,
+    );
   }
-  
 }

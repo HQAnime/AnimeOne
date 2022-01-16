@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// WebsiteClosed class
 class WebsiteClosed extends StatelessWidget {
-  WebsiteClosed({Key key}) : super(key: key);
+  WebsiteClosed({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +31,18 @@ class WebsiteClosed extends StatelessWidget {
               ),
             ),
             Text('如果你喜歡英文字幕的話'),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 launch('https://github.com/HenryQuan/AnimeGo-Re/releases');
-              }, 
-              child: Text('下載 AnimeGo')
+              },
+              child: Text('下載 AnimeGo'),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   launch('https://github.com/HenryQuan/AnimeOne');
-                }, 
+                },
                 child: Text('https://github.com/HenryQuan/AnimeOne'),
               ),
             ),
@@ -52,10 +52,10 @@ class WebsiteClosed extends StatelessWidget {
             )
           ],
         ),
-      )
+      ),
     );
   }
 }
 
-// 
+//
 // 永遠のAnimeOne

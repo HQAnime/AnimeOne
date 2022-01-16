@@ -38,12 +38,10 @@ class MainActivity: FlutterActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (this.methodResult != null) {
-            if (resultCode == this.webRequestCode) {
-                val cookie = data?.getStringExtra("cookie")
-                val agent = data?.getStringExtra("agent")
-                this.methodResult.success(listOf(cookie, agent))
-            }
+        if (resultCode == this.webRequestCode) {
+            val cookie = data?.getStringExtra("cookie")
+            val agent = data?.getStringExtra("agent")
+            this.methodResult.success(listOf(cookie, agent))
         }
     }
 }

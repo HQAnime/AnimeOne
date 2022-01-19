@@ -40,12 +40,17 @@ class AnimeEntry extends AnimeBasic {
           if (password.length > 0) {
             // Use need to enter some password
           } else {
-            // It is a YouTube preview
-            Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-            final link = GlobalData().getYouTubeLink(
-              youtube.attributes['data-vid'],
-            );
-            this.videoLink = new AnimeVideo(link);
+            // Check if it is a YouTube preview
+            final youtube = e.getElementsByClassName('youtubePlayer');
+            if (youtube.length > 0) {
+              final element = youtube[0];
+              final link = GlobalData().getYouTubeLink(
+                element.attributes['data-vid'],
+              );
+              this.videoLink = new AnimeVideo(link);
+            } else {
+              // This probably needs an API request here
+            }
           }
         }
       }

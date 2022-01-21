@@ -61,7 +61,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
             )
           : null,
       body: Container(
-        color: Theme.of(context).primaryColor,
+        color: Colors.black,
         child: buildBody(),
       ),
     );
@@ -77,7 +77,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
           child: AspectRatio(
             aspectRatio: 16 / 9,
             child: WebView(
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Colors.black,
               initialCookies: _cookies,
               onPageStarted: (url) {
                 print('done');

@@ -79,7 +79,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
             child: WebView(
               backgroundColor: Theme.of(context).primaryColor,
               initialCookies: _cookies,
-              onPageFinished: (url) {
+              onPageStarted: (url) {
                 print('done');
                 setState(() {
                   loading = false;

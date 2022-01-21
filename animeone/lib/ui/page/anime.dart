@@ -5,7 +5,6 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
-import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 /// This class handles anime page
@@ -66,7 +65,7 @@ class _AnimeState extends State<Anime> {
       rLink = fullLink! + '/page/${this.page}';
     }
 
-    this.parser = new AnimePageParser(rLink);
+    this.parser = new AnimePageParser(rLink!);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
         // Stop loading more data

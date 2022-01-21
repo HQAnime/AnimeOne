@@ -11,9 +11,7 @@ class GithubParser extends BasicParser {
   @override
   GithubUpdate? parseHTML(Document? body) {
     final text = body?.firstChild?.text;
-    if (text == null) {
-      return null;
-    }
+    if (text == null) return null;
 
     return GithubUpdate.fromJson(jsonDecode(text));
   }

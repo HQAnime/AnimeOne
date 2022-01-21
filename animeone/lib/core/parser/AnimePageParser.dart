@@ -9,7 +9,7 @@ import 'package:html/dom.dart';
 /// The long link can up to 14 episodes and the short one only has one.
 /// They have a link to all episodes or next episode
 class AnimePageParser extends BasicParser {
-  AnimePageParser(String? link) : super(link);
+  AnimePageParser(String link) : super(link);
 
   @override
   List<AnimeEntry> parseHTML(Document? body) {

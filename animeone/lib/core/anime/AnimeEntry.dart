@@ -49,7 +49,15 @@ class AnimeEntry extends AnimeBasic {
               );
               this.videoLink = new AnimeVideo(link);
             } else {
-              // This probably needs an API request here
+              // find the video tag and get data-apireq from it
+              final videoTags = e.getElementsByTagName('video');
+              if (videoTags.length > 0) {
+                final element = videoTags[0];
+                final link = element.attributes['data-apireq'];
+                this.videoLink = new AnimeVideo(link);
+              } else {
+                // this is probably something new again
+              }
             }
           }
         }

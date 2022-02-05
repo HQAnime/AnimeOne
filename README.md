@@ -52,6 +52,10 @@ GitHub 會紀錄 APK 下載次數以及頁面觀看次數和 Clone 次數。
 ## 下載安裝
 安卓可以在[這裏下載](https://github.com/HenryQuan/AnimeOne/releases/latest)，IOS 則需要自己使用 Xcode 進行編譯或者[下載 IPA 安裝包](https://github.com/HenryQuan/AnimeOne/releases/latest)。
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">](https://f-droid.org/packages/org.github.henryquan.animeone)
+
 ### Xcode 如何編譯
 - 在電腦上安裝 Flutter 以及 Xcode
 - 使用 `flutter doctor` 指令來檢查是否設置成功

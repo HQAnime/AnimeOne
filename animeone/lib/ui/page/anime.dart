@@ -65,7 +65,7 @@ class _AnimeState extends State<Anime> {
       rLink = fullLink! + '/page/${this.page}';
     }
 
-    this.parser = new AnimePageParser(rLink);
+    this.parser = new AnimePageParser(rLink!);
     this.parser.downloadHTML().then((d) {
       if (d == null) {
         // Stop loading more data
@@ -97,25 +97,26 @@ class _AnimeState extends State<Anime> {
     }).catchError((error) {
       // Something is broken
       setState(() {
-        this.hasError = error;
+        this.hasError = error.toString();
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (loading) {
-      return Scaffold(
-        appBar: AppBar(title: Text('努力加載中...')),
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else if (hasError != '') {
+    // Always show error message first even if it is loading
+    if (hasError != '') {
       return Scaffold(
         appBar: AppBar(title: Text('加载失败 QAQ')),
         body: Center(
           child: ErrorButton(msg: this.hasError),
+        ),
+      );
+    } else if (loading) {
+      return Scaffold(
+        appBar: AppBar(title: Text('努力加載中...')),
+        body: Center(
+          child: CircularProgressIndicator(),
         ),
       );
     } else {

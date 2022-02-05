@@ -40,12 +40,25 @@ class AnimeEntry extends AnimeBasic {
           if (password.length > 0) {
             // Use need to enter some password
           } else {
-            // It is a YouTube preview
-            Element youtube = e.getElementsByClassName('youtubePlayer')[0];
-            final link = GlobalData().getYouTubeLink(
-              youtube.attributes['data-vid'],
-            );
-            this.videoLink = new AnimeVideo(link);
+            // Check if it is a YouTube preview
+            final youtube = e.getElementsByClassName('youtubePlayer');
+            if (youtube.length > 0) {
+              final element = youtube[0];
+              final link = GlobalData().getYouTubeLink(
+                element.attributes['data-vid'],
+              );
+              this.videoLink = new AnimeVideo(link);
+            } else {
+              // find the video tag and get data-apireq from it
+              final videoTags = e.getElementsByTagName('video');
+              if (videoTags.length > 0) {
+                final element = videoTags[0];
+                final link = element.attributes['data-apireq'];
+                this.videoLink = new AnimeVideo(link);
+              } else {
+                // this is probably something new again
+              }
+            }
           }
         }
       }

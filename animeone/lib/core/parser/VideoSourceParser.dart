@@ -1,30 +1,20 @@
+import 'dart:convert';
+
 import 'package:animeone/core/parser/BasicParser.dart';
 import 'package:html/dom.dart';
 
 class VideoSourceParser extends BasicParser {
-  VideoSourceParser(String link) : super(link);
+  VideoSourceParser() : super('https://v.anime1.me/api');
 
   @override
   String? parseHTML(Document? body) {
-    if (body == null) return null;
+    final rawJSON = body?.children[0];
+    if (rawJSON == null) return null;
+    final videoJSON = json.decode(rawJSON.text) as Map?;
+    final videoLink = videoJSON?['l'] as String?;
+    if (videoLink == null) return null;
 
-    String? videoSrc;
-
-    final sources = body.getElementsByTagName('source');
-    if (sources.length > 0) {
-      // It has a source tag
-      videoSrc = sources.first.attributes['src'];
-    } else {
-      // Use regex to parse source
-      // The string is link https://xxx.anime1.app/xx/xxxx.mp4?h=xxx&e=xxx&ip=xxxxxxx
-      String regex = 'file:\"(.*?\.mp4.*?)\"';
-      RegExp ex = RegExp(regex);
-      final match = ex.firstMatch(body.outerHtml);
-      if (match != null) {
-        videoSrc = match[1];
-      }
-    }
-
-    return videoSrc;
+    if (videoLink.contains('http')) return videoLink;
+    return 'https:$videoLink';
   }
 }

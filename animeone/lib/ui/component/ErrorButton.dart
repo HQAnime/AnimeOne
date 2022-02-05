@@ -13,7 +13,7 @@ class ErrorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String finalMsg = '404 無法加載\n';
+    String finalMsg = '404 無法加載\n\n$msg)';
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[

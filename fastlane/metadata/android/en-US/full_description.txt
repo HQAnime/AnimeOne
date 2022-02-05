@@ -1,0 +1,27 @@
+<h3>Features</h3>
+<ul>
+<li>Newest Anime</li>
+<li>Anime List</li>
+<li>Quick Search</li>
+<li>New Anime Timetable</li>
+<li>New Anima Introduce Video</li>
+<li>Built-in Video Player</li>
+<li>Auto Update</li>
+<li>Auto Night Mode</li>
+</ul>
+
+<h3>About</h3>
+This app works well currently. Please open an issue if you find any problem.
+Some data are downloaded (once every week and on every January/Febrary/July/October 1st).
+since the anime list and the new anime timetable aren't updated everyday，
+so it's not needed to download data on start.
+
+<h3> <b>Age Restriction</b></h3>
+Because Interspecies Reviewers is aired recently, we decides to apply age restriction for AnimeOne without an official rating. You need to be at least 15 years old (18 years old is recommadated) to use this app. Please uninstall this app if you are under 15 years old.
+
+<h3> <b>Android Permissions</b></h3>
+AnimeOne does not need any permissions except Internet Connection.
+
+<h3> <b>Privacy Policy</b></h3>
+AnimeOne does not collect your data,
+GitHub logs the number of times of downloading, page viewing and clone.

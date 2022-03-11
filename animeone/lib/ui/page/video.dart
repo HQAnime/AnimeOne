@@ -37,6 +37,12 @@ class _VideoState extends State<Video> with FullscreenPlayer {
           setState(() {
             videoLink = parser.parseHTML(body);
             print('Raw video link - $videoLink');
+            if (videoLink == null) {
+              loading = false;
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text('沒有找到動畫鏈接'),
+              ));
+            }
           });
         });
       }

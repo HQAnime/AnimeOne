@@ -11,7 +11,7 @@ class VideoSourceParser extends BasicParser {
     final rawJSON = body?.children[0];
     if (rawJSON == null) return null;
     final videoJSON = json.decode(rawJSON.text) as Map?;
-    final videoLink = videoJSON?['l'] as String?;
+    final videoLink = videoJSON?['s']?['src'] as String?;
     if (videoLink == null) return null;
 
     if (videoLink.contains('http')) return videoLink;

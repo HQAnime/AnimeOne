@@ -1,20 +1,17 @@
 package org.github.henryquan.animeone.ui.screen.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +25,7 @@ sealed class HomeTabs(val route: String, val title: String, val icon: ImageVecto
     object Latest : HomeTabs("latest", "最新", Icons.Default.NewReleases)
     object AnimeList : HomeTabs("anime_list", "動畫列表", Icons.Default.List)
     object Schedule : HomeTabs("schedule", "時間表", Icons.Default.CalendarToday)
+    object About : HomeTabs("about", "關於", Icons.Default.Info)
 }
 
 @Composable
@@ -37,29 +35,15 @@ fun HomeScreen(
     val state by navController.currentBackStackEntryAsState()
     val currentRoute = state?.destination?.route
 
-    val tabs = listOf(HomeTabs.Schedule, HomeTabs.AnimeList, HomeTabs.Latest)
+    val tabs = listOf(HomeTabs.About, HomeTabs.Schedule, HomeTabs.AnimeList, HomeTabs.Latest)
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("AnimeOne Compose") }
-            )
-        }
-    ) {
+    Scaffold() {
         Row {
             NavigationRail(
+                modifier = Modifier.width(60.dp),
                 content = {
-                    // TODO: update the logo here
-                    Text("LOGO")
-                    // TODO: ideally, there should be a line extending the icon
-                    // This moves all items down
-                    Spacer(
-                        modifier = Modifier
-                            .weight(1f)
-                            .width(4.dp)
-                            .clip(CircleShape)
-                            .background(Color.Black)
-                    )
+                    // Push all tabs down
+                    Spacer(modifier = Modifier.weight(1f))
                     tabs.forEach { tab ->
                         val tabRoute = tab.route
                         NavigationRailItem(
@@ -79,6 +63,7 @@ fun HomeScreen(
                 composable(HomeTabs.Latest.route) { LatestScreen() }
                 composable(HomeTabs.AnimeList.route) { AnimeListScreen() }
                 composable(HomeTabs.Schedule.route) { ScheduleScreen() }
+                composable(HomeTabs.About.route) { AboutScreen() }
             }
         }
     }

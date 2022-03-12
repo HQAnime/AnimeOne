@@ -16,13 +16,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AnimeOneTheme {
-                val navController = rememberNavController()
-
-                NavHost(navController = navController, startDestination = "latest") {
-                    composable("latest") { Text("Latest") }
-                    composable("anime_list") { Text("Anime List") }
-                    composable("schedule") { Text("Schedule") }
-                }
+                HomeScreen()
             }
         }
     }

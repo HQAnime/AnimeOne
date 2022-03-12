@@ -17,14 +17,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.github.henryquan.animeone.ui.theme.AnimeOneTheme
 
 @Composable
 fun HomeScreen(
 ) {
-    val navController = rememberNavController()
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -71,12 +71,6 @@ fun HomeScreen(
                     // Spacer(modifier = Modifier.weight(1f))
                 }
             )
-            Column {
-                Text("Main Page here")
-                Text("Main Page here")
-                Text("Main Page here")
-                Text("Main Page here")
-            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package org.github.henryquan.animeone.ui.screen
+package org.github.henryquan.animeone.ui.screen.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row

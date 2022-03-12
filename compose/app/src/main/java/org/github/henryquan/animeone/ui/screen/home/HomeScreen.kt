@@ -59,7 +59,7 @@ fun HomeScreen(
                 }
             )
 
-            NavHost(navController = navController, startDestination = HomeTabs.Latest.route) {
+            NavHost(navController = navController, startDestination = HomeTabs.About.route) {
                 composable(HomeTabs.Latest.route) { LatestScreen() }
                 composable(HomeTabs.AnimeList.route) { AnimeListScreen() }
                 composable(HomeTabs.Schedule.route) { ScheduleScreen() }

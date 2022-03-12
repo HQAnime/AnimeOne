@@ -1,3 +1,6 @@
 .DS_Store
 animeone/ios/Flutter/flutter_export_environment.sh
 animeone/.flutter-plugins-dependencies
+
+# android studio
+.idea

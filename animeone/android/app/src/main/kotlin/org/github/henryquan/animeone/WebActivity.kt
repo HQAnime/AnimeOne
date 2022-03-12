@@ -9,7 +9,7 @@ import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import java.net.URLEncoder
 
-lateinit var link: String
+private lateinit var link: String
 
 class WebActivity : AppCompatActivity() {
 

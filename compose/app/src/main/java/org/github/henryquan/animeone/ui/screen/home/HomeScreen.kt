@@ -34,6 +34,9 @@ sealed class HomeTabs(val route: String, val title: String, val icon: ImageVecto
 fun HomeScreen(
 ) {
     val navController = rememberNavController()
+    val state by navController.currentBackStackEntryAsState()
+    val currentRoute = state?.destination?.route
+
     val tabs = listOf(HomeTabs.Schedule, HomeTabs.AnimeList, HomeTabs.Latest)
 
     Scaffold(
@@ -58,8 +61,6 @@ fun HomeScreen(
                             .background(Color.Black)
                     )
                     tabs.forEach { tab ->
-                        val state by navController.currentBackStackEntryAsState()
-                        val currentRoute = state?.destination?.route
                         val tabRoute = tab.route
                         NavigationRailItem(
                             selected = currentRoute == tabRoute,
@@ -74,10 +75,10 @@ fun HomeScreen(
                 }
             )
 
-            NavHost(navController = navController, startDestination = "latest") {
-                composable(HomeTabs.Latest.route) { Text("Latest") }
-                composable(HomeTabs.AnimeList.route) { Text("Anime List") }
-                composable(HomeTabs.Schedule.route) { Text("Schedule") }
+            NavHost(navController = navController, startDestination = HomeTabs.Latest.route) {
+                composable(HomeTabs.Latest.route) { LatestScreen() }
+                composable(HomeTabs.AnimeList.route) { AnimeListScreen() }
+                composable(HomeTabs.Schedule.route) { ScheduleScreen() }
             }
         }
     }

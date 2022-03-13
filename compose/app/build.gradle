@@ -62,4 +62,6 @@ dependencies {
 
     implementation "androidx.navigation:navigation-compose:2.4.1"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.17.0"
+    implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0'
 }

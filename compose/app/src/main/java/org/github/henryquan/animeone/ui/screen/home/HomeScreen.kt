@@ -55,7 +55,7 @@ fun HomeScreen(
             NavHost(
                 modifier = Modifier.weight(1f),
                 navController = navController,
-                startDestination = HomeTabs.About.route
+                startDestination = HomeTabs.Latest.route
             ) {
                 composable(HomeTabs.About.route) { AboutScreen(aboutViewModel) }
                 composable(HomeTabs.History.route) { WatchHistoryScreen(watchHistoryViewModel) }

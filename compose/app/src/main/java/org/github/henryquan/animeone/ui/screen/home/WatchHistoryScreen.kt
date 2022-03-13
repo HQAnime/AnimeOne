@@ -4,13 +4,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
-import org.github.henryquan.animeone.viewmodel.home.LatestViewModel
+import org.github.henryquan.animeone.viewmodel.home.WatchHistoryViewModel
 
 @Composable
-fun LatestScreen(
-    viewModel: LatestViewModel = viewModel()
+fun WatchHistoryScreen(
+    viewModel: WatchHistoryViewModel = viewModel()
 ) {
     Surface {
-        Text("Latest Anime List")
+        Text("Watch History")
     }
 }

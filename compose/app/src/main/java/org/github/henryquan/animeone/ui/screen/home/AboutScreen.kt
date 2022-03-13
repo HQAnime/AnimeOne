@@ -7,10 +7,14 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import org.github.henryquan.animeone.viewmodel.home.AboutViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AboutScreen() {
+fun AboutScreen(
+    viewModel: AboutViewModel = viewModel()
+) {
     Surface {
         val scrollState = rememberScrollState()
         Column(

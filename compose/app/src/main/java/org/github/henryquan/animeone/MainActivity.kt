@@ -19,8 +19,7 @@ class MainActivity : ComponentActivity() {
             if (isSystemInDarkTheme()) {
                 systemUiController.setSystemBarsColor(Color.Black)
             } else {
-                systemUiController.setNavigationBarColor(Color.White)
-                systemUiController.setStatusBarColor(Pink700)
+                systemUiController.setSystemBarsColor(Color.White)
             }
 
             AnimeOneTheme {

@@ -1,9 +1,8 @@
 package org.github.henryquan.animeone.ui.screen.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
@@ -15,10 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.zIndex
 import org.github.henryquan.animeone.ui.theme.AnimeOneTheme
 
 sealed class HomeTabs(val route: String, val title: String, val icon: ImageVector) {
@@ -34,7 +30,7 @@ fun HomeScreen(
     var currentScreen by remember { mutableStateOf(HomeTabs.About.route) }
     val tabs = listOf(HomeTabs.About, HomeTabs.Schedule, HomeTabs.AnimeList, HomeTabs.Latest)
 
-    Scaffold() {
+    Scaffold {
         Row {
             NavigationRail(
                 modifier = Modifier.width(60.dp),
@@ -55,15 +51,59 @@ fun HomeScreen(
                     // Spacer(modifier = Modifier.weight(1f))
                 }
             )
-
-            Box {
-                LatestScreen()
-                AnimeListScreen()
-                ScheduleScreen()
-                AboutScreen()
+            Divider(
+                modifier = Modifier.width(1.dp)
+            )
+            Crossfade(targetState = currentScreen, animationSpec = tween(300)) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        modifier = Modifier.zIndex(
+                            decideZIndex(
+                                it,
+                                HomeTabs.Latest.route
+                            )
+                        )
+                    ) {
+                        LatestScreen()
+                    }
+                    Box(
+                        modifier = Modifier.zIndex(
+                            decideZIndex(
+                                it,
+                                HomeTabs.AnimeList.route
+                            )
+                        )
+                    ) {
+                        AnimeListScreen()
+                    }
+                    Box(
+                        modifier = Modifier.zIndex(
+                            decideZIndex(
+                                it,
+                                HomeTabs.Schedule.route
+                            )
+                        )
+                    ) {
+                        ScheduleScreen()
+                    }
+                    Box(
+                        modifier = Modifier.zIndex(
+                            decideZIndex(
+                                it,
+                                HomeTabs.About.route
+                            )
+                        )
+                    ) {
+                        AboutScreen()
+                    }
+                }
             }
         }
     }
+}
+
+private fun decideZIndex(screen: String, name: String): Float {
+    return if (screen == name) 100f else 0f
 }
 
 @Preview

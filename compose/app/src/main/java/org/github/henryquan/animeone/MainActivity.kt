@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.github.henryquan.animeone.ui.screen.home.HomeScreen
 import org.github.henryquan.animeone.ui.theme.AnimeOneTheme
+import org.github.henryquan.animeone.ui.theme.Pink700
 import org.github.henryquan.animeone.viewmodel.home.*
 
 class MainActivity : ComponentActivity() {
@@ -27,7 +28,8 @@ class MainActivity : ComponentActivity() {
             if (isSystemInDarkTheme()) {
                 systemUiController.setSystemBarsColor(Color.Black)
             } else {
-                systemUiController.setSystemBarsColor(Color.White)
+                systemUiController.setStatusBarColor(Pink700)
+                systemUiController.setNavigationBarColor(Color.White)
             }
 
             AnimeOneTheme {

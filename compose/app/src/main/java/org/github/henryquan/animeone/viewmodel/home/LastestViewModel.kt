@@ -23,7 +23,7 @@ class LatestViewModel : ViewModel() {
 
     suspend fun refreshLatestAnime() {
         try {
-            animeList = service.getLatestAnimeList()
+//            animeList = service.getLatestAnimeList()
         } catch (e: Exception) {
             // TODO: show a message to ask the user to send me an email, this can be a centralised solution
 

@@ -4,4 +4,9 @@ import androidx.lifecycle.ViewModel
 
 class ScheduleViewModel : ViewModel() {
 
+    fun loadScheduleList() {
+
+    }
+
+
 }

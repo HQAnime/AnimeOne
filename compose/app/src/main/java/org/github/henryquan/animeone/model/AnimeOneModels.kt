@@ -19,3 +19,12 @@ data class AnimeInfo(
     val season: String?,
     val subtitle: String?,
 )
+
+/**
+ * Anime Schedule with the day in a week
+ */
+data class AnimeSchedule(
+    val name: String?,
+    val link: String?,
+    val weekday: Int?,
+)

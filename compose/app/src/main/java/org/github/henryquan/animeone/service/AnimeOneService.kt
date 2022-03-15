@@ -5,11 +5,63 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import it.skrape.core.htmlDocument
 import org.github.henryquan.animeone.model.AnimeInfo
+import org.github.henryquan.animeone.model.AnimeSchedule
 import org.github.henryquan.animeone.model.LatestAnime
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+data class ServiceResult<T>(
+    val success: Boolean,
+    val data: T,
+    val errorMessage: String? = null,
+)
+
 class AnimeOneService : BaseService() {
+
+    /**
+     * Get anime schedule based on the season
+     * @param season The season string like 2022年冬季新番
+     */
+    @Throws(NoSuchElementException::class)
+    suspend fun getAnimeSchedule(season: String): ServiceResult<List<AnimeSchedule>> {
+        return suspendCoroutine { completion ->
+            getString("https://anime1.me/$season") { _, _, result ->
+                result.fold(
+                    success = { html ->
+                        val scheduleList: MutableList<AnimeSchedule> = mutableListOf()
+                        htmlDocument(html) {
+                            this.findFirst("table")
+                                .children[1]
+                                .children.forEach { tr ->
+                                    if (tr.children.size > 1) {
+                                        var weekday = 0
+                                        tr.children.forEach { td ->
+                                            // fix for Sunday because anime1 puts Sunday first
+                                            val adjustment = if (weekday == 0) 7 else weekday
+                                            scheduleList.add(AnimeSchedule(
+                                                name = td.children.first().text,
+                                                link = null,
+                                                weekday = adjustment
+                                            ))
+                                            weekday += 1
+                                        }
+                                    }
+                                }
+                        }
+                    },
+                    failure = {
+                        completion.resume(
+                            ServiceResult(
+                                success = false,
+                                data = emptyList(),
+                                errorMessage = it.localizedMessage,
+                            )
+                        )
+                    }
+                )
+            }
+        }
+    }
 
     @Throws(org.json.JSONException::class, Exception::class)
     suspend fun getAnimeList(): List<AnimeInfo> {

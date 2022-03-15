@@ -1,5 +1,8 @@
 package org.github.henryquan.animeone.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 /**
  * Latest anime with only the name and its link
  */
@@ -11,7 +14,9 @@ data class LatestAnime(
 /**
  * The complete anime information used by the anime list
  */
+@Entity(tableName = "anime_list_table")
 data class AnimeInfo(
+    @PrimaryKey()
     val name: String?,
     val link: String?,
     val episode: String?,

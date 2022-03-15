@@ -72,4 +72,9 @@ dependencies {
     implementation 'it.skrape:skrapeit:1.2.1'
     // JSON
     implementation "com.squareup.moshi:moshi-kotlin:1.13.0"
+
+    // Room Database
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }

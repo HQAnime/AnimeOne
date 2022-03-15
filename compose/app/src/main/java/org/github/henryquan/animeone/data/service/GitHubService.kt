@@ -1,4 +1,4 @@
-package org.github.henryquan.animeone.service
+package org.github.henryquan.animeone.data.service
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

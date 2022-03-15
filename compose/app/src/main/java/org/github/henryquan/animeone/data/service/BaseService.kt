@@ -1,4 +1,4 @@
-package org.github.henryquan.animeone.service
+package org.github.henryquan.animeone.data.service
 
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.ResponseResultHandler

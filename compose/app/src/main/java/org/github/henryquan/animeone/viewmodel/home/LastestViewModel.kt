@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import org.github.henryquan.animeone.model.LatestAnime
-import org.github.henryquan.animeone.service.AnimeOneService
+import org.github.henryquan.animeone.data.service.AnimeOneService
 
 /**
  * Latest anime screen view model

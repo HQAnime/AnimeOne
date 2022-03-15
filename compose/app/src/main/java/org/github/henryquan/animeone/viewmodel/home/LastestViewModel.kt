@@ -1,6 +1,8 @@
 package org.github.henryquan.animeone.viewmodel.home
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import org.github.henryquan.animeone.model.LatestAnime
 import org.github.henryquan.animeone.service.AnimeOneService

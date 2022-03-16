@@ -25,7 +25,7 @@ data class AnimeInfo(
     val season: String?,
     val subtitle: String?,
 ) {
-    val link: String = AnimeOne.url + "/?cat=$animeID"
+    fun getLink(): String = AnimeOne.url + "/?cat=$animeID"
 }
 
 /**
@@ -33,7 +33,8 @@ data class AnimeInfo(
  */
 @Entity(tableName = "anime_schedule_table")
 data class AnimeSchedule(
-    @PrimaryKey()
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String?,
     val link: String?,
     val weekday: Int?,

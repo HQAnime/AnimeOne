@@ -7,6 +7,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.coroutineScope
+import org.github.henryquan.animeone.data.repository.AnimeOneRepository
 import org.github.henryquan.animeone.ui.screen.home.HomeScreen
 import org.github.henryquan.animeone.ui.theme.AnimeOneTheme
 import org.github.henryquan.animeone.ui.theme.Pink700
@@ -22,6 +24,11 @@ class MainActivity : ComponentActivity() {
         val scheduleViewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
         val animeListViewModel = ViewModelProvider(this).get(AnimeListViewModel::class.java)
         val latestViewModel = ViewModelProvider(this).get(LatestViewModel::class.java)
+
+        // setup repositories
+        Thread {
+            val animeOneRepository = AnimeOneRepository(applicationContext)
+        }.start()
 
         setContent {
             val systemUiController = rememberSystemUiController()

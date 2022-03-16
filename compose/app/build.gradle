@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -46,6 +47,11 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
+    }
 }
 
 dependencies {
@@ -76,5 +82,5 @@ dependencies {
     // Room Database
     def room_version = "2.4.2"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 }

@@ -9,12 +9,18 @@ import org.github.henryquan.animeone.model.AnimeSchedule
 interface AnimeListDAO {
     @Insert
     fun insertAnime(anime: AnimeInfo)
+
+    @Query("Select * from anime_list_table")
+    fun getAnimeList(): List<AnimeInfo>
 }
 
 @Dao
 interface AnimeScheduleDAO {
     @Insert
     fun insertSchedule(schedule: AnimeSchedule)
+
+    @Query("Select * from anime_schedule_table")
+    fun getAnimeSchedule(): List<AnimeSchedule>
 }
 
 /**

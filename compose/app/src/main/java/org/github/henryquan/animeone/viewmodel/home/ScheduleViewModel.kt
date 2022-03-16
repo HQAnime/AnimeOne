@@ -7,6 +7,4 @@ class ScheduleViewModel : ViewModel() {
     fun loadScheduleList() {
 
     }
-
-
 }

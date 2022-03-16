@@ -96,7 +96,7 @@ class AnimeOneService : BaseService() {
                                     if (animeID > 0) {
                                         animeList.add(
                                             AnimeInfo(
-                                                link = "https://anime1.me/?cat=${animeID}",
+                                                animeID = animeID,
                                                 name = list[1] as String,
                                                 episode = list[2] as String,
                                                 year = list[3] as String,

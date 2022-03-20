@@ -1,6 +1,7 @@
 package org.github.henryquan.animeone.data.database
 
 import android.content.Context
+import androidx.annotation.WorkerThread
 import androidx.room.*
 import org.github.henryquan.animeone.model.AnimeInfo
 import org.github.henryquan.animeone.model.AnimeSchedule
@@ -8,19 +9,25 @@ import org.github.henryquan.animeone.model.AnimeSchedule
 @Dao
 interface AnimeListDAO {
     @Insert
-    fun insertAnime(anime: AnimeInfo)
+    fun insertList(animeList: List<AnimeInfo>)
 
     @Query("Select * from anime_list_table")
     fun getAnimeList(): List<AnimeInfo>
+
+    @Query("Delete from anime_list_table")
+    fun clear()
 }
 
 @Dao
 interface AnimeScheduleDAO {
     @Insert
-    fun insertSchedule(schedule: AnimeSchedule)
+    fun insertList(animeSchedule: List<AnimeSchedule>)
 
     @Query("Select * from anime_schedule_table")
     fun getAnimeSchedule(): List<AnimeSchedule>
+
+    @Query("Delete from anime_schedule_table")
+    fun clear()
 }
 
 /**

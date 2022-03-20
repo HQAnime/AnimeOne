@@ -7,12 +7,16 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.github.henryquan.animeone.data.repository.AnimeOneRepository
 import org.github.henryquan.animeone.ui.screen.home.HomeScreen
 import org.github.henryquan.animeone.ui.theme.AnimeOneTheme
+import org.github.henryquan.animeone.ui.theme.Pink500
 import org.github.henryquan.animeone.ui.theme.Pink700
 import org.github.henryquan.animeone.viewmodel.home.*
+import kotlin.coroutines.suspendCoroutine
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +30,7 @@ class MainActivity : ComponentActivity() {
         val latestViewModel = ViewModelProvider(this).get(LatestViewModel::class.java)
 
         // setup repositories
-        Thread {
-            val animeOneRepository = AnimeOneRepository(applicationContext)
-        }.start()
+        AnimeOneRepository.setup(applicationContext)
 
         setContent {
             val systemUiController = rememberSystemUiController()
@@ -36,7 +38,7 @@ class MainActivity : ComponentActivity() {
                 systemUiController.setSystemBarsColor(Color.Black)
             } else {
                 systemUiController.setStatusBarColor(Pink700)
-                systemUiController.setNavigationBarColor(Color.White)
+                systemUiController.setNavigationBarColor(Pink500)
             }
 
             AnimeOneTheme {

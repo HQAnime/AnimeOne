@@ -26,6 +26,7 @@ fun AboutScreen(
         Column(
             modifier = Modifier.verticalScroll(scrollState)
         ) {
+            TopAppBar(title = { Text("關於 AnimeOne") })
             ListItem(
                 text = { Text("支持開發") },
                 secondaryText = { Text("特別喜歡本 APP 的話，可以支持一下~~") },

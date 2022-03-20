@@ -5,7 +5,7 @@ import com.github.kittinunf.fuel.core.ResponseResultHandler
 
 open class BaseService {
 
-    fun getString(path: String, handler: ResponseResultHandler<String>) {
+    internal fun getString(path: String, handler: ResponseResultHandler<String>) {
         Fuel.get(path).timeout(10000).responseString(handler)
     }
 }

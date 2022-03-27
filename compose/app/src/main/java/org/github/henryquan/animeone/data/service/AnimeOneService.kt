@@ -38,11 +38,13 @@ class AnimeOneService : BaseService() {
                                         tr.children.forEach { td ->
                                             // fix for Sunday because anime1 puts Sunday first
                                             val adjustment = if (weekday == 0) 7 else weekday
-                                            scheduleList.add(AnimeSchedule(
-                                                name = td.children.first().text,
-                                                link = null,
-                                                weekday = adjustment
-                                            ))
+                                            scheduleList.add(
+                                                AnimeSchedule(
+                                                    name = td.children.first().text,
+                                                    link = null,
+                                                    weekday = adjustment
+                                                )
+                                            )
                                             weekday += 1
                                         }
                                     }
@@ -99,8 +101,7 @@ class AnimeOneService : BaseService() {
                                                 animeID = animeID,
                                                 name = list[1] as String,
                                                 episode = list[2] as String,
-                                                year = list[3] as String,
-                                                season = list[4] as String,
+                                                yearWithSeason = list[3] as String + list[4] as String,
                                                 subtitle = list[5] as String,
                                             )
                                         )

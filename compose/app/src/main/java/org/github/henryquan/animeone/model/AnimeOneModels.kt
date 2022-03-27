@@ -4,6 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.github.henryquan.animeone.utility.AnimeOne
 
+interface Filterable {
+    fun contains(text: String): Boolean
+}
+
 /**
  * Latest anime with only the name and its link
  */
@@ -21,11 +25,17 @@ data class AnimeInfo(
     val animeID: Int,
     val name: String?,
     val episode: String?,
-    val year: String?,
-    val season: String?,
+    val yearWithSeason: String?,
     val subtitle: String?,
-) {
+): Filterable {
     fun getLink(): String = AnimeOne.url + "/?cat=$animeID"
+    override fun contains(text: String): Boolean {
+        if (name?.contains(text) == true) return true
+        if (episode?.contains(text) == true) return true
+        if (yearWithSeason?.contains(text) == true) return true
+        if (subtitle?.contains(text) == true) return true
+        return false
+    }
 }
 
 /**

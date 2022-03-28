@@ -47,7 +47,6 @@ fun AnimeListScreen(
         },
     ) {
         Column {
-            
             Box(Modifier.fillMaxSize()) {
                 if (uiState.filteredList.isEmpty()) {
                     CircularProgressIndicator(
@@ -101,7 +100,8 @@ private fun AnimeCell(
                 .padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(name)
+            Text(name, textAlign = TextAlign.Center)
+            Spacer(Modifier.height(4.dp))
             Row(Modifier.fillMaxWidth()) {
                 Text(
                     anime.episode ?: "-",
@@ -109,12 +109,12 @@ private fun AnimeCell(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    anime.yearWithSeason ?: "",
+                    anime.yearWithSeason ?: "-",
                     Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    anime.subtitle ?: "-",
+                    anime.subtitle ?: "",
                     Modifier.weight(1f),
                     textAlign = TextAlign.Center
                 )

@@ -108,9 +108,7 @@ class _AnimeState extends State<Anime> {
     if (hasError != '') {
       return Scaffold(
         appBar: AppBar(title: Text('加载失败 QAQ')),
-        body: Center(
-          child: ErrorButton(msg: this.hasError),
-        ),
+        body: ErrorButton(msg: this.hasError),
       );
     } else if (loading) {
       return Scaffold(

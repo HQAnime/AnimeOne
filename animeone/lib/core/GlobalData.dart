@@ -75,7 +75,7 @@ class GlobalData {
       _cookie = _cookie! + '; videopassword=0';
     }
 
-    prefs.setString(oneCookie, cookie);
+    prefs.setString(oneCookie, _cookie!);
   }
 
   // Age restriction

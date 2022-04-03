@@ -64,13 +64,13 @@ class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
         ) {
             // Make sure the checking view has passed
             if (!it.contains("Checking your browser before accessing")) {
-                val userAgent = view?.settings?.userAgentString ?: ""
+                val userAgent = view.settings?.userAgentString ?: ""
                 val cookie = CookieManager.getInstance().getCookie(url)
 
                 // free the web view properly here
-                view?.stopLoading()
-                view?.onPause()
-                view?.removeAllViews()
+                view.stopLoading()
+                view.onPause()
+                view.removeAllViews()
 
                 val main = Intent(this.activity, MainActivity::class.java)
                 main.putExtra("cookie", cookie)

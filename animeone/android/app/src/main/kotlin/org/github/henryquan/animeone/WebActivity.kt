@@ -37,7 +37,7 @@ class WebActivity : AppCompatActivity() {
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
 
-    private var counter = 0
+//    private var counter = 0
 
     override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
         super.doUpdateVisitedHistory(view, url, isReload)
@@ -57,21 +57,27 @@ class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        counter += 1
-        if (counter > 3) {
-            val userAgent = view?.settings?.userAgentString ?: ""
-            val cookie = CookieManager.getInstance().getCookie(url)
+        view?.evaluateJavascript(
+            """(function() {
+                return "<html>" + document.getElementsByTagName('html')[0].innerHTML + "</html>";
+            })()""".trimMargin()
+        ) {
+            // Make sure the checking view has passed
+            if (!it.contains("Checking your browser before accessing")) {
+                val userAgent = view?.settings?.userAgentString ?: ""
+                val cookie = CookieManager.getInstance().getCookie(url)
 
-            // free the web view properly here
-            view?.stopLoading()
-            view?.onPause()
-            view?.removeAllViews()
+                // free the web view properly here
+                view?.stopLoading()
+                view?.onPause()
+                view?.removeAllViews()
 
-            val main = Intent(this.activity, MainActivity::class.java)
-            main.putExtra("cookie", cookie)
-            main.putExtra("agent", userAgent)
-            this.activity.setResult(1111, main)
-            this.activity.finish()
+                val main = Intent(this.activity, MainActivity::class.java)
+                main.putExtra("cookie", cookie)
+                main.putExtra("agent", userAgent)
+                this.activity.setResult(1111, main)
+                this.activity.finish()
+            }
         }
     }
 }

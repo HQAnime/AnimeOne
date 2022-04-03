@@ -34,7 +34,7 @@ class ErrorButton extends StatelessWidget {
           one.getAnimeOneCookie()?.then((cookie) {
             String cookieStr = cookie;
             print(cookieStr);
-            if (cookieStr.contains('__cfduid')) {
+            if (cookieStr.contains('cf_clearance')) {
               global.updateCookie(cookieStr);
               // Ask if they want to try and fix it
               one.restartApp();

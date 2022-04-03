@@ -175,8 +175,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
                       final channel = AnimeOne();
                       channel.getAnimeOneCookie()?.then((cookie) {
-                        if (cookie is String &&
-                            cookie.length > 0 &&
+                        if (cookie.length > 0 &&
                             cookie.contains('cf_clearance')) {
                           print(cookie);
                           GlobalData().updateCookie(cookie);

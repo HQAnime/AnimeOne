@@ -17,22 +17,26 @@ class MainActivity: FlutterActivity() {
 
         // Add method channel to receive calls from Flutter side
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, animeOneChannel).setMethodCallHandler { call, result ->
-            this.methodResult = result
             // Note: this method is invoked on the main thread
-            if (call.method == "getAnimeOneCookie") {
-                // Grab the cookie for anime1.me
-                val webIntent = Intent(this.context, WebActivity::class.java)
+            when (call.method) {
+                "getAnimeOneCookie" -> {
+                    // Grab the cookie for anime1.me
+                    val webIntent = Intent(this.context, WebActivity::class.java)
 
-                // Grab the link, we need to request
-                val link = call.argument<String>("link")
-                webIntent.putExtra("link", link)
+                    // Grab the link, we need to request
+                    val link = call.argument<String>("link")
+                    webIntent.putExtra("link", link)
 
-                startActivityForResult(webIntent, webRequestCode)
-            } else if (call.method == "restartAnimeOne") {
-                this.finish()
-                this.startActivity(this.intent)
-            } else {
-                result.notImplemented()
+                    this.methodResult = result
+                    startActivityForResult(webIntent, webRequestCode)
+                }
+                "restartAnimeOne" -> {
+                    this.finish()
+                    this.startActivity(this.intent)
+                }
+                else -> {
+                    result.notImplemented()
+                }
             }
         }
     }

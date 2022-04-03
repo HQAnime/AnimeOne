@@ -13,24 +13,25 @@ class AnimeOne {
     return Platform.isAndroid;
   }
 
-  Future? _invokeMethod(String method, [dynamic arguments]) {
+  Future? _invokeMethod(String method, [dynamic arguments]) async {
     if (this._isSupported()) {
-      return nativeChannel.invokeMethod(method, arguments);
+      return await nativeChannel.invokeMethod(method, arguments);
     }
 
     return null;
   }
 
   /// Restart the app
-  Future? restartApp() {
-    return this._invokeMethod('restartAnimeOne');
+  Future? restartApp() async {
+    return await this._invokeMethod('restartAnimeOne');
   }
 
   /// Popup native browser and get cookie from webview
-  Future? getAnimeOneCookie() {
-    return this._invokeMethod(
+  Future<String>? getAnimeOneCookie() async {
+    final list = await this._invokeMethod(
       'getAnimeOneCookie',
       {'link': GlobalData.requestCookieLink},
     );
+    return list[0];
   }
 }

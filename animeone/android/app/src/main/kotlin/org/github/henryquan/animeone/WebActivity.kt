@@ -23,37 +23,55 @@ class WebActivity : AppCompatActivity() {
             }
         }
 
-        // Load the webview loads anime1.me
-        val webview = findViewById<WebView>(R.id.webview)
-        webview.settings.javaScriptEnabled = true
-        webview.clearCache(false)
+        // Load the web view loads anime1.me
+        val webView = findViewById<WebView>(R.id.webview)
+        webView.settings.javaScriptEnabled = true
+        webView.clearCache(false)
         // Set up client to get cookie
         val client = WebClient(this)
-        webview.webViewClient = client
+        webView.webViewClient = client
         // Load whichever page that needs cookie
-        webview.loadUrl(link)
-    }
-
-    override fun onBackPressed() {
-        // You cannot go back with back button
-        return
+        webView.loadUrl(link)
     }
 }
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
-    override fun onPageFinished(view: WebView?, url: String?) {
-        val linkEncoded = URLEncoder.encode(link, "utf-8").replace("%2F", "/").replace("%3A", ":")
-        if (url == linkEncoded) return
-        println(url)
-        println(linkEncoded)
-        if (link == url) return
 
-        val userAgent = view?.settings?.userAgentString ?: ""
-        val cookie = CookieManager.getInstance().getCookie(url)
-        val main = Intent(this.activity, MainActivity::class.java)
-        main.putExtra("cookie", cookie)
-        main.putExtra("agent", userAgent)
-        this.activity.setResult(1111, main)
-        this.activity.finish()
+    private var counter = 0
+
+    override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
+        super.doUpdateVisitedHistory(view, url, isReload)
+
+//        if (counter == 2) {
+
+//        }
+//
+//        val linkEncoded = URLEncoder.encode(link, "utf-8").replace("%2F", "/").replace("%3A", ":")
+//        println(url)
+//        println(linkEncoded)
+//        if (url == linkEncoded) return
+//        if (link == url) return
+//
+//        counter += 1
+    }
+
+    override fun onPageFinished(view: WebView?, url: String?) {
+        super.onPageFinished(view, url)
+        counter += 1
+        if (counter > 3) {
+            val userAgent = view?.settings?.userAgentString ?: ""
+            val cookie = CookieManager.getInstance().getCookie(url)
+
+            // free the web view properly here
+            view?.stopLoading()
+            view?.onPause()
+            view?.removeAllViews()
+
+            val main = Intent(this.activity, MainActivity::class.java)
+            main.putExtra("cookie", cookie)
+            main.putExtra("agent", userAgent)
+            this.activity.setResult(1111, main)
+            this.activity.finish()
+        }
     }
 }

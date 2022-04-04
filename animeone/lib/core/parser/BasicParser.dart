@@ -12,12 +12,16 @@ import 'package:http/http.dart' as http;
 abstract class BasicParser {
   final String _link;
   late final String _cookie;
+  late final String _userAgent;
 
   /// Get the link for current page
   String getLink() => this._link;
 
   BasicParser(this._link) {
-    this._cookie = GlobalData().getCookie();
+    final data = GlobalData();
+    this._cookie = data.getCookie();
+    this._userAgent = data.getUserAgent();
+
     // this._cookie = '__cfduid=d51d3b47667b64ea1c0278ca1baec11f41583638164; _ga=GA1.2.1712035882.1586138123; _gid=GA1.2.378879752.1586138123; cf_clearance=b92f05ead855fb1ec43fdad0205f81c366c23ce0-1586138131-0-150; videopassword=0';
     print(this._link);
   }
@@ -25,8 +29,7 @@ abstract class BasicParser {
   Map<String, String> get _defaultHeader {
     return {
       'cookie': _cookie,
-      'user-agent':
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36 Edg/100.0.1185.29',
+      'user-agent': _userAgent,
       'referer': 'https://anime1.me/',
     };
   }

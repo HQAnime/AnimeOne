@@ -42,6 +42,7 @@ class GlobalData {
   static final animeScedule = 'AnimeOne:AnimeScedule';
   static final scheduleIntroVideo = 'AnimeOne:SceduleIntroVideo';
   static final oneCookie = 'AnimeOne:OneCookie';
+  static final oneUserAgent = 'AnimeOne:OneUserAgent';
   static final ageRestriction = 'AnimeOne:AgeRestriction';
 
   // Relating to seasonal anime
@@ -65,6 +66,7 @@ class GlobalData {
   List<AnimeRecent> getRecentList() => this._recentList;
   // Saved cookie for animeon
   String? _cookie;
+  String? _userAgent;
 
   /// Use videopassword as the default cookie
   String getCookie() => _cookie ?? 'videopassword=0';
@@ -76,6 +78,12 @@ class GlobalData {
     }
 
     prefs.setString(oneCookie, _cookie!);
+  }
+
+  String getUserAgent() => _userAgent ?? '';
+  void updateUserAgent(String agent) {
+    _userAgent = agent;
+    prefs.setString(oneUserAgent, agent);
   }
 
   // Age restriction
@@ -120,6 +128,13 @@ class GlobalData {
     if (savedCookie != null) {
       this._cookie = savedCookie;
       print('Cookie - $savedCookie');
+    }
+
+    // Get saved user agent
+    String? savedUserAgent = prefs.getString(oneUserAgent);
+    if (savedUserAgent != null) {
+      this._userAgent = savedUserAgent;
+      print('User agent - $savedUserAgent');
     }
 
     // Check if this is the new version

@@ -174,11 +174,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   onPressed: () {
                     if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
                       final channel = AnimeOne();
-                      channel.getAnimeOneCookie()?.then((cookie) {
+                      channel.getAnimeOneCookie()?.then((output) {
+                        final cookie = output[0];
+                        final userAgent = output[1];
                         if (cookie.length > 0 &&
                             cookie.contains('cf_clearance')) {
                           print(cookie);
-                          GlobalData().updateCookie(cookie);
+                          final data = GlobalData();
+                          data.updateCookie(cookie);
+                          data.updateUserAgent(userAgent);
+
                           showDialog(
                             context: context,
                             builder: (c) => AlertDialog(

@@ -27,11 +27,12 @@ class AnimeOne {
   }
 
   /// Popup native browser and get cookie from webview
-  Future<String>? getAnimeOneCookie() async {
+  Future<List<String>>? getAnimeOneCookie() async {
     final list = await this._invokeMethod(
       'getAnimeOneCookie',
       {'link': GlobalData.requestCookieLink},
-    );
-    return list[0];
+    ) as List;
+
+    return list.map((e) => e as String).toList();
   }
 }

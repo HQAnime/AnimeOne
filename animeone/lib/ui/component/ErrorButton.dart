@@ -31,11 +31,13 @@ class ErrorButton extends StatelessWidget {
       return MaterialButton(
         onPressed: () {
           final one = AnimeOne();
-          one.getAnimeOneCookie()?.then((cookie) {
-            String cookieStr = cookie;
+          one.getAnimeOneCookie()?.then((output) {
+            String cookieStr = output[0];
+            String userAgentStr = output[1];
             print(cookieStr);
             if (cookieStr.contains('cf_clearance')) {
               global.updateCookie(cookieStr);
+              global.updateUserAgent(userAgentStr);
               // Ask if they want to try and fix it
               one.restartApp();
             }

@@ -19,29 +19,19 @@ class ErrorButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(finalMsg, textAlign: TextAlign.center),
-          this.renderFixButton(),
+          renderFixButton(context),
         ],
       ),
     );
   }
 
-  Widget renderFixButton() {
+  Widget renderFixButton(BuildContext context) {
     if (GlobalData.requestCookieLink != '') {
       // Get cookie
       return MaterialButton(
         onPressed: () {
           final one = AnimeOne();
-          one.getAnimeOneCookie()?.then((output) {
-            String cookieStr = output[0];
-            String userAgentStr = output[1];
-            print(cookieStr);
-            if (cookieStr.contains('cf_clearance')) {
-              global.updateCookie(cookieStr);
-              global.updateUserAgent(userAgentStr);
-              // Ask if they want to try and fix it
-              one.restartApp();
-            }
-          });
+          one.bypassWebsiteCheck(context);
         },
         child: Text('啓動自動修復程序'),
       );

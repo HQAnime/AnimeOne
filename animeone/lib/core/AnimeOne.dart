@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animeone/core/GlobalData.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// This class communicates with native code
@@ -27,12 +28,54 @@ class AnimeOne {
   }
 
   /// Popup native browser and get cookie from webview
-  Future<List<String>>? getAnimeOneCookie() async {
+  Future<List<String>>? _getAnimeOneCookie() async {
     final list = await this._invokeMethod(
       'getAnimeOneCookie',
       {'link': GlobalData.requestCookieLink},
     ) as List;
 
     return list.map((e) => e as String).toList();
+  }
+
+  void bypassWebsiteCheck(BuildContext context) {
+    _getAnimeOneCookie()?.then((output) {
+      final cookie = output[0];
+      final userAgent = output[1];
+      if (cookie.length > 0 && cookie.contains('cf_clearance')) {
+        print(cookie);
+        final data = GlobalData();
+        data.updateCookie(cookie);
+        data.updateUserAgent(userAgent);
+
+        showDialog(
+          context: context,
+          builder: (c) => AlertDialog(
+            title: Text('修復成功!!'),
+            content: Text('立即重新啓動 APP？'),
+            actions: <Widget>[
+              TextButton(onPressed: () => restartApp(), child: Text('好的')),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('之後'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (c) => AlertDialog(
+            title: Text('修復失敗'),
+            content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('好的'),
+              ),
+            ],
+          ),
+        );
+      }
+    });
   }
 }

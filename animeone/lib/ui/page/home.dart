@@ -174,46 +174,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   onPressed: () {
                     if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
                       final channel = AnimeOne();
-                      channel.getAnimeOneCookie()?.then((output) {
-                        final cookie = output[0];
-                        final userAgent = output[1];
-                        if (cookie.length > 0 &&
-                            cookie.contains('cf_clearance')) {
-                          print(cookie);
-                          final data = GlobalData();
-                          data.updateCookie(cookie);
-                          data.updateUserAgent(userAgent);
-
-                          showDialog(
-                            context: context,
-                            builder: (c) => AlertDialog(
-                              title: Text('修復成功'),
-                              content: Text('重新啓動 APP？'),
-                              actions: <Widget>[
-                                TextButton(
-                                    onPressed: () => channel.restartApp(),
-                                    child: Text('好的')),
-                                TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('之後')),
-                              ],
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (c) => AlertDialog(
-                              title: Text('修復失敗'),
-                              content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
-                              actions: <Widget>[
-                                TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('好的')),
-                              ],
-                            ),
-                          );
-                        }
-                      });
+                      channel.bypassWebsiteCheck(context);
                     } else {
                       // This should be a request error
                       showDialog(

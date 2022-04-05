@@ -146,7 +146,7 @@ class _AnimeState extends State<Anime> {
   /// Render differently with different number of elements
   Widget renderBody() {
     if (this.entries.length == 0) {
-      return ErrorButton();
+      return ErrorButton(msg: '沒有找到任何東西...');
     } else if (this.entries.length == 1) {
       return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {

@@ -28,7 +28,7 @@ class ErrorButton extends StatelessWidget {
   Widget renderFixButton(BuildContext context) {
     if (GlobalData.requestCookieLink != '') {
       // Get cookie
-      return MaterialButton(
+      return ElevatedButton(
         onPressed: () {
           final one = AnimeOne();
           one.bypassWebsiteCheck(context);

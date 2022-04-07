@@ -7,24 +7,22 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import java.net.URLEncoder
-
-private lateinit var link: String
 
 class WebActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.webview)
-        link = intent.getStringExtra("link")!!
+        setContentView(R.layout.activity_webview)
+        val link = intent.getStringExtra("link")!!
+        // Clear cookies to get
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             CookieManager.getInstance().removeAllCookies {
-                println("Cookies are removed? $it")
+                println("Cookies are removed, $it")
             }
         }
 
         // Load the web view loads anime1.me
-        val webView = findViewById<WebView>(R.id.webview)
+        val webView = findViewById<WebView>(R.id.webView)
         webView.settings.javaScriptEnabled = true
         webView.clearCache(false)
         // Set up client to get cookie
@@ -37,24 +35,6 @@ class WebActivity : AppCompatActivity() {
 
 class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
 
-//    private var counter = 0
-
-    override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
-        super.doUpdateVisitedHistory(view, url, isReload)
-
-//        if (counter == 2) {
-
-//        }
-//
-//        val linkEncoded = URLEncoder.encode(link, "utf-8").replace("%2F", "/").replace("%3A", ":")
-//        println(url)
-//        println(linkEncoded)
-//        if (url == linkEncoded) return
-//        if (link == url) return
-//
-//        counter += 1
-    }
-
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
         view?.evaluateJavascript(
@@ -64,7 +44,7 @@ class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
         ) {
             // Make sure the checking view has passed
             if (!it.contains("Checking your browser before accessing")) {
-                val userAgent = view.settings?.userAgentString ?: ""
+                val userAgent = view.settings.userAgentString
                 val cookie = CookieManager.getInstance().getCookie(url)
 
                 // free the web view properly here
@@ -77,6 +57,7 @@ class WebClient(private val activity: AppCompatActivity) : WebViewClient() {
                 main.putExtra("agent", userAgent)
                 this.activity.setResult(1111, main)
                 this.activity.finish()
+                println("cookie fixed")
             }
         }
     }

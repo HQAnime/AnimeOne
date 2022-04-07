@@ -48,9 +48,14 @@ abstract class BasicParser {
     Map<String, String>? headers = null,
   }) async {
     try {
+      var link = this._link;
+      // TODO: better solution is needed here if there is one
+      // redirection handling
+      if (link.contains('/?cat')) link = await _redirect();
+
       return await http
           .get(
-            Uri.parse(this._link),
+            Uri.parse(link),
             headers: headers ?? _defaultHeader,
           )
           .timeout(Duration(seconds: 10));
@@ -58,6 +63,31 @@ abstract class BasicParser {
       // catch timeout here
       print(e);
       return null;
+    }
+  }
+
+  Future<String> _redirect() async {
+    String finalLink = this._link;
+    try {
+      String? redirected = this._link;
+      // WHen it is null, it means that there is no more redirect and it is the latest domain
+      while (redirected != null) {
+        // handle redirects manually
+        final request = Request('GET', Uri.parse(redirected))
+          ..followRedirects = false;
+        final response = await Client().send(request);
+        // get the redirect link
+        redirected = response.headers['location'];
+        print("Redirected to $redirected");
+        if (redirected != null) {
+          finalLink = redirected;
+        }
+      }
+
+      return finalLink;
+    } catch (e) {
+      print(e);
+      return finalLink;
     }
   }
 

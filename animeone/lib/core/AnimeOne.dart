@@ -47,20 +47,8 @@ class AnimeOne {
         data.updateCookie(cookie);
         data.updateUserAgent(userAgent);
 
-        showDialog(
-          context: context,
-          builder: (c) => AlertDialog(
-            title: Text('修復成功!!'),
-            content: Text('立即重新啓動 APP？'),
-            actions: <Widget>[
-              TextButton(onPressed: () => restartApp(), child: Text('好的')),
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text('之後'),
-              ),
-            ],
-          ),
-        );
+        // restart if successful, only show the error if it failed
+        restartApp();
       } else {
         showDialog(
           context: context,

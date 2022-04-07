@@ -32,7 +32,7 @@
             android:name=".WebActivity"
             android:configChanges="keyboardHidden|orientation"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light">
+            android:theme="@style/WebTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

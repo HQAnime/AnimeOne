@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="browser_loading_message">正在檢查你的瀏覽器\n請稍候\n檢查完成會自動導向網站</string>
+</resources>

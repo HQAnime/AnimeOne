@@ -26,7 +26,8 @@ class ErrorButton extends StatelessWidget {
   }
 
   Widget renderFixButton(BuildContext context) {
-    if (GlobalData.requestCookieLink != '') {
+    // don't show this all the time
+    if (GlobalData.requestCookieLink?.isNotEmpty ?? false) {
       // Get cookie
       return ElevatedButton(
         onPressed: () {

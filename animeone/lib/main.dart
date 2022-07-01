@@ -14,6 +14,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    final window = WidgetsBinding.instance.window;
+    window.onPlatformBrightnessChanged = () {
+      final brightness = window.platformBrightness;
+      // update navigation bar colour
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          systemNavigationBarColor:
+              brightness == Brightness.light ? Colors.white : Colors.black,
+          systemNavigationBarIconBrightness: brightness == Brightness.light
+              ? Brightness.dark
+              : Brightness.light,
+        ),
+      );
+    };
+  }
+
   final darkTheme = ThemeData(
     brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSwatch(
@@ -34,12 +53,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // Setup navigation bar colour
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //   systemNavigationBarColor: useDark ? Colors.grey[900] : Colors.grey[50],
-    //   systemNavigationBarIconBrightness: useDark ? Brightness.light : Brightness.dark
-    // ));
-
     return MaterialApp(
       title: 'AnimeOne',
       theme: lightTheme,

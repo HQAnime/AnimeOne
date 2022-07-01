@@ -8,13 +8,21 @@ class VideoSourceParser extends BasicParser {
 
   @override
   String? parseHTML(Document? body) {
-    final rawJSON = body?.children[0];
-    if (rawJSON == null) return null;
-    final videoJSON = json.decode(rawJSON.text) as Map?;
-    final videoLink = videoJSON?['s']?['src'] as String?;
-    if (videoLink == null) return null;
+    try {
+      final rawJSON = body?.children[0];
+      if (rawJSON == null) return null;
+      final videoJSON = json.decode(rawJSON.text) as Map?;
+      print(videoJSON);
+      // it is now a list
+      final videoLink = videoJSON?['s']?[0]?['src'] as String?;
+      if (videoLink == null) return null;
 
-    if (videoLink.contains('http')) return videoLink;
-    return 'https:$videoLink';
+      if (videoLink.contains('http')) return videoLink;
+      return 'https:$videoLink';
+    } catch (e, s) {
+      print(s);
+      assert(false, 'VideoSourceParser - Error parsing HTML\n$e');
+      return null;
+    }
   }
 }

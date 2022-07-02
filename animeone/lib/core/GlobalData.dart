@@ -19,7 +19,7 @@ import 'anime/AnimeInfo.dart';
 /// A class has constants and also a list of all anime
 class GlobalData {
   static final domain = 'https://anime1.me/';
-  static final version = '1.1.7';
+  static final version = '1.1.8';
 
   static final githubRelease =
       'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';

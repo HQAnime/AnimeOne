@@ -5,7 +5,7 @@ import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 TextButton(
                   child: const Text('使用瀏覽器打開 anime1.me'),
-                  onPressed: () => launch(GlobalData.domain),
+                  onPressed: () => launchUrlString(GlobalData.domain),
                 ),
                 Text(
                   '或者',

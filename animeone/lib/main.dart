@@ -1,9 +1,22 @@
 import 'package:animeone/ui/page/home.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logging/logging.dart';
 
 /// Entry point of this app
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // setup logger and make sure it only prints in debug mode
+  Logger.root.level = Level.ALL; // defaults to Level.INFO
+  Logger.root.onRecord.listen((record) {
+    if (kDebugMode) {
+      final message = '${record.loggerName}: ${record.message}';
+      print('${record.level.name}|$message');
+    }
+  });
+
   runApp(const MyApp());
 }
 

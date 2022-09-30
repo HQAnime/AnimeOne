@@ -1,7 +1,7 @@
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
@@ -58,7 +58,9 @@ class AnimeCoverImage extends StatelessWidget {
             video?.launchURL();
           } else {
             if (identical(0, 0.0)) {
-              if (video != null && video!.video != null) launch(video!.video!);
+              if (video != null && video!.video != null) {
+                launchUrlString(video!.video!);
+              }
             } else {
               Navigator.push(
                 context,

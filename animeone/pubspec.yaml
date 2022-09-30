@@ -30,6 +30,7 @@ dependencies:
   shared_preferences: ^2.0.3
   share: ^2.0.0
   webview_flutter: ^3.0.2
+  logging: ^1.0.2
 
 dev_dependencies:
   flutter_test:

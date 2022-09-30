@@ -4,6 +4,7 @@ import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
@@ -15,6 +16,7 @@ class Video extends StatefulWidget {
 }
 
 class _VideoState extends State<Video> with FullscreenPlayer {
+  final _logger = Logger('Video');
   final isIOS = Platform.isIOS;
   bool loading = true;
   List<WebViewCookie> _cookies = [];
@@ -36,7 +38,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
           final body = parser.handleReponse(res);
           setState(() {
             videoLink = parser.parseHTML(body);
-            print('Raw video link - $videoLink');
+            _logger.info('Raw video link - $videoLink');
             if (videoLink == null) {
               loading = false;
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -86,7 +88,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
               backgroundColor: Colors.black,
               initialCookies: _cookies,
               onPageStarted: (url) {
-                print('done');
+                _logger.info('done loading');
                 setState(() {
                   loading = false;
                 });

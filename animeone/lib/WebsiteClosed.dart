@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// WebsiteClosed class
 class WebsiteClosed extends StatelessWidget {
@@ -33,7 +33,9 @@ class WebsiteClosed extends StatelessWidget {
             const Text('如果你喜歡英文字幕的話'),
             ElevatedButton(
               onPressed: () {
-                launch('https://github.com/HenryQuan/AnimeGo-Re/releases');
+                launchUrlString(
+                  'https://github.com/HenryQuan/AnimeGo-Re/releases',
+                );
               },
               child: const Text('下載 AnimeGo'),
             ),
@@ -41,7 +43,7 @@ class WebsiteClosed extends StatelessWidget {
               padding: const EdgeInsets.only(top: 32),
               child: TextButton(
                 onPressed: () {
-                  launch('https://github.com/HenryQuan/AnimeOne');
+                  launchUrlString('https://github.com/HenryQuan/AnimeOne');
                 },
                 child: const Text('https://github.com/HenryQuan/AnimeOne'),
               ),

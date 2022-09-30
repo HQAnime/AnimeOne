@@ -6,10 +6,12 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 
 /// This is the parent of all parsers and it handles 404 not found.
 /// This is also the termination point of next page or back to home
 abstract class BasicParser {
+  final _logger = Logger('BasicParser');
   final String _link;
   late final String _cookie;
   late final String _userAgent;
@@ -23,7 +25,7 @@ abstract class BasicParser {
     _userAgent = data.getUserAgent();
 
     // this._cookie = '__cfduid=d51d3b47667b64ea1c0278ca1baec11f41583638164; _ga=GA1.2.1712035882.1586138123; _gid=GA1.2.378879752.1586138123; cf_clearance=b92f05ead855fb1ec43fdad0205f81c366c23ce0-1586138131-0-150; videopassword=0';
-    print(_link);
+    _logger.info(_link);
   }
 
   Map<String, String> get _defaultHeader {
@@ -38,8 +40,9 @@ abstract class BasicParser {
   Future<Document?> downloadHTML() async {
     try {
       return handleReponse(await get());
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      _logger.shout(s);
+      assert(false, 'BasicParser - Error downloading HTML\n$e');
       return null;
     }
   }
@@ -59,9 +62,9 @@ abstract class BasicParser {
             headers: headers ?? _defaultHeader,
           )
           .timeout(const Duration(seconds: 10));
-    } catch (e) {
-      // catch timeout here
-      print(e);
+    } catch (e, s) {
+      _logger.shout(s);
+      assert(false, 'BasicParser - Error downloading HTML\n$e');
       return null;
     }
   }
@@ -78,15 +81,16 @@ abstract class BasicParser {
         final response = await Client().send(request);
         // get the redirect link
         redirected = response.headers['location'];
-        print("Redirected to $redirected");
+        _logger.info("Redirected to $redirected");
         if (redirected != null) {
           finalLink = redirected;
         }
       }
 
       return finalLink;
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      _logger.shout(s);
+      assert(false, 'BasicParser - Error redirecting\n$e');
       return finalLink;
     }
   }
@@ -105,9 +109,10 @@ abstract class BasicParser {
             encoding: encoding,
           )
           .timeout(const Duration(seconds: 10));
-    } catch (e) {
+    } catch (e, s) {
       // catch timeout here
-      print(e);
+      _logger.shout(s);
+      assert(false, 'BasicParser - Error downloading HTML\n$e');
       return null;
     }
   }

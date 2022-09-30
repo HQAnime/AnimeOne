@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// This class save the video link and randomly choose one of the cover images
 class AnimeVideo {
@@ -25,7 +25,7 @@ class AnimeVideo {
 
   void launchURL() {
     final video = this.video;
-    if (video != null) launch(video);
+    if (video != null) launchUrlString(video);
   }
 
   bool? get hasToken {

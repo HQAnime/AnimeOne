@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:logging/logging.dart';
 
 /// This class communicates with native code
 class AnimeOne {
+  final _logger = Logger('AnimeOneChannel');
   // This is a channel to connect with native side
   static const nativeChannel = MethodChannel('org.github.henryquan.animeone');
 
@@ -42,7 +44,7 @@ class AnimeOne {
       final cookie = output[0];
       final userAgent = output[1];
       if (cookie.isNotEmpty && cookie.contains('cf_clearance')) {
-        print(cookie);
+        _logger.info(cookie);
         final data = GlobalData();
         data.updateCookie(cookie);
         data.updateUserAgent(userAgent);

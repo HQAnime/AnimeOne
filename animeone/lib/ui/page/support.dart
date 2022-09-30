@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// Support class
 class Support extends StatelessWidget {
@@ -16,12 +16,12 @@ class Support extends StatelessWidget {
           ListTile(
             title: const Text('PayPal'),
             subtitle: const Text('短期或一次性'),
-            onTap: () => launch('https://www.paypal.me/yihengquan'),
+            onTap: () => launchUrlString('https://www.paypal.me/yihengquan'),
           ),
           ListTile(
             title: const Text('Patreon'),
             subtitle: const Text('長期且穩定'),
-            onTap: () => launch('https://patreon.com/HenryQuan'),
+            onTap: () => launchUrlString('https://patreon.com/HenryQuan'),
           ),
           const Padding(
             padding: EdgeInsets.all(16.0),

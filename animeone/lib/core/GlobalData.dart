@@ -10,14 +10,17 @@ import 'package:animeone/core/parser/AnimeListParserV2.dart';
 import 'package:animeone/core/parser/AnimeRecentParser.dart';
 import 'package:animeone/core/parser/AnimeScheduleParser.dart';
 import 'package:animeone/core/parser/GithubParser.dart';
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
+import 'package:logging/logging.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'anime/AnimeInfo.dart';
 
 /// A class has constants and also a list of all anime
 class GlobalData {
+  final _logger = Logger('GlobalData');
   static const domain = 'https://anime1.me/';
   static const version = '1.1.8';
 
@@ -113,9 +116,11 @@ class GlobalData {
 
     prefs = await SharedPreferences.getInstance();
     // Check if data are stored properly
-    // prefs.getKeys().forEach((k) {
-    //   debugPrint('$k ${prefs.get(k)}');
-    // });
+    if (kDebugMode) {
+      prefs.getKeys().forEach((k) {
+        debugPrint('$k ${prefs.get(k)}');
+      });
+    }
 
     // Whether an age alert shoud be shown
     String? ageAlert = prefs.get(ageRestriction) as String?;
@@ -127,14 +132,14 @@ class GlobalData {
     String? savedCookie = prefs.getString(oneCookie);
     if (savedCookie != null) {
       _cookie = savedCookie;
-      print('Cookie - $savedCookie');
+      _logger.info('Cookie - $savedCookie');
     }
 
     // Get saved user agent
     String? savedUserAgent = prefs.getString(oneUserAgent);
     if (savedUserAgent != null) {
       _userAgent = savedUserAgent;
-      print('User agent - $savedUserAgent');
+      _logger.info('User agent - $savedUserAgent');
     }
 
     // Check if this is the new version
@@ -269,13 +274,13 @@ class GlobalData {
     _recentList = _recentParser.parseHTML(body);
   }
 
-  /// launch wikipedia page for anime
+  /// launchUrlString wikipedia page for anime
   void getWikipediaLink(String? name) {
     // Somehow I need to encode on IOS but not on Android
     final link = Uri.encodeFull(
       'https://zh.wikipedia.org/w/index.php?search=$name',
     );
-    launch(link);
+    launchUrlString(link);
   }
 
   /// get a string like https://youtube.com/watch?v=xxx
@@ -286,7 +291,7 @@ class GlobalData {
 
   /// send an email to HenryQuan
   void sendEmail(String? extra) {
-    launch(
+    launchUrlString(
       'mailto:development.henryquan@gmail.com?subject=[AnimeOne ${GlobalData.version}]&body=$extra',
     );
   }

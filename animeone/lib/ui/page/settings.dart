@@ -2,7 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});
@@ -31,13 +31,13 @@ class Settings extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  onTap: () => launch('https://61.uy/d'),
+                  onTap: () => launchUrlString('https://61.uy/d'),
                   title: const Text('官方Discord伺服器'),
                   subtitle: const Text('https://61.uy/d'),
                 ),
                 ListTile(
                   onTap: () {
-                    launch('https://anime1.me/%e9%97%9c%e6%96%bc');
+                    launchUrlString('https://anime1.me/%e9%97%9c%e6%96%bc');
                   },
                   title: const Text('官方網站 - 關於'),
                   subtitle: const Text('官方網站的聯繫方式和捐款'),
@@ -45,14 +45,14 @@ class Settings extends StatelessWidget {
                 const Divider(),
                 ListTile(
                   onTap: () {
-                    launch('https://github.com/HenryQuan/AnimeOne');
+                    launchUrlString('https://github.com/HenryQuan/AnimeOne');
                   },
                   title: const Text('軟件源代碼'),
                   subtitle: const Text('源代碼在GitHub上開放，歡迎Pull Request'),
                 ),
                 ListTile(
                   onTap: () {
-                    launch(
+                    launchUrlString(
                       'https://github.com/HenryQuan/AnimeOne/blob/master/README.md#%E9%9A%B1%E7%A7%81%E6%A2%9D%E6%AC%BE',
                     );
                   },
@@ -78,14 +78,14 @@ class Settings extends StatelessWidget {
                 const Divider(),
                 ListTile(
                   onTap: () {
-                    launch(GlobalData.eminaOne);
+                    launchUrlString(GlobalData.eminaOne);
                   },
                   title: const Text('下載  Emina One '),
                   subtitle: const Text('splitline 製作的 anime1 app'),
                 ),
                 ListTile(
                   onTap: () {
-                    launch(GlobalData.animeGo);
+                    launchUrlString(GlobalData.animeGo);
                   },
                   title: const Text('下載 AnimeGo'),
                   subtitle: const Text('非官方 gogoanime app (還在開發中)'),

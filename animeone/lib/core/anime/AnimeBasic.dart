@@ -6,7 +6,7 @@ abstract class AnimeBasic {
   /// Check if name contains t
   bool contains(String t) {
     final tL = t.toLowerCase();
-    final nL = this.name?.toLowerCase();
+    final nL = name?.toLowerCase();
     if (nL == null) {
       return false;
     } else {
@@ -22,7 +22,7 @@ abstract class AnimeBasic {
 
   /// Check if name is loaded and not null
   bool valid() {
-    return name != null && name!.trim().length > 0;
+    return name != null && name!.trim().isNotEmpty;
   }
 
   /// Move episode number in front ([12] xxxx)

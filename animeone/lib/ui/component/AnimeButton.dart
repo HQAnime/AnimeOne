@@ -35,7 +35,7 @@ class AnimeButton extends StatelessWidget {
               context: context,
               builder: (BuildContext context) {
                 // Has update now
-                return AlertDialog(
+                return const AlertDialog(
                   content: Text('動畫還沒有更新第一集 >_<', textAlign: TextAlign.center),
                 );
               },
@@ -50,7 +50,7 @@ class AnimeButton extends StatelessWidget {
               basic.formattedName() ?? "賽博朋克",
               maxLines: 1,
               textAlign: TextAlign.left,
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
           ),
         ),

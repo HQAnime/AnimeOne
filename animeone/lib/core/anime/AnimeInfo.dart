@@ -13,15 +13,15 @@ class AnimeInfo extends AnimeBasic {
   AnimeInfo(Node tr) : super.fromJson(null) {
     final list = tr.nodes;
     try {
-      this.name = list[0].text;
+      name = list[0].text;
       final href = list[0].nodes[0].attributes["href"];
-      if (href != null) this.link = GlobalData.domain + href;
-      this.episode = list[1].text;
-      this.year = list[2].text;
-      this.season = list[3].text;
-      this.subtitle = list[4].text ?? "-";
+      if (href != null) link = GlobalData.domain + href;
+      episode = list[1].text;
+      year = list[2].text;
+      season = list[3].text;
+      subtitle = list[4].text ?? "-";
     } catch (e) {
-      throw new Exception('AnimeInfo - Tr has been changed\n${e.toString()}');
+      throw Exception('AnimeInfo - Tr has been changed\n${e.toString()}');
     }
   }
 
@@ -29,8 +29,9 @@ class AnimeInfo extends AnimeBasic {
   bool contains(String t) {
     // emm, any better way of writing this?
     if (super.contains(t)) return true;
-    if (year != null && season != null && (year! + season!).contains(t))
+    if (year != null && season != null && (year! + season!).contains(t)) {
       return true;
+    }
     if (episode != null && episode!.contains(t)) return true;
     if (subtitle != null && subtitle!.contains(t)) return true;
 
@@ -46,12 +47,12 @@ class AnimeInfo extends AnimeBasic {
 
   AnimeInfo.fromList(List list) : super.fromJson(null) {
     // The ID is the link
-    this.link = 'https://anime1.me/?cat=${list[0]}';
-    this.name = list[1];
-    this.episode = list[2];
-    this.year = list[3];
-    this.season = list[4];
-    this.subtitle = list[5];
+    link = 'https://anime1.me/?cat=${list[0]}';
+    name = list[1];
+    episode = list[2];
+    year = list[3];
+    season = list[4];
+    subtitle = list[5];
   }
 
   Map<String, dynamic> toJson() => {

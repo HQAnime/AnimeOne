@@ -6,7 +6,7 @@ class AnimeSeason {
   final _seasons = ['冬季', '春季', '夏季', '秋季'];
 
   AnimeSeason(DateTime date) {
-    this._date = date;
+    _date = date;
   }
 
   String getLink() {
@@ -26,9 +26,8 @@ class AnimeSeason {
     int offset = 0;
     for (int i = 0; i < 4; i++, offset -= 3) {
       // Keep updating the date
-      var temp =
-          this._getYearAndSeason(this._date.add(Duration(days: offset * 30)));
-      filters.add('${temp[0]}${this._seasons[temp[1]][0]}');
+      var temp = _getYearAndSeason(_date.add(Duration(days: offset * 30)));
+      filters.add('${temp[0]}${_seasons[temp[1]][0]}');
     }
 
     return filters;
@@ -39,22 +38,23 @@ class AnimeSeason {
     int month = dt.month;
 
     int season;
-    if (month < 4)
+    if (month < 4) {
       season = 0;
-    else if (month < 7)
+    } else if (month < 7) {
       season = 1;
-    else if (month < 10)
+    } else if (month < 10) {
       season = 2;
-    else
+    } else {
       season = 3;
+    }
 
     return [year, season];
   }
 
   @override
   String toString() {
-    var yas = this._getYearAndSeason(this._date);
+    var yas = _getYearAndSeason(_date);
 
-    return '${yas[0]}年${this._seasons[yas[1]]}新番';
+    return '${yas[0]}年${_seasons[yas[1]]}新番';
   }
 }

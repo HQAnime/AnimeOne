@@ -9,7 +9,7 @@ class ErrorButton extends StatelessWidget {
   }) : super(key: key);
 
   final String? msg;
-  final global = new GlobalData();
+  final global = GlobalData();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class ErrorButton extends StatelessWidget {
           final one = AnimeOne();
           one.bypassWebsiteCheck(context);
         },
-        child: Text('啓動自動修復程序'),
+        child: const Text('啓動自動修復程序'),
       );
     } else {
       return Container();

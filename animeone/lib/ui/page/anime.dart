@@ -24,11 +24,11 @@ class Anime extends StatefulWidget {
   final bool? recent;
 
   @override
-  _AnimeState createState() => _AnimeState();
+  State<Anime> createState() => _AnimeState();
 }
 
 class _AnimeState extends State<Anime> {
-  final global = new GlobalData();
+  final global = GlobalData();
 
   // Always start from page 1
   String? fullLink = '';
@@ -49,47 +49,46 @@ class _AnimeState extends State<Anime> {
   @override
   void initState() {
     super.initState();
-    this._getEntry();
-    this.controller = new ScrollController()
-      ..addListener(() => this.loadMore());
+    _getEntry();
+    controller = ScrollController()..addListener(() => loadMore());
   }
 
   /// Get entries from link (support page)
   void _getEntry() {
     setState(() {
-      this.canLoadMore = false;
+      canLoadMore = false;
     });
 
     String? rLink = widget.link;
     if (fullLink != null && fullLink != '') {
-      rLink = fullLink! + '/page/${this.page}';
+      rLink = '${fullLink!}/page/$page';
     }
 
-    this.parser = new AnimePageParser(rLink!);
-    this.parser.downloadHTML().then((d) {
+    parser = AnimePageParser(rLink!);
+    parser.downloadHTML().then((d) {
       if (d == null) {
         // Stop loading more data
-        this.hasMoreData = false;
+        hasMoreData = false;
 
         setState(() {
-          this.canLoadMore = true;
-          this.loading = false;
+          canLoadMore = true;
+          loading = false;
         });
       } else {
         // Category also contains cat so you need to make it longer
         if (widget.link?.contains('/?cat=') ?? false) {
-          this.fullLink = this.parser.getFullLink(d);
+          fullLink = parser.getFullLink(d);
         } else {
-          this.fullLink = widget.link;
+          fullLink = widget.link;
         }
 
-        final newEntries = this.parser.parseHTML(d);
+        final newEntries = parser.parseHTML(d);
         setState(() {
           // Append more data
-          this.entries.addAll(newEntries);
-          this.title = this.parser.getPageTitle(d);
-          this.loading = false;
-          this.canLoadMore = true;
+          entries.addAll(newEntries);
+          title = parser.getPageTitle(d);
+          loading = false;
+          canLoadMore = true;
 
           // Don't auto play here, it can be quite annoying
         });
@@ -97,7 +96,7 @@ class _AnimeState extends State<Anime> {
     }).catchError((error) {
       // Something is broken
       setState(() {
-        this.hasError = error.toString();
+        hasError = error.toString();
       });
     });
   }
@@ -107,35 +106,33 @@ class _AnimeState extends State<Anime> {
     // Always show error message first even if it is loading
     if (hasError != '') {
       return Scaffold(
-        appBar: AppBar(title: Text('加载失败 QAQ')),
-        body: ErrorButton(msg: this.hasError),
+        appBar: AppBar(title: const Text('加载失败 QAQ')),
+        body: ErrorButton(msg: hasError),
       );
     } else if (loading) {
       return Scaffold(
-        appBar: AppBar(title: Text('努力加載中...')),
-        body: Center(
+        appBar: AppBar(title: const Text('努力加載中...')),
+        body: const Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text(this.title),
-          actions: <Widget>[this.renderSearch()],
+          title: Text(title),
+          actions: <Widget>[renderSearch()],
         ),
-        body: this.renderBody(),
+        body: renderBody(),
       );
     }
   }
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (this.title != '' &&
-        widget.seasonal == null &&
-        this.title != '加載失敗了...') {
+    if (title != '' && widget.seasonal == null && title != '加載失敗了...') {
       return IconButton(
-        icon: Icon(Icons.search),
-        onPressed: () => global.getWikipediaLink(this.title),
+        icon: const Icon(Icons.search),
+        onPressed: () => global.getWikipediaLink(title),
         tooltip: '使用維基百科搜索',
       );
     } else {
@@ -145,15 +142,15 @@ class _AnimeState extends State<Anime> {
 
   /// Render differently with different number of elements
   Widget renderBody() {
-    if (this.entries.length == 0) {
+    if (entries.isEmpty) {
       return ErrorButton(msg: '沒有找到任何東西...');
-    } else if (this.entries.length == 1) {
+    } else if (entries.length == 1) {
       return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return Center(
           child: SizedBox(
             width: constraints.maxHeight,
-            child: AnimeEntryCard(entry: this.entries.first, showEpisode: true),
+            child: AnimeEntryCard(entry: entries.first, showEpisode: true),
           ),
         );
       });
@@ -169,7 +166,7 @@ class _AnimeState extends State<Anime> {
             // Calculat ratio
             double ratio = imageWidth / (imageWidth / 1.777 + offset);
 
-            int length = this.entries.length;
+            int length = entries.length;
             return Stack(
               children: <Widget>[
                 GridView.builder(
@@ -180,13 +177,13 @@ class _AnimeState extends State<Anime> {
                   itemCount: length,
                   itemBuilder: (context, index) {
                     return AnimeEntryCard(
-                      entry: this.entries.elementAt(index),
+                      entry: entries.elementAt(index),
                       showEpisode: widget.seasonal == null ? false : true,
                     );
                   },
-                  controller: this.controller,
+                  controller: controller,
                 ),
-                this.loadDivider()
+                loadDivider()
               ],
             );
           },
@@ -196,8 +193,8 @@ class _AnimeState extends State<Anime> {
   }
 
   Widget loadDivider() {
-    if (!this.loading && !this.canLoadMore) {
-      return Align(
+    if (!loading && !canLoadMore) {
+      return const Align(
         alignment: Alignment.bottomCenter,
         child: LinearProgressIndicator(),
       );
@@ -209,11 +206,11 @@ class _AnimeState extends State<Anime> {
   /// Load more anime here
   void loadMore() {
     if ((controller?.position.extentAfter ?? 10) < 10 &&
-        this.entries.length % 14 == 0 &&
-        this.hasMoreData) {
+        entries.length % 14 == 0 &&
+        hasMoreData) {
       if (canLoadMore) {
-        this.page += 1;
-        this._getEntry();
+        page += 1;
+        _getEntry();
       }
     }
   }

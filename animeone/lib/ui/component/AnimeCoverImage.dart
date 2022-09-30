@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
-  AnimeCoverImage({
+  const AnimeCoverImage({
     Key? key,
     required this.video,
   }) : super(key: key);
@@ -16,8 +16,7 @@ class AnimeCoverImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
       return Tooltip(
-        message:
-            this.shouldEnterPassword() ? '因版權方要求，目前無法提供此内容。' : '點擊進入内置視頻播放器',
+        message: shouldEnterPassword() ? '因版權方要求，目前無法提供此内容。' : '點擊進入内置視頻播放器',
         child: Stack(children: <Widget>[
           AspectRatio(
             aspectRatio: 16 / 9,
@@ -29,7 +28,7 @@ class AnimeCoverImage extends StatelessWidget {
             ),
           ),
           Positioned.fill(
-            child: this.renderButton(context, constraint),
+            child: renderButton(context, constraint),
           ),
         ]),
       );
@@ -37,9 +36,9 @@ class AnimeCoverImage extends StatelessWidget {
   }
 
   Widget renderButton(BuildContext context, BoxConstraints constraint) {
-    if (this.shouldEnterPassword()) {
+    if (shouldEnterPassword()) {
       return TextButton(
-        child: Text(
+        child: const Text(
           '啓動瀏覽器輸入密碼',
           style: TextStyle(
             backgroundColor: Colors.pink,
@@ -63,21 +62,21 @@ class AnimeCoverImage extends StatelessWidget {
             } else {
               Navigator.push(
                 context,
-                new MaterialPageRoute(
-                  builder: (context) => Video(video: this.video),
+                MaterialPageRoute(
+                  builder: (context) => Video(video: video),
                 ),
               );
             }
           }
         },
         iconSize: constraint.maxWidth / 6,
-        icon: Icon(Icons.play_circle_outline),
+        icon: const Icon(Icons.play_circle_outline),
         color: Colors.pink,
       );
     }
   }
 
   bool shouldEnterPassword() {
-    return this.video == null;
+    return video == null;
   }
 }

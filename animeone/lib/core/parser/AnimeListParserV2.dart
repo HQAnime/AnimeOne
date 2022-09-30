@@ -18,12 +18,12 @@ class AnimeListParserV2 extends BasicParser {
     final json = jsonDecode(text);
     // It should be a list of list
     if (json is List) {
-      json.forEach((item) {
+      for (final item in json) {
         // 0 means that it is 🔞
         if (item is List && item[0] > 0) {
           list.add(AnimeInfo.fromList(item));
         }
-      });
+      }
     } else {
       throw Exception('Invalid json');
     }

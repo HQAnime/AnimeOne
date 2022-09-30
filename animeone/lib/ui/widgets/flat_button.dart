@@ -14,11 +14,11 @@ class AnimeFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: onPressed,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: child,
       ),
-      onTap: onPressed,
     );
   }
 }

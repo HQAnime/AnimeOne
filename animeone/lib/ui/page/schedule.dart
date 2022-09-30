@@ -7,28 +7,28 @@ import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 class Schedule extends StatefulWidget {
-  Schedule({Key? key}) : super(key: key);
+  const Schedule({Key? key}) : super(key: key);
 
   @override
-  _ScheduleState createState() => _ScheduleState();
+  State<Schedule> createState() => _ScheduleState();
 }
 
 class _ScheduleState extends State<Schedule>
     with SingleTickerProviderStateMixin {
-  final global = new GlobalData();
+  final global = GlobalData();
   String? link;
   AnimeVideo? video;
   late List<AnimeSchedule> schedules;
 
   TabController? controller;
   final List<Tab> tabs = <Tab>[
-    Tab(text: '一'),
-    Tab(text: '二'),
-    Tab(text: '三'),
-    Tab(text: '四'),
-    Tab(text: '五'),
-    Tab(text: '六'),
-    Tab(text: '日'),
+    const Tab(text: '一'),
+    const Tab(text: '二'),
+    const Tab(text: '三'),
+    const Tab(text: '四'),
+    const Tab(text: '五'),
+    const Tab(text: '六'),
+    const Tab(text: '日'),
   ];
 
   @override
@@ -36,18 +36,21 @@ class _ScheduleState extends State<Schedule>
     super.initState();
 
     int weekday = DateTime.now().weekday - 1;
-    this.controller =
-        TabController(vsync: this, length: tabs.length, initialIndex: weekday);
+    controller = TabController(
+      vsync: this,
+      length: tabs.length,
+      initialIndex: weekday,
+    );
 
     setState(() {
-      this.schedules = this.global.getScheduleList();
-      this.video = this.global.getIntroVideo();
+      schedules = global.getScheduleList();
+      video = global.getIntroVideo();
     });
   }
 
   @override
   void dispose() {
-    this.controller?.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -77,7 +80,7 @@ class _ScheduleState extends State<Schedule>
                 },
                 child: Text(
                   global.getSeasonName(),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
                     color: Colors.black87,
@@ -88,15 +91,15 @@ class _ScheduleState extends State<Schedule>
           ),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.play_circle_outline),
+              icon: const Icon(Icons.play_circle_outline),
               tooltip: '新番介紹視頻',
               onPressed: () {
-                if (this.video != null) {
+                if (video != null) {
                   // this.video.launchURL();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => Video(video: this.video),
+                      builder: (context) => Video(video: video),
                     ),
                   );
                 } else {
@@ -104,11 +107,11 @@ class _ScheduleState extends State<Schedule>
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: Text('AnimeOne'),
-                        content: Text('沒有發現介紹視頻'),
+                        title: const Text('AnimeOne'),
+                        content: const Text('沒有發現介紹視頻'),
                         actions: <Widget>[
                           TextButton(
-                            child: Text('這樣啊'),
+                            child: const Text('這樣啊'),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -121,19 +124,19 @@ class _ScheduleState extends State<Schedule>
               },
             )
           ]),
-      body: this.renderBody(),
+      body: renderBody(),
     );
   }
 
   /// Render body depending on whether there are data
   Widget renderBody() {
-    if (this.schedules.length > 0) {
+    if (schedules.isNotEmpty) {
       return TabBarView(
         controller: controller,
-        children: this.renderSchedule(),
+        children: renderSchedule(),
       );
     } else {
-      return Center(
+      return const Center(
         child: Text('數據還沒有更新 (´;ω;`)'),
       );
     }
@@ -142,8 +145,8 @@ class _ScheduleState extends State<Schedule>
   /// Render schedule to different days
   List<Widget> renderSchedule() {
     List<Widget> children = [];
-    for (int i = 0; i < this.tabs.length; i++) {
-      final list = this.schedules.where((s) => s.weekday == i);
+    for (int i = 0; i < tabs.length; i++) {
+      final list = schedules.where((s) => s.weekday == i);
       children.add(SafeArea(
         child: ListView.builder(
           itemCount: list.length,

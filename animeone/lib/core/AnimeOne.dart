@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 /// This class communicates with native code
 class AnimeOne {
   // This is a channel to connect with native side
-  static final nativeChannel = MethodChannel('org.github.henryquan.animeone');
+  static const nativeChannel = MethodChannel('org.github.henryquan.animeone');
 
   /// If native channel is supported
   bool _isSupported() {
@@ -15,7 +15,7 @@ class AnimeOne {
   }
 
   Future? _invokeMethod(String method, [dynamic arguments]) async {
-    if (this._isSupported()) {
+    if (_isSupported()) {
       return await nativeChannel.invokeMethod(method, arguments);
     }
 
@@ -24,12 +24,12 @@ class AnimeOne {
 
   /// Restart the app
   Future? restartApp() async {
-    return await this._invokeMethod('restartAnimeOne');
+    return await _invokeMethod('restartAnimeOne');
   }
 
   /// Popup native browser and get cookie from webview
   Future<List<String>>? _getAnimeOneCookie() async {
-    final list = await this._invokeMethod(
+    final list = await _invokeMethod(
       'getAnimeOneCookie',
       {'link': GlobalData.requestCookieLink},
     ) as List;
@@ -41,7 +41,7 @@ class AnimeOne {
     _getAnimeOneCookie()?.then((output) {
       final cookie = output[0];
       final userAgent = output[1];
-      if (cookie.length > 0 && cookie.contains('cf_clearance')) {
+      if (cookie.isNotEmpty && cookie.contains('cf_clearance')) {
         print(cookie);
         final data = GlobalData();
         data.updateCookie(cookie);
@@ -53,12 +53,12 @@ class AnimeOne {
         showDialog(
           context: context,
           builder: (c) => AlertDialog(
-            title: Text('修復失敗'),
-            content: Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
+            title: const Text('修復失敗'),
+            content: const Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: Text('好的'),
+                child: const Text('好的'),
               ),
             ],
           ),

@@ -4,13 +4,15 @@ import 'package:flutter/services.dart';
 
 /// Entry point of this app
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// Top level component
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -46,7 +48,7 @@ class _MyAppState extends State<MyApp> {
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
   );

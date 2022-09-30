@@ -13,11 +13,11 @@ class AnimeRecentParser extends BasicParser {
 
     final widgets = body?.getElementsByClassName('widget-area');
     final list = widgets?.first.getElementsByTagName('ul');
-    list?.first.nodes.forEach((tr) {
+    for (final tr in list?.first.nodes ?? []) {
       if (tr.text?.trim() != "") {
-        recent.add(new AnimeRecent(tr));
+        recent.add(AnimeRecent(tr));
       }
-    });
+    }
 
     return recent;
   }

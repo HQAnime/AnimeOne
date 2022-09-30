@@ -16,45 +16,45 @@ class AnimeEntry extends AnimeBasic {
     try {
       // There are rare occasions where you need to enter password
       Node title = e.getElementsByClassName('entry-title')[0].nodes[0];
-      this.name = title.text;
-      this.link = title.attributes['href'];
+      name = title.text;
+      link = title.attributes['href'];
 
       Node post = e.getElementsByClassName('entry-date')[0];
-      this.postDate = post.text;
+      postDate = post.text;
 
       // Get iframe instead
       var iframe = e.getElementsByTagName('iframe');
-      if (iframe.length > 0) {
+      if (iframe.isNotEmpty) {
         // There are exceptions where iframe is not used
         Element video = iframe[0];
-        this.videoLink = new AnimeVideo(video.attributes['src']);
+        videoLink = AnimeVideo(video.attributes['src']);
       } else {
         // Get loadView button
         var loadBtn = e.getElementsByClassName('loadvideo');
-        if (loadBtn.length > 0) {
+        if (loadBtn.isNotEmpty) {
           Element btn = loadBtn[0];
-          this.videoLink = new AnimeVideo(btn.attributes['data-src']);
+          videoLink = AnimeVideo(btn.attributes['data-src']);
         } else {
           // See if it needs passwords
           var password = e.getElementsByClassName('acpwd-container');
-          if (password.length > 0) {
+          if (password.isNotEmpty) {
             // Use need to enter some password
           } else {
             // Check if it is a YouTube preview
             final youtube = e.getElementsByClassName('youtubePlayer');
-            if (youtube.length > 0) {
+            if (youtube.isNotEmpty) {
               final element = youtube[0];
               final link = GlobalData().getYouTubeLink(
                 element.attributes['data-vid'],
               );
-              this.videoLink = new AnimeVideo(link);
+              videoLink = AnimeVideo(link);
             } else {
               // find the video tag and get data-apireq from it
               final videoTags = e.getElementsByTagName('video');
-              if (videoTags.length > 0) {
+              if (videoTags.isNotEmpty) {
                 final element = videoTags[0];
                 final link = element.attributes['data-apireq'];
-                this.videoLink = new AnimeVideo(link);
+                videoLink = AnimeVideo(link);
               } else {
                 // this is probably something new again
               }
@@ -70,15 +70,15 @@ class AnimeEntry extends AnimeBasic {
           final episodeLink = GlobalData.domain + href;
           if (n.text.contains('全集')) {
             // Get all episode link
-            this.allEpisodes = episodeLink;
+            allEpisodes = episodeLink;
           } else if (n.text.contains('下一集')) {
             // Get next episode link
-            this.nextEpisode = episodeLink;
+            nextEpisode = episodeLink;
           }
         }
       });
     } catch (e) {
-      throw new Exception('AnimeEntry - Format changed\n${e.toString()}');
+      throw Exception('AnimeEntry - Format changed\n${e.toString()}');
     }
   }
 
@@ -89,7 +89,7 @@ class AnimeEntry extends AnimeBasic {
   /// - 一年之前
   String getEnhancedDate() {
     String enhanced = '';
-    final postDateString = this.postDate;
+    final postDateString = postDate;
     if (postDateString != null) {
       final date = DateTime.parse(postDateString);
       int dayDiff = date.difference(DateTime.now()).inDays.abs();
@@ -110,7 +110,7 @@ class AnimeEntry extends AnimeBasic {
         enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
       }
 
-      return this.postDate! + ' | $enhanced';
+      return '${postDate!} | $enhanced';
     } else {
       return '未知';
     }
@@ -127,8 +127,8 @@ class AnimeEntry extends AnimeBasic {
 
   /// In certain regions, password is needed due to copyright protection
   bool needPassword() {
-    return this.videoLink == null;
+    return videoLink == null;
   }
 
-  AnimeVideo? getVideo() => this.videoLink;
+  AnimeVideo? getVideo() => videoLink;
 }

@@ -5,14 +5,14 @@ import 'package:animeone/ui/page/settings.dart';
 import 'package:flutter/material.dart';
 
 class AnimeList extends StatefulWidget {
-  AnimeList({Key? key}) : super(key: key);
+  const AnimeList({Key? key}) : super(key: key);
 
   @override
-  _AnimeListState createState() => _AnimeListState();
+  State<AnimeList> createState() => _AnimeListState();
 }
 
 class _AnimeListState extends State<AnimeList> {
-  static GlobalData global = new GlobalData();
+  static GlobalData global = GlobalData();
   List<AnimeInfo> list = [];
   final all = global.getAnimeList();
 
@@ -24,27 +24,27 @@ class _AnimeListState extends State<AnimeList> {
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 8),
+            const Padding(
+              padding: EdgeInsets.only(right: 8),
               child: Icon(Icons.search, size: 32),
             ),
             Expanded(
               child: TextField(
-                style: TextStyle(color: Colors.white, fontSize: 20),
-                decoration: InputDecoration.collapsed(
+                style: const TextStyle(color: Colors.white, fontSize: 20),
+                decoration: const InputDecoration.collapsed(
                   hintText: '快速搜尋',
                   hintStyle: TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 autocorrect: false,
                 autofocus: false,
-                onChanged: (t) => this._filterList(t),
+                onChanged: (t) => _filterList(t),
               ),
             )
           ],
         ),
         actions: <Widget>[
           Ink.image(
-            image: AssetImage('lib/assets/icon/logo.png'),
+            image: const AssetImage('lib/assets/icon/logo.png'),
             width: 64,
             height: 64,
             child: Tooltip(
@@ -54,7 +54,7 @@ class _AnimeListState extends State<AnimeList> {
                   // Go to information page
                   Navigator.push(
                     context,
-                    new MaterialPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => Settings(),
                     ),
                   );
@@ -67,11 +67,11 @@ class _AnimeListState extends State<AnimeList> {
       ),
       body: Column(children: [
         SizedBox.fromSize(
-          size: Size.fromHeight(48),
-          child: this.renderQuickFilter(),
+          size: const Size.fromHeight(48),
+          child: renderQuickFilter(),
         ),
         Expanded(
-          child: this.renderBody(),
+          child: renderBody(),
         ),
       ]),
     );
@@ -80,7 +80,7 @@ class _AnimeListState extends State<AnimeList> {
   @override
   void initState() {
     super.initState();
-    this._resetList();
+    _resetList();
   }
 
   /// render a list of quick filter
@@ -91,17 +91,17 @@ class _AnimeListState extends State<AnimeList> {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: this.quickFilters.length,
+              itemCount: quickFilters.length,
               itemBuilder: (context, index) {
                 // Get current filter
-                final filter = this.quickFilters[index];
+                final filter = quickFilters[index];
                 return Padding(
                   padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
                   child: Tooltip(
                     message: '搜索 $filter 動畫',
                     child: ActionChip(
                       label: Text(filter),
-                      onPressed: () => this._filterList(filter),
+                      onPressed: () => _filterList(filter),
                     ),
                   ),
                 );
@@ -111,8 +111,8 @@ class _AnimeListState extends State<AnimeList> {
           Tooltip(
             message: '重設整個列表',
             child: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () => this._resetList(),
+              icon: const Icon(Icons.close),
+              onPressed: () => _resetList(),
             ),
           )
         ],
@@ -122,15 +122,15 @@ class _AnimeListState extends State<AnimeList> {
 
   /// render body and deal with 0 result
   Widget renderBody() {
-    if (this.list.length == 0) {
-      return Center(
+    if (list.isEmpty) {
+      return const Center(
         child: Text('找不到任何東西 (´;ω;`)'),
       );
     } else {
       return ListView.builder(
-        itemCount: this.list.length,
+        itemCount: list.length,
         itemBuilder: (context, index) {
-          return AnimeInfoCard(info: this.list[index], index: index);
+          return AnimeInfoCard(info: list[index], index: index);
         },
       );
     }
@@ -139,11 +139,11 @@ class _AnimeListState extends State<AnimeList> {
   /// Filter list by string
   void _filterList(String t) {
     // At least two characters
-    if (t == '')
-      this._resetList();
-    else if (t.length > 0) {
+    if (t == '') {
+      _resetList();
+    } else if (t.isNotEmpty) {
       setState(() {
-        this.list = this.all.where((e) {
+        list = all.where((e) {
           return e.contains(t);
         }).toList();
       });
@@ -153,7 +153,7 @@ class _AnimeListState extends State<AnimeList> {
   /// Reset list to only 100 items
   void _resetList() {
     setState(() {
-      this.list = this.all;
+      list = all;
     });
   }
 }

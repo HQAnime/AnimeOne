@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    this._loadData();
+    _loadData();
   }
 
   void _loadData() {
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
 
     // Init if not and check for update
-    this.global.init().then((_) {
+    global.init().then((_) {
       final update = global.getGithubUpdate();
       if (update != null) {
         update.checkUpdate(context);
@@ -51,12 +51,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           builder: (BuildContext context) {
             // No update
             return AlertDialog(
-              title: Text('關於年齡限制'),
-              content: Text(
-                  '最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。'),
+              title: const Text('關於年齡限制'),
+              content: const Text(
+                '最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。',
+              ),
               actions: <Widget>[
                 TextButton(
-                  child: Text('好的'),
+                  child: const Text('好的'),
                   onPressed: () {
                     Navigator.of(context).pop();
                     // Don't show this again
@@ -82,7 +83,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: this.renderBody(),
+      body: renderBody(),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   /// Loading or index stacked
   Widget renderBody() {
-    if (this.error != '') {
+    if (error != '') {
       return Stack(
         children: <Widget>[
           Center(
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),
-                SizedBox.fromSize(size: Size.fromHeight(24)),
+                SizedBox.fromSize(size: const Size.fromHeight(24)),
                 // ErrorButton(),
                 Text(
                   '錯誤消息!',
@@ -133,19 +134,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '$error',
+                    error,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.caption,
                   ),
                 ),
-                SizedBox.fromSize(size: Size.fromHeight(24)),
+                SizedBox.fromSize(size: const Size.fromHeight(24)),
                 Text(
                   '現在怎麽辦？',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline5,
                 ),
                 TextButton(
-                  child: Text('使用瀏覽器打開 anime1.me'),
+                  child: const Text('使用瀏覽器打開 anime1.me'),
                   onPressed: () => launch(GlobalData.domain),
                 ),
                 Text(
@@ -153,7 +154,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 TextButton(
-                  child: Text('檢查 APP 是否有更新'),
+                  child: const Text('檢查 APP 是否有更新'),
                   onPressed: () {
                     GlobalData().checkGithubUpdate().then((_) {
                       GlobalData()
@@ -167,7 +168,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   style: Theme.of(context).textTheme.caption,
                 ),
                 TextButton(
-                  child: Text(
+                  child: const Text(
                     '嘗試修復問題 (Beta)',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -180,14 +181,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       showDialog(
                         context: context,
                         builder: (c) => AlertDialog(
-                          title: Text('沒有發現任何問題'),
-                          content: Text(
+                          title: const Text('沒有發現任何問題'),
+                          content: const Text(
                             '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。',
                           ),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.pop(context),
-                              child: Text('好的'),
+                              child: const Text('好的'),
                             ),
                           ],
                         ),
@@ -204,8 +205,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             child: Tooltip(
               message: '重新加載數據',
               child: IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () => this._loadData(),
+                icon: const Icon(Icons.refresh),
+                onPressed: () => _loadData(),
               ),
             ),
           ),
@@ -215,12 +216,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           )
         ],
       );
-    } else if (this.loading) {
-      return Center(child: CircularProgressIndicator());
+    } else if (loading) {
+      return const Center(child: CircularProgressIndicator());
     } else {
       return IndexedStack(
         index: selectedIndex,
-        children: [
+        children: const [
           Latest(),
           AnimeList(),
           Schedule(),

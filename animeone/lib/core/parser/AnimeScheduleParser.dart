@@ -13,17 +13,17 @@ class AnimeScheduleParser extends BasicParser {
 
     final tables = body?.getElementsByTagName('table');
     final tbody = tables?.first.nodes[1];
-    tbody?.nodes.forEach((tr) {
+    for (final tr in tbody?.nodes ?? []) {
       // anime1.me is also one line (so check the length to prevent it)
       if (tr.nodes.length > 1) {
         // It is in order so use an index to indicate the date
         int i = 0;
-        tr.nodes.forEach((td) {
-          AnimeSchedule t = new AnimeSchedule(td, i++);
+        for (final td in tr.nodes) {
+          AnimeSchedule t = AnimeSchedule(td, i++);
           if (t.valid()) schedules.add(t);
-        });
+        }
       }
-    });
+    }
 
     return schedules;
   }
@@ -31,10 +31,10 @@ class AnimeScheduleParser extends BasicParser {
   /// get AnimeVideo from schedule (there might be one)
   AnimeVideo? parseIntroductoryVideo(Document? body) {
     final frames = body?.getElementsByTagName('iframe');
-    if (frames == null || frames.length == 0) {
+    if (frames == null || frames.isEmpty) {
       return null;
     } else {
-      return new AnimeVideo(frames.first.attributes['src']);
+      return AnimeVideo(frames.first.attributes['src']);
     }
   }
 }

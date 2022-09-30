@@ -15,7 +15,9 @@ class AnimeListParser extends BasicParser {
     final e = elements?.first;
 
     if (e?.hasChildNodes() ?? false) {
-      e?.nodes.forEach((n) => list.add(new AnimeInfo(n)));
+      for (final n in e?.nodes ?? []) {
+        list.add(AnimeInfo(n));
+      }
     }
 
     return list;

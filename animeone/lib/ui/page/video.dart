@@ -8,10 +8,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
   final AnimeVideo? video;
-  Video({Key? key, required this.video}) : super(key: key);
+  const Video({Key? key, required this.video}) : super(key: key);
 
   @override
-  _VideoState createState() => _VideoState();
+  State<Video> createState() => _VideoState();
 }
 
 class _VideoState extends State<Video> with FullscreenPlayer {
@@ -39,7 +39,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
             print('Raw video link - $videoLink');
             if (videoLink == null) {
               loading = false;
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('沒有找到動畫鏈接'),
               ));
             }
@@ -63,7 +63,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
     return Scaffold(
       appBar: isIOS
           ? AppBar(
-              title: Text('Video'),
+              title: const Text('Video'),
             )
           : null,
       body: Container(
@@ -104,11 +104,12 @@ class _VideoState extends State<Video> with FullscreenPlayer {
 
   Widget buildLoading() {
     if (loading) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator(),
       );
-    } else
-      return SizedBox.shrink();
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   List<WebViewCookie> parseCookies(String? cookies) {

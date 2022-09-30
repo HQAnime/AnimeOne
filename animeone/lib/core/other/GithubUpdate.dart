@@ -38,13 +38,13 @@ class GithubUpdate {
             content: Text(whatsnew! + extraInfo),
             actions: <Widget>[
               TextButton(
-                child: Text('關閉'),
+                child: const Text('關閉'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               // Render nothing for non-android devices
               isAndroid
                   ? TextButton(
-                      child: Text('立即下載'),
+                      child: const Text('立即下載'),
                       onPressed: () {
                         launch(link!);
                         Navigator.of(context).pop();
@@ -65,10 +65,10 @@ class GithubUpdate {
           // No update
           return AlertDialog(
             title: Text('v$version'),
-            content: Text('沒有發現更新，目前已經是最新版本'),
+            content: const Text('沒有發現更新，目前已經是最新版本'),
             actions: <Widget>[
               TextButton(
-                child: Text('關閉'),
+                child: const Text('關閉'),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],

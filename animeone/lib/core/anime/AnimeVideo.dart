@@ -4,15 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 /// This class save the video link and randomly choose one of the cover images
 class AnimeVideo {
-  String? video;
+  final String? video;
   int? image;
 
   // From 3 -> 9
   final _covers = List.generate(7, (i) => i + 3);
 
-  AnimeVideo(String? video) {
-    this.video = video;
-    this.image = _covers[Random().nextInt(6)];
+  AnimeVideo(this.video) {
+    image = _covers[Random().nextInt(6)];
   }
 
   AnimeVideo.fromJson(Map<String, dynamic> json)

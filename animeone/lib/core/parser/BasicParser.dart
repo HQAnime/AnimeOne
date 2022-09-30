@@ -15,15 +15,15 @@ abstract class BasicParser {
   late final String _userAgent;
 
   /// Get the link for current page
-  String getLink() => this._link;
+  String getLink() => _link;
 
   BasicParser(this._link) {
     final data = GlobalData();
-    this._cookie = data.getCookie();
-    this._userAgent = data.getUserAgent();
+    _cookie = data.getCookie();
+    _userAgent = data.getUserAgent();
 
     // this._cookie = '__cfduid=d51d3b47667b64ea1c0278ca1baec11f41583638164; _ga=GA1.2.1712035882.1586138123; _gid=GA1.2.378879752.1586138123; cf_clearance=b92f05ead855fb1ec43fdad0205f81c366c23ce0-1586138131-0-150; videopassword=0';
-    print(this._link);
+    print(_link);
   }
 
   Map<String, String> get _defaultHeader {
@@ -45,10 +45,10 @@ abstract class BasicParser {
   }
 
   Future<Response?> get({
-    Map<String, String>? headers = null,
+    Map<String, String>? headers,
   }) async {
     try {
-      var link = this._link;
+      var link = _link;
       // TODO: better solution is needed here if there is one
       // redirection handling
       if (link.contains('/?cat')) link = await _redirect();
@@ -58,7 +58,7 @@ abstract class BasicParser {
             Uri.parse(link),
             headers: headers ?? _defaultHeader,
           )
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
     } catch (e) {
       // catch timeout here
       print(e);
@@ -67,9 +67,9 @@ abstract class BasicParser {
   }
 
   Future<String> _redirect() async {
-    String finalLink = this._link;
+    String finalLink = _link;
     try {
-      String? redirected = this._link;
+      String? redirected = _link;
       // WHen it is null, it means that there is no more redirect and it is the latest domain
       while (redirected != null) {
         // handle redirects manually
@@ -92,19 +92,19 @@ abstract class BasicParser {
   }
 
   Future<Response?> post({
-    Map<String, String>? headers = null,
+    Map<String, String>? headers,
     Object? body,
     Encoding? encoding,
   }) async {
     try {
       return await http
           .post(
-            Uri.parse(this._link),
+            Uri.parse(_link),
             headers: headers ?? _defaultHeader,
             body: body,
             encoding: encoding,
           )
-          .timeout(Duration(seconds: 10));
+          .timeout(const Duration(seconds: 10));
     } catch (e) {
       // catch timeout here
       print(e);
@@ -117,11 +117,11 @@ abstract class BasicParser {
 
     if (response.statusCode == 200) {
       // Encoding is needed to prevent unexpected error (espcially Chinese character)
-      final encoded = Utf8Encoder().convert(response.body);
+      final encoded = const Utf8Encoder().convert(response.body);
       return parse(encoded);
     } else if (response.statusCode == 503) {
       // Need to get cookie
-      GlobalData.requestCookieLink = this._link;
+      GlobalData.requestCookieLink = _link;
       return null;
     } else {
       // If it is 404, the status code will tell you

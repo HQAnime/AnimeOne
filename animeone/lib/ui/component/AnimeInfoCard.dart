@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// Takes an AnimeInfo object and render it to a card
 class AnimeInfoCard extends StatelessWidget {
-  AnimeInfoCard({
+  const AnimeInfoCard({
     Key? key,
     required this.info,
     required this.index,
@@ -27,7 +27,7 @@ class AnimeInfoCard extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Anime(link: this.info.link),
+              builder: (context) => Anime(link: info.link),
             ),
           );
         },
@@ -38,7 +38,10 @@ class AnimeInfoCard extends StatelessWidget {
               child: Text(
                 info.name ?? "賽博朋克",
                 maxLines: 1,
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
+                ),
               ),
             ),
             Table(children: [

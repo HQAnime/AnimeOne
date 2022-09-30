@@ -6,10 +6,10 @@ class AnimeRecent extends AnimeBasic {
   AnimeRecent(Node tr) : super.fromJson(null) {
     final anime = tr.firstChild;
     try {
-      this.name = anime?.text;
-      this.link = anime?.attributes['href'];
+      name = anime?.text;
+      link = anime?.attributes['href'];
     } catch (e) {
-      throw new Exception('AnimeRecent - Tr has been changed\n${e.toString()}');
+      throw Exception('AnimeRecent - Tr has been changed\n${e.toString()}');
     }
   }
 }

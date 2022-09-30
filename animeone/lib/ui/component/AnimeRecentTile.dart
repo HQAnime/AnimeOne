@@ -11,7 +11,7 @@ class AnimeRecentTile extends StatelessWidget {
   }) : super(key: key);
 
   final AnimeRecent recent;
-  final GlobalData global = new GlobalData();
+  final GlobalData global = GlobalData();
 
   @override
   Widget build(BuildContext context) {

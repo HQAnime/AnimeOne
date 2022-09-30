@@ -16,14 +16,14 @@ class AnimePageParser extends BasicParser {
     List<AnimeEntry> list = [];
 
     final elements = body?.getElementsByClassName("hentry");
-    elements?.forEach((e) => list.add(new AnimeEntry(e)));
+    elements?.forEach((e) => list.add(AnimeEntry(e)));
     return list;
   }
 
   /// Get page title to be displayed in app bar
   String getPageTitle(Document body) {
     final titles = body.getElementsByClassName('page-title');
-    if (titles.length > 0) {
+    if (titles.isNotEmpty) {
       return titles.first.text;
     } else {
       return '';

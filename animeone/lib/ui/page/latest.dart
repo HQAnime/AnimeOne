@@ -9,19 +9,19 @@ class Latest extends StatefulWidget {
   const Latest({Key? key}) : super(key: key);
 
   @override
-  _LatestState createState() => _LatestState();
+  State<Latest> createState() => _LatestState();
 }
 
 class _LatestState extends State<Latest> {
   bool loading = false;
   List<AnimeRecent> list = [];
-  final global = new GlobalData();
+  final global = GlobalData();
 
   @override
   void initState() {
     super.initState();
     setState(() {
-      this.list = global.getRecentList();
+      list = global.getRecentList();
     });
   }
 
@@ -29,13 +29,13 @@ class _LatestState extends State<Latest> {
   void loadRecentAnime() {
     // Reset to loading
     setState(() {
-      this.loading = true;
+      loading = true;
     });
 
     global.getRecentAnime().then((d) {
       setState(() {
-        this.list = global.getRecentList();
-        this.loading = false;
+        list = global.getRecentList();
+        loading = false;
       });
     });
   }
@@ -44,16 +44,16 @@ class _LatestState extends State<Latest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('最新動畫'),
+        title: const Text('最新動畫'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             tooltip: '刷新最新動畫',
-            onPressed: () => this.loadRecentAnime(),
+            onPressed: () => loadRecentAnime(),
           )
         ],
         leading: IconButton(
-          icon: Icon(Icons.favorite),
+          icon: const Icon(Icons.favorite),
           tooltip: '支持發開',
           onPressed: () {
             // Push to support page
@@ -67,15 +67,15 @@ class _LatestState extends State<Latest> {
         ),
       ),
       body: Center(
-        child: this.renderBody(),
+        child: renderBody(),
       ),
     );
   }
 
   Widget renderBody() {
     if (loading) {
-      return CircularProgressIndicator();
-    } else if (list.length == 0) {
+      return const CircularProgressIndicator();
+    } else if (list.isEmpty) {
       // If somehow we cannot get recent anime
       return ErrorButton();
     } else {

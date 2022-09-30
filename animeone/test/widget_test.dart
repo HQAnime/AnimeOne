@@ -12,7 +12,7 @@ import 'package:animeone/main.dart';
 void main() {
   testWidgets('Basic checks', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
     // TODO: UI tests need to be fixed
     await tester.pump();
 

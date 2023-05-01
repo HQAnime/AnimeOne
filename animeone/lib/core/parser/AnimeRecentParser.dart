@@ -12,13 +12,15 @@ class AnimeRecentParser extends BasicParser {
     List<AnimeRecent> recent = [];
 
     final widgets = body?.getElementsByClassName('widget-area');
+    assert(widgets != null, 'AnimeRecentParser - Error parsing HTML');
     final list = widgets?.first.getElementsByTagName('ul');
-    for (final tr in list?.first.nodes ?? []) {
+    final nodes = list?.first.nodes;
+    assert(nodes != null, 'AnimeRecentParser - Error parsing HTML');
+    for (final tr in nodes ?? []) {
       if (tr.text?.trim() != "") {
         recent.add(AnimeRecent(tr));
       }
     }
-
     return recent;
   }
 }

@@ -60,7 +60,7 @@ class _LatestState extends State<Latest> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => Support(),
+                builder: (context) => const Support(),
               ),
             );
           },

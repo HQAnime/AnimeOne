@@ -173,27 +173,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
-                      final channel = AnimeOne();
-                      channel.bypassWebsiteCheck(context);
-                    } else {
-                      // This should be a request error
-                      showDialog(
-                        context: context,
-                        builder: (c) => AlertDialog(
-                          title: const Text('沒有發現任何問題'),
-                          content: const Text(
-                            '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。',
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text('好的'),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
+                    GlobalData.requestCookieLink ??= GlobalData.domain;
+                    final channel = AnimeOne();
+                    channel.bypassWebsiteCheck(context);
+                    // if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
+                    // } else {
+                    //   // This should be a request error
+                    //   showDialog(
+                    //     context: context,
+                    //     builder: (c) => AlertDialog(
+                    //       title: const Text('沒有發現任何問題'),
+                    //       content: const Text(
+                    //         '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。',
+                    //       ),
+                    //       actions: <Widget>[
+                    //         TextButton(
+                    //           onPressed: () => Navigator.pop(context),
+                    //           child: const Text('好的'),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
+                    // }
                   },
                 ),
               ],

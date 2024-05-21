@@ -6,7 +6,11 @@
 ***AnimeOne不是官方 APP***。這是我使用 Flutter 製作的第三方 APP。第一個 React Native 的 APP 是用來看動漫的，第一個 Flutter 的 APP 也是用來看動漫的。これは運命かもしれない。不久之前，我學習了 [COMP2511](https://www.handbook.unsw.edu.au/undergraduate/courses/2019/COMP2511/)，正好用這個 App 來練手。
 總的來講，Flutter 非常好用，比起 React Native 我覺得最大的進步就是編譯方面。我沒有一次會因爲編譯不通過而苦惱。大多數時間可以專心寫代碼而且調試也非常棒。
 
-If you prefer watching anime with English subtitles, you might consider [AnimeGo](https://github.com/HenryQuan/AnimeGo).
+If you prefer watching anime with English subtitles, you might consider [AnimeGo]([https://github.com/hqanime/AnimeGo](https://github.com/HQAnime/AnimeGo-Re)).
+
+![GitHub License](https://img.shields.io/github/license/hqanime/AnimeOne)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/hqanime/AnimeOne/total)
+
 </div>
 
 ## 功能

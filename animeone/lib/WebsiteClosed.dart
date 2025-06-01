@@ -18,7 +18,7 @@ class WebsiteClosed extends StatelessWidget {
               width: 200,
               color: Colors.pink,
             ),
-            Text('網站已關閉', style: Theme.of(context).textTheme.headline4),
+            Text('網站已關閉', style: Theme.of(context).textTheme.headlineMedium),
             const Padding(
               padding: EdgeInsets.only(bottom: 32),
               child: Text('「楓林網」遭查封'),

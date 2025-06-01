@@ -117,33 +117,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Text(
                   '無法加載數據 :(',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(
                   '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox.fromSize(size: const Size.fromHeight(24)),
                 // ErrorButton(),
                 Text(
                   '錯誤消息!',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     error,
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.caption,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 SizedBox.fromSize(size: const Size.fromHeight(24)),
                 Text(
                   '現在怎麽辦？',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 TextButton(
                   child: const Text('使用瀏覽器打開 anime1.me'),
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 Text(
                   '或者',
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
                   child: const Text('檢查 APP 是否有更新'),
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 Text(
                   '或者',
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
                   child: const Text(

@@ -22,10 +22,43 @@ class _VideoState extends State<Video> with FullscreenPlayer {
   List<WebViewCookie> _cookies = [];
   String? videoLink;
 
+  late final WebViewController _controller;
+
   @override
   void initState() {
     super.initState();
     setLandscape();
+
+    WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageStarted: (String url) {
+            _logger.info('done loading');
+            setState(() {
+              loading = false;
+            });
+          },
+          onPageFinished: (String url) {
+            _logger.info('Page finished loading: $url');
+            setState(() {
+              loading = false;
+            });
+          },
+          onWebResourceError: (WebResourceError error) {
+            _logger.severe('Web resource error: ${error.description}');
+            setState(() {
+              loading = false;
+            });
+          },
+        ),
+      )
+      ..setBackgroundColor(Colors.black);
+    final cookieManager = WebViewCookieManager();
+    for (final cookie in _cookies) {
+      cookieManager.setCookie(cookie);
+    }
+    _controller.loadRequest(Uri.parse(videoLink ?? ''));
 
     if (widget.video?.hasToken ?? false) {
       final token = widget.video?.video;
@@ -83,21 +116,8 @@ class _VideoState extends State<Video> with FullscreenPlayer {
       children: <Widget>[
         Center(
           child: AspectRatio(
-            aspectRatio: 16 / 9,
-            child: WebView(
-              backgroundColor: Colors.black,
-              initialCookies: _cookies,
-              onPageStarted: (url) {
-                _logger.info('done loading');
-                setState(() {
-                  loading = false;
-                });
-              },
-              initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-              initialUrl: videoLink,
-              javascriptMode: JavascriptMode.unrestricted,
-            ),
-          ),
+              aspectRatio: 16 / 9,
+              child: WebViewWidget(controller: _controller)),
         ),
         buildLoading(),
       ],

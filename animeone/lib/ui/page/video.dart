@@ -5,6 +5,7 @@ import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
@@ -66,7 +67,8 @@ class _VideoState extends State<Video> with FullscreenPlayer {
         parser.post(headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         }, body: 'd=$token').then((res) {
-          _cookies = parseCookies(res?.headers['set-cookie']);
+          final cookieString = res?.headers['set-cookie'];
+          _cookies = parseCookies(cookieString);
           final body = parser.handleReponse(res);
           setState(() {
             videoLink = parser.parseHTML(body);
@@ -79,8 +81,19 @@ class _VideoState extends State<Video> with FullscreenPlayer {
               return;
             }
 
+            // add referer header
             _controller.loadRequest(
               Uri.parse(videoLink!),
+              headers: {
+                'Referer': 'https://anime1.me/',
+                'User-Agent':
+                    'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Mobile Safari/537.36 Edg/137.0.0.0',
+                'Cookie': cookieString ?? '',
+                // 'Range': 'bytes=0-',
+                // "Sec-Fetch-Dest": "video",
+                // "Dnt": "1",
+                // "Priority": "i",
+              },
             );
           });
         });

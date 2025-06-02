@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/henryquan/Documents/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/henryquan/Documents/GitHub/AnimeOne/animeone"
+export "FLUTTER_ROOT=C:\libs\flutter"
+export "FLUTTER_APPLICATION_PATH=D:\GitHub\AnimeOne\animeone"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.1.8"

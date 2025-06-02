@@ -5,7 +5,7 @@ import 'package:animeone/ui/page/settings.dart';
 import 'package:flutter/material.dart';
 
 class AnimeList extends StatefulWidget {
-  const AnimeList({Key? key}) : super(key: key);
+  const AnimeList({super.key});
 
   @override
   State<AnimeList> createState() => _AnimeListState();

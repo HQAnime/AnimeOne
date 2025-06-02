@@ -38,12 +38,12 @@ class AnimeInfo extends AnimeBasic {
     return false;
   }
 
-  AnimeInfo.fromJson(Map<String, dynamic> json)
+  AnimeInfo.fromJson(Map<String, dynamic> super.json)
       : episode = json['episode'],
         year = json['year'],
         season = json['season'],
         subtitle = json['subtitle'],
-        super.fromJson(json);
+        super.fromJson();
 
   AnimeInfo.fromList(List list) : super.fromJson(null) {
     // The ID is the link

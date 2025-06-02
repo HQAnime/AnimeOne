@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class ErrorButton extends StatelessWidget {
   ErrorButton({
-    Key? key,
+    super.key,
     this.msg,
-  }) : super(key: key);
+  });
 
   final String? msg;
   final global = GlobalData();

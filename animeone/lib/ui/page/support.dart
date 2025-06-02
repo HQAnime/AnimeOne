@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 /// Support class
 class Support extends StatelessWidget {
-  const Support({Key? key}) : super(key: key);
+  const Support({super.key});
 
   @override
   Widget build(BuildContext context) {

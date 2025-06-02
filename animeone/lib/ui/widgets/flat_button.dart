@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 /// A replacement for the deprecated `FlatButton`
 class AnimeFlatButton extends StatelessWidget {
   const AnimeFlatButton({
-    Key? key,
+    super.key,
     required this.onPressed,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final void Function()? onPressed;

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 /// Takes an AnimeEntry object and render it to a card
 class AnimeEntryCard extends StatelessWidget {
   const AnimeEntryCard({
-    Key? key,
+    super.key,
     required this.entry,
     this.showEpisode,
-  }) : super(key: key);
+  });
 
   final AnimeEntry entry;
   final bool? showEpisode;

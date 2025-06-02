@@ -3,7 +3,7 @@ import 'package:url_launcher/url_launcher_string.dart';
 
 /// WebsiteClosed class
 class WebsiteClosed extends StatelessWidget {
-  const WebsiteClosed({Key? key}) : super(key: key);
+  const WebsiteClosed({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -23,9 +23,9 @@ class AnimeSchedule extends AnimeBasic {
     }
   }
 
-  AnimeSchedule.fromJson(Map<String, dynamic> json)
+  AnimeSchedule.fromJson(Map<String, dynamic> super.json)
       : weekday = json['weekday'],
-        super.fromJson(json);
+        super.fromJson();
 
   Map<String, dynamic> toJson() => {
         'weekday': weekday!,

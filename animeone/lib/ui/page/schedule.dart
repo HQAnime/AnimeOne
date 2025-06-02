@@ -7,7 +7,7 @@ import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 class Schedule extends StatefulWidget {
-  const Schedule({Key? key}) : super(key: key);
+  const Schedule({super.key});
 
   @override
   State<Schedule> createState() => _ScheduleState();

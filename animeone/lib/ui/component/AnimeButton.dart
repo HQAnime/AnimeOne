@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 /// This a button that accepts AnimeSchedule or AnimeRecent
 class AnimeButton extends StatelessWidget {
   const AnimeButton({
-    Key? key,
+    super.key,
     required this.basic,
     this.recent,
-  }) : super(key: key);
+  });
 
   final AnimeBasic basic;
   final bool? recent;

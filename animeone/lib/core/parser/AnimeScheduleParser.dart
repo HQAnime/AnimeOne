@@ -5,7 +5,7 @@ import 'package:html/dom.dart';
 
 /// This class get anime schedule and possibly an introductory video
 class AnimeScheduleParser extends BasicParser {
-  AnimeScheduleParser(String link) : super(link);
+  AnimeScheduleParser(super.link);
 
   @override
   List<AnimeSchedule> parseHTML(Document? body) {

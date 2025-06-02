@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 /// Takes an AnimeInfo object and render it to a card
 class AnimeInfoCard extends StatelessWidget {
   const AnimeInfoCard({
-    Key? key,
+    super.key,
     required this.info,
     required this.index,
-  }) : super(key: key);
+  });
 
   final AnimeInfo info;
   final int index;

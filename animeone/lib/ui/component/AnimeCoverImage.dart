@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher_string.dart';
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
   const AnimeCoverImage({
-    Key? key,
+    super.key,
     required this.video,
-  }) : super(key: key);
+  });
 
   final AnimeVideo? video;
 

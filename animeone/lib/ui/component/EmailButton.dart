@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 /// EmailButton class
 class EmailButton extends StatelessWidget {
   const EmailButton({
-    Key? key,
+    super.key,
     this.message,
-  }) : super(key: key);
+  });
 
   final String? message;
 
@@ -16,7 +16,7 @@ class EmailButton extends StatelessWidget {
       widthFactor: 0.618,
       child: ElevatedButton(
         style: ButtonStyle(
-          shape: MaterialStateProperty.all(
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),
           ),
         ),

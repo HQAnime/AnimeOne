@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 
 class AnimeRecentTile extends StatelessWidget {
   AnimeRecentTile({
-    Key? key,
+    super.key,
     required this.recent,
-  }) : super(key: key);
+  });
 
   final AnimeRecent recent;
   final GlobalData global = GlobalData();

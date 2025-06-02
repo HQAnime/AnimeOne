@@ -13,11 +13,11 @@ import 'package:flutter/material.dart';
 /// - Load next page if possible
 class Anime extends StatefulWidget {
   const Anime({
-    Key? key,
+    super.key,
     required this.link,
     this.seasonal,
     this.recent,
-  }) : super(key: key);
+  });
 
   final String? link;
   final bool? seasonal;

@@ -5,7 +5,7 @@ import 'BasicParser.dart';
 
 /// This class get recent anime
 class AnimeRecentParser extends BasicParser {
-  AnimeRecentParser(String link) : super(link);
+  AnimeRecentParser(super.link);
 
   @override
   List<AnimeRecent> parseHTML(Document? body) {

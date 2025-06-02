@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 class AnimeScheduleTile extends StatelessWidget {
   AnimeScheduleTile({
-    Key? key,
+    super.key,
     required this.schedule,
-  }) : super(key: key);
+  });
 
   final AnimeSchedule schedule;
   final GlobalData global = GlobalData();

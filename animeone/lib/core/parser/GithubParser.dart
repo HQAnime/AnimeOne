@@ -6,7 +6,7 @@ import 'package:html/dom.dart';
 
 /// This class get anime schedule and possibly an introductory video
 class GithubParser extends BasicParser {
-  GithubParser(String link) : super(link);
+  GithubParser(super.link);
 
   @override
   GithubUpdate? parseHTML(Document? body) {

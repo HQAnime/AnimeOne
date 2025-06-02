@@ -6,7 +6,7 @@ import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 
 class Latest extends StatefulWidget {
-  const Latest({Key? key}) : super(key: key);
+  const Latest({super.key});
 
   @override
   State<Latest> createState() => _LatestState();

@@ -9,7 +9,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
   final AnimeVideo? video;
-  const Video({Key? key, required this.video}) : super(key: key);
+  const Video({super.key, required this.video});
 
   @override
   State<Video> createState() => _VideoState();

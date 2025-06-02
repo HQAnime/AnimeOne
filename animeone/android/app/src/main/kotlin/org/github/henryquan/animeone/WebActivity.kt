@@ -15,10 +15,8 @@ class WebActivity : AppCompatActivity() {
         setContentView(R.layout.activity_webview)
         val link = intent.getStringExtra("link")!!
         // Clear cookies to get
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            CookieManager.getInstance().removeAllCookies {
-                println("Cookies are removed, $it")
-            }
+        CookieManager.getInstance().removeAllCookies {
+            println("Cookies are removed, $it")
         }
 
         // Load the web view loads anime1.me

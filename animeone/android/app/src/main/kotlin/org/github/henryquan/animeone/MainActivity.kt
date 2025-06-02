@@ -16,7 +16,7 @@ class MainActivity : FlutterActivity() {
     private val webRequestCode = 1111
     private var methodResult: MethodChannel.Result? = null
 
-    override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
+    override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         GeneratedPluginRegistrant.registerWith(flutterEngine)
 
         // Add method channel to receive calls from Flutter side

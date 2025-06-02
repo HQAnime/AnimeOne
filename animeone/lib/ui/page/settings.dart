@@ -1,7 +1,7 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Settings extends StatelessWidget {
@@ -100,7 +100,14 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
-                    Share.share(GlobalData.latestRelease);
+                    // Share.share(GlobalData.latestRelease);
+                    SharePlus.instance.share(
+                      ShareParams(
+                        text: GlobalData.latestRelease,
+                        subject: 'AnimeOne 軟件更新',
+                        sharePositionOrigin: const Rect.fromLTWH(0, 0, 0, 0),
+                      ),
+                    );
                   },
                   title: const Text('分享軟件'),
                   subtitle: const Text('喜歡本APP的話，可以分享給朋友們'),

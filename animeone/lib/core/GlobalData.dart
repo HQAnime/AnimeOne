@@ -22,7 +22,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
   final _logger = Logger('GlobalData');
   static const domain = 'https://anime1.me/';
-  static const version = '1.1.8';
+  static const version = '1.1.9';
 
   static const githubRelease =
       'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';

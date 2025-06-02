@@ -27,9 +27,8 @@ class _VideoState extends State<Video> with FullscreenPlayer {
   @override
   void initState() {
     super.initState();
-    setLandscape();
 
-    WebViewController()
+    _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
@@ -58,8 +57,8 @@ class _VideoState extends State<Video> with FullscreenPlayer {
     for (final cookie in _cookies) {
       cookieManager.setCookie(cookie);
     }
-    _controller.loadRequest(Uri.parse(videoLink ?? ''));
 
+    setLandscape();
     if (widget.video?.hasToken ?? false) {
       final token = widget.video?.video;
       if (token != null) {
@@ -77,7 +76,12 @@ class _VideoState extends State<Video> with FullscreenPlayer {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('沒有找到動畫鏈接'),
               ));
+              return;
             }
+
+            _controller.loadRequest(
+              Uri.parse(videoLink!),
+            );
           });
         });
       }

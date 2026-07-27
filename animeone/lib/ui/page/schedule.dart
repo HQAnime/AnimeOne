@@ -110,13 +110,9 @@ class _ScheduleState extends State<Schedule>
                   };
                   if (video?.hasToken == true && video?.video != null) {
                     final parser = VideoSourceParser();
-                    final res = await parser.post(body: 'd=${video!.video!}', headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                    });
-                    final body = parser.handleReponse(res);
-                    url = parser.parseHTML(body);
-                    final cookie = res?.headers['set-cookie'];
-                    if (cookie != null) headers['Cookie'] = cookie;
+                    final result = await parser.resolve(video!.video!);
+                    url = result.url;
+                    if (result.cookie != null) headers['Cookie'] = result.cookie!;
                   } else {
                     url = video?.video?.startsWith('http') == true ? video!.video! : null;
                   }

@@ -1,9 +1,10 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
-import 'package:animeone/ui/page/video.dart';
+import 'package:animeone/ui/page/desktop_player.dart';
 import 'package:flutter/material.dart';
 
 class Schedule extends StatefulWidget {
@@ -93,15 +94,33 @@ class _ScheduleState extends State<Schedule>
             IconButton(
               icon: const Icon(Icons.play_circle_outline),
               tooltip: '新番介紹視頻',
-              onPressed: () {
+              onPressed: () async {
                 if (video != null) {
-                  // this.video.launchURL();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Video(video: video),
-                    ),
-                  );
+                  String? url;
+                  Map<String, String> headers = {
+                    'referer': 'https://anime1.me/',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                  };
+                  if (video?.hasToken == true && video?.video != null) {
+                    final parser = VideoSourceParser();
+                    final res = await parser.post(body: 'd=${video!.video!}', headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded',
+                    });
+                    final body = parser.handleReponse(res);
+                    url = parser.parseHTML(body);
+                    final cookie = res?.headers['set-cookie'];
+                    if (cookie != null) headers['Cookie'] = cookie;
+                  } else {
+                    url = video?.video?.startsWith('http') == true ? video!.video! : null;
+                  }
+                  if (url != null && context.mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DesktopPlayer(url: url!, headers: headers),
+                      ),
+                    );
+                  }
                 } else {
                   showDialog(
                     context: context,

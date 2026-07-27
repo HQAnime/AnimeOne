@@ -1,9 +1,6 @@
-import 'dart:io';
-
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:animeone/ui/page/desktop_player.dart';
-import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
@@ -62,14 +59,6 @@ class AnimeCoverImage extends StatelessWidget {
           if (video?.isYoutube() ?? false) {
             video?.launchURL();
           } else {
-            if (Platform.isAndroid || Platform.isIOS) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Video(video: video),
-                ),
-              );
-            } else {
               String? url;
               Map<String, String> headers = {
                 'referer': 'https://anime1.me/',
@@ -96,7 +85,7 @@ class AnimeCoverImage extends StatelessWidget {
                 );
               }
             }
-          }
+
         },
         iconSize: constraint.maxWidth / 6,
         icon: const Icon(Icons.play_circle_outline),

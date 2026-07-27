@@ -83,11 +83,17 @@ class _LatestState extends State<Latest> {
       return ErrorButton();
     } else {
       return SafeArea(
-        child: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            return AnimeRecentTile(recent: list.elementAt(index));
-          },
+        child: FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return AnimeRecentTile(
+                recent: list.elementAt(index),
+                autofocus: index == 0,
+              );
+            },
+          ),
         ),
       );
     }

@@ -8,9 +8,11 @@ class AnimeRecentTile extends StatelessWidget {
   AnimeRecentTile({
     super.key,
     required this.recent,
+    this.autofocus = false,
   });
 
   final AnimeRecent recent;
+  final bool autofocus;
   final GlobalData global = GlobalData();
 
   @override
@@ -18,6 +20,7 @@ class AnimeRecentTile extends StatelessWidget {
     return AnimeButton(
       basic: recent,
       recent: true,
+      autofocus: autofocus,
     );
   }
 }

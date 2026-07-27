@@ -23,6 +23,10 @@ void main() {
   runApp(const MyApp());
 }
 
+class _PopIntent extends Intent {
+  const _PopIntent();
+}
+
 /// Top level component
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -32,6 +36,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   void initState() {
     super.initState();
@@ -75,7 +81,8 @@ class _MyAppState extends State<MyApp> {
 
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
-    appBarTheme: const AppBarTheme(
+    appBarTheme: AppBarTheme(
+      backgroundColor: Colors.pink,
       foregroundColor: Colors.white,
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
@@ -83,18 +90,32 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AnimeOne',
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: HomePage(),
-      builder: (context, child) {
-        final scale = GlobalData().getFontScale();
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
-          child: child!,
-        );
+    return Shortcuts(
+      shortcuts: {
+        SingleActivator(LogicalKeyboardKey.escape): const _PopIntent(),
       },
+      child: Actions(
+        actions: {
+          _PopIntent: CallbackAction(onInvoke: (_) {
+            _navigatorKey.currentState?.maybePop();
+            return null;
+          }),
+        },
+        child: MaterialApp(
+          navigatorKey: _navigatorKey,
+          title: 'AnimeOne',
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          home: HomePage(),
+          builder: (context, child) {
+            final scale = GlobalData().getFontScale();
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+              child: child!,
+            );
+          },
+        ),
+      ),
     );
   }
 }

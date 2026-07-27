@@ -8,16 +8,19 @@ class AnimeButton extends StatelessWidget {
     super.key,
     required this.basic,
     this.recent,
+    this.autofocus = false,
   });
 
   final AnimeBasic basic;
   final bool? recent;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 48,
       child: InkWell(
+        autofocus: autofocus,
         onTap: () {
           // It might be null
           if (basic.link != null) {

@@ -105,6 +105,7 @@ class _AnimeListState extends State<AnimeList> {
                     message: '搜索 $filter 動畫',
                     child: ActionChip(
                       label: Text(filter),
+                      labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                       onPressed: () => _filterList(filter),
                     ),
                   ),

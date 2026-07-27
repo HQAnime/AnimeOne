@@ -28,6 +28,7 @@ class AnimeEntryCard extends StatelessWidget {
               entry.formattedName() ?? '',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(

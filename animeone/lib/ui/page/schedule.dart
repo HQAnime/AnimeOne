@@ -62,6 +62,8 @@ class _ScheduleState extends State<Schedule>
           bottom: TabBar(
             controller: controller,
             tabs: tabs,
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.white70,
             indicatorColor: Theme.of(context).colorScheme.primary,
           ),
           title: Padding(

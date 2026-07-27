@@ -163,9 +163,10 @@ class _AnimeState extends State<Anime> {
           builder: (BuildContext context, BoxConstraints constraints) {
             int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
             double imageWidth = constraints.maxWidth / count.toDouble();
-            // Adjust offset
-            double offset = 93;
-            if (widget.seasonal != null) offset = 125;
+            // Adjust offset — scale with font size
+            final scaler = MediaQuery.of(context).textScaler;
+            double offset = scaler.scale(93);
+            if (widget.seasonal != null) offset = scaler.scale(125);
             // Calculat ratio
             double ratio = imageWidth / (imageWidth / 1.777 + offset);
 
@@ -173,6 +174,7 @@ class _AnimeState extends State<Anime> {
             return Stack(
               children: <Widget>[
                 GridView.builder(
+                  key: ValueKey('grid_${count}_${ratio.toStringAsFixed(3)}'),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: count,
                     childAspectRatio: ratio,

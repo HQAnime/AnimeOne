@@ -38,6 +38,7 @@ class AnimeInfoCard extends StatelessWidget {
               child: Text(
                 info.name ?? "賽博朋克",
                 maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
@@ -46,16 +47,18 @@ class AnimeInfoCard extends StatelessWidget {
             ),
             Table(children: [
               TableRow(children: [
-                Text(info.episode ?? "77", textAlign: TextAlign.center),
+                Text(info.episode ?? "77", textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
                 // Cyperpunk?
                 Text(
                   (info.year ?? "2077") + (info.season ?? ""),
                   textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   info.subtitle ?? "",
                   textAlign: TextAlign.center,
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ]),
             ]),

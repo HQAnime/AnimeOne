@@ -52,6 +52,7 @@ class AnimeOne {
         // restart if successful, only show the error if it failed
         restartApp();
       } else {
+        if (!context.mounted) return;
         showDialog(
           context: context,
           builder: (c) => AlertDialog(

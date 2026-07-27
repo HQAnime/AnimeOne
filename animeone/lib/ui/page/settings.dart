@@ -117,6 +117,7 @@ class Settings extends StatelessWidget {
                   subtitle: const Text(GlobalData.version),
                   onTap: () {
                     GlobalData().checkGithubUpdate().then((_) {
+                      if (!context.mounted) return;
                       GlobalData()
                           .getGithubUpdate()
                           ?.checkUpdate(context, showAlertWhenNoUpdate: true);

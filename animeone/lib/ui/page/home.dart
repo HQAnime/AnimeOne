@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     // Init if not and check for update
     global.init().then((_) {
+      if (!mounted) return;
       final update = global.getGithubUpdate();
       if (update != null) {
         update.checkUpdate(context);
@@ -157,6 +158,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   child: const Text('檢查 APP 是否有更新'),
                   onPressed: () {
                     GlobalData().checkGithubUpdate().then((_) {
+                      if (!mounted) return;
                       GlobalData()
                           .getGithubUpdate()
                           ?.checkUpdate(context, showAlertWhenNoUpdate: true);

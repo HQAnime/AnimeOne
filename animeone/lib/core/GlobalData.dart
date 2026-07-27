@@ -33,6 +33,7 @@ class GlobalData {
       'https://github.com/HenryQuan/AnimeOne/releases/latest';
 
   static const eminaOne = 'https://github.com/splitline/emina-one';
+  static const oneAnime = 'https://github.com/Predidit/oneAnime';
   static const animeGo = 'https://github.com/HenryQuan/AnimeGo';
 
   /// if update has been checked

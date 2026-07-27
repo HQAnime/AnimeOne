@@ -191,6 +191,13 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {
+                    launchUrlString(GlobalData.oneAnime);
+                  },
+                  title: Text(l.downloadOneAnime),
+                  subtitle: Text(l.downloadOneAnimeSubtitle),
+                ),
+                ListTile(
+                  onTap: () {
                     launchUrlString(GlobalData.animeGo);
                   },
                   title: Text(l.downloadAnimeGo),

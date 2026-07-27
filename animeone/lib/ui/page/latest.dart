@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
+import 'package:animeone/ui/page/settings.dart';
 import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +51,25 @@ class _LatestState extends State<Latest> {
             icon: const Icon(Icons.refresh),
             tooltip: '刷新最新動畫',
             onPressed: () => loadRecentAnime(),
-          )
+          ),
+          Ink.image(
+            image: const AssetImage('lib/assets/icon/logo.png'),
+            width: 28,
+            height: 28,
+            child: Tooltip(
+              message: '關於AnimeOne',
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Settings(),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         ],
         leading: IconButton(
           icon: const Icon(Icons.favorite),

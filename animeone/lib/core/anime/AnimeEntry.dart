@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:html/dom.dart';
 
 /// This class saves anime name, anime page link, anime video link,  post date, all episodes and next episode
@@ -88,11 +89,7 @@ class AnimeEntry extends AnimeBasic {
   }
 
   /// Date + how many days ago
-  /// - 一天前
-  /// 一周前
-  /// - 一個月前
-  /// - 一年之前
-  String getEnhancedDate() {
+  String getEnhancedDate(AppLocalizations l) {
     String enhanced = '';
     final postDateString = postDate;
     if (postDateString != null) {
@@ -101,23 +98,22 @@ class AnimeEntry extends AnimeBasic {
       log(dayDiff.toString());
 
       if (dayDiff == 0) {
-        enhanced = '今天';
+        enhanced = l.today;
       } else if (dayDiff == 1) {
-        enhanced = '昨天';
+        enhanced = l.yesterday;
       } else if (dayDiff < 7) {
-        enhanced = '$dayDiff 天前';
+        enhanced = l.daysAgo(dayDiff.toString());
       } else if (dayDiff < 28) {
-        enhanced = '${(dayDiff / 7).round()} 周前';
+        enhanced = l.weeksAgo((dayDiff / 7).round().toString());
       } else if (dayDiff < 365) {
-        enhanced =
-            '${(dayDiff / 30).toStringAsFixed(1)} 個月前'; // is this a good idea??
+        enhanced = l.monthsAgo((dayDiff / 30).toStringAsFixed(1));
       } else {
-        enhanced = '${(dayDiff / 365).toStringAsFixed(1)} 年前';
+        enhanced = l.yearsAgo((dayDiff / 365).toStringAsFixed(1));
       }
 
       return '${postDate!} | $enhanced';
     } else {
-      return '未知';
+      return l.unknown;
     }
   }
 

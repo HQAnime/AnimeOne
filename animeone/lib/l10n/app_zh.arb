@@ -1,0 +1,190 @@
+{
+  "@@locale": "zh",
+  "appTitle": "AnimeOne",
+  "tabLatest": "最新",
+  "tabAnimeList": "動畫列表",
+  "tabSchedule": "時間表",
+  "tabWatchHistory": "觀看紀錄",
+  "latestAnime": "最新動畫",
+  "refreshLatest": "刷新最新動畫",
+  "aboutAnimeOne": "關於AnimeOne",
+  "supportDev": "支持開發",
+  "quickSearch": "快速搜尋",
+  "searchFilter": "搜索 {filter} 動畫",
+  "@searchFilter": {
+    "placeholders": {
+      "filter": {}
+    }
+  },
+  "resetList": "重設整個列表",
+  "notFound": "找不到任何東西 (´;ω;`)",
+  "dayMon": "一",
+  "dayTue": "二",
+  "dayWed": "三",
+  "dayThu": "四",
+  "dayFri": "五",
+  "daySat": "六",
+  "daySun": "日",
+  "introVideo": "新番介紹視頻",
+  "noIntroVideo": "沒有發現介紹視頻",
+  "iSee": "這樣啊",
+  "dataNotUpdated": "數據還沒有更新 (´;ω;`)",
+  "loadFailedQaq": "加载失败 QAQ",
+  "loading": "努力加載中...",
+  "wikipediaSearch": "使用維基百科搜索",
+  "nothingFound": "沒有找到任何東西...",
+  "loadFailedTitle": "加載失敗了...",
+  "allEpisodes": "全集連結",
+  "nextEpisode": "下一集",
+  "watchHistory": "觀看紀錄",
+  "clearHistory": "清除紀錄",
+  "clearHistoryTitle": "清除觀看紀錄",
+  "clearHistoryConfirm": "確定要清除所有觀看紀錄嗎？",
+  "cancel": "取消",
+  "confirm": "確定",
+  "noWatchHistory": "尚無觀看紀錄",
+  "ageRestrictionTitle": "關於年齡限制",
+  "ageRestrictionContent": "最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。",
+  "ok": "好的",
+  "loadFailed": "無法加載數據 :(",
+  "retryMessage": "請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）",
+  "errorMessage": "錯誤消息!",
+  "whatNow": "現在怎麽辦？",
+  "openInBrowser": "使用瀏覽器打開 anime1.me",
+  "or": "或者",
+  "checkUpdate": "檢查 APP 是否有更新",
+  "tryFix": "嘗試修復問題 (Beta)",
+  "noIssueFound": "沒有發現任何問題",
+  "noIssueContent": "應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。",
+  "reloadData": "重新加載數據",
+  "settingsTitle": "關於AnimeOne",
+  "supportDevTitle": "支持開發",
+  "supportDevSubtitle": "特別喜歡本APP的話，可以支持一下~~",
+  "fontSize": "字型大小",
+  "small": "小",
+  "large": "大",
+  "forceDarkMode": "強制深色模式",
+  "forceDarkModeSubtitle": "開啟後無論系統設定始終使用深色模式，關閉則跟隨系統",
+  "discordServer": "官方Discord伺服器",
+  "officialWebsite": "官方網站 - 關於",
+  "officialWebsiteSubtitle": "官方網站的聯繫方式和捐款",
+  "sourceCode": "軟件源代碼",
+  "sourceCodeSubtitle": "源代碼在GitHub上開放，歡迎Pull Request",
+  "privacyPolicy": "隱私條款",
+  "privacyPolicySubtitle": "AnimeOne不會收集用戶的任何數據",
+  "openSourceLicense": "開源許可證",
+  "openSourceLicenseSubtitle": "查看所有的開源許可證",
+  "openSourceLegalese": "開源許可證",
+  "downloadEminaOne": "下載  Emina One ",
+  "downloadEminaOneSubtitle": "splitline 製作的 anime1 app",
+  "downloadAnimeGo": "下載 AnimeGo",
+  "downloadAnimeGoSubtitle": "非官方 gogoanime app (還在開發中)",
+  "email": "電子郵件",
+  "emailSubtitle": "聯係本軟件的開發者",
+  "shareApp": "分享軟件",
+  "shareAppSubtitle": "喜歡本APP的話，可以分享給朋友們",
+  "shareSubject": "AnimeOne 軟件更新",
+  "appUpdate": "軟件更新",
+  "language": "語言",
+  "supportAnimeOne": "支持AnimeOne",
+  "paypal": "PayPal",
+  "paypalSubtitle": "短期或一次性",
+  "patreon": "Patreon",
+  "patreonSubtitle": "長期且穩定",
+  "thankYou": "非常感謝您的支持！",
+  "close": "關閉",
+  "skipBack": "-10s",
+  "skipForward": "+30s",
+  "closePlayer": "Close",
+  "websiteClosed": "網站已關閉",
+  "fenglinClosed": "「楓林網」遭查封",
+  "websiteClosedMessage": "AnimeOne 並不是官方的應用程式，\n這只是我個人的開源項目，\n因為網站已經關閉所以開發已終止。",
+  "ifYouLikeEnglish": "如果你喜歡英文字幕的話",
+  "downloadAnimeGoWebsite": "下載 AnimeGo",
+  "noFirstEpisode": "動畫還沒有更新第一集 >_<",
+  "copyrightProtected": "因版權方要求，目前無法提供此内容。",
+  "clickToPlay": "點擊進入内置視頻播放器",
+  "launchBrowserForPassword": "啓動瀏覽器輸入密碼",
+  "watchComplete": "觀看完成",
+  "progressFormat": " | {progress}%",
+  "@progressFormat": {
+    "placeholders": {
+      "progress": {}
+    }
+  },
+  "error404": "404 無法加載",
+  "autoFix": "啓動自動修復程序",
+  "loadFailedEmailTitle": "關於加載失敗",
+  "loadFailedEmailContent": "請先嘗試重新啓動APP，檢查問題依然存在。如果問題依然存在，請一天後再次嘗試，如果還是無法加載的話，再發送郵件。網站有的時候會檢查瀏覽器，所以導致 APP 無法使用。報告只會包括錯誤信息，請不要重複發送多個報告！",
+  "sendEmail": "發送郵件",
+  "details": "詳細信息",
+  "fixFailed": "修復失敗",
+  "fixFailedContent": "請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。",
+  "downloadNow": "立即下載",
+  "noUpdateFound": "沒有發現更新，目前已經是最新版本",
+  "recompileApp": "\n請重新編譯APP",
+  "wikipediaSearchAnime": "使用維基百科搜索 動畫{name}",
+  "@wikipediaSearchAnime": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "today": "今天",
+  "yesterday": "昨天",
+  "daysAgo": "{count} 天前",
+  "@daysAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "weeksAgo": "{count} 周前",
+  "@weeksAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "monthsAgo": "{count} 個月前",
+  "@monthsAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "yearsAgo": "{count} 年前",
+  "@yearsAgo": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "unknown": "未知",
+  "unknownName": "賽博朋克",
+  "winter": "冬季",
+  "spring": "春季",
+  "summer": "夏季",
+  "autumn": "秋季",
+  "seasonFormat": "{year}年{season}新番",
+  "@seasonFormat": {
+    "placeholders": {
+      "year": {},
+      "season": {}
+    }
+  },
+  "airing": "連載中",
+  "movie": "劇場版",
+  "ova": "OVA",
+  "oad": "OAD",
+  "seasonSingleFormat": "{year}{season}",
+  "@seasonSingleFormat": {
+    "placeholders": {
+      "year": {},
+      "season": {}
+    }
+  },
+  "watchHistorySubtitle": "{position} / {duration}（{percent}%）",
+  "@watchHistorySubtitle": {
+    "placeholders": {
+      "position": {},
+      "duration": {},
+      "percent": {}
+    }
+  }
+}

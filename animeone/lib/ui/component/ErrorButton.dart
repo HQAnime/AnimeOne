@@ -1,5 +1,6 @@
 import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class ErrorButton extends StatelessWidget {
@@ -13,7 +14,8 @@ class ErrorButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String finalMsg = '404 無法加載\n\n${msg ?? ''}';
+    final l = AppLocalizations.of(context)!;
+    String finalMsg = '${l.error404}\n\n${msg ?? ''}';
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,15 +28,13 @@ class ErrorButton extends StatelessWidget {
   }
 
   Widget renderFixButton(BuildContext context) {
-    // don't show this all the time
     if (GlobalData.requestCookieLink?.isNotEmpty ?? false) {
-      // Get cookie
       return ElevatedButton(
         onPressed: () {
           final one = AnimeOne();
           one.bypassWebsiteCheck(context);
         },
-        child: const Text('啓動自動修復程序'),
+        child: Text(AppLocalizations.of(context)!.autoFix),
       );
     } else {
       return Container();

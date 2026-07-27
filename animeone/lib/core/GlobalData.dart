@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui' show Locale;
 
 import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
@@ -18,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'anime/AnimeInfo.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 
 /// A class has constants and also a list of all anime
 class GlobalData {
@@ -54,8 +56,11 @@ class GlobalData {
   static const fontScaleKey = 'AnimeOne:FontScale';
   static const historyKey = 'AnimeOne:WatchHistory';
   static const darkModeKey = 'AnimeOne:ForceDark';
+  static const localeKey = 'AnimeOne:Locale';
+  static final localeNotifier = ValueNotifier<Locale?>(null);
 
   double _fontScale = 1.0;
+  Locale? _locale;
   static final fontScaleNotifier = ValueNotifier<double>(1.0);
   static final historyNotifier = ValueNotifier<int>(0);
   static final darkModeNotifier = ValueNotifier<bool>(false);
@@ -79,6 +84,21 @@ class GlobalData {
 
   void initDarkMode() {
     darkModeNotifier.value = prefs.getBool(darkModeKey) ?? false;
+  }
+
+  Locale? getLocale() => _locale;
+  void setLocale(String code) {
+    _locale = Locale(code);
+    prefs.setString(localeKey, code);
+    localeNotifier.value = _locale;
+  }
+
+  void initLocale() {
+    final code = prefs.getString(localeKey);
+    if (code != null) {
+      _locale = Locale(code);
+      localeNotifier.value = _locale;
+    }
   }
 
   List<WatchEntry> getHistory() {
@@ -123,10 +143,10 @@ class GlobalData {
 
   // Relating to seasonal anime
   static final _season = AnimeSeason(DateTime.now());
-  String getSeasonName() => _season.toString();
+  String getSeasonName([AppLocalizations? l]) => l != null ? _season.getLocalizedName(l) : _season.toString();
   String getScheduleLink() => _season.getLink();
   String getSeasonLink() => _season.getAnimeLink();
-  List<String> getQuickFilters() => _season.getQuickFilters();
+  List<({String label, String value})> getQuickFilters(AppLocalizations l) => _season.getQuickFilters(l);
 
   // Relating to anime list (it won't be changed)
   List<AnimeInfo> _animeList = [];
@@ -200,6 +220,8 @@ class GlobalData {
     initFontScale();
     // Dark mode
     initDarkMode();
+    // Locale
+    initLocale();
 
     // Whether an age alert shoud be shown
     String? ageAlert = prefs.get(ageRestriction) as String?;

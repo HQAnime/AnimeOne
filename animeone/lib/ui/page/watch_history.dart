@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/WatchEntry.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/material.dart';
 
@@ -43,23 +44,24 @@ class _WatchHistoryState extends State<WatchHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('觀看紀錄'),
+        title: Text(l.watchHistory),
         actions: [
           if (_history.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete_sweep),
-              tooltip: '清除紀錄',
+              tooltip: l.clearHistory,
               onPressed: () {
                 showDialog<bool>(
                   context: context,
                   builder: (ctx) => AlertDialog(
-                    title: const Text('清除觀看紀錄'),
-                    content: const Text('確定要清除所有觀看紀錄嗎？'),
+                    title: Text(l.clearHistoryTitle),
+                    content: Text(l.clearHistoryConfirm),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('取消')),
-                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('確定')),
+                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.cancel)),
+                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l.confirm)),
                     ],
                   ),
                 ).then((ok) {
@@ -73,7 +75,7 @@ class _WatchHistoryState extends State<WatchHistory> {
         ],
       ),
       body: _history.isEmpty
-          ? const Center(child: Text('尚無觀看紀錄'))
+          ? Center(child: Text(l.noWatchHistory))
           : ListView.builder(
               itemCount: _history.length,
               itemBuilder: (context, index) {
@@ -90,7 +92,7 @@ class _WatchHistoryState extends State<WatchHistory> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
-                    '${_fmtDuration(entry.positionSec)} / ${_fmtDuration(entry.durationSec)}（$pct%）',
+                    l.watchHistorySubtitle(_fmtDuration(entry.positionSec), _fmtDuration(entry.durationSec), pct),
                   ),
                   onTap: () {
                     Navigator.push(

@@ -1,4 +1,5 @@
 import 'package:animeone/core/anime/AnimeBasic.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +32,8 @@ class AnimeButton extends StatelessWidget {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const AlertDialog(
-                content: Text('動畫還沒有更新第一集 >_<', textAlign: TextAlign.center),
+              return AlertDialog(
+                content: Text(AppLocalizations.of(context)!.noFirstEpisode, textAlign: TextAlign.center),
               );
             },
           );
@@ -43,7 +44,7 @@ class AnimeButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: Text(
-            basic.formattedName() ?? "賽博朋克",
+            basic.formattedName() ?? AppLocalizations.of(context)!.unknownName,
             maxLines: 1,
             textAlign: TextAlign.left,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),

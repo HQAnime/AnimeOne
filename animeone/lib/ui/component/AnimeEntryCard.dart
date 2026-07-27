@@ -1,4 +1,5 @@
 import 'package:animeone/core/anime/AnimeEntry.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeCoverImage.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
@@ -38,7 +39,7 @@ class AnimeEntryCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              entry.getEnhancedDate() + _progressText(),
+              entry.getEnhancedDate(AppLocalizations.of(context)!) + _progressText(context),
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
             ),
           ),
@@ -61,17 +62,18 @@ class AnimeEntryCard extends StatelessWidget {
     );
   }
 
-  String _progressText() {
+  String _progressText(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     if (progress == null || progress! <= 0) return '';
-    if (progress! >= 1.0) return ' | 觀看完成';
-    return ' | ${(progress! * 100).toStringAsFixed(0)}%';
+    if (progress! >= 1.0) return ' | ${l.watchComplete}';
+    return l.progressFormat((progress! * 100).toStringAsFixed(0));
   }
 
   /// Render all episode if exists or should be shown
   Widget renderAllEpisode(BuildContext context) {
     if (showEpisode == true && entry.allEpisodes != null) {
       return AnimeFlatButton(
-        child: const Text('全集連結'),
+        child: Text(AppLocalizations.of(context)!.allEpisodes),
         onPressed: () {
           Navigator.pushReplacement(
             context,
@@ -93,7 +95,7 @@ class AnimeEntryCard extends StatelessWidget {
         entry.nextEpisode != null &&
         entry.hasNextEpisode()) {
       return AnimeFlatButton(
-        child: const Text('下一集'),
+        child: Text(AppLocalizations.of(context)!.nextEpisode),
         onPressed: () {
           Navigator.pushReplacement(
             context,

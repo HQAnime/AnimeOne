@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/WatchEntry.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:media_kit/media_kit.dart';
@@ -184,13 +185,13 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                   focusNode: FocusNode(skipTraversal: true),
                   icon: const Icon(Icons.close, color: Colors.white, size: 28),
                   onPressed: () => Navigator.of(context).pop(),
-                  tooltip: 'Close',
+                  tooltip: AppLocalizations.of(context)!.closePlayer,
                 ),
                 const Spacer(),
                 IconButton(
                   icon: const Icon(Icons.replay_10, color: Colors.white, size: 32),
                   onPressed: () => _skip(const Duration(seconds: -10)),
-                  tooltip: '-10s',
+                  tooltip: AppLocalizations.of(context)!.skipBack,
                 ),
                 const SizedBox(width: 16),
                 IconButton(
@@ -205,7 +206,7 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                 IconButton(
                   icon: const Icon(Icons.forward_30, color: Colors.white, size: 32),
                   onPressed: () => _skip(const Duration(seconds: 30)),
-                  tooltip: '+30s',
+                  tooltip: AppLocalizations.of(context)!.skipForward,
                 ),
                 const Spacer(),
                 const SizedBox(width: 48),

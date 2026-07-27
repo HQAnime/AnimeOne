@@ -1,4 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,30 +22,27 @@ class GithubUpdate {
 
   /// Check if version is current and launch the link if so
   void checkUpdate(BuildContext context, {bool showAlertWhenNoUpdate = false}) {
-    // Only Android devices can download new apk
+    final l = AppLocalizations.of(context)!;
     bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
     String extraInfo = '';
-    if (!isAndroid) extraInfo = '\n請重新編譯APP';
+    if (!isAndroid) extraInfo = l.recompileApp;
 
     if (version != GlobalData.version) {
       showDialog(
         context: context,
-        // Prevent accidental dismiss
         barrierDismissible: false,
         builder: (BuildContext context) {
-          // Has update now
           return AlertDialog(
             title: Text('v$version'),
             content: Text(whatsnew! + extraInfo),
             actions: <Widget>[
               TextButton(
-                child: const Text('關閉'),
+                child: Text(l.close),
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              // Render nothing for non-android devices
               isAndroid
                   ? TextButton(
-                      child: const Text('立即下載'),
+                      child: Text(l.downloadNow),
                       onPressed: () {
                         launchUrl(Uri.parse(link!));
                         Navigator.of(context).pop();
@@ -56,19 +54,16 @@ class GithubUpdate {
         },
       );
     } else if (showAlertWhenNoUpdate) {
-      // This should only shown in settings
       showDialog(
         context: context,
-        // Prevent accidental dismiss
         barrierDismissible: false,
         builder: (BuildContext context) {
-          // No update
           return AlertDialog(
             title: Text('v$version'),
-            content: const Text('沒有發現更新，目前已經是最新版本'),
+            content: Text(l.noUpdateFound),
             actions: <Widget>[
               TextButton(
-                child: const Text('關閉'),
+                child: Text(l.close),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],

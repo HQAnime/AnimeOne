@@ -1,5 +1,6 @@
 import 'package:animeone/core/AnimeOne.dart';
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/EmailButton.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
@@ -52,14 +53,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           barrierDismissible: false,
           builder: (BuildContext context) {
             // No update
+            final l = AppLocalizations.of(context)!;
             return AlertDialog(
-              title: const Text('關於年齡限制'),
-              content: const Text(
-                '最近因爲某異世界 xxx 評鑑指南的播出，雖然沒有官方的分級審核，但還是決定為 AnimeOne 增加年齡限制。本 App 至少需要 15 歲（建議18嵗）才可以使用本 App，如果你不到 15 嵗請立即刪除本 App。',
-              ),
+              title: Text(l.ageRestrictionTitle),
+              content: Text(l.ageRestrictionContent),
               actions: <Widget>[
                 TextButton(
-                  child: const Text('好的'),
+                  child: Text(l.ok),
                   onPressed: () {
                     Navigator.of(context).pop();
                     // Don't show this again
@@ -87,22 +87,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Scaffold(
       body: renderBody(),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.new_releases),
-            label: '最新',
+            icon: const Icon(Icons.new_releases),
+            label: AppLocalizations.of(context)!.tabLatest,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: '動畫列表',
+            icon: const Icon(Icons.list),
+            label: AppLocalizations.of(context)!.tabAnimeList,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: '時間表',
+            icon: const Icon(Icons.calendar_today),
+            label: AppLocalizations.of(context)!.tabSchedule,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: '觀看紀錄',
+            icon: const Icon(Icons.history),
+            label: AppLocalizations.of(context)!.tabWatchHistory,
           ),
         ],
         currentIndex: selectedIndex,
@@ -116,6 +116,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   /// Loading or index stacked
   Widget renderBody() {
     if (error != '') {
+      final l = AppLocalizations.of(context)!;
       return Stack(
         children: <Widget>[
           Center(
@@ -123,19 +124,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  '無法加載數據 :(',
+                  l.loadFailed,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 Text(
-                  '請稍後重試，如果問題依然存在，請聯係開發者\n（也許是服務器的問題 也有可能是 APP 的問題）',
+                  l.retryMessage,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox.fromSize(size: const Size.fromHeight(24)),
-                // ErrorButton(),
                 Text(
-                  '錯誤消息!',
+                  l.errorMessage,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
@@ -149,20 +149,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
                 SizedBox.fromSize(size: const Size.fromHeight(24)),
                 Text(
-                  '現在怎麽辦？',
+                  l.whatNow,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 TextButton(
-                  child: const Text('使用瀏覽器打開 anime1.me'),
+                  child: Text(l.openInBrowser),
                   onPressed: () => launchUrlString(GlobalData.domain),
                 ),
                 Text(
-                  '或者',
+                  l.or,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
-                  child: const Text('檢查 APP 是否有更新'),
+                  child: Text(l.checkUpdate),
                   onPressed: () {
                     GlobalData().checkGithubUpdate().then((_) {
                       if (!mounted) return;
@@ -173,37 +173,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   },
                 ),
                 Text(
-                  '或者',
+                  l.or,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 TextButton(
-                  child: const Text(
-                    '嘗試修復問題 (Beta)',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Text(
+                    l.tryFix,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
                     GlobalData.requestCookieLink ??= GlobalData.domain;
                     final channel = AnimeOne();
                     channel.bypassWebsiteCheck(context);
-                    // if ((GlobalData.requestCookieLink?.length ?? 0) > 0) {
-                    // } else {
-                    //   // This should be a request error
-                    //   showDialog(
-                    //     context: context,
-                    //     builder: (c) => AlertDialog(
-                    //       title: const Text('沒有發現任何問題'),
-                    //       content: const Text(
-                    //         '應該是網絡問題，請嘗試 【使用瀏覽器打開 anime1.me 】之後在刷新一下這個界面。如果問題依然存在，請查看詳細信息。',
-                    //       ),
-                    //       actions: <Widget>[
-                    //         TextButton(
-                    //           onPressed: () => Navigator.pop(context),
-                    //           child: const Text('好的'),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   );
-                    // }
                   },
                 ),
               ],
@@ -213,7 +194,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             right: 16,
             top: 36,
             child: Tooltip(
-              message: '重新加載數據',
+              message: l.reloadData,
               child: IconButton(
                 icon: const Icon(Icons.refresh),
                 onPressed: () => _loadData(),

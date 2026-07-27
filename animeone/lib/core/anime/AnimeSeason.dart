@@ -1,9 +1,9 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 
 /// This class asks for DateTime to get a string to indicate seasonal anime
 class AnimeSeason {
   late DateTime _date;
-  final _seasons = ['冬季', '春季', '夏季', '秋季'];
 
   AnimeSeason(DateTime date) {
     _date = date;
@@ -18,19 +18,33 @@ class AnimeSeason {
     return '${GlobalData.domain}category/$this'.replaceFirst('新番', '');
   }
 
+  List<String> getSeasons(AppLocalizations l) {
+    return [l.winter, l.spring, l.summer, l.autumn];
+  }
+
+  static const _cnSeasonChars = ['冬', '春', '夏', '秋'];
+  static const _cnTypeValues = ['連載中', '劇場版', 'OVA', 'OAD'];
+
   /// some preset filters
-  List<String> getQuickFilters() {
-    List<String> filters = ['連載中', '劇場版', 'OVA', 'OAD'];
+  List<({String label, String value})> getQuickFilters(AppLocalizations l) {
+    final seasons = getSeasons(l);
+    return [
+      (label: l.airing, value: _cnTypeValues[0]),
+      (label: l.movie, value: _cnTypeValues[1]),
+      (label: l.ova, value: _cnTypeValues[2]),
+      (label: l.oad, value: _cnTypeValues[3]),
+      for (int i = 0, offset = 0; i < 4; i++, offset -= 3)
+        _seasonFilter(l, seasons, offset),
+    ];
+  }
 
-    // Add recent 4 seasons
-    int offset = 0;
-    for (int i = 0; i < 4; i++, offset -= 3) {
-      // Keep updating the date
-      var temp = _getYearAndSeason(_date.add(Duration(days: offset * 30)));
-      filters.add('${temp[0]}${_seasons[temp[1]][0]}');
-    }
-
-    return filters;
+  ({String label, String value}) _seasonFilter(
+      AppLocalizations l, List<String> seasons, int offset) {
+    var temp = _getYearAndSeason(_date.add(Duration(days: offset * 30)));
+    return (
+      label: '${temp[0]} ${seasons[temp[1]]}',
+      value: '${temp[0]}${_cnSeasonChars[temp[1]]}',
+    );
   }
 
   List<int> _getYearAndSeason(DateTime dt) {
@@ -51,10 +65,14 @@ class AnimeSeason {
     return [year, season];
   }
 
+  String getLocalizedName(AppLocalizations l) {
+    var yas = _getYearAndSeason(_date);
+    return l.seasonFormat('${yas[0]}', getSeasons(l)[yas[1]]);
+  }
+
   @override
   String toString() {
     var yas = _getYearAndSeason(_date);
-
-    return '${yas[0]}年${_seasons[yas[1]]}新番';
+    return '${yas[0]}年${['冬季', '春季', '夏季', '秋季'][yas[1]]}新番';
   }
 }

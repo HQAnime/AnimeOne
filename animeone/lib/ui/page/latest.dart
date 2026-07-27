@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:animeone/ui/page/settings.dart';
@@ -54,13 +55,14 @@ class _LatestState extends State<Latest> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('最新動畫'),
+        title: Text(l.latestAnime),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: '刷新最新動畫',
+            tooltip: l.refreshLatest,
             onPressed: () => loadRecentAnime(),
           ),
           Ink.image(
@@ -68,7 +70,7 @@ class _LatestState extends State<Latest> {
             width: 28,
             height: 28,
             child: Tooltip(
-              message: '關於AnimeOne',
+              message: l.aboutAnimeOne,
               child: InkWell(
                 onTap: () {
                   Navigator.push(
@@ -84,9 +86,8 @@ class _LatestState extends State<Latest> {
         ],
         leading: IconButton(
           icon: const Icon(Icons.favorite),
-          tooltip: '支持發開',
+          tooltip: l.supportDev,
           onPressed: () {
-            // Push to support page
             Navigator.push(
               context,
               MaterialPageRoute(

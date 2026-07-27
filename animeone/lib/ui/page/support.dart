@@ -1,3 +1,4 @@
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -7,25 +8,26 @@ class Support extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('支持AnimeOne'),
+        title: Text(l.supportAnimeOne),
       ),
       body: ListView(
         children: <Widget>[
           ListTile(
             title: const Text('PayPal'),
-            subtitle: const Text('短期或一次性'),
+            subtitle: Text(l.paypalSubtitle),
             onTap: () => launchUrlString('https://www.paypal.me/yihengquan'),
           ),
           ListTile(
             title: const Text('Patreon'),
-            subtitle: const Text('長期且穩定'),
+            subtitle: Text(l.patreonSubtitle),
             onTap: () => launchUrlString('https://patreon.com/HenryQuan'),
           ),
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text('非常感謝您的支持！'),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(l.thankYou),
           )
         ],
       ),

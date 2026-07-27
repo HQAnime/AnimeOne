@@ -1,3 +1,4 @@
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -7,6 +8,7 @@ class WebsiteClosed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
     return Scaffold(
       body: Center(
         child: Column(
@@ -18,26 +20,26 @@ class WebsiteClosed extends StatelessWidget {
               width: 200,
               color: Theme.of(context).colorScheme.primary,
             ),
-            Text('網站已關閉', style: Theme.of(context).textTheme.headlineMedium),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 32),
-              child: Text('「楓林網」遭查封'),
+            Text(l.websiteClosed, style: Theme.of(context).textTheme.headlineMedium),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 32),
+              child: Text(l.fenglinClosed),
             ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 16),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
               child: Text(
-                'AnimeOne 並不是官方的應用程式，\n這只是我個人的開源項目，\n因為網站已經關閉所以開發已終止。',
+                l.websiteClosedMessage,
                 textAlign: TextAlign.center,
               ),
             ),
-            const Text('如果你喜歡英文字幕的話'),
+            Text(l.ifYouLikeEnglish),
             ElevatedButton(
               onPressed: () {
                 launchUrlString(
                   'https://github.com/HenryQuan/AnimeGo-Re/releases',
                 );
               },
-              child: const Text('下載 AnimeGo'),
+              child: Text(l.downloadAnimeGoWebsite),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 32),

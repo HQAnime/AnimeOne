@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/page/desktop_player.dart';
@@ -22,15 +23,19 @@ class _ScheduleState extends State<Schedule>
   late List<AnimeSchedule> schedules;
 
   TabController? controller;
-  final List<Tab> tabs = <Tab>[
-    const Tab(text: '一'),
-    const Tab(text: '二'),
-    const Tab(text: '三'),
-    const Tab(text: '四'),
-    const Tab(text: '五'),
-    const Tab(text: '六'),
-    const Tab(text: '日'),
-  ];
+
+  List<Tab> tabs(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return <Tab>[
+      Tab(text: l.dayMon),
+      Tab(text: l.dayTue),
+      Tab(text: l.dayWed),
+      Tab(text: l.dayThu),
+      Tab(text: l.dayFri),
+      Tab(text: l.daySat),
+      Tab(text: l.daySun),
+    ];
+  }
 
   @override
   void initState() {
@@ -39,7 +44,7 @@ class _ScheduleState extends State<Schedule>
     int weekday = DateTime.now().weekday - 1;
     controller = TabController(
       vsync: this,
-      length: tabs.length,
+      length: 7,
       initialIndex: weekday,
     );
 
@@ -61,7 +66,7 @@ class _ScheduleState extends State<Schedule>
       appBar: AppBar(
           bottom: TabBar(
             controller: controller,
-            tabs: tabs,
+            tabs: tabs(context),
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
             indicatorColor: Colors.white,
@@ -87,7 +92,7 @@ class _ScheduleState extends State<Schedule>
                   );
                 },
                 child: Text(
-                  global.getSeasonName(),
+                  global.getSeasonName(AppLocalizations.of(context)!),
                   style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 16,
@@ -100,8 +105,9 @@ class _ScheduleState extends State<Schedule>
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.play_circle_outline),
-              tooltip: '新番介紹視頻',
+              tooltip: AppLocalizations.of(context)!.introVideo,
               onPressed: () async {
+                final l = AppLocalizations.of(context)!;
                 if (video != null) {
                   String? url;
                   Map<String, String> headers = {
@@ -124,7 +130,7 @@ class _ScheduleState extends State<Schedule>
                           url: url!,
                           headers: headers,
                           episodeLink: video?.video,
-                          episodeName: '新番介紹視頻',
+                          episodeName: l.introVideo,
                         ),
                       ),
                     );
@@ -134,11 +140,11 @@ class _ScheduleState extends State<Schedule>
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        title: const Text('AnimeOne'),
-                        content: const Text('沒有發現介紹視頻'),
+                        title: Text(l.appTitle),
+                        content: Text(l.noIntroVideo),
                         actions: <Widget>[
                           TextButton(
-                            child: const Text('這樣啊'),
+                            child: Text(l.iSee),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -166,8 +172,8 @@ class _ScheduleState extends State<Schedule>
         children: renderSchedule(),
       );
     } else {
-      return const Center(
-        child: Text('數據還沒有更新 (´;ω;`)'),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.dataNotUpdated),
       );
     }
   }
@@ -175,7 +181,7 @@ class _ScheduleState extends State<Schedule>
   /// Render schedule to different days
   List<Widget> renderSchedule() {
     List<Widget> children = [];
-    for (int i = 0; i < tabs.length; i++) {
+    for (int i = 0; i < 7; i++) {
       final list = schedules.where((s) => s.weekday == i);
       children.add(SafeArea(
         child: ListView.builder(

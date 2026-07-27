@@ -1,4 +1,5 @@
 import 'package:animeone/core/anime/AnimeInfo.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class AnimeInfoCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                info.name ?? "賽博朋克",
+                info.name ?? AppLocalizations.of(context)!.unknownName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

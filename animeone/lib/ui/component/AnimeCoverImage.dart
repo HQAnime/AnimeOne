@@ -1,5 +1,6 @@
 import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/desktop_player.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +20,9 @@ class AnimeCoverImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraint) {
+      final l = AppLocalizations.of(context)!;
       return Tooltip(
-        message: shouldEnterPassword() ? '因版權方要求，目前無法提供此内容。' : '點擊進入内置視頻播放器',
+        message: shouldEnterPassword() ? l.copyrightProtected : l.clickToPlay,
         child: Stack(children: <Widget>[
           AspectRatio(
             aspectRatio: 16 / 9,
@@ -41,9 +43,10 @@ class AnimeCoverImage extends StatelessWidget {
 
   Widget renderButton(BuildContext context, BoxConstraints constraint) {
     if (shouldEnterPassword()) {
+      final l = AppLocalizations.of(context)!;
       return TextButton(
         child: Text(
-          '啓動瀏覽器輸入密碼',
+          l.launchBrowserForPassword,
           style: TextStyle(
             backgroundColor: Theme.of(context).colorScheme.primary,
             color: Colors.white,

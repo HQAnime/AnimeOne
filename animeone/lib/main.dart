@@ -1,4 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,12 +38,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  Locale? _locale;
 
   @override
   void initState() {
     super.initState();
     GlobalData.fontScaleNotifier.addListener(_onFontScaleChanged);
     GlobalData.darkModeNotifier.addListener(_onDarkModeChanged);
+    GlobalData.localeNotifier.addListener(_onLocaleChanged);
+    _locale = GlobalData().getLocale();
   }
 
   void _onFontScaleChanged() {
@@ -53,10 +57,19 @@ class _MyAppState extends State<MyApp> {
     if (mounted) setState(() {});
   }
 
+  void _onLocaleChanged() {
+    if (mounted) {
+      setState(() {
+        _locale = GlobalData().getLocale();
+      });
+    }
+  }
+
   @override
   void dispose() {
     GlobalData.fontScaleNotifier.removeListener(_onFontScaleChanged);
     GlobalData.darkModeNotifier.removeListener(_onDarkModeChanged);
+    GlobalData.localeNotifier.removeListener(_onLocaleChanged);
     super.dispose();
     final platformDispatcher = PlatformDispatcher.instance;
     platformDispatcher.onPlatformBrightnessChanged = () {
@@ -127,6 +140,17 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           navigatorKey: _navigatorKey,
           title: 'AnimeOne',
+          locale: _locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localeResolutionCallback: (locale, supported) {
+            if (_locale != null) return _locale;
+            if (locale == null) return const Locale('en');
+            for (final l in supported) {
+              if (l.languageCode == locale.languageCode) return l;
+            }
+            return const Locale('en');
+          },
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _AnimeState extends State<Anime> {
   // Catch error messages
   String hasError = '';
 
-  String title = '加載失敗了...';
+  String title = '';
   late AnimePageParser parser;
   List<AnimeEntry> entries = [];
   ScrollController? controller;
@@ -117,12 +118,12 @@ class _AnimeState extends State<Anime> {
     // Always show error message first even if it is loading
     if (hasError != '') {
       return Scaffold(
-        appBar: AppBar(title: const Text('加载失败 QAQ')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.loadFailedQaq)),
         body: ErrorButton(msg: hasError),
       );
     } else if (loading) {
       return Scaffold(
-        appBar: AppBar(title: const Text('努力加載中...')),
+        appBar: AppBar(title: Text(AppLocalizations.of(context)!.loading)),
         body: const Center(
           child: CircularProgressIndicator(),
         ),
@@ -143,11 +144,11 @@ class _AnimeState extends State<Anime> {
 
   /// Render a search icon to go to wikipedia
   Widget renderSearch() {
-    if (title != '' && widget.seasonal == null && title != '加載失敗了...') {
+    if (title != '' && widget.seasonal == null) {
       return IconButton(
         icon: const Icon(Icons.search),
         onPressed: () => global.getWikipediaLink(title),
-        tooltip: '使用維基百科搜索',
+        tooltip: AppLocalizations.of(context)!.wikipediaSearch,
       );
     } else {
       return Container();
@@ -157,7 +158,7 @@ class _AnimeState extends State<Anime> {
   /// Render differently with different number of elements
   Widget renderBody() {
     if (entries.isEmpty) {
-      return ErrorButton(msg: '沒有找到任何東西...');
+      return ErrorButton(msg: AppLocalizations.of(context)!.nothingFound);
     } else if (entries.length == 1) {
       return LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {

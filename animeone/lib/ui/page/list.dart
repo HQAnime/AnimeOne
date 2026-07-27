@@ -1,5 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeInfo.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeInfoCard.dart';
 import 'package:animeone/ui/page/settings.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ class _AnimeListState extends State<AnimeList> {
   static GlobalData global = GlobalData();
   List<AnimeInfo> list = [];
   final all = global.getAnimeList();
-  final quickFilters = global.getQuickFilters();
   String? _selectedFilter;
   String _searchText = '';
   final _searchController = TextEditingController();
@@ -24,7 +24,7 @@ class _AnimeListState extends State<AnimeList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+          title: Row(
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.only(right: 8),
@@ -34,9 +34,9 @@ class _AnimeListState extends State<AnimeList> {
               child: TextField(
                 controller: _searchController,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
-                decoration: const InputDecoration.collapsed(
-                  hintText: '快速搜尋',
-                  hintStyle: TextStyle(color: Colors.white, fontSize: 20),
+                decoration: InputDecoration.collapsed(
+                  hintText: AppLocalizations.of(context)!.quickSearch,
+                  hintStyle: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
                 autocorrect: false,
                 autofocus: false,
@@ -51,7 +51,7 @@ class _AnimeListState extends State<AnimeList> {
             width: 64,
             height: 64,
             child: Tooltip(
-              message: '關於AnimeOne',
+              message: AppLocalizations.of(context)!.aboutAnimeOne,
               child: InkWell(
                 onTap: () {
                   // Go to information page
@@ -96,19 +96,20 @@ class _AnimeListState extends State<AnimeList> {
 
   /// render a list of quick filter
   Widget renderQuickFilter() {
+    final quickFilters = global.getQuickFilters(AppLocalizations.of(context)!);
     return SafeArea(
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: <Widget>[
-            ...quickFilters.map((filter) {
-              final selected = _selectedFilter == filter;
+            ...quickFilters.map((f) {
+              final selected = _selectedFilter == f.value;
               return Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
                 child: Tooltip(
-                  message: '搜索 $filter 動畫',
+                  message: AppLocalizations.of(context)!.searchFilter(f.label),
                   child: ActionChip(
-                    label: Text(filter),
+                    label: Text(f.label),
                     labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                     side: BorderSide(color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline),
                     backgroundColor: selected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15) : Colors.transparent,
@@ -116,7 +117,7 @@ class _AnimeListState extends State<AnimeList> {
                       if (selected) {
                         _selectedFilter = null;
                       } else {
-                        _selectedFilter = filter;
+                        _selectedFilter = f.value;
                       }
                       _applyFilters();
                     },
@@ -125,7 +126,7 @@ class _AnimeListState extends State<AnimeList> {
               );
             }),
           Tooltip(
-            message: '重設整個列表',
+            message: AppLocalizations.of(context)!.resetList,
             child: IconButton(
               icon: const Icon(Icons.close),
               onPressed: () => _resetList(),
@@ -140,8 +141,8 @@ class _AnimeListState extends State<AnimeList> {
   /// render body and deal with 0 result
   Widget renderBody() {
     if (list.isEmpty) {
-      return const Center(
-        child: Text('找不到任何東西 (´;ω;`)'),
+      return Center(
+        child: Text(AppLocalizations.of(context)!.notFound),
       );
     } else {
       return ListView.builder(

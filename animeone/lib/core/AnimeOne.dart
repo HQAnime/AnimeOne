@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
@@ -53,15 +54,16 @@ class AnimeOne {
         restartApp();
       } else {
         if (!context.mounted) return;
+        final l = AppLocalizations.of(context)!;
         showDialog(
           context: context,
           builder: (c) => AlertDialog(
-            title: const Text('修復失敗'),
-            content: const Text('請再次嘗試，如果連續三次都失敗的話，請查看詳細信息。'),
+            title: Text(l.fixFailed),
+            content: Text(l.fixFailedContent),
             actions: <Widget>[
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('好的'),
+                child: Text(l.ok),
               ),
             ],
           ),

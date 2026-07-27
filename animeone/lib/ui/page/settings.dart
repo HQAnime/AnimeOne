@@ -92,6 +92,34 @@ class Settings extends StatelessWidget {
                 ),
                 const Divider(),
                 ListTile(
+                  title: const Text('字型大小'),
+                  subtitle: StatefulBuilder(
+                    builder: (context, setInnerState) {
+                      final scale = GlobalData().getFontScale();
+                      return Row(
+                        children: [
+                          const Text('小'),
+                          Expanded(
+                            child:                             Slider(
+                              value: scale,
+                              min: 0.8,
+                              max: 2.5,
+                              divisions: 17,
+                              label: '${(scale * 100).round()}%',
+                              onChanged: (v) {
+                                GlobalData().setFontScale(v);
+                                setInnerState(() {});
+                              },
+                            ),
+                          ),
+                          const Text('大'),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                const Divider(),
+                ListTile(
                   onTap: () {
                     GlobalData().sendEmail('');
                   },

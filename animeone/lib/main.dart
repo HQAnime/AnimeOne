@@ -1,3 +1,4 @@
+import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,17 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    GlobalData.fontScaleNotifier.addListener(_onFontScaleChanged);
+  }
+
+  void _onFontScaleChanged() {
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void dispose() {
+    GlobalData.fontScaleNotifier.removeListener(_onFontScaleChanged);
+    super.dispose();
     final platformDispatcher = PlatformDispatcher.instance;
     platformDispatcher.onPlatformBrightnessChanged = () {
       final brightness = platformDispatcher.platformBrightness;
@@ -64,6 +76,7 @@ class _MyAppState extends State<MyApp> {
   final lightTheme = ThemeData(
     primarySwatch: Colors.pink,
     appBarTheme: const AppBarTheme(
+      foregroundColor: Colors.white,
       systemOverlayStyle: SystemUiOverlayStyle.light,
     ),
   );
@@ -75,6 +88,13 @@ class _MyAppState extends State<MyApp> {
       theme: lightTheme,
       darkTheme: darkTheme,
       home: HomePage(),
+      builder: (context, child) {
+        final scale = GlobalData().getFontScale();
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+          child: child!,
+        );
+      },
     );
   }
 }

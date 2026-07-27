@@ -47,6 +47,21 @@ class GlobalData {
   static const oneCookie = 'AnimeOne:OneCookie';
   static const oneUserAgent = 'AnimeOne:OneUserAgent';
   static const ageRestriction = 'AnimeOne:AgeRestriction';
+  static const fontScaleKey = 'AnimeOne:FontScale';
+
+  double _fontScale = 1.0;
+  static final fontScaleNotifier = ValueNotifier<double>(1.0);
+  double getFontScale() => _fontScale;
+  void setFontScale(double v) {
+    _fontScale = v;
+    prefs.setDouble(fontScaleKey, v);
+    fontScaleNotifier.value = v;
+  }
+
+  void initFontScale() {
+    _fontScale = prefs.getDouble(fontScaleKey) ?? 1.0;
+    fontScaleNotifier.value = _fontScale;
+  }
 
   // Relating to seasonal anime
   static final _season = AnimeSeason(DateTime.now());
@@ -121,6 +136,9 @@ class GlobalData {
         debugPrint('$k ${prefs.get(k)}');
       });
     }
+
+    // Font scale
+    initFontScale();
 
     // Whether an age alert shoud be shown
     String? ageAlert = prefs.get(ageRestriction) as String?;

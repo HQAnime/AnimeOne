@@ -91,6 +91,7 @@
   "resetCachedTitles": "重置緩存標題",
   "resetCachedTitlesSubtitle": "清除已翻譯的標題緩存",
   "resetCachedDone": "已清除",
+  "changeLangWarning": "切換語言將清除所有已緩存的翻譯標題，是否繼續？",
   "supportAnimeOne": "支持AnimeOne",
   "paypal": "PayPal",
   "paypalSubtitle": "短期或一次性",

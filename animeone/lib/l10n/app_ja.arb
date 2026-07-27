@@ -86,6 +86,7 @@
   "resetCachedTitles": "翻訳キャッシュをリセット",
   "resetCachedTitlesSubtitle": "翻訳されたタイトルのキャッシュをクリア",
   "resetCachedDone": "クリアしました",
+  "changeLangWarning": "言語を切り替えると、キャッシュされた翻訳タイトルがすべてクリアされます。続行しますか？",
   "supportAnimeOne": "AnimeOneをサポート",
   "paypal": "PayPal",
   "paypalSubtitle": "短期または一回限り",

@@ -86,6 +86,7 @@
   "resetCachedTitles": "Reset Cached Titles",
   "resetCachedTitlesSubtitle": "Clear translated title cache",
   "resetCachedDone": "Cleared",
+  "changeLangWarning": "Switching language will clear all cached translated titles. Continue?",
   "supportAnimeOne": "Support AnimeOne",
   "paypal": "PayPal",
   "paypalSubtitle": "Short-term or one-time",

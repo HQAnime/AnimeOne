@@ -3,7 +3,6 @@ import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:media_kit/media_kit.dart';
@@ -25,25 +24,6 @@ void main() {
   runApp(const MyApp());
 }
 
-bool _isEditing() {
-  final focus = FocusManager.instance.primaryFocus;
-  if (focus == null) return false;
-  final render = focus.context?.findRenderObject();
-  return render is RenderEditable;
-}
-
-class _WasmUpIntent extends Intent {
-  const _WasmUpIntent();
-}
-class _WasmDownIntent extends Intent {
-  const _WasmDownIntent();
-}
-class _WasmLeftIntent extends Intent {
-  const _WasmLeftIntent();
-}
-class _WasmRightIntent extends Intent {
-  const _WasmRightIntent();
-}
 class _PopIntent extends Intent {
   const _PopIntent();
 }
@@ -165,32 +145,12 @@ class _MyAppState extends State<MyApp> {
         return Shortcuts(
           shortcuts: {
             SingleActivator(LogicalKeyboardKey.escape): const _PopIntent(),
-            SingleActivator(LogicalKeyboardKey.keyW): const _WasmUpIntent(),
-            SingleActivator(LogicalKeyboardKey.keyA): const _WasmLeftIntent(),
-            SingleActivator(LogicalKeyboardKey.keyS): const _WasmDownIntent(),
-            SingleActivator(LogicalKeyboardKey.keyD): const _WasmRightIntent(),
           },
           child: Actions(
             actions: {
               _PopIntent: CallbackAction(onInvoke: (_) {
                 _navigatorKey.currentState?.maybePop();
                 return null;
-              }),
-              _WasmUpIntent: CallbackAction(onInvoke: (_) {
-                if (_isEditing()) return null;
-                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.up));
-              }),
-              _WasmDownIntent: CallbackAction(onInvoke: (_) {
-                if (_isEditing()) return null;
-                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.down));
-              }),
-              _WasmLeftIntent: CallbackAction(onInvoke: (_) {
-                if (_isEditing()) return null;
-                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.left));
-              }),
-              _WasmRightIntent: CallbackAction(onInvoke: (_) {
-                if (_isEditing()) return null;
-                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.right));
               }),
             },
             child: MediaQuery(

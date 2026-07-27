@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TranslationCache {
@@ -7,6 +8,7 @@ class TranslationCache {
   static const _version = 2;
   static Map<String, String> _map = {};
   static SharedPreferences? _prefs;
+  static final translationAdded = ValueNotifier<String?>(null);
 
   static void init(SharedPreferences prefs) {
     _prefs = prefs;
@@ -35,6 +37,7 @@ class TranslationCache {
   static void put(String zh, String translated) {
     _map[zh] = translated;
     _save();
+    translationAdded.value = zh;
   }
 
   static void clear() {

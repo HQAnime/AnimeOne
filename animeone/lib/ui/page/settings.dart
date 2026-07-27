@@ -113,8 +113,30 @@ class Settings extends StatelessWidget {
                               for (int i = 0; i < _localeCodes.length; i++)
                                 SimpleDialogOption(
                                   onPressed: () {
-                                    GlobalData().setLocale(_localeCodes[i]);
                                     Navigator.pop(ctx);
+                                    if (_localeCodes[i] == currentCode) return;
+                                    showDialog(
+                                      context: context,
+                                      builder: (c2) => AlertDialog(
+                                        title: Text(l.language),
+                                        content: Text(l.changeLangWarning),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.pop(c2),
+                                            child: Text(l.cancel),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(c2);
+                                              TranslationCache.clear();
+                                              TranslationService.cancelPending();
+                                              GlobalData().setLocale(_localeCodes[i]);
+                                            },
+                                            child: Text(l.confirm),
+                                          ),
+                                        ],
+                                      ),
+                                    );
                                   },
                                   child: Row(
                                     children: [

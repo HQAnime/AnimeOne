@@ -5,6 +5,22 @@ import 'package:animeone/ui/widgets/TranslatedText.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
 
+String _locMeta(String text, AppLocalizations l) {
+  return text
+      .replaceAll('連載中', l.airing)
+      .replaceAll('劇場版', l.movie)
+      .replaceAll('OVA', l.ova)
+      .replaceAll('OAD', l.oad)
+      .replaceAll('冬季', l.winter)
+      .replaceAll('春季', l.spring)
+      .replaceAll('夏季', l.summer)
+      .replaceAll('秋季', l.autumn)
+      .replaceAll('冬', l.winter)
+      .replaceAll('春', l.spring)
+      .replaceAll('夏', l.summer)
+      .replaceAll('秋', l.autumn);
+}
+
 /// Takes an AnimeInfo object and render it to a card
 class AnimeInfoCard extends StatelessWidget {
   const AnimeInfoCard({
@@ -50,13 +66,13 @@ class AnimeInfoCard extends StatelessWidget {
               TableRow(children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(info.episode ?? "77", textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
+                  child: Text(_locMeta(info.episode ?? "77", AppLocalizations.of(context)!), textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
                 ),
                 // Cyperpunk?
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    (info.year ?? "2077") + (info.season ?? ""),
+                    _locMeta((info.year ?? "2077") + (info.season ?? ""), AppLocalizations.of(context)!),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),

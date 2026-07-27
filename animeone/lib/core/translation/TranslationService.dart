@@ -57,15 +57,20 @@ class TranslationService {
     _pending.clear();
   }
 
+  /// Try Wikipedia zh→target, fallback to Google Translate
   static Future<String?> _fetch(String text, String target) async {
-    final wiki = await _tryWikipedia(text, target);
-    if (wiki != null) return wiki;
+    final zhTitle = await _searchZhWikipedia(text);
+    if (zhTitle != null) {
+      final direct = await _langlink('zh.wikipedia.org', zhTitle, target);
+      if (direct != null) return direct;
+    }
     return _tryGoogle(text, target);
   }
 
-  static Future<String?> _tryWikipedia(String text, String target) async {
+  /// Search zh.wikipedia for a page matching [text], return its title.
+  static Future<String?> _searchZhWikipedia(String text) async {
     try {
-      final searchUri = Uri.https('zh.wikipedia.org', '/w/api.php', {
+      final uri = Uri.https('zh.wikipedia.org', '/w/api.php', {
         'action': 'query',
         'list': 'search',
         'srsearch': text,
@@ -73,28 +78,34 @@ class TranslationService {
         'utf8': '1',
         'srlimit': '1',
       });
-      final searchRes = await http.get(searchUri);
-      if (searchRes.statusCode != 200) return null;
-      final searchBody = json.decode(searchRes.body) as Map;
-      final query = searchBody['query'] as Map?;
+      final res = await http.get(uri);
+      if (res.statusCode != 200) return null;
+      final body = json.decode(res.body) as Map;
+      final query = body['query'] as Map?;
       final searchList = query?['search'] as List?;
       if (searchList == null || searchList.isEmpty) return null;
-      final title = (searchList[0] as Map)['title'] as String?;
-      if (title == null) return null;
+      return (searchList[0] as Map)['title'] as String?;
+    } catch (_) {
+      return null;
+    }
+  }
 
-      final llUri = Uri.https('zh.wikipedia.org', '/w/api.php', {
+  /// Get the interlanguage link from [domain] for [title] in [targetLang].
+  static Future<String?> _langlink(String domain, String title, String targetLang) async {
+    try {
+      final uri = Uri.https(domain, '/w/api.php', {
         'action': 'query',
         'titles': title,
         'prop': 'langlinks',
-        'lllang': target,
+        'lllang': targetLang,
         'format': 'json',
         'utf8': '1',
       });
-      final llRes = await http.get(llUri);
-      if (llRes.statusCode != 200) return null;
-      final llBody = json.decode(llRes.body) as Map;
-      final llQuery = llBody['query'] as Map?;
-      final pages = llQuery?['pages'] as Map?;
+      final res = await http.get(uri);
+      if (res.statusCode != 200) return null;
+      final body = json.decode(res.body) as Map;
+      final query = body['query'] as Map?;
+      final pages = query?['pages'] as Map?;
       if (pages == null || pages.isEmpty) return null;
       final page = pages.values.first as Map?;
       if (page == null) return null;

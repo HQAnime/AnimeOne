@@ -86,6 +86,7 @@
   "resetCachedTitles": "Сбросить кеш переводов",
   "resetCachedTitlesSubtitle": "Очистить кеш переведённых названий",
   "resetCachedDone": "Очищено",
+  "changeLangWarning": "Смена языка очистит все кешированные переводы названий. Продолжить?",
   "supportAnimeOne": "Поддержать AnimeOne",
   "paypal": "PayPal",
   "paypalSubtitle": "Краткосрочно или единоразово",

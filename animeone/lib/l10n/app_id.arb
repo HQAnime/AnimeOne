@@ -86,6 +86,7 @@
   "resetCachedTitles": "Setel Ulang Cache Judul",
   "resetCachedTitlesSubtitle": "Hapus cache judul yang diterjemahkan",
   "resetCachedDone": "Dibersihkan",
+  "changeLangWarning": "Mengganti bahasa akan menghapus semua cache judul terjemahan. Lanjutkan?",
   "supportAnimeOne": "Dukung AnimeOne",
   "paypal": "PayPal",
   "paypalSubtitle": "Jangka pendek atau sekali",

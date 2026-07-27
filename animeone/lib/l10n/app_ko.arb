@@ -86,6 +86,7 @@
   "resetCachedTitles": "번역 캐시 재설정",
   "resetCachedTitlesSubtitle": "번역된 제목 캐시 지우기",
   "resetCachedDone": "지워짐",
+  "changeLangWarning": "언어를 전환하면 캐시된 번역 제목이 모두 지워집니다. 계속하시겠습니까?",
   "supportAnimeOne": "AnimeOne 후원",
   "paypal": "PayPal",
   "paypalSubtitle": "단기 또는 일회성",

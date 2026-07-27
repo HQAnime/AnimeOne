@@ -27,10 +27,39 @@ class _TranslatedTextState extends State<TranslatedText> {
   String? _displayText;
   bool _loading = false;
 
+  String? _cleanName;
+
   @override
   void initState() {
     super.initState();
+    _cleanName = _stripTag(widget.originalText);
     _resolve();
+    GlobalData.localeNotifier.addListener(_onLocaleChanged);
+    TranslationCache.translationAdded.addListener(_onTranslationAdded);
+  }
+
+  @override
+  void dispose() {
+    GlobalData.localeNotifier.removeListener(_onLocaleChanged);
+    TranslationCache.translationAdded.removeListener(_onTranslationAdded);
+    super.dispose();
+  }
+
+  void _onLocaleChanged() {
+    _displayText = null;
+    _loading = false;
+    if (mounted) setState(() => _resolve());
+  }
+
+  void _onTranslationAdded() {
+    if (_cleanName == null) return;
+    if (_displayText != null && _displayText != widget.originalText) return;
+    if (!TranslationCache.has(_cleanName!)) return;
+    final cached = TranslationCache.get(_cleanName!);
+    if (cached == null) return;
+    final tag = _extractTag(widget.originalText);
+    final result = tag.isEmpty ? cached : '$tag $cached';
+    if (mounted) setState(() => _displayText = result);
   }
 
   @override
@@ -39,6 +68,7 @@ class _TranslatedTextState extends State<TranslatedText> {
     if (oldWidget.originalText != widget.originalText) {
       _displayText = null;
       _loading = false;
+      _cleanName = _stripTag(widget.originalText);
       _resolve();
     }
   }

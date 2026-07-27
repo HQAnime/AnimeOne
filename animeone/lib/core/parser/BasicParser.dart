@@ -135,5 +135,6 @@ abstract class BasicParser {
   }
 
   /// All subclasses have different implementations
+  // ignore: strict_top_level_inference
   parseHTML(Document? body);
 }

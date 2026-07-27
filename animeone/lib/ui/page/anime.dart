@@ -161,10 +161,9 @@ class _AnimeState extends State<Anime> {
       return SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            int count = max(min((constraints.maxWidth / 300).floor(), 3), 1);
-            double imageWidth = constraints.maxWidth / count.toDouble();
-            // Adjust offset — scale with font size
             final scaler = MediaQuery.of(context).textScaler;
+            int count = max(min((constraints.maxWidth / scaler.scale(300)).floor(), 3), 1);
+            double imageWidth = constraints.maxWidth / count.toDouble();
             double offset = scaler.scale(93);
             if (widget.seasonal != null) offset = scaler.scale(125);
             // Calculat ratio

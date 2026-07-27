@@ -31,6 +31,34 @@ class Settings extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 ListTile(
+                  title: const Text('字型大小'),
+                  subtitle: StatefulBuilder(
+                    builder: (context, setInnerState) {
+                      final scale = GlobalData().getFontScale();
+                      return Row(
+                        children: [
+                          const Text('小'),
+                          Expanded(
+                            child:                             Slider(
+                              value: scale,
+                              min: 0.8,
+                              max: 2.5,
+                              divisions: 17,
+                              label: '${(scale * 100).round()}%',
+                              onChanged: (v) {
+                                GlobalData().setFontScale(v);
+                                setInnerState(() {});
+                              },
+                            ),
+                          ),
+                          const Text('大'),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                const Divider(),
+                ListTile(
                   onTap: () => launchUrlString('https://61.uy/d'),
                   title: const Text('官方Discord伺服器'),
                   subtitle: const Text('https://61.uy/d'),
@@ -89,34 +117,6 @@ class Settings extends StatelessWidget {
                   },
                   title: const Text('下載 AnimeGo'),
                   subtitle: const Text('非官方 gogoanime app (還在開發中)'),
-                ),
-                const Divider(),
-                ListTile(
-                  title: const Text('字型大小'),
-                  subtitle: StatefulBuilder(
-                    builder: (context, setInnerState) {
-                      final scale = GlobalData().getFontScale();
-                      return Row(
-                        children: [
-                          const Text('小'),
-                          Expanded(
-                            child:                             Slider(
-                              value: scale,
-                              min: 0.8,
-                              max: 2.5,
-                              divisions: 17,
-                              label: '${(scale * 100).round()}%',
-                              onChanged: (v) {
-                                GlobalData().setFontScale(v);
-                                setInnerState(() {});
-                              },
-                            ),
-                          ),
-                          const Text('大'),
-                        ],
-                      );
-                    },
-                  ),
                 ),
                 const Divider(),
                 ListTile(

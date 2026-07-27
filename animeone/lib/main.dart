@@ -93,6 +93,10 @@ class _MyAppState extends State<MyApp> {
     return Shortcuts(
       shortcuts: {
         SingleActivator(LogicalKeyboardKey.escape): const _PopIntent(),
+        SingleActivator(LogicalKeyboardKey.keyW): const DirectionalFocusIntent(TraversalDirection.up),
+        SingleActivator(LogicalKeyboardKey.keyA): const DirectionalFocusIntent(TraversalDirection.left),
+        SingleActivator(LogicalKeyboardKey.keyS): const DirectionalFocusIntent(TraversalDirection.down),
+        SingleActivator(LogicalKeyboardKey.keyD): const DirectionalFocusIntent(TraversalDirection.right),
       },
       child: Actions(
         actions: {

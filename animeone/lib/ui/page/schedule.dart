@@ -64,14 +64,19 @@ class _ScheduleState extends State<Schedule>
             tabs: tabs,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white70,
-            indicatorColor: Theme.of(context).colorScheme.primary,
+            indicatorColor: Colors.white,
+            indicatorWeight: 3,
+            indicatorPadding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).textScaler.scale(6),
+            ),
           ),
           title: Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.only(top: 2, bottom: 2),
             child: FractionallySizedBox(
               widthFactor: 0.7,
               child: MaterialButton(
                 color: Colors.white,
+                visualDensity: VisualDensity.compact,
                 onPressed: () {
                   Navigator.push(
                     context,

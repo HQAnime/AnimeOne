@@ -47,18 +47,27 @@ class AnimeInfoCard extends StatelessWidget {
             ),
             Table(children: [
               TableRow(children: [
-                Text(info.episode ?? "77", textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
-                // Cyperpunk?
-                Text(
-                  (info.year ?? "2077") + (info.season ?? ""),
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(info.episode ?? "77", textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
                 ),
-                Text(
-                  info.subtitle ?? "",
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                // Cyperpunk?
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    (info.year ?? "2077") + (info.season ?? ""),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    info.subtitle ?? "",
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ]),
             ]),

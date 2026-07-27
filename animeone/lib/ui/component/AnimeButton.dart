@@ -17,44 +17,36 @@ class AnimeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48,
-      child: InkWell(
-        autofocus: autofocus,
-        onTap: () {
-          // It might be null
-          if (basic.link != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Anime(
-                  link: basic.link,
-                  recent: recent,
-                ),
-              ),
-            );
-          } else {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                // Has update now
-                return const AlertDialog(
-                  content: Text('動畫還沒有更新第一集 >_<', textAlign: TextAlign.center),
-                );
-              },
-            );
-          }
-        },
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(
-              basic.formattedName() ?? "賽博朋克",
-              maxLines: 1,
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+    return InkWell(
+      autofocus: autofocus,
+      onTap: () {
+        if (basic.link != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Anime(link: basic.link, recent: recent),
             ),
+          );
+        } else {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const AlertDialog(
+                content: Text('動畫還沒有更新第一集 >_<', textAlign: TextAlign.center),
+              );
+            },
+          );
+        }
+      },
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            basic.formattedName() ?? "賽博朋克",
+            maxLines: 1,
+            textAlign: TextAlign.left,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
         ),
       ),

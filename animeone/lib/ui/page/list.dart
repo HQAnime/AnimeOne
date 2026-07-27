@@ -67,16 +67,14 @@ class _AnimeListState extends State<AnimeList> {
       ),
       body: FocusTraversalGroup(
         policy: OrderedTraversalPolicy(),
-        child: Column(children: [
-        SizedBox.fromSize(
-          size: const Size.fromHeight(48),
-          child: renderQuickFilter(),
+        child: Column(
+          children: [
+            renderQuickFilter(),
+            Expanded(
+              child: renderBody(),
+            ),
+          ],
         ),
-        Expanded(
-          child: renderBody(),
-        ),
-      ],
-      ),
       ),
     );
   }
@@ -90,37 +88,30 @@ class _AnimeListState extends State<AnimeList> {
   /// render a list of quick filter
   Widget renderQuickFilter() {
     return SafeArea(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: quickFilters.length,
-              itemBuilder: (context, index) {
-                // Get current filter
-                final filter = quickFilters[index];
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
-                  child: Tooltip(
-                    message: '搜索 $filter 動畫',
-                    child: ActionChip(
-                      label: Text(filter),
-                      labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                      onPressed: () => _filterList(filter),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: <Widget>[
+            ...quickFilters.map((filter) => Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+              child: Tooltip(
+                message: '搜索 $filter 動畫',
+                child: ActionChip(
+                  label: Text(filter),
+                  labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  onPressed: () => _filterList(filter),
+                ),
+              ),
+            )),
           Tooltip(
             message: '重設整個列表',
             child: IconButton(
               icon: const Icon(Icons.close),
               onPressed: () => _resetList(),
             ),
-          )
+          ),
         ],
+      ),
       ),
     );
   }

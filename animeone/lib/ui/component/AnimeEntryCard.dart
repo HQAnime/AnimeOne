@@ -2,6 +2,7 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeCoverImage.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/widgets/TranslatedText.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
 
@@ -29,11 +30,10 @@ class AnimeEntryCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
-            child: Text(
-              entry.formattedName() ?? '',
+            child: TranslatedText(
+              originalText: entry.formattedName() ?? '',
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
               maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(

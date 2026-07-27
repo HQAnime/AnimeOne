@@ -1,6 +1,7 @@
 import 'package:animeone/core/anime/AnimeBasic.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/widgets/TranslatedText.dart';
 import 'package:flutter/material.dart';
 
 /// This a button that accepts AnimeSchedule or AnimeRecent
@@ -10,11 +11,13 @@ class AnimeButton extends StatelessWidget {
     required this.basic,
     this.recent,
     this.autofocus = false,
+    this.translate = false,
   });
 
   final AnimeBasic basic;
   final bool? recent;
   final bool autofocus;
+  final bool translate;
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +46,11 @@ class AnimeButton extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
-          child: Text(
-            basic.formattedName() ?? AppLocalizations.of(context)!.unknownName,
+          child: TranslatedText(
+            originalText: basic.formattedName() ?? AppLocalizations.of(context)!.unknownName,
             maxLines: 1,
-            textAlign: TextAlign.left,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            canFetch: translate,
           ),
         ),
       ),

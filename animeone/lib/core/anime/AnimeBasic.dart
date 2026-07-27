@@ -1,3 +1,5 @@
+import 'package:animeone/core/translation/TranslationCache.dart';
+
 /// A basic anime class that has a name and link
 abstract class AnimeBasic {
   String? name;
@@ -9,9 +11,10 @@ abstract class AnimeBasic {
     final nL = name?.toLowerCase();
     if (nL == null) {
       return false;
-    } else {
-      return nL.contains(tL);
     }
+    if (nL.contains(tL)) return true;
+    final translated = TranslationCache.get(name!);
+    return translated != null && translated.toLowerCase().contains(tL);
   }
 
   AnimeBasic.fromJson(Map<String, dynamic>? json) {

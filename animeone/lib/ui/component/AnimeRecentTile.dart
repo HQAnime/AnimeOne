@@ -24,6 +24,7 @@ class AnimeRecentTile extends StatelessWidget {
             basic: recent,
             recent: true,
             autofocus: autofocus,
+            translate: true,
           ),
         ),
         if (entry != null)

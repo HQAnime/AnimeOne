@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/widgets/TranslatedText.dart';
 import 'package:flutter/material.dart';
 
 class WatchHistory extends StatefulWidget {
@@ -86,10 +87,9 @@ class _WatchHistoryState extends State<WatchHistory> {
                     entry.done ? Icons.check_circle : Icons.play_circle_outline,
                     color: entry.done ? Colors.green : Theme.of(context).colorScheme.secondary,
                   ),
-                  title: Text(
-                    entry.episodeName,
+                  title: TranslatedText(
+                    originalText: entry.episodeName,
                     maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
                   ),
                   subtitle: Text(
                     l.watchHistorySubtitle(_fmtDuration(entry.positionSec), _fmtDuration(entry.durationSec), pct),

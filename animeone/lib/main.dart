@@ -3,6 +3,7 @@ import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:media_kit/media_kit.dart';
@@ -24,6 +25,25 @@ void main() {
   runApp(const MyApp());
 }
 
+bool _isEditing() {
+  final focus = FocusManager.instance.primaryFocus;
+  if (focus == null) return false;
+  final render = focus.context?.findRenderObject();
+  return render is RenderEditable;
+}
+
+class _WasmUpIntent extends Intent {
+  const _WasmUpIntent();
+}
+class _WasmDownIntent extends Intent {
+  const _WasmDownIntent();
+}
+class _WasmLeftIntent extends Intent {
+  const _WasmLeftIntent();
+}
+class _WasmRightIntent extends Intent {
+  const _WasmRightIntent();
+}
 class _PopIntent extends Intent {
   const _PopIntent();
 }
@@ -122,48 +142,64 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Shortcuts(
-      shortcuts: {
-        SingleActivator(LogicalKeyboardKey.escape): const _PopIntent(),
-        SingleActivator(LogicalKeyboardKey.keyW): const DirectionalFocusIntent(TraversalDirection.up),
-        SingleActivator(LogicalKeyboardKey.keyA): const DirectionalFocusIntent(TraversalDirection.left),
-        SingleActivator(LogicalKeyboardKey.keyS): const DirectionalFocusIntent(TraversalDirection.down),
-        SingleActivator(LogicalKeyboardKey.keyD): const DirectionalFocusIntent(TraversalDirection.right),
+    return MaterialApp(
+      navigatorKey: _navigatorKey,
+      title: 'AnimeOne',
+      locale: _locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localeResolutionCallback: (locale, supported) {
+        if (_locale != null) return _locale;
+        if (locale == null) return const Locale('en');
+        for (final l in supported) {
+          if (l.languageCode == locale.languageCode) return l;
+        }
+        return const Locale('en');
       },
-      child: Actions(
-        actions: {
-          _PopIntent: CallbackAction(onInvoke: (_) {
-            _navigatorKey.currentState?.maybePop();
-            return null;
-          }),
-        },
-        child: MaterialApp(
-          navigatorKey: _navigatorKey,
-          title: 'AnimeOne',
-          locale: _locale,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          localeResolutionCallback: (locale, supported) {
-            if (_locale != null) return _locale;
-            if (locale == null) return const Locale('en');
-            for (final l in supported) {
-              if (l.languageCode == locale.languageCode) return l;
-            }
-            return const Locale('en');
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
+      home: HomePage(),
+      builder: (context, child) {
+        final scale = GlobalData().getFontScale();
+        return Shortcuts(
+          shortcuts: {
+            SingleActivator(LogicalKeyboardKey.escape): const _PopIntent(),
+            SingleActivator(LogicalKeyboardKey.keyW): const _WasmUpIntent(),
+            SingleActivator(LogicalKeyboardKey.keyA): const _WasmLeftIntent(),
+            SingleActivator(LogicalKeyboardKey.keyS): const _WasmDownIntent(),
+            SingleActivator(LogicalKeyboardKey.keyD): const _WasmRightIntent(),
           },
-          theme: lightTheme,
-          darkTheme: darkTheme,
-          themeMode: GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
-          home: HomePage(),
-          builder: (context, child) {
-            final scale = GlobalData().getFontScale();
-            return MediaQuery(
+          child: Actions(
+            actions: {
+              _PopIntent: CallbackAction(onInvoke: (_) {
+                _navigatorKey.currentState?.maybePop();
+                return null;
+              }),
+              _WasmUpIntent: CallbackAction(onInvoke: (_) {
+                if (_isEditing()) return null;
+                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.up));
+              }),
+              _WasmDownIntent: CallbackAction(onInvoke: (_) {
+                if (_isEditing()) return null;
+                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.down));
+              }),
+              _WasmLeftIntent: CallbackAction(onInvoke: (_) {
+                if (_isEditing()) return null;
+                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.left));
+              }),
+              _WasmRightIntent: CallbackAction(onInvoke: (_) {
+                if (_isEditing()) return null;
+                return Actions.invoke(context, const DirectionalFocusIntent(TraversalDirection.right));
+              }),
+            },
+            child: MediaQuery(
               data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
               child: child!,
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

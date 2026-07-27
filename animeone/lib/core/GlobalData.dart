@@ -19,6 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import 'anime/AnimeInfo.dart';
+import 'package:animeone/core/translation/TranslationCache.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 
 /// A class has constants and also a list of all anime
@@ -223,6 +224,8 @@ class GlobalData {
     initDarkMode();
     // Locale
     initLocale();
+    // Translation
+    TranslationCache.init(prefs);
 
     // Whether an age alert shoud be shown
     String? ageAlert = prefs.get(ageRestriction) as String?;

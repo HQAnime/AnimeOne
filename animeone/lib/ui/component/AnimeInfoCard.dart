@@ -1,6 +1,7 @@
 import 'package:animeone/core/anime/AnimeInfo.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/anime.dart';
+import 'package:animeone/ui/widgets/TranslatedText.dart';
 import 'package:animeone/ui/widgets/flat_button.dart';
 import 'package:flutter/material.dart';
 
@@ -36,10 +37,9 @@ class AnimeInfoCard extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
-              child: Text(
-                info.name ?? AppLocalizations.of(context)!.unknownName,
+              child: TranslatedText(
+                originalText: info.name ?? AppLocalizations.of(context)!.unknownName,
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,

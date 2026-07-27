@@ -1,4 +1,6 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/core/translation/TranslationCache.dart';
+import 'package:animeone/core/translation/TranslationService.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/support.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class Settings extends StatelessWidget {
                         children: [
                           Text(l.small),
                           Expanded(
-                            child:                             Slider(
+                            child: Slider(
                               value: scale,
                               min: 0.8,
                               max: 2.5,
@@ -69,7 +71,6 @@ class Settings extends StatelessWidget {
                     },
                   ),
                 ),
-                const Divider(),
                 StatefulBuilder(
                   builder: (context, setInnerState) {
                     final forceDark = GlobalData.darkModeNotifier.value;
@@ -134,6 +135,18 @@ class Settings extends StatelessWidget {
                       },
                     );
                   },
+                ),
+                ListTile(
+                  onTap: () {
+                    TranslationCache.clear();
+                    TranslationService.cancelPending();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(l.resetCachedDone)),
+                    );
+                  },
+                  title: Text(l.resetCachedTitles),
+                  subtitle: Text(l.resetCachedTitlesSubtitle),
+                  trailing: const Icon(Icons.delete_outline),
                 ),
                 const Divider(),
                 ListTile(

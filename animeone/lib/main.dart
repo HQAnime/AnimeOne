@@ -32,9 +32,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
-      final brightness = window.platformBrightness;
+    final platformDispatcher = PlatformDispatcher.instance;
+    platformDispatcher.onPlatformBrightnessChanged = () {
+      final brightness = platformDispatcher.platformBrightness;
       // update navigation bar colour
       SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(

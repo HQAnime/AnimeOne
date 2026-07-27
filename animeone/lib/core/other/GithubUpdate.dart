@@ -46,7 +46,7 @@ class GithubUpdate {
                   ? TextButton(
                       child: const Text('立即下載'),
                       onPressed: () {
-                        launch(link!);
+                        launchUrl(Uri.parse(link!));
                         Navigator.of(context).pop();
                       },
                     )

@@ -5,7 +5,7 @@ import 'package:animeone/core/interface/FullscreenPlayer.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Video extends StatefulWidget {
@@ -19,41 +19,44 @@ class Video extends StatefulWidget {
 class _VideoState extends State<Video> with FullscreenPlayer {
   final _logger = Logger('Video');
   final isIOS = Platform.isIOS;
+  final isDesktop = !Platform.isAndroid && !Platform.isIOS;
   bool loading = true;
   List<WebViewCookie> _cookies = [];
   String? videoLink;
 
-  late final WebViewController _controller;
+  late final WebViewController? _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onPageStarted: (String url) {
-            _logger.info('done loading');
-            setState(() {
-              loading = false;
-            });
-          },
-          onPageFinished: (String url) {
-            _logger.info('Page finished loading: $url');
-            setState(() {
-              loading = false;
-            });
-          },
-          onWebResourceError: (WebResourceError error) {
-            _logger.severe('Web resource error: ${error.description}');
-            setState(() {
-              loading = false;
-            });
-          },
-        ),
-      )
-      ..setBackgroundColor(Colors.black);
+    if (!isDesktop) {
+      _controller = WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onPageStarted: (String url) {
+              _logger.info('done loading');
+              setState(() {
+                loading = false;
+              });
+            },
+            onPageFinished: (String url) {
+              _logger.info('Page finished loading: $url');
+              setState(() {
+                loading = false;
+              });
+            },
+            onWebResourceError: (WebResourceError error) {
+              _logger.severe('Web resource error: ${error.description}');
+              setState(() {
+                loading = false;
+              });
+            },
+          ),
+        )
+        ..setBackgroundColor(Colors.black);
+    }
     final cookieManager = WebViewCookieManager();
     for (final cookie in _cookies) {
       cookieManager.setCookie(cookie);
@@ -82,7 +85,7 @@ class _VideoState extends State<Video> with FullscreenPlayer {
             }
 
             // add referer header
-            _controller.loadRequest(
+            _controller?.loadRequest(
               Uri.parse(videoLink!),
               headers: {
                 'Referer': 'https://anime1.me/',
@@ -129,12 +132,22 @@ class _VideoState extends State<Video> with FullscreenPlayer {
     // Only show video if the link is valid
     if (videoLink == null) return buildLoading();
 
+    if (isDesktop) {
+      launchUrl(Uri.parse(videoLink!));
+      return Center(
+        child: TextButton(
+          onPressed: () => launchUrl(Uri.parse(videoLink!)),
+          child: const Text('Open in browser'),
+        ),
+      );
+    }
+
     return Stack(
       children: <Widget>[
         Center(
           child: AspectRatio(
               aspectRatio: 16 / 9,
-              child: WebViewWidget(controller: _controller)),
+              child: WebViewWidget(controller: _controller!)),
         ),
         buildLoading(),
       ],

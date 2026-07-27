@@ -3,10 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
+import 'package:media_kit/media_kit.dart';
 
 /// Entry point of this app
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  MediaKit.ensureInitialized();
 
   // setup logger and make sure it only prints in debug mode
   Logger.root.level = Level.ALL; // defaults to Level.INFO

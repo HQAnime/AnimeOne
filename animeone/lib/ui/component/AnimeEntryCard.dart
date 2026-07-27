@@ -39,6 +39,7 @@ class AnimeEntryCard extends StatelessWidget {
           ),
           AnimeCoverImage(
             video: entry.needPassword() ? null : entry.getVideo(),
+            pageLink: entry.link,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4),

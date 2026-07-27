@@ -1,16 +1,21 @@
+import 'dart:io';
+
 import 'package:animeone/core/anime/AnimeVideo.dart';
+import 'package:animeone/core/parser/VideoSourceParser.dart';
+import 'package:animeone/ui/page/desktop_player.dart';
 import 'package:animeone/ui/page/video.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 /// Takes an AnimeVideo object and render it to an Image
 class AnimeCoverImage extends StatelessWidget {
   const AnimeCoverImage({
     super.key,
     required this.video,
+    this.pageLink,
   });
 
   final AnimeVideo? video;
+  final String? pageLink;
 
   @override
   Widget build(BuildContext context) {
@@ -52,22 +57,44 @@ class AnimeCoverImage extends StatelessWidget {
       );
     } else {
       return IconButton(
-        onPressed: () {
+        onPressed: () async {
           // video.launchURL();
           if (video?.isYoutube() ?? false) {
             video?.launchURL();
           } else {
-            if (identical(0, 0.0)) {
-              if (video != null && video!.video != null) {
-                launchUrlString(video!.video!);
-              }
-            } else {
+            if (Platform.isAndroid || Platform.isIOS) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => Video(video: video),
                 ),
               );
+            } else {
+              String? url;
+              Map<String, String> headers = {
+                'referer': 'https://anime1.me/',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+              };
+              if (video?.hasToken == true && video?.video != null) {
+                final parser = VideoSourceParser();
+                final res = await parser.post(body: 'd=${video!.video!}', headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                });
+                final body = parser.handleReponse(res);
+                url = parser.parseHTML(body);
+                final cookie = res?.headers['set-cookie'];
+                if (cookie != null) headers['Cookie'] = cookie;
+              } else {
+                url = video?.video?.startsWith('http') == true ? video!.video! : null;
+              }
+              if (url != null && context.mounted) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DesktopPlayer(url: url!, headers: headers),
+                  ),
+                );
+              }
             }
           }
         },

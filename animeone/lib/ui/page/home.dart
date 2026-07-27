@@ -4,6 +4,7 @@ import 'package:animeone/ui/component/EmailButton.dart';
 import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
+import 'package:animeone/ui/page/watch_history.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -99,10 +100,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             icon: Icon(Icons.calendar_today),
             label: '時間表',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.history),
+            label: '觀看紀錄',
+          ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.black54,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
         onTap: onItemTapped,
       ),
     );
@@ -230,6 +235,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Latest(),
           AnimeList(),
           Schedule(),
+          WatchHistory(),
         ],
       );
     }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/core/anime/AnimeSeason.dart';
@@ -22,7 +23,7 @@ import 'anime/AnimeInfo.dart';
 class GlobalData {
   final _logger = Logger('GlobalData');
   static const domain = 'https://anime1.me/';
-  static const version = '1.1.9';
+  static const version = '1.2.0';
 
   static const githubRelease =
       'https://raw.githubusercontent.com/HenryQuan/AnimeOne/api/app.json';
@@ -40,6 +41,9 @@ class GlobalData {
 
   // Relating to local data
   late SharedPreferences prefs;
+  static SharedPreferences? _prefsCache;
+
+  SharedPreferences? get _prefs => _prefsCache;
   static const lastUpdate = 'AnimeOne:LastUpdate';
   static const animeList = 'AnimeOne:AnimeList';
   static const animeScedule = 'AnimeOne:AnimeScedule';
@@ -48,9 +52,13 @@ class GlobalData {
   static const oneUserAgent = 'AnimeOne:OneUserAgent';
   static const ageRestriction = 'AnimeOne:AgeRestriction';
   static const fontScaleKey = 'AnimeOne:FontScale';
+  static const historyKey = 'AnimeOne:WatchHistory';
+  static const darkModeKey = 'AnimeOne:ForceDark';
 
   double _fontScale = 1.0;
   static final fontScaleNotifier = ValueNotifier<double>(1.0);
+  static final historyNotifier = ValueNotifier<int>(0);
+  static final darkModeNotifier = ValueNotifier<bool>(false);
   double getFontScale() => _fontScale;
   void setFontScale(double v) {
     _fontScale = v;
@@ -61,6 +69,56 @@ class GlobalData {
   void initFontScale() {
     _fontScale = prefs.getDouble(fontScaleKey) ?? 1.0;
     fontScaleNotifier.value = _fontScale;
+  }
+
+  bool getForceDark() => darkModeNotifier.value;
+  void setForceDark(bool v) {
+    prefs.setBool(darkModeKey, v);
+    darkModeNotifier.value = v;
+  }
+
+  void initDarkMode() {
+    darkModeNotifier.value = prefs.getBool(darkModeKey) ?? false;
+  }
+
+  List<WatchEntry> getHistory() {
+    final p = _prefs;
+    if (p == null) return [];
+    final raw = p.getString(historyKey);
+    if (raw == null) return [];
+    final list = json.decode(raw) as List;
+    final result = list.map((e) => WatchEntry.fromJson(e as Map<String, dynamic>)).toList();
+    result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+    return result;
+  }
+
+  void saveWatchEntry(WatchEntry entry) {
+    final p = _prefs;
+    if (p == null) return;
+    final history = getHistory();
+    final idx = history.indexWhere((e) => e.episodeLink == entry.episodeLink);
+    if (idx >= 0) {
+      history[idx] = entry;
+    } else {
+      history.add(entry);
+    }
+    p.setString(historyKey, json.encode(history.map((e) => e.toJson()).toList()));
+    historyNotifier.value++;
+  }
+
+  WatchEntry? getWatchEntry(String episodeLink) {
+    final p = _prefs;
+    if (p == null) return null;
+    final history = getHistory();
+    final idx = history.indexWhere((e) => e.episodeLink == episodeLink);
+    return idx >= 0 ? history[idx] : null;
+  }
+
+  void clearHistory() {
+    final p = _prefs;
+    if (p == null) return;
+    p.remove(historyKey);
+    historyNotifier.value++;
   }
 
   // Relating to seasonal anime
@@ -130,6 +188,7 @@ class GlobalData {
     bool shouldUpdate = false;
 
     prefs = await SharedPreferences.getInstance();
+    _prefsCache = prefs;
     // Check if data are stored properly
     if (kDebugMode) {
       prefs.getKeys().forEach((k) {
@@ -139,6 +198,8 @@ class GlobalData {
 
     // Font scale
     initFontScale();
+    // Dark mode
+    initDarkMode();
 
     // Whether an age alert shoud be shown
     String? ageAlert = prefs.get(ageRestriction) as String?;

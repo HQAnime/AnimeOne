@@ -120,7 +120,12 @@ class _ScheduleState extends State<Schedule>
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DesktopPlayer(url: url!, headers: headers),
+                        builder: (context) => DesktopPlayer(
+                          url: url!,
+                          headers: headers,
+                          episodeLink: video?.video,
+                          episodeName: '新番介紹視頻',
+                        ),
                       ),
                     );
                   }

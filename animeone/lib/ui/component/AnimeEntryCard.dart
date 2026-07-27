@@ -10,10 +10,14 @@ class AnimeEntryCard extends StatelessWidget {
     super.key,
     required this.entry,
     this.showEpisode,
+    this.pageUrl,
+    this.progress,
   });
 
   final AnimeEntry entry;
   final bool? showEpisode;
+  final String? pageUrl;
+  final double? progress;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +38,14 @@ class AnimeEntryCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              entry.getEnhancedDate(),
+              entry.getEnhancedDate() + _progressText(),
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
             ),
           ),
           AnimeCoverImage(
             video: entry.needPassword() ? null : entry.getVideo(),
-            pageLink: entry.link,
+            pageLink: pageUrl ?? entry.link,
+            episodeName: entry.formattedName(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4),
@@ -54,6 +59,12 @@ class AnimeEntryCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _progressText() {
+    if (progress == null || progress! <= 0) return '';
+    if (progress! >= 1.0) return ' | 觀看完成';
+    return ' | ${(progress! * 100).toStringAsFixed(0)}%';
   }
 
   /// Render all episode if exists or should be shown

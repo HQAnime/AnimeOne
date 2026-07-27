@@ -58,6 +58,28 @@ class Settings extends StatelessWidget {
                   ),
                 ),
                 const Divider(),
+                StatefulBuilder(
+                  builder: (context, setInnerState) {
+                    final forceDark = GlobalData.darkModeNotifier.value;
+                    return ListTile(
+                      title: const Text('強制深色模式'),
+                      subtitle: const Text('開啟後無論系統設定始終使用深色模式，關閉則跟隨系統'),
+                      onTap: () {
+                        GlobalData().setForceDark(!forceDark);
+                        setInnerState(() {});
+                      },
+                      trailing: Checkbox(
+                        value: forceDark,
+                        activeColor: Theme.of(context).colorScheme.primary,
+                        onChanged: (v) {
+                          GlobalData().setForceDark(v ?? false);
+                          setInnerState(() {});
+                        },
+                      ),
+                    );
+                  },
+                ),
+                const Divider(),
                 ListTile(
                   onTap: () => launchUrlString('https://61.uy/d'),
                   title: const Text('官方Discord伺服器'),

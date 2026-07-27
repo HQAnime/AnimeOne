@@ -49,8 +49,19 @@ class _AnimeState extends State<Anime> {
   @override
   void initState() {
     super.initState();
+    GlobalData.historyNotifier.addListener(_onHistoryChanged);
     _getEntry();
     controller = ScrollController()..addListener(() => loadMore());
+  }
+
+  @override
+  void dispose() {
+    GlobalData.historyNotifier.removeListener(_onHistoryChanged);
+    super.dispose();
+  }
+
+  void _onHistoryChanged() {
+    setState(() {});
   }
 
   /// Get entries from link (support page)
@@ -153,7 +164,12 @@ class _AnimeState extends State<Anime> {
         return Center(
           child: SizedBox(
             width: constraints.maxHeight,
-            child: AnimeEntryCard(entry: entries.first, showEpisode: true),
+            child: AnimeEntryCard(
+              entry: entries.first,
+              showEpisode: true,
+              pageUrl: widget.link,
+              progress: global.getWatchEntry(widget.link ?? '')?.progress,
+            ),
           ),
         );
       });
@@ -180,9 +196,12 @@ class _AnimeState extends State<Anime> {
                   ),
                   itemCount: length,
                   itemBuilder: (context, index) {
+                    final e = entries.elementAt(index);
                     return AnimeEntryCard(
-                      entry: entries.elementAt(index),
+                      entry: e,
                       showEpisode: widget.seasonal == null ? false : true,
+                      pageUrl: widget.link,
+                      progress: global.getWatchEntry(widget.link ?? e.link ?? '')?.progress,
                     );
                   },
                   controller: controller,

@@ -15,8 +15,10 @@ class _AnimeListState extends State<AnimeList> {
   static GlobalData global = GlobalData();
   List<AnimeInfo> list = [];
   final all = global.getAnimeList();
-
   final quickFilters = global.getQuickFilters();
+  String? _selectedFilter;
+  String _searchText = '';
+  final _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class _AnimeListState extends State<AnimeList> {
             ),
             Expanded(
               child: TextField(
+                controller: _searchController,
                 style: const TextStyle(color: Colors.white, fontSize: 20),
                 decoration: const InputDecoration.collapsed(
                   hintText: '快速搜尋',
@@ -85,6 +88,12 @@ class _AnimeListState extends State<AnimeList> {
     _resetList();
   }
 
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   /// render a list of quick filter
   Widget renderQuickFilter() {
     return SafeArea(
@@ -92,17 +101,29 @@ class _AnimeListState extends State<AnimeList> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: <Widget>[
-            ...quickFilters.map((filter) => Padding(
-              padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
-              child: Tooltip(
-                message: '搜索 $filter 動畫',
-                child: ActionChip(
-                  label: Text(filter),
-                  labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                  onPressed: () => _filterList(filter),
+            ...quickFilters.map((filter) {
+              final selected = _selectedFilter == filter;
+              return Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                child: Tooltip(
+                  message: '搜索 $filter 動畫',
+                  child: ActionChip(
+                    label: Text(filter),
+                    labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    side: BorderSide(color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline),
+                    backgroundColor: selected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15) : Colors.transparent,
+                    onPressed: () {
+                      if (selected) {
+                        _selectedFilter = null;
+                      } else {
+                        _selectedFilter = filter;
+                      }
+                      _applyFilters();
+                    },
+                  ),
                 ),
-              ),
-            )),
+              );
+            }),
           Tooltip(
             message: '重設整個列表',
             child: IconButton(
@@ -134,20 +155,25 @@ class _AnimeListState extends State<AnimeList> {
 
   /// Filter list by string
   void _filterList(String t) {
-    // At least two characters
-    if (t == '') {
-      _resetList();
-    } else if (t.isNotEmpty) {
-      setState(() {
-        list = all.where((e) {
-          return e.contains(t);
-        }).toList();
-      });
-    }
+    _searchText = t;
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    setState(() {
+      list = all.where((e) {
+        if (_selectedFilter != null && !e.contains(_selectedFilter!)) return false;
+        if (_searchText != '' && !e.contains(_searchText)) return false;
+        return true;
+      }).toList();
+    });
   }
 
   /// Reset list to only 100 items
   void _resetList() {
+    _selectedFilter = null;
+    _searchText = '';
+    _searchController.clear();
     setState(() {
       list = all;
     });

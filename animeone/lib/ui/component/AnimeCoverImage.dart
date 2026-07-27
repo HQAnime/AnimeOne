@@ -9,10 +9,12 @@ class AnimeCoverImage extends StatelessWidget {
     super.key,
     required this.video,
     this.pageLink,
+    this.episodeName,
   });
 
   final AnimeVideo? video;
   final String? pageLink;
+  final String? episodeName;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,10 @@ class AnimeCoverImage extends StatelessWidget {
   Widget renderButton(BuildContext context, BoxConstraints constraint) {
     if (shouldEnterPassword()) {
       return TextButton(
-        child: const Text(
+        child: Text(
           '啓動瀏覽器輸入密碼',
           style: TextStyle(
-            backgroundColor: Colors.pink,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             color: Colors.white,
             fontSize: 18,
           ),
@@ -76,7 +78,12 @@ class AnimeCoverImage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => DesktopPlayer(url: url!, headers: headers),
+                    builder: (context) => DesktopPlayer(
+                      url: url!,
+                      headers: headers,
+                      episodeLink: pageLink,
+                      episodeName: episodeName,
+                    ),
                   ),
                 );
               }
@@ -85,7 +92,7 @@ class AnimeCoverImage extends StatelessWidget {
         },
         iconSize: constraint.maxWidth / 6,
         icon: const Icon(Icons.play_circle_outline),
-        color: Colors.pink,
+        color: Theme.of(context).colorScheme.secondary,
       );
     }
   }

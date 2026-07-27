@@ -24,6 +24,17 @@ class _LatestState extends State<Latest> {
     setState(() {
       list = global.getRecentList();
     });
+    GlobalData.historyNotifier.addListener(_onHistoryChanged);
+  }
+
+  @override
+  void dispose() {
+    GlobalData.historyNotifier.removeListener(_onHistoryChanged);
+    super.dispose();
+  }
+
+  void _onHistoryChanged() {
+    setState(() {});
   }
 
   /// Load or refresh latest anime

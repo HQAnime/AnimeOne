@@ -42,15 +42,21 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     GlobalData.fontScaleNotifier.addListener(_onFontScaleChanged);
+    GlobalData.darkModeNotifier.addListener(_onDarkModeChanged);
   }
 
   void _onFontScaleChanged() {
     if (mounted) setState(() {});
   }
 
+  void _onDarkModeChanged() {
+    if (mounted) setState(() {});
+  }
+
   @override
   void dispose() {
     GlobalData.fontScaleNotifier.removeListener(_onFontScaleChanged);
+    GlobalData.darkModeNotifier.removeListener(_onDarkModeChanged);
     super.dispose();
     final platformDispatcher = PlatformDispatcher.instance;
     platformDispatcher.onPlatformBrightnessChanged = () {
@@ -74,17 +80,30 @@ class _MyAppState extends State<MyApp> {
       primarySwatch: Colors.pink,
       brightness: Brightness.dark,
     ).copyWith(
-      // set navigation tab bar tint colour
       secondary: Colors.pinkAccent,
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: Colors.pink,
+      inactiveTrackColor: Colors.pink.shade100,
+      thumbColor: Colors.pink,
     ),
   );
 
   final lightTheme = ThemeData(
-    primarySwatch: Colors.pink,
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: Colors.pink,
+    ).copyWith(
+      secondary: Colors.pinkAccent,
+    ),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.pink,
       foregroundColor: Colors.white,
       systemOverlayStyle: SystemUiOverlayStyle.light,
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: Colors.pink,
+      inactiveTrackColor: Colors.pink.shade100,
+      thumbColor: Colors.pink,
     ),
   );
 
@@ -110,6 +129,7 @@ class _MyAppState extends State<MyApp> {
           title: 'AnimeOne',
           theme: lightTheme,
           darkTheme: darkTheme,
+          themeMode: GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
           home: HomePage(),
           builder: (context, child) {
             final scale = GlobalData().getFontScale();

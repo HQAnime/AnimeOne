@@ -12,11 +12,11 @@ class WebsiteClosed extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Image(
-              image: AssetImage('lib/assets/icon/logo.png'),
+            Image(
+              image: const AssetImage('lib/assets/icon/logo.png'),
               height: 200,
               width: 200,
-              color: Colors.pink,
+              color: Theme.of(context).colorScheme.primary,
             ),
             Text('網站已關閉', style: Theme.of(context).textTheme.headlineMedium),
             const Padding(

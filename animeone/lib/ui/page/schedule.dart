@@ -143,7 +143,10 @@ class _ScheduleState extends State<Schedule>
               },
             )
           ]),
-      body: renderBody(),
+      body: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: renderBody(),
+      ),
     );
   }
 

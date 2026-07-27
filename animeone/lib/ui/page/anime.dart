@@ -122,7 +122,10 @@ class _AnimeState extends State<Anime> {
           title: Text(title),
           actions: <Widget>[renderSearch()],
         ),
-        body: renderBody(),
+        body: FocusTraversalGroup(
+          policy: OrderedTraversalPolicy(),
+          child: renderBody(),
+        ),
       );
     }
   }

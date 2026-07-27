@@ -65,7 +65,9 @@ class _AnimeListState extends State<AnimeList> {
           ),
         ],
       ),
-      body: Column(children: [
+      body: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: Column(children: [
         SizedBox.fromSize(
           size: const Size.fromHeight(48),
           child: renderQuickFilter(),
@@ -73,7 +75,9 @@ class _AnimeListState extends State<AnimeList> {
         Expanded(
           child: renderBody(),
         ),
-      ]),
+      ],
+      ),
+      ),
     );
   }
 

@@ -66,8 +66,11 @@ class _LatestState extends State<Latest> {
           },
         ),
       ),
-      body: Center(
-        child: renderBody(),
+      body: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: Center(
+          child: renderBody(),
+        ),
       ),
     );
   }

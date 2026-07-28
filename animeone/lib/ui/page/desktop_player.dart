@@ -57,14 +57,18 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
         httpHeaders: widget.headers,
       ),
     );
+    // Wait for duration to be known before seeking.
+    await Future.doWhile(() => Future.delayed(const Duration(milliseconds: 50), () => _durationSec <= 0));
+    if (widget.episodeLink != null) {
+      final saved = _global.getWatchEntry(widget.episodeLink!);
+      if (saved != null && saved.positionSec > 0) {
+        _player.seek(Duration(seconds: saved.positionSec));
+      }
+    }
     _player.play();
   }
 
-  String _fmtDuration(int sec) {
-    final m = (sec ~/ 60).toString().padLeft(2, '0');
-    final s = (sec % 60).toString().padLeft(2, '0');
-    return '$m:$s';
-  }
+
 
   void _save() {
     if (widget.episodeLink == null) return;
@@ -152,68 +156,17 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
 
   Widget _buildControls() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      height: 48,
       color: Colors.black87,
-      child: FocusTraversalGroup(
-        policy: OrderedTraversalPolicy(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (_durationSec > 0)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    Text(_fmtDuration(_positionSec), style: const TextStyle(color: Colors.white70, fontSize: 12)),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: LinearProgressIndicator(
-                          value: _durationSec > 0 ? _positionSec / _durationSec : 0,
-                          color: Theme.of(context).colorScheme.secondary,
-                          backgroundColor: Colors.white24,
-                        ),
-                      ),
-                    ),
-                    Text(_fmtDuration(_durationSec), style: const TextStyle(color: Colors.white70, fontSize: 12)),
-                  ],
-                ),
-              ),
-            Row(
-              children: [
-                IconButton(
-                  focusNode: FocusNode(skipTraversal: true),
-                  icon: const Icon(Icons.close, color: Colors.white, size: 28),
-                  onPressed: () => Navigator.of(context).pop(),
-                  tooltip: AppLocalizations.of(context)!.closePlayer,
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.replay_10, color: Colors.white, size: 32),
-                  onPressed: () => _skip(const Duration(seconds: -10)),
-                  tooltip: AppLocalizations.of(context)!.skipBack,
-                ),
-                const SizedBox(width: 16),
-                IconButton(
-                  icon: Icon(
-                    _playing ? Icons.pause : Icons.play_arrow,
-                    color: Colors.white,
-                    size: 40,
-                  ),
-                  onPressed: _togglePlay,
-                ),
-                const SizedBox(width: 16),
-                IconButton(
-                  icon: const Icon(Icons.forward_30, color: Colors.white, size: 32),
-                  onPressed: () => _skip(const Duration(seconds: 30)),
-                  tooltip: AppLocalizations.of(context)!.skipForward,
-                ),
-                const Spacer(),
-                const SizedBox(width: 48),
-              ],
-            ),
-          ],
-        ),
+      child: Row(
+        children: [
+          IconButton(
+            focusNode: FocusNode(skipTraversal: true),
+            icon: const Icon(Icons.close, color: Colors.white, size: 28),
+            onPressed: () => Navigator.of(context).pop(),
+            tooltip: AppLocalizations.of(context)!.closePlayer,
+          ),
+        ],
       ),
     );
   }

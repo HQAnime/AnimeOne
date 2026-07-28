@@ -109,7 +109,9 @@ class GlobalData {
     final raw = p.getString(historyKey);
     if (raw == null) return [];
     final list = json.decode(raw) as List;
-    final result = list.map((e) => WatchEntry.fromJson(e as Map<String, dynamic>)).toList();
+    final result = list
+        .map((e) => WatchEntry.fromJson(e as Map<String, dynamic>))
+        .toList();
     result.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
     return result;
   }
@@ -125,7 +127,8 @@ class GlobalData {
     } else {
       history.add(entry);
     }
-    p.setString(historyKey, json.encode(history.map((e) => e.toJson()).toList()));
+    p.setString(
+        historyKey, json.encode(history.map((e) => e.toJson()).toList()));
     historyNotifier.value++;
   }
 
@@ -151,10 +154,12 @@ class GlobalData {
 
   // Relating to seasonal anime
   static final _season = AnimeSeason(DateTime.now());
-  String getSeasonName([AppLocalizations? l]) => l != null ? _season.getLocalizedName(l) : _season.toString();
+  String getSeasonName([AppLocalizations? l]) =>
+      l != null ? _season.getLocalizedName(l) : _season.toString();
   String getScheduleLink() => _season.getLink();
   String getSeasonLink() => _season.getAnimeLink();
-  List<({String label, String value})> getQuickFilters(AppLocalizations l) => _season.getQuickFilters(l);
+  List<({String label, String value})> getQuickFilters(AppLocalizations l) =>
+      _season.getQuickFilters(l);
 
   // Relating to anime list (it won't be changed)
   List<AnimeInfo> _animeList = [];

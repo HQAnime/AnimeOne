@@ -19,28 +19,32 @@ class AnimeRecentTile extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: GlobalData.historyNotifier,
       builder: (context, _, __) {
-        final entry = recent.link != null ? global.getWatchEntry(recent.link!) : null;
+        final entry =
+            recent.link != null ? global.getWatchEntry(recent.link!) : null;
         return Row(
-      children: [
-        Expanded(
-          child: AnimeButton(
-            basic: recent,
-            recent: true,
-            autofocus: autofocus,
-            translate: true,
-          ),
-        ),
-        if (entry != null)
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: entry.done
-                ? const Icon(Icons.check_circle, color: Colors.green, size: 20)
-                : Text(
-                    '${(entry.progress * 100).toStringAsFixed(0)}%',
-                    style: TextStyle(color: Theme.of(context).colorScheme.secondary, fontSize: 12),
-                  ),
-          ),
-      ],
+          children: [
+            Expanded(
+              child: AnimeButton(
+                basic: recent,
+                recent: true,
+                autofocus: autofocus,
+                translate: true,
+              ),
+            ),
+            if (entry != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: entry.done
+                    ? const Icon(Icons.check_circle,
+                        color: Colors.green, size: 20)
+                    : Text(
+                        '${(entry.progress * 100).toStringAsFixed(0)}%',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 12),
+                      ),
+              ),
+          ],
         );
       },
     );

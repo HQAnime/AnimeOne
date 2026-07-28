@@ -91,7 +91,8 @@ class TranslationService {
   }
 
   /// Get the interlanguage link from [domain] for [title] in [targetLang].
-  static Future<String?> _langlink(String domain, String title, String targetLang) async {
+  static Future<String?> _langlink(
+      String domain, String title, String targetLang) async {
     try {
       final uri = Uri.https(domain, '/w/api.php', {
         'action': 'query',

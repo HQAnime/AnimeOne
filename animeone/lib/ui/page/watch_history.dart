@@ -65,8 +65,12 @@ class _WatchHistoryState extends State<WatchHistory> {
                     title: Text(l.clearHistoryTitle),
                     content: Text(l.clearHistoryConfirm),
                     actions: [
-                      TextButton(onPressed: () => Navigator.pop(ctx, false), child: Text(l.cancel)),
-                      TextButton(onPressed: () => Navigator.pop(ctx, true), child: Text(l.confirm)),
+                      TextButton(
+                          onPressed: () => Navigator.pop(ctx, false),
+                          child: Text(l.cancel)),
+                      TextButton(
+                          onPressed: () => Navigator.pop(ctx, true),
+                          child: Text(l.confirm)),
                     ],
                   ),
                 ).then((ok) {
@@ -94,76 +98,100 @@ class _WatchHistoryState extends State<WatchHistory> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : Icon(
-                          entry.done ? Icons.check_circle : Icons.play_circle_outline,
-                          color: entry.done ? Colors.green : Theme.of(context).colorScheme.secondary,
+                          entry.done
+                              ? Icons.check_circle
+                              : Icons.play_circle_outline,
+                          color: entry.done
+                              ? Colors.green
+                              : Theme.of(context).colorScheme.secondary,
                         ),
                   title: TranslatedText(
                     originalText: entry.episodeName,
                     maxLines: 1,
                   ),
                   subtitle: Text(
-                    l.watchHistorySubtitle(_fmtDuration(entry.positionSec), _fmtDuration(entry.durationSec), pct),
+                    l.watchHistorySubtitle(_fmtDuration(entry.positionSec),
+                        _fmtDuration(entry.durationSec), pct),
                   ),
-                  onTap: _loadingIndex != null ? null : () async {
-                    setState(() => _loadingIndex = index);
-                    final parser = AnimePageParser(entry.episodeLink);
-                    final doc = await parser.downloadHTML();
-                    final results = doc != null ? parser.parseHTML(doc) : [];
-                    if (!context.mounted) return;
-                    if (results.isEmpty) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Anime(link: entry.episodeLink),
-                        ),
-                      ).then((_) => _load()).whenComplete(() => _loadingIndex = null);
-                      return;
-                    }
-                    final animeEntry = results.first;
-                    final video = animeEntry.getVideo();
-                    if (video == null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Anime(link: entry.episodeLink),
-                        ),
-                      ).then((_) => _load()).whenComplete(() => _loadingIndex = null);
-                      return;
-                    }
-                    String? url;
-                    Map<String, String> headers = {
-                      'referer': 'https://anime1.me/',
-                      'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                    };
-                    if (video.hasToken && video.video != null) {
-                      final result = await VideoSourceParser().resolve(video.video!);
-                      url = result.url;
-                      if (result.cookie != null) headers['Cookie'] = result.cookie!;
-                    } else {
-                      url = video.video?.startsWith('http') == true ? video.video! : null;
-                    }
-                    if (!context.mounted) return;
-                    if (url != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DesktopPlayer(
-                            url: url!,
-                            headers: headers,
-                            episodeLink: entry.episodeLink,
-                            episodeName: entry.episodeName,
-                          ),
-                        ),
-                      ).then((_) => _load()).whenComplete(() => _loadingIndex = null);
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Anime(link: entry.episodeLink),
-                        ),
-                      ).then((_) => _load()).whenComplete(() => _loadingIndex = null);
-                    }
-                  },
+                  onTap: _loadingIndex != null
+                      ? null
+                      : () async {
+                          setState(() => _loadingIndex = index);
+                          final parser = AnimePageParser(entry.episodeLink);
+                          final doc = await parser.downloadHTML();
+                          final results =
+                              doc != null ? parser.parseHTML(doc) : [];
+                          if (!context.mounted) return;
+                          if (results.isEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Anime(link: entry.episodeLink),
+                              ),
+                            )
+                                .then((_) => _load())
+                                .whenComplete(() => _loadingIndex = null);
+                            return;
+                          }
+                          final animeEntry = results.first;
+                          final video = animeEntry.getVideo();
+                          if (video == null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Anime(link: entry.episodeLink),
+                              ),
+                            )
+                                .then((_) => _load())
+                                .whenComplete(() => _loadingIndex = null);
+                            return;
+                          }
+                          String? url;
+                          Map<String, String> headers = {
+                            'referer': 'https://anime1.me/',
+                            'user-agent':
+                                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                          };
+                          if (video.hasToken && video.video != null) {
+                            final result =
+                                await VideoSourceParser().resolve(video.video!);
+                            url = result.url;
+                            if (result.cookie != null)
+                              headers['Cookie'] = result.cookie!;
+                          } else {
+                            url = video.video?.startsWith('http') == true
+                                ? video.video!
+                                : null;
+                          }
+                          if (!context.mounted) return;
+                          if (url != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DesktopPlayer(
+                                  url: url!,
+                                  headers: headers,
+                                  episodeLink: entry.episodeLink,
+                                  episodeName: entry.episodeName,
+                                ),
+                              ),
+                            )
+                                .then((_) => _load())
+                                .whenComplete(() => _loadingIndex = null);
+                          } else {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Anime(link: entry.episodeLink),
+                              ),
+                            )
+                                .then((_) => _load())
+                                .whenComplete(() => _loadingIndex = null);
+                          }
+                        },
                 );
               },
             ),

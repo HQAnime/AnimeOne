@@ -54,7 +54,8 @@ class AnimeInfoCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: TranslatedText(
-                originalText: info.name ?? AppLocalizations.of(context)!.unknownName,
+                originalText:
+                    info.name ?? AppLocalizations.of(context)!.unknownName,
                 maxLines: 1,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
@@ -66,13 +67,18 @@ class AnimeInfoCard extends StatelessWidget {
               TableRow(children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
-                  child: Text(_locMeta(info.episode ?? "77", AppLocalizations.of(context)!), textAlign: TextAlign.center, overflow: TextOverflow.ellipsis),
+                  child: Text(
+                      _locMeta(
+                          info.episode ?? "77", AppLocalizations.of(context)!),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis),
                 ),
                 // Cyperpunk?
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
-                    _locMeta((info.year ?? "2077") + (info.season ?? ""), AppLocalizations.of(context)!),
+                    _locMeta((info.year ?? "2077") + (info.season ?? ""),
+                        AppLocalizations.of(context)!),
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                   ),

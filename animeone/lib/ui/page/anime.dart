@@ -118,7 +118,8 @@ class _AnimeState extends State<Anime> {
     // Always show error message first even if it is loading
     if (hasError != '') {
       return Scaffold(
-        appBar: AppBar(title: Text(AppLocalizations.of(context)!.loadFailedQaq)),
+        appBar:
+            AppBar(title: Text(AppLocalizations.of(context)!.loadFailedQaq)),
         body: ErrorButton(msg: hasError),
       );
     } else if (loading) {
@@ -178,7 +179,8 @@ class _AnimeState extends State<Anime> {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final scaler = MediaQuery.of(context).textScaler;
-            int count = max(min((constraints.maxWidth / scaler.scale(300)).floor(), 3), 1);
+            int count = max(
+                min((constraints.maxWidth / scaler.scale(300)).floor(), 3), 1);
             double imageWidth = constraints.maxWidth / count.toDouble();
             double offset = scaler.scale(93);
             if (widget.seasonal != null) offset = scaler.scale(125);

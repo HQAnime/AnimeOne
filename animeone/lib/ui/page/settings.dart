@@ -129,8 +129,10 @@ class Settings extends StatelessWidget {
                                             onPressed: () {
                                               Navigator.pop(c2);
                                               TranslationCache.clear();
-                                              TranslationService.cancelPending();
-                                              GlobalData().setLocale(_localeCodes[i]);
+                                              TranslationService
+                                                  .cancelPending();
+                                              GlobalData()
+                                                  .setLocale(_localeCodes[i]);
                                             },
                                             child: Text(l.confirm),
                                           ),

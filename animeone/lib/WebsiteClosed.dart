@@ -20,7 +20,8 @@ class WebsiteClosed extends StatelessWidget {
               width: 200,
               color: Theme.of(context).colorScheme.primary,
             ),
-            Text(l.websiteClosed, style: Theme.of(context).textTheme.headlineMedium),
+            Text(l.websiteClosed,
+                style: Theme.of(context).textTheme.headlineMedium),
             Padding(
               padding: const EdgeInsets.only(bottom: 32),
               child: Text(l.fenglinClosed),

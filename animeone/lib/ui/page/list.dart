@@ -24,7 +24,7 @@ class _AnimeListState extends State<AnimeList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Row(
+        title: Row(
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.only(right: 8),
@@ -110,9 +110,18 @@ class _AnimeListState extends State<AnimeList> {
                   message: AppLocalizations.of(context)!.searchFilter(f.label),
                   child: ActionChip(
                     label: Text(f.label),
-                    labelPadding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                    side: BorderSide(color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.outline),
-                    backgroundColor: selected ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.15) : Colors.transparent,
+                    labelPadding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    side: BorderSide(
+                        color: selected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.outline),
+                    backgroundColor: selected
+                        ? Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withValues(alpha: 0.15)
+                        : Colors.transparent,
                     onPressed: () {
                       if (selected) {
                         _selectedFilter = null;
@@ -125,15 +134,15 @@ class _AnimeListState extends State<AnimeList> {
                 ),
               );
             }),
-          Tooltip(
-            message: AppLocalizations.of(context)!.resetList,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => _resetList(),
+            Tooltip(
+              message: AppLocalizations.of(context)!.resetList,
+              child: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => _resetList(),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
       ),
     );
   }
@@ -163,7 +172,8 @@ class _AnimeListState extends State<AnimeList> {
   void _applyFilters() {
     setState(() {
       list = all.where((e) {
-        if (_selectedFilter != null && !e.contains(_selectedFilter!)) return false;
+        if (_selectedFilter != null && !e.contains(_selectedFilter!))
+          return false;
         if (_searchText != '' && !e.contains(_searchText)) return false;
         return true;
       }).toList();

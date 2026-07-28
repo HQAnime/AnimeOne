@@ -58,7 +58,8 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
       ),
     );
     // Wait for duration to be known before seeking.
-    await Future.doWhile(() => Future.delayed(const Duration(milliseconds: 50), () => _durationSec <= 0));
+    await Future.doWhile(() => Future.delayed(
+        const Duration(milliseconds: 50), () => _durationSec <= 0));
     if (widget.episodeLink != null) {
       final saved = _global.getWatchEntry(widget.episodeLink!);
       if (saved != null && saved.positionSec > 0) {
@@ -67,8 +68,6 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
     }
     _player.play();
   }
-
-
 
   void _save() {
     if (widget.episodeLink == null) return;
@@ -109,16 +108,25 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
     return Shortcuts(
       shortcuts: {
         SingleActivator(LogicalKeyboardKey.space): _TogglePlayIntent(),
-        SingleActivator(LogicalKeyboardKey.arrowLeft): _SkipIntent(const Duration(seconds: -10)),
-        SingleActivator(LogicalKeyboardKey.arrowRight): _SkipIntent(const Duration(seconds: 30)),
+        SingleActivator(LogicalKeyboardKey.arrowLeft):
+            _SkipIntent(const Duration(seconds: -10)),
+        SingleActivator(LogicalKeyboardKey.arrowRight):
+            _SkipIntent(const Duration(seconds: 30)),
         SingleActivator(LogicalKeyboardKey.escape): _CloseIntent(),
-        SingleActivator(LogicalKeyboardKey.arrowUp): _SkipIntent(const Duration(seconds: 0)),
+        SingleActivator(LogicalKeyboardKey.arrowUp):
+            _SkipIntent(const Duration(seconds: 0)),
       },
       child: Actions(
         actions: {
           _TogglePlayIntent: CallbackAction(onInvoke: (_) => _togglePlay()),
-          _SkipIntent: CallbackAction<_SkipIntent>(onInvoke: (i) => _skip(i.offset)),
-          _CloseIntent: CallbackAction(onInvoke: (_) { _save(); final nav = Navigator.of(context); Future.microtask(() => nav.pop()); return null; }),
+          _SkipIntent:
+              CallbackAction<_SkipIntent>(onInvoke: (i) => _skip(i.offset)),
+          _CloseIntent: CallbackAction(onInvoke: (_) {
+            _save();
+            final nav = Navigator.of(context);
+            Future.microtask(() => nav.pop());
+            return null;
+          }),
         },
         child: Focus(
           focusNode: _focusNode,
@@ -128,8 +136,10 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
               const SingleActivator(LogicalKeyboardKey.mediaPlay): _togglePlay,
               const SingleActivator(LogicalKeyboardKey.mediaPause): _togglePlay,
               const SingleActivator(LogicalKeyboardKey.mediaStop): _togglePlay,
-              const SingleActivator(LogicalKeyboardKey.mediaTrackPrevious): () => _skip(const Duration(seconds: -10)),
-              const SingleActivator(LogicalKeyboardKey.mediaTrackNext): () => _skip(const Duration(seconds: 30)),
+              const SingleActivator(LogicalKeyboardKey.mediaTrackPrevious):
+                  () => _skip(const Duration(seconds: -10)),
+              const SingleActivator(LogicalKeyboardKey.mediaTrackNext): () =>
+                  _skip(const Duration(seconds: 30)),
             },
             child: Scaffold(
               backgroundColor: Colors.black,
@@ -163,7 +173,11 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
           IconButton(
             focusNode: FocusNode(skipTraversal: true),
             icon: const Icon(Icons.close, color: Colors.white, size: 28),
-            onPressed: () { _save(); final nav = Navigator.of(context); Future.microtask(() => nav.pop()); },
+            onPressed: () {
+              _save();
+              final nav = Navigator.of(context);
+              Future.microtask(() => nav.pop());
+            },
             tooltip: AppLocalizations.of(context)!.closePlayer,
           ),
         ],
@@ -173,8 +187,10 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
 }
 
 class _TogglePlayIntent extends Intent {}
+
 class _SkipIntent extends Intent {
   final Duration offset;
   const _SkipIntent(this.offset);
 }
+
 class _CloseIntent extends Intent {}

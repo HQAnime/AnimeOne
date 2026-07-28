@@ -21,7 +21,8 @@ class AnimeScheduleTile extends StatelessWidget {
           child: AnimeButton(basic: schedule),
         ),
         IconButton(
-          tooltip: AppLocalizations.of(context)!.wikipediaSearchAnime(schedule.name ?? '??'),
+          tooltip: AppLocalizations.of(context)!
+              .wikipediaSearchAnime(schedule.name ?? '??'),
           icon: const Icon(Icons.info_outline),
           onPressed: () => global.getWikipediaLink(schedule.name),
         )

@@ -36,7 +36,8 @@ class AnimeButton extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text(AppLocalizations.of(context)!.noFirstEpisode, textAlign: TextAlign.center),
+                content: Text(AppLocalizations.of(context)!.noFirstEpisode,
+                    textAlign: TextAlign.center),
               );
             },
           );
@@ -47,7 +48,8 @@ class AnimeButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: TranslatedText(
-            originalText: basic.formattedName() ?? AppLocalizations.of(context)!.unknownName,
+            originalText: basic.formattedName() ??
+                AppLocalizations.of(context)!.unknownName,
             maxLines: 1,
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             canFetch: translate,

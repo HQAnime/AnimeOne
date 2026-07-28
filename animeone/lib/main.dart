@@ -138,7 +138,8 @@ class _MyAppState extends State<MyApp> {
       },
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
+      themeMode:
+          GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
       home: HomePage(),
       builder: (context, child) {
         final scale = GlobalData().getFontScale();
@@ -154,7 +155,8 @@ class _MyAppState extends State<MyApp> {
               }),
             },
             child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+              data: MediaQuery.of(context)
+                  .copyWith(textScaler: TextScaler.linear(scale)),
               child: child!,
             ),
           ),

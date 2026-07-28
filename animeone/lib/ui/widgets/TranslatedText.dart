@@ -117,7 +117,8 @@ class _TranslatedTextState extends State<TranslatedText> {
       if (!mounted) return;
       final translated = t ?? cleanName;
       TranslationCache.put(cleanName, translated);
-      setState(() => _displayText = tag.isEmpty ? translated : '$tag $translated');
+      setState(
+          () => _displayText = tag.isEmpty ? translated : '$tag $translated');
     });
   }
 

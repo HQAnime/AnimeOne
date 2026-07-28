@@ -25,7 +25,8 @@ class ApiService {
         'referer': 'https://anime1.me/',
       };
 
-  Future<http.Response?> get({String? link, Map<String, String>? headers}) async {
+  Future<http.Response?> get(
+      {String? link, Map<String, String>? headers}) async {
     try {
       var target = link ?? _baseLink;
       return await http

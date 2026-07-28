@@ -38,7 +38,8 @@ class AnimeEntryCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: Text(
-              entry.getEnhancedDate(AppLocalizations.of(context)!) + _progressText(context),
+              entry.getEnhancedDate(AppLocalizations.of(context)!) +
+                  _progressText(context),
               style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
             ),
           ),

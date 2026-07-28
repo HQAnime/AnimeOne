@@ -112,15 +112,19 @@ class _ScheduleState extends State<Schedule>
                   String? url;
                   Map<String, String> headers = {
                     'referer': 'https://anime1.me/',
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                    'user-agent':
+                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
                   };
                   if (video?.hasToken == true && video?.video != null) {
                     final parser = VideoSourceParser();
                     final result = await parser.resolve(video!.video!);
                     url = result.url;
-                    if (result.cookie != null) headers['Cookie'] = result.cookie!;
+                    if (result.cookie != null)
+                      headers['Cookie'] = result.cookie!;
                   } else {
-                    url = video?.video?.startsWith('http') == true ? video!.video! : null;
+                    url = video?.video?.startsWith('http') == true
+                        ? video!.video!
+                        : null;
                   }
                   if (url != null && context.mounted) {
                     Navigator.push(

@@ -107,7 +107,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ],
         currentIndex: selectedIndex,
         selectedItemColor: Theme.of(context).colorScheme.primary,
-        unselectedItemColor: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+        unselectedItemColor:
+            Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
         onTap: onItemTapped,
       ),
     );

@@ -21,7 +21,9 @@ class AnimeEntry extends AnimeBasic {
       if (title is Element) {
         link = title.attributes['href'];
       } else {
-        var links = e.getElementsByClassName('entry-title')[0].getElementsByTagName('a');
+        var links = e
+            .getElementsByClassName('entry-title')[0]
+            .getElementsByTagName('a');
         if (links.isNotEmpty) link = links[0].attributes['href'];
       }
 

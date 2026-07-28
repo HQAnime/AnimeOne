@@ -81,13 +81,16 @@ class Settings extends StatelessWidget {
                         GlobalData().setForceDark(!forceDark);
                         setInnerState(() {});
                       },
-                      trailing: Checkbox(
-                        value: forceDark,
-                        activeColor: Theme.of(context).colorScheme.primary,
-                        onChanged: (v) {
-                          GlobalData().setForceDark(v ?? false);
-                          setInnerState(() {});
-                        },
+                      trailing: Transform.translate(
+                        offset: const Offset(8, 0),
+                        child: Checkbox(
+                          value: forceDark,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          onChanged: (v) {
+                            GlobalData().setForceDark(v ?? false);
+                            setInnerState(() {});
+                          },
+                        ),
                       ),
                     );
                   },

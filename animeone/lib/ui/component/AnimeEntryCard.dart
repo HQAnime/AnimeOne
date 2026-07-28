@@ -1,3 +1,4 @@
+import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeCoverImage.dart';
@@ -13,13 +14,11 @@ class AnimeEntryCard extends StatelessWidget {
     required this.entry,
     this.showEpisode,
     this.pageUrl,
-    this.progress,
   });
 
   final AnimeEntry entry;
   final bool? showEpisode;
   final String? pageUrl;
-  final double? progress;
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +63,12 @@ class AnimeEntryCard extends StatelessWidget {
 
   String _progressText(BuildContext context) {
     final l = AppLocalizations.of(context)!;
-    if (progress == null || progress! <= 0) return '';
-    if (progress! >= 1.0) return ' | ${l.watchComplete}';
-    return l.progressFormat((progress! * 100).toStringAsFixed(0));
+    final key = entry.link ?? pageUrl ?? '';
+    if (key.isEmpty) return '';
+    final p = GlobalData().getWatchEntry(key)?.progress ?? 0.0;
+    if (p <= 0) return '';
+    if (p >= 1.0) return ' | ${l.watchComplete}';
+    return l.progressFormat((p * 100).toStringAsFixed(0));
   }
 
   /// Render all episode if exists or should be shown

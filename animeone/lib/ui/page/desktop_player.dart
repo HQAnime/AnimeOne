@@ -118,7 +118,7 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
         actions: {
           _TogglePlayIntent: CallbackAction(onInvoke: (_) => _togglePlay()),
           _SkipIntent: CallbackAction<_SkipIntent>(onInvoke: (i) => _skip(i.offset)),
-          _CloseIntent: CallbackAction(onInvoke: (_) => Navigator.of(context).pop()),
+          _CloseIntent: CallbackAction(onInvoke: (_) { _save(); final nav = Navigator.of(context); Future.microtask(() => nav.pop()); return null; }),
         },
         child: Focus(
           focusNode: _focusNode,
@@ -163,7 +163,7 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
           IconButton(
             focusNode: FocusNode(skipTraversal: true),
             icon: const Icon(Icons.close, color: Colors.white, size: 28),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () { _save(); final nav = Navigator.of(context); Future.microtask(() => nav.pop()); },
             tooltip: AppLocalizations.of(context)!.closePlayer,
           ),
         ],

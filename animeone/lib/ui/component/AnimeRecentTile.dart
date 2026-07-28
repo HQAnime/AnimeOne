@@ -16,8 +16,11 @@ class AnimeRecentTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final entry = recent.link != null ? global.getWatchEntry(recent.link!) : null;
-    return Row(
+    return ValueListenableBuilder<int>(
+      valueListenable: GlobalData.historyNotifier,
+      builder: (context, _, __) {
+        final entry = recent.link != null ? global.getWatchEntry(recent.link!) : null;
+        return Row(
       children: [
         Expanded(
           child: AnimeButton(
@@ -38,6 +41,8 @@ class AnimeRecentTile extends StatelessWidget {
                   ),
           ),
       ],
+        );
+      },
     );
   }
 }

@@ -169,7 +169,6 @@ class _AnimeState extends State<Anime> {
               entry: entries.first,
               showEpisode: true,
               pageUrl: widget.link,
-              progress: global.getWatchEntry(entries.first.link ?? '')?.progress,
             ),
           ),
         );
@@ -202,7 +201,6 @@ class _AnimeState extends State<Anime> {
                       entry: e,
                       showEpisode: widget.seasonal == null ? false : true,
                       pageUrl: widget.link,
-                      progress: global.getWatchEntry(e.link ?? '')?.progress,
                     );
                   },
                   controller: controller,

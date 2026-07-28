@@ -118,7 +118,8 @@ class GlobalData {
     final p = _prefs;
     if (p == null) return;
     final history = getHistory();
-    final idx = history.indexWhere((e) => e.episodeLink == entry.episodeLink);
+    final abs = _absLink(entry.episodeLink);
+    final idx = history.indexWhere((e) => _absLink(e.episodeLink) == abs);
     if (idx >= 0) {
       history[idx] = entry;
     } else {
@@ -128,11 +129,16 @@ class GlobalData {
     historyNotifier.value++;
   }
 
+  String _absLink(String link) {
+    return link.startsWith('http') ? link : '$domain$link';
+  }
+
   WatchEntry? getWatchEntry(String episodeLink) {
     final p = _prefs;
     if (p == null) return null;
+    final abs = _absLink(episodeLink);
     final history = getHistory();
-    final idx = history.indexWhere((e) => e.episodeLink == episodeLink);
+    final idx = history.indexWhere((e) => _absLink(e.episodeLink) == abs);
     return idx >= 0 ? history[idx] : null;
   }
 

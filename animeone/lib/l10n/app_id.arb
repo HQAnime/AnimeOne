@@ -96,6 +96,7 @@
   "close": "Tutup",
   "skipBack": "-10dtk",
   "skipForward": "+30dtk",
+  "skipJump80": "+80dtk",
   "closePlayer": "Tutup",
   "websiteClosed": "Situs Ditutup",
   "fenglinClosed": "「楓林網」telah ditutup",

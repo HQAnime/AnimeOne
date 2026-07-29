@@ -96,6 +96,7 @@
   "close": "Закрыть",
   "skipBack": "-10с",
   "skipForward": "+30с",
+  "skipJump80": "+80с",
   "closePlayer": "Закрыть",
   "websiteClosed": "Сайт закрыт",
   "fenglinClosed": "«楓林網» был закрыт",

@@ -96,6 +96,7 @@
   "close": "閉じる",
   "skipBack": "-10秒",
   "skipForward": "+30秒",
+  "skipJump80": "+80秒",
   "closePlayer": "閉じる",
   "websiteClosed": "ウェブサイトは閉鎖されました",
   "fenglinClosed": "「楓林網」は閉鎖されました",

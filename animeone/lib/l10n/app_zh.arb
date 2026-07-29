@@ -101,6 +101,7 @@
   "close": "關閉",
   "skipBack": "-10秒",
   "skipForward": "+30秒",
+  "skipJump80": "+80秒",
   "closePlayer": "Close",
   "websiteClosed": "網站已關閉",
   "fenglinClosed": "「楓林網」遭查封",

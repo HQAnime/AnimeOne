@@ -96,6 +96,7 @@
   "close": "닫기",
   "skipBack": "-10초",
   "skipForward": "+30초",
+  "skipJump80": "+80초",
   "closePlayer": "닫기",
   "websiteClosed": "웹사이트가 폐쇄되었습니다",
   "fenglinClosed": "「楓林網」이 폐쇄되었습니다",

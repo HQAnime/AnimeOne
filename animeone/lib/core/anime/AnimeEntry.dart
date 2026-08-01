@@ -121,8 +121,9 @@ class AnimeEntry extends AnimeBasic {
 
   /// If next episode is avaible
   bool hasNextEpisode() {
-    if (nextEpisode != null) {
-      return !nextEpisode!.endsWith('/?p=');
+    final next = nextEpisode;
+    if (next != null) {
+      return !next.endsWith('/?p=');
     } else {
       return false;
     }

@@ -47,7 +47,8 @@ class GithubUpdate {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('v$version'),
-            content: Text((whatsNewFor(Localizations.localeOf(context)) ?? '') + extraInfo),
+            content: Text((whatsNewFor(Localizations.localeOf(context)) ?? '') +
+                extraInfo),
             actions: <Widget>[
               TextButton(
                 child: Text(l.close),

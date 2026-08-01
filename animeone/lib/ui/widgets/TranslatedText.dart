@@ -52,10 +52,11 @@ class _TranslatedTextState extends State<TranslatedText> {
   }
 
   void _onTranslationAdded() {
-    if (_cleanName == null) return;
+    final cleanName = _cleanName;
+    if (cleanName == null) return;
     if (_displayText != null && _displayText != widget.originalText) return;
-    if (!TranslationCache.has(_cleanName!)) return;
-    final cached = TranslationCache.get(_cleanName!);
+    if (!TranslationCache.has(cleanName)) return;
+    final cached = TranslationCache.get(cleanName);
     if (cached == null) return;
     final tag = _extractTag(widget.originalText);
     final result = tag.isEmpty ? cached : '$tag $cached';

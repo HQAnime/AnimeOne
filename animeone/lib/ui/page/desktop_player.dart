@@ -69,8 +69,9 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
     // Wait for duration to be known before seeking.
     await Future.doWhile(() => Future.delayed(
         const Duration(milliseconds: 50), () => _durationSec <= 0));
-    if (widget.episodeLink != null) {
-      final saved = _global.getWatchEntry(widget.episodeLink!);
+    final episodeLink = widget.episodeLink;
+    if (episodeLink != null) {
+      final saved = _global.getWatchEntry(episodeLink);
       if (saved != null && saved.positionSec > 0) {
         _player.seek(Duration(seconds: saved.positionSec));
       }
@@ -203,7 +204,8 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           onTap: _onVideoTap,
-                          onDoubleTap: () => _skip(const Duration(seconds: -10)),
+                          onDoubleTap: () =>
+                              _skip(const Duration(seconds: -10)),
                           onLongPressStart: _onLongPressStart,
                           onLongPressEnd: _onLongPressEnd,
                         ),
@@ -260,10 +262,8 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                 child: SliderTheme(
                   data: const SliderThemeData(
                     trackHeight: 3,
-                    thumbShape:
-                        RoundSliderThumbShape(enabledThumbRadius: 6),
-                    overlayShape:
-                        RoundSliderOverlayShape(overlayRadius: 12),
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
+                    overlayShape: RoundSliderOverlayShape(overlayRadius: 12),
                     activeTrackColor: Colors.pink,
                     inactiveTrackColor: Color(0x29FF69B4),
                     thumbColor: Colors.pink,
@@ -274,8 +274,8 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                         ? (_positionSec / _durationSec).clamp(0.0, 1.0)
                         : 0.0,
                     onChanged: (v) {
-                      _player.seek(
-                          Duration(seconds: (v * _durationSec).round()));
+                      _player
+                          .seek(Duration(seconds: (v * _durationSec).round()));
                     },
                   ),
                 ),

@@ -8,12 +8,13 @@ abstract class AnimeBasic {
   /// Check if name contains t
   bool contains(String t) {
     final tL = t.toLowerCase();
-    final nL = name?.toLowerCase();
-    if (nL == null) {
+    final n = name;
+    if (n == null) {
       return false;
     }
+    final nL = n.toLowerCase();
     if (nL.contains(tL)) return true;
-    final translated = TranslationCache.get(name!);
+    final translated = TranslationCache.get(n);
     return translated != null && translated.toLowerCase().contains(tL);
   }
 
@@ -25,24 +26,26 @@ abstract class AnimeBasic {
 
   /// Check if name is loaded and not null
   bool valid() {
-    return name != null && name!.trim().isNotEmpty;
+    final n = name;
+    return n != null && n.trim().isNotEmpty;
   }
 
   /// Move episode number in front ([12] xxxx)
   String? formattedName() {
-    if (name == null) {
+    final n = name;
+    if (n == null) {
       return null;
-    } else if (name!.endsWith(']')) {
-      var group = name!.split(' ');
+    } else if (n.endsWith(']')) {
+      var group = n.split(' ');
       String tag = group.removeLast();
       String rest = group.join(' ');
       String last = '$tag $rest';
 
       // Double check the tag is in front now
       if (last.startsWith('[')) return last;
-      return name;
+      return n;
     } else {
-      return name;
+      return n;
     }
   }
 }

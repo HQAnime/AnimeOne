@@ -19,8 +19,8 @@ class AnimeRecentTile extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: GlobalData.historyNotifier,
       builder: (context, _, __) {
-        final entry =
-            recent.link != null ? global.getWatchEntry(recent.link!) : null;
+        final link = recent.link;
+        final entry = link != null ? global.getWatchEntry(link) : null;
         return Row(
           children: [
             Expanded(

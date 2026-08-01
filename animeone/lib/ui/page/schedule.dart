@@ -115,16 +115,17 @@ class _ScheduleState extends State<Schedule>
                     'user-agent':
                         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
                   };
-                  if (video?.hasToken == true && video?.video != null) {
+                  final v = video;
+                  final videoUrl = v?.video;
+                  if (v != null && v.hasToken == true && videoUrl != null) {
                     final parser = VideoSourceParser();
-                    final result = await parser.resolve(video!.video!);
+                    final result = await parser.resolve(videoUrl);
                     url = result.url;
-                    if (result.cookie != null)
-                      headers['Cookie'] = result.cookie!;
+                    final cookie = result.cookie;
+                    if (cookie != null) headers['Cookie'] = cookie;
                   } else {
-                    url = video?.video?.startsWith('http') == true
-                        ? video!.video!
-                        : null;
+                    url =
+                        videoUrl?.startsWith('http') == true ? videoUrl : null;
                   }
                   if (url != null && context.mounted) {
                     Navigator.push(

@@ -172,8 +172,10 @@ class _AnimeListState extends State<AnimeList> {
   void _applyFilters() {
     setState(() {
       list = all.where((e) {
-        if (_selectedFilter != null && !e.contains(_selectedFilter!))
+        final selected = _selectedFilter;
+        if (selected != null && !e.contains(selected)) {
           return false;
+        }
         if (_searchText != '' && !e.contains(_searchText)) return false;
         return true;
       }).toList();

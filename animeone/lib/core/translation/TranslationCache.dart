@@ -26,8 +26,9 @@ class TranslationCache {
   }
 
   static void _save() {
-    if (_prefs == null) return;
-    _prefs!.setString(_key, json.encode(_map));
+    final prefs = _prefs;
+    if (prefs == null) return;
+    prefs.setString(_key, json.encode(_map));
   }
 
   static String? get(String zh) => _map[zh];

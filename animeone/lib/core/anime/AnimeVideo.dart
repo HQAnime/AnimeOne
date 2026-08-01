@@ -35,7 +35,5 @@ class AnimeVideo {
   }
 
   /// Check if this is a youtube link
-  bool isYoutube() {
-    return video != null && video!.contains('youtube');
-  }
+  bool isYoutube() => video?.contains('youtube') == true;
 }

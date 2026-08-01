@@ -183,10 +183,10 @@ class GlobalData {
     _cookie = cookie;
     // Add video password if not included
     if (!cookie.contains('videopassword')) {
-      _cookie = '${_cookie!}; videopassword=0';
+      _cookie = '$_cookie; videopassword=0';
     }
 
-    prefs.setString(oneCookie, _cookie!);
+    prefs.setString(oneCookie, _cookie ?? 'videopassword=0');
   }
 
   String getUserAgent() => _userAgent ?? '';

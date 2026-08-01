@@ -154,15 +154,16 @@ class _WatchHistoryState extends State<WatchHistory> {
                             'user-agent':
                                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
                           };
-                          if (video.hasToken && video.video != null) {
+                          final videoUrl = video.video;
+                          if (video.hasToken && videoUrl != null) {
                             final result =
-                                await VideoSourceParser().resolve(video.video!);
+                                await VideoSourceParser().resolve(videoUrl);
                             url = result.url;
-                            if (result.cookie != null)
-                              headers['Cookie'] = result.cookie!;
+                            final cookie = result.cookie;
+                            if (cookie != null) headers['Cookie'] = cookie;
                           } else {
-                            url = video.video?.startsWith('http') == true
-                                ? video.video!
+                            url = videoUrl?.startsWith('http') == true
+                                ? videoUrl
                                 : null;
                           }
                           if (!context.mounted) return;

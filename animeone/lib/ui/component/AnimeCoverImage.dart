@@ -58,7 +58,9 @@ class AnimeCoverImage extends StatelessWidget {
         },
       );
     } else {
+      final l = AppLocalizations.of(context)!;
       return IconButton(
+        tooltip: l.clickToPlay,
         onPressed: () async {
           // video.launchURL();
           if (video?.isYoutube() ?? false) {

@@ -125,11 +125,14 @@ class _TranslatedTextState extends State<TranslatedText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      _displayText ?? widget.originalText,
-      style: widget.style,
-      maxLines: widget.maxLines,
-      overflow: widget.overflow,
+    return Tooltip(
+      message: widget.originalText,
+      child: Text(
+        _displayText ?? widget.originalText,
+        style: widget.style,
+        maxLines: widget.maxLines,
+        overflow: widget.overflow ?? TextOverflow.ellipsis,
+      ),
     );
   }
 }

@@ -270,6 +270,7 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                   size: 28,
                 ),
                 onPressed: _togglePlay,
+                tooltip: AppLocalizations.of(context)!.clickToPlay,
               ),
               Expanded(
                 child: SliderTheme(

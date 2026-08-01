@@ -8,17 +8,30 @@ class GithubUpdate {
   String? version;
   String? link;
   String? whatsnew;
+  final Map<String, String> localizedWhatsNew = {};
 
   GithubUpdate.fromJson(Map<String, dynamic> json)
       : version = json['version'],
         link = json['link'],
-        whatsnew = json['new'];
+        whatsnew = json['new'] {
+    for (final entry in json.entries) {
+      if (entry.key.startsWith('new-') && entry.value is String) {
+        localizedWhatsNew[entry.key.substring(4)] = entry.value as String;
+      }
+    }
+  }
 
   Map<String, dynamic> toJson() => {
         'version': version,
         'link': link,
         'new': whatsnew,
+        for (final entry in localizedWhatsNew.entries)
+          'new-${entry.key}': entry.value,
       };
+
+  /// Localised changelog for [locale], falls back to the default "new"
+  String? whatsNewFor(Locale locale) =>
+      localizedWhatsNew[locale.languageCode] ?? whatsnew;
 
   /// Check if version is current and launch the link if so
   void checkUpdate(BuildContext context, {bool showAlertWhenNoUpdate = false}) {
@@ -34,7 +47,7 @@ class GithubUpdate {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('v$version'),
-            content: Text(whatsnew! + extraInfo),
+            content: Text((whatsNewFor(Localizations.localeOf(context)) ?? '') + extraInfo),
             actions: <Widget>[
               TextButton(
                 child: Text(l.close),
@@ -44,7 +57,8 @@ class GithubUpdate {
                   ? TextButton(
                       child: Text(l.downloadNow),
                       onPressed: () {
-                        launchUrl(Uri.parse(link!));
+                        final link = this.link;
+                        if (link != null) launchUrl(Uri.parse(link));
                         Navigator.of(context).pop();
                       },
                     )

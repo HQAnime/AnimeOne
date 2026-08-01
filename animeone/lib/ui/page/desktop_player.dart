@@ -221,8 +221,19 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                       ),
                     ],
                   ),
-                  if (_overlayVisible) _buildTopBar(),
-                  if (_speedBoost && !_overlayVisible) _buildSpeedBadge(),
+                  IgnorePointer(
+                    ignoring: !_overlayVisible,
+                    child: AnimatedOpacity(
+                      opacity: _overlayVisible ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 300),
+                      child: _buildTopBar(),
+                    ),
+                  ),
+                  AnimatedOpacity(
+                    opacity: _speedBoost && !_overlayVisible ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: _buildSpeedBadge(),
+                  ),
                   _buildControlsBar(),
                 ],
               ),
@@ -238,9 +249,11 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
       bottom: 8,
       left: 8,
       right: 8,
-      child: AnimatedOpacity(
-        opacity: _overlayVisible ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 150),
+      child: IgnorePointer(
+        ignoring: !_overlayVisible,
+        child: AnimatedOpacity(
+          opacity: _overlayVisible ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 300),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           decoration: const BoxDecoration(
@@ -280,30 +293,12 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                   ),
                 ),
               ),
-              IconButton(
-                icon: Icon(
-                  _fullscreen ? Icons.fullscreen_exit : Icons.fullscreen,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                onPressed: _toggleFullscreen,
-              ),
             ],
           ),
         ),
       ),
+      ),
     );
-  }
-
-  bool _fullscreen = true;
-
-  void _toggleFullscreen() {
-    if (_fullscreen) {
-      _exitFullscreen();
-    } else {
-      _enterFullscreen();
-    }
-    _fullscreen = !_fullscreen;
   }
 
   String _formatDuration(int sec) {

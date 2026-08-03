@@ -79,7 +79,10 @@ class ApiService {
       String? redirected = url;
       while (redirected != null) {
         final request = http.Request('GET', Uri.parse(redirected))
-          ..followRedirects = false;
+          ..followRedirects = false
+          // Cloudflare blocks header-less requests, so the redirect probe
+          // must look like a normal browser request too.
+          ..headers.addAll(_defaultHeader);
         final response = await http.Client().send(request);
         redirected = response.headers['location'];
         if (redirected != null) finalLink = redirected;

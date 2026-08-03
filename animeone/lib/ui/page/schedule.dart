@@ -130,6 +130,7 @@ class _ScheduleState extends State<Schedule>
                   } else {
                     url =
                         videoUrl?.startsWith('http') == true ? videoUrl : null;
+                    headers['Cookie'] = GlobalData().getCookie();
                   }
                   if (url != null && context.mounted) {
                     Navigator.push(

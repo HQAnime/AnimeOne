@@ -166,6 +166,7 @@ class _WatchHistoryState extends State<WatchHistory> {
                             url = videoUrl?.startsWith('http') == true
                                 ? videoUrl
                                 : null;
+                            headers['Cookie'] = GlobalData().getCookie();
                           }
                           if (!context.mounted) return;
                           if (url != null) {

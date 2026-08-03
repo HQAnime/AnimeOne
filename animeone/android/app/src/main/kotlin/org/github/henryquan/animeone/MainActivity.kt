@@ -29,7 +29,8 @@ class MainActivity : FlutterActivity() {
                 "getAnimeOneCookie" -> {
                     methodResult = result
                     val link = call.argument<String>("link")!!
-                    bypassBrowserCheck(link)
+                    val dark = call.argument<Boolean>("dark") ?: false
+                    bypassBrowserCheck(link, dark)
                 }
                 "restartAnimeOne" -> restart()
                 else -> result.notImplemented()
@@ -45,10 +46,11 @@ class MainActivity : FlutterActivity() {
         }
     }
 
-    private fun bypassBrowserCheck(link: String) {
+    private fun bypassBrowserCheck(link: String, dark: Boolean) {
         // Grab the cookie for anime1.me
         val webIntent = Intent(context, WebActivity::class.java)
         webIntent.putExtra("link", link)
+        webIntent.putExtra("dark", dark)
         startActivityForResult(webIntent, webRequestCode)
     }
 

@@ -20,17 +20,31 @@ class ApiService {
   }
 
   Map<String, String> get _defaultHeader => {
-        'cookie': _cookie,
-        'user-agent': _userAgent,
-        'referer': 'https://anime1.me/',
-      };
+      'cookie': _cookie,
+      'user-agent': _userAgent,
+      'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,'
+          'image/avif,image/webp,*/*;q=0.8',
+      'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,ja;q=0.7',
+      'accept-encoding': 'gzip',
+      'referer': 'https://anime1.me/',
+      'connection': 'keep-alive',
+      'upgrade-insecure-requests': '1',
+      'sec-ch-ua': '"Not A(Brand";v="99", "Google Chrome";v="126", '
+          '"Chromium";v="126"',
+      'sec-ch-ua-mobile': '?0',
+      'sec-ch-ua-platform': '"Windows"',
+      'sec-fetch-dest': 'document',
+      'sec-fetch-mode': 'navigate',
+      'sec-fetch-site': 'same-origin',
+      'sec-fetch-user': '?1',
+    };
 
   Future<http.Response?> get(
       {String? link, Map<String, String>? headers}) async {
     try {
       var target = link ?? _baseLink;
       return await http
-          .get(Uri.parse(target), headers: headers ?? _defaultHeader)
+          .get(Uri.parse(target), headers: {..._defaultHeader, ...?headers})
           .timeout(const Duration(seconds: 10));
     } catch (e, s) {
       _logger.shout(s);
@@ -48,7 +62,7 @@ class ApiService {
       return await http
           .post(
             Uri.parse(link ?? _baseLink),
-            headers: headers ?? _defaultHeader,
+            headers: {..._defaultHeader, ...?headers},
             body: body,
             encoding: encoding,
           )
@@ -83,7 +97,12 @@ class ApiService {
       final encoded = const Utf8Encoder().convert(response.body);
       return parse(encoded);
     }
-    if (response.statusCode == 503) {
+    // Cloudflare answers blocked requests with 403/404/429/503. Remember
+    // which page needs a bypass so the fix button can be offered.
+    if (response.statusCode == 403 ||
+        response.statusCode == 404 ||
+        response.statusCode == 429 ||
+        response.statusCode == 503) {
       GlobalData.requestCookieLink = _baseLink;
     }
     return null;

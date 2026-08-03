@@ -183,7 +183,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    GlobalData.requestCookieLink ??= GlobalData.domain;
+                    if (GlobalData.requestCookieLink?.isEmpty ?? true) {
+                      GlobalData.requestCookieLink = GlobalData.domain;
+                    }
                     final channel = AnimeOne();
                     channel.bypassWebsiteCheck(context);
                   },

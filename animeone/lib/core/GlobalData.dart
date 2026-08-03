@@ -203,7 +203,12 @@ class GlobalData {
     prefs.setString(oneCookie, _cookie ?? 'videopassword=0');
   }
 
-  String getUserAgent() => _userAgent ?? '';
+  /// Fall back to a common desktop Chrome agent so requests never go out
+  /// with an empty user-agent before a WebView agent has been saved.
+  String getUserAgent() =>
+      _userAgent ??
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+          '(KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
   void updateUserAgent(String agent) {
     _userAgent = agent;
     prefs.setString(oneUserAgent, agent);

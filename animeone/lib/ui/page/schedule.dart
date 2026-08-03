@@ -115,8 +115,7 @@ class _ScheduleState extends State<Schedule>
                   String? url;
                   Map<String, String> headers = {
                     'referer': 'https://anime1.me/',
-                    'user-agent':
-                        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+                    'user-agent': GlobalData().getUserAgent(),
                   };
                   final v = video;
                   final videoUrl = v?.video;
@@ -125,7 +124,9 @@ class _ScheduleState extends State<Schedule>
                     final result = await parser.resolve(videoUrl);
                     url = result.url;
                     final cookie = result.cookie;
-                    if (cookie != null) headers['Cookie'] = cookie;
+                    headers['Cookie'] = cookie == null
+                        ? GlobalData().getCookie()
+                        : '${GlobalData().getCookie()}; $cookie';
                   } else {
                     url =
                         videoUrl?.startsWith('http') == true ? videoUrl : null;

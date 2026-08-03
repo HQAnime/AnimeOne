@@ -1,6 +1,6 @@
 {
   "@@locale": "id",
-  "appTitle": "AnimeOne",
+  "appTitle": "AnimeOne untuk Semua",
   "tabLatest": "Terbaru",
   "tabAnimeList": "Daftar Anime",
   "tabSchedule": "Jadwal",
@@ -60,6 +60,8 @@
   "large": "Besar",
   "forceDarkMode": "Paksa Mode Gelap",
   "forceDarkModeSubtitle": "Selalu gunakan mode gelap terlepas dari pengaturan sistem; nonaktifkan untuk mengikuti sistem",
+  "dynamicColor": "Warna Dinamis",
+  "dynamicColorSubtitle": "Gunakan warna tema berdasarkan wallpaper perangkat; nonaktifkan untuk menggunakan warna pink brand",
   "discordServer": "Server Discord Resmi",
   "officialWebsite": "Situs Web Resmi - Tentang",
   "officialWebsiteSubtitle": "Info kontak dan donasi di situs web resmi",

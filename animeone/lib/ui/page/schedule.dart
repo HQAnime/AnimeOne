@@ -67,9 +67,12 @@ class _ScheduleState extends State<Schedule>
           bottom: TabBar(
             controller: controller,
             tabs: tabs(context),
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white70,
-            indicatorColor: Colors.white,
+            labelColor: Theme.of(context).colorScheme.onSurface,
+            unselectedLabelColor: Theme.of(context)
+                .colorScheme
+                .onSurface
+                .withValues(alpha: 0.7),
+            indicatorColor: Theme.of(context).colorScheme.onSurface,
             indicatorWeight: 3,
             indicatorPadding: EdgeInsets.only(
               bottom: MediaQuery.of(context).textScaler.scale(6),

@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appTitle": "AnimeOne",
+  "appTitle": "AnimeOne for All",
   "tabLatest": "Latest",
   "tabAnimeList": "Anime List",
   "tabSchedule": "Schedule",
@@ -60,6 +60,8 @@
   "large": "Large",
   "forceDarkMode": "Force Dark Mode",
   "forceDarkModeSubtitle": "Always use dark mode regardless of system settings; disable to follow the system",
+  "dynamicColor": "Dynamic Color",
+  "dynamicColorSubtitle": "Use your device's wallpaper-based theme color; disable to use the pink brand color",
   "discordServer": "Official Discord Server",
   "officialWebsite": "Official Website - About",
   "officialWebsiteSubtitle": "Contact and donation info on the official website",

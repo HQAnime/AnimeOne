@@ -3,6 +3,7 @@ import 'package:animeone/core/translation/TranslationCache.dart';
 import 'package:animeone/core/translation/TranslationService.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/page/support.dart';
+import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -88,6 +89,31 @@ class Settings extends StatelessWidget {
                           activeColor: Theme.of(context).colorScheme.primary,
                           onChanged: (v) {
                             GlobalData().setForceDark(v ?? false);
+                            setInnerState(() {});
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android)
+                  StatefulBuilder(
+                  builder: (context, setInnerState) {
+                    final dynamicColor = GlobalData.dynamicColorNotifier.value;
+                    return ListTile(
+                      title: Text(l.dynamicColor),
+                      subtitle: Text(l.dynamicColorSubtitle),
+                      onTap: () {
+                        GlobalData().setDynamicColor(!dynamicColor);
+                        setInnerState(() {});
+                      },
+                      trailing: Transform.translate(
+                        offset: const Offset(8, 0),
+                        child: Checkbox(
+                          value: dynamicColor,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          onChanged: (v) {
+                            GlobalData().setDynamicColor(v ?? true);
                             setInnerState(() {});
                           },
                         ),
@@ -213,7 +239,7 @@ class Settings extends StatelessWidget {
                       context,
                       MaterialPageRoute<void>(
                         builder: (BuildContext context) => LicensePage(
-                          applicationName: 'AnimeOne',
+                          applicationName: 'AnimeOne for All',
                           applicationVersion: GlobalData.version,
                           applicationLegalese: l.openSourceLegalese,
                         ),

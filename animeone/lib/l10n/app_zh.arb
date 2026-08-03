@@ -1,6 +1,6 @@
 {
   "@@locale": "zh",
-  "appTitle": "AnimeOne",
+  "appTitle": "大家的AnimeOne",
   "tabLatest": "最新",
   "tabAnimeList": "動畫列表",
   "tabSchedule": "時間表",
@@ -65,6 +65,8 @@
   "large": "大",
   "forceDarkMode": "強制深色模式",
   "forceDarkModeSubtitle": "開啟後無論系統設定始終使用深色模式，關閉則跟隨系統",
+  "dynamicColor": "動態色彩",
+  "dynamicColorSubtitle": "使用裝置壁紙的主題色彩；關閉則使用粉紅色",
   "discordServer": "官方Discord伺服器",
   "officialWebsite": "官方網站 - 關於",
   "officialWebsiteSubtitle": "官方網站的聯繫方式和捐款",

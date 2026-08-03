@@ -33,10 +33,14 @@ class _AnimeListState extends State<AnimeList> {
             Expanded(
               child: TextField(
                 controller: _searchController,
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 20),
                 decoration: InputDecoration.collapsed(
                   hintText: AppLocalizations.of(context)!.quickSearch,
-                  hintStyle: const TextStyle(color: Colors.white, fontSize: 20),
+                  hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontSize: 20),
                 ),
                 autocorrect: false,
                 autofocus: false,
@@ -48,6 +52,10 @@ class _AnimeListState extends State<AnimeList> {
         actions: <Widget>[
           Ink.image(
             image: const AssetImage('lib/assets/icon/logo.png'),
+            colorFilter: ColorFilter.mode(
+              Theme.of(context).colorScheme.onSurface,
+              BlendMode.srcIn,
+            ),
             width: 64,
             height: 64,
             child: Tooltip(

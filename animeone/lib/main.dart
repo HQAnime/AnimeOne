@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:media_kit/media_kit.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 
 /// Entry point of this app
 void main() {
@@ -39,14 +40,31 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   Locale? _locale;
+  // Cached dynamic (wallpaper-based) schemes loaded from the platform.
+  ColorScheme? _lightDynamic;
+  ColorScheme? _darkDynamic;
 
   @override
   void initState() {
     super.initState();
     GlobalData.fontScaleNotifier.addListener(_onFontScaleChanged);
     GlobalData.darkModeNotifier.addListener(_onDarkModeChanged);
+    GlobalData.dynamicColorNotifier.addListener(_onDynamicColorChanged);
     GlobalData.localeNotifier.addListener(_onLocaleChanged);
     _locale = GlobalData().getLocale();
+    _loadDynamicSchemes();
+  }
+
+  /// Loads the system dynamic color scheme (Material You) when available.
+  /// Dynamic color is an Android 12+ feature; other platforms use the pink seed.
+  Future<void> _loadDynamicSchemes() async {
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) return;
+    final corePalette = await DynamicColorPlugin.getCorePalette();
+    if (!mounted || corePalette == null) return;
+    setState(() {
+      _lightDynamic = corePalette.toColorScheme(brightness: Brightness.light);
+      _darkDynamic = corePalette.toColorScheme(brightness: Brightness.dark);
+    });
   }
 
   void _onFontScaleChanged() {
@@ -54,6 +72,10 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onDarkModeChanged() {
+    if (mounted) setState(() {});
+  }
+
+  void _onDynamicColorChanged() {
     if (mounted) setState(() {});
   }
 
@@ -69,6 +91,7 @@ class _MyAppState extends State<MyApp> {
   void dispose() {
     GlobalData.fontScaleNotifier.removeListener(_onFontScaleChanged);
     GlobalData.darkModeNotifier.removeListener(_onDarkModeChanged);
+    GlobalData.dynamicColorNotifier.removeListener(_onDynamicColorChanged);
     GlobalData.localeNotifier.removeListener(_onLocaleChanged);
     super.dispose();
     final platformDispatcher = PlatformDispatcher.instance;
@@ -87,44 +110,44 @@ class _MyAppState extends State<MyApp> {
     };
   }
 
-  final darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.pink,
-      brightness: Brightness.dark,
-    ).copyWith(
-      secondary: Colors.pinkAccent,
-    ),
-    sliderTheme: SliderThemeData(
-      activeTrackColor: Colors.pink,
-      inactiveTrackColor: Colors.pink.shade100,
-      thumbColor: Colors.pink,
-    ),
-  );
-
-  final lightTheme = ThemeData(
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: Colors.pink,
-    ).copyWith(
-      secondary: Colors.pinkAccent,
-    ),
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.pink,
-      foregroundColor: Colors.white,
-      systemOverlayStyle: SystemUiOverlayStyle.light,
-    ),
-    sliderTheme: SliderThemeData(
-      activeTrackColor: Colors.pink,
-      inactiveTrackColor: Colors.pink.shade100,
-      thumbColor: Colors.pink,
-    ),
-  );
+  /// Follow the system dynamic color (Material You) when enabled, defaulting to
+  /// the pink brand otherwise. The cached scheme is null until the platform
+  /// reports one (and on platforms without dynamic color, e.g. pre-Android 12).
+  ThemeData _buildTheme(Brightness brightness) {
+    final dynamicScheme = brightness == Brightness.light
+        ? _lightDynamic
+        : _darkDynamic;
+    final useDynamic = !kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.android &&
+        GlobalData.dynamicColorNotifier.value &&
+        dynamicScheme != null;
+    final scheme = useDynamic
+        ? dynamicScheme
+        : ColorScheme.fromSeed(
+            seedColor: Colors.pink, brightness: brightness);
+    return ThemeData(
+      brightness: brightness,
+      colorScheme: scheme,
+      appBarTheme: AppBarTheme(
+        // Let Material 3 render the app bar with the default surface color so
+        // it matches other dynamic-color apps instead of a saturated primary.
+        systemOverlayStyle: brightness == Brightness.light
+            ? SystemUiOverlayStyle.light
+            : SystemUiOverlayStyle.dark,
+      ),
+      sliderTheme: SliderThemeData(
+        activeTrackColor: scheme.primary,
+        inactiveTrackColor: scheme.primary.withValues(alpha: 0.35),
+        thumbColor: scheme.primary,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
-      title: 'AnimeOne',
+      title: 'AnimeOne for All',
       locale: _locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -136,8 +159,8 @@ class _MyAppState extends State<MyApp> {
         }
         return const Locale('en');
       },
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
       themeMode:
           GlobalData.darkModeNotifier.value ? ThemeMode.dark : ThemeMode.system,
       home: HomePage(),

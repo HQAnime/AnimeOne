@@ -1,6 +1,6 @@
 {
   "@@locale": "ru",
-  "appTitle": "AnimeOne",
+  "appTitle": "Наш AnimeOne",
   "tabLatest": "Новинки",
   "tabAnimeList": "Список аниме",
   "tabSchedule": "Расписание",
@@ -60,6 +60,8 @@
   "large": "Крупный",
   "forceDarkMode": "Принудительный тёмный режим",
   "forceDarkModeSubtitle": "Всегда использовать тёмный режим независимо от системных настроек; выключить — следовать системе",
+  "dynamicColor": "Динамический цвет",
+  "dynamicColorSubtitle": "Использовать цвет темы на основе обоев устройства; выключить — фирменный розовый",
   "discordServer": "Официальный Discord сервер",
   "officialWebsite": "Официальный сайт - О нас",
   "officialWebsiteSubtitle": "Контактная информация и пожертвования на официальном сайте",

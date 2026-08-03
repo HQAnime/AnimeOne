@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ui' show Locale;
+import 'dart:ui' show Locale, PlatformDispatcher;
 
 import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
@@ -58,6 +58,7 @@ class GlobalData {
   static const fontScaleKey = 'AnimeOne:FontScale';
   static const historyKey = 'AnimeOne:WatchHistory';
   static const darkModeKey = 'AnimeOne:ForceDark';
+  static const dynamicColorKey = 'AnimeOne:DynamicColor';
   static const localeKey = 'AnimeOne:Locale';
   static final localeNotifier = ValueNotifier<Locale?>(null);
 
@@ -66,6 +67,7 @@ class GlobalData {
   static final fontScaleNotifier = ValueNotifier<double>(1.0);
   static final historyNotifier = ValueNotifier<int>(0);
   static final darkModeNotifier = ValueNotifier<bool>(false);
+  static final dynamicColorNotifier = ValueNotifier<bool>(true);
   double getFontScale() => _fontScale;
   void setFontScale(double v) {
     _fontScale = v;
@@ -88,6 +90,16 @@ class GlobalData {
     darkModeNotifier.value = prefs.getBool(darkModeKey) ?? false;
   }
 
+  bool getDynamicColor() => dynamicColorNotifier.value;
+  void setDynamicColor(bool v) {
+    prefs.setBool(dynamicColorKey, v);
+    dynamicColorNotifier.value = v;
+  }
+
+  void initDynamicColor() {
+    dynamicColorNotifier.value = prefs.getBool(dynamicColorKey) ?? true;
+  }
+
   Locale? getLocale() => _locale;
   void setLocale(String code) {
     _locale = Locale(code);
@@ -96,11 +108,13 @@ class GlobalData {
   }
 
   void initLocale() {
+    // A user-chosen locale wins; otherwise default to the device locale so a
+    // matching entry is pre-selected on first launch.
     final code = prefs.getString(localeKey);
-    if (code != null) {
-      _locale = Locale(code);
-      localeNotifier.value = _locale;
-    }
+    _locale = code != null
+        ? Locale(code)
+        : PlatformDispatcher.instance.locale;
+    localeNotifier.value = _locale;
   }
 
   List<WatchEntry> getHistory() {
@@ -233,6 +247,8 @@ class GlobalData {
     initFontScale();
     // Dark mode
     initDarkMode();
+    // Dynamic color
+    initDynamicColor();
     // Locale
     initLocale();
     // Translation

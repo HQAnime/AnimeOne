@@ -1,6 +1,6 @@
 {
   "@@locale": "ko",
-  "appTitle": "AnimeOne",
+  "appTitle": "모두의 AnimeOne",
   "tabLatest": "최신",
   "tabAnimeList": "애니메이션 목록",
   "tabSchedule": "스케줄",
@@ -60,6 +60,8 @@
   "large": "크게",
   "forceDarkMode": "다크 모드 강제",
   "forceDarkModeSubtitle": "시스템 설정과 관계없이 항상 다크 모드 사용, 끄면 시스템 설정 따름",
+  "dynamicColor": "다이내믹 컬러",
+  "dynamicColorSubtitle": "기기의 배경화면 기반 테마 색상 사용. 끄면 핑크 브랜드 색상 사용",
   "discordServer": "공식 Discord 서버",
   "officialWebsite": "공식 웹사이트 - 정보",
   "officialWebsiteSubtitle": "공식 웹사이트의 연락처 및 기부 정보",

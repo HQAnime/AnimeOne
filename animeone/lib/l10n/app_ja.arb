@@ -1,6 +1,6 @@
 {
   "@@locale": "ja",
-  "appTitle": "AnimeOne",
+  "appTitle": "みんなのAnimeOne",
   "tabLatest": "最新",
   "tabAnimeList": "アニメ一覧",
   "tabSchedule": "スケジュール",
@@ -60,6 +60,8 @@
   "large": "大",
   "forceDarkMode": "ダークモードを強制",
   "forceDarkModeSubtitle": "システム設定に関わらず常にダークモードを使用、オフでシステムに従う",
+  "dynamicColor": "ダイナミックカラー",
+  "dynamicColorSubtitle": "壁紙ベースのテーマ色を使用。オフでブランドのピンクを使用",
   "discordServer": "公式Discordサーバー",
   "officialWebsite": "公式ウェブサイト - について",
   "officialWebsiteSubtitle": "公式サイトの連絡先と寄付情報",

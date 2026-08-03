@@ -67,6 +67,10 @@ class _LatestState extends State<Latest> {
           ),
           Ink.image(
             image: const AssetImage('lib/assets/icon/logo.png'),
+            colorFilter: ColorFilter.mode(
+              Theme.of(context).colorScheme.onSurface,
+              BlendMode.srcIn,
+            ),
             width: 28,
             height: 28,
             child: Tooltip(

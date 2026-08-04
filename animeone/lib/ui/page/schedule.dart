@@ -66,17 +66,15 @@ class _ScheduleState extends State<Schedule>
       appBar: AppBar(
           bottom: TabBar(
             controller: controller,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
             tabs: tabs(context),
             labelColor: Theme.of(context).colorScheme.onSurface,
-            unselectedLabelColor: Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withValues(alpha: 0.7),
+            unselectedLabelColor:
+                Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
             indicatorColor: Theme.of(context).colorScheme.onSurface,
             indicatorWeight: 3,
-            indicatorPadding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).textScaler.scale(6),
-            ),
+            indicatorPadding: EdgeInsets.zero,
           ),
           title: Padding(
             padding: const EdgeInsets.only(top: 2, bottom: 2),
@@ -84,6 +82,9 @@ class _ScheduleState extends State<Schedule>
               widthFactor: 0.7,
               child: MaterialButton(
                 color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
                 visualDensity: VisualDensity.compact,
                 onPressed: () {
                   Navigator.push(
@@ -94,12 +95,15 @@ class _ScheduleState extends State<Schedule>
                     ),
                   );
                 },
-                child: Text(
-                  global.getSeasonName(AppLocalizations.of(context)!),
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: Colors.black87,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    global.getSeasonName(AppLocalizations.of(context)!),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
                   ),
                 ),
               ),

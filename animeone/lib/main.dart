@@ -132,8 +132,8 @@ class _MyAppState extends State<MyApp> {
         // Let Material 3 render the app bar with the default surface color so
         // it matches other dynamic-color apps instead of a saturated primary.
         systemOverlayStyle: brightness == Brightness.light
-            ? SystemUiOverlayStyle.light
-            : SystemUiOverlayStyle.dark,
+            ? SystemUiOverlayStyle.dark
+            : SystemUiOverlayStyle.light,
       ),
       sliderTheme: SliderThemeData(
         activeTrackColor: scheme.primary,

@@ -6,12 +6,20 @@ import android.webkit.CookieManager
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 
 class WebActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
+        // Android 15 enforces edge-to-edge (targetSdk 35), which ignores the
+        // theme's status bar attrs. Set the icon appearance directly, matching
+        // the app's light/dark theme passed from Flutter: light theme -> dark
+        // (black) icons, dark theme -> light (white) icons.
+        val dark = intent.getBooleanExtra("dark", false)
+        WindowCompat.getInsetsController(window, window.decorView)
+            .isAppearanceLightStatusBars = !dark
         // Fall back to the home page when no specific link was remembered,
         // so the bypass never launches with an empty URL.
         val link = intent.getStringExtra("link")?.takeIf { it.isNotBlank() }

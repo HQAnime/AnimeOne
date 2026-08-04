@@ -32,9 +32,13 @@ class AnimeOne {
 
   /// Popup native browser and get cookie from webview
   Future<List<String>>? _getAnimeOneCookie() async {
+    // Let the native webview match the app's light/dark theme.
+    final dark = GlobalData().getForceDark() ||
+        WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+            Brightness.dark;
     final list = await _invokeMethod(
       'getAnimeOneCookie',
-      {'link': GlobalData.requestCookieLink},
+      {'link': GlobalData.requestCookieLink, 'dark': dark},
     ) as List;
 
     return list.map((e) => e as String).toList();

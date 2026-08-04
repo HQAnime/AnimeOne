@@ -193,9 +193,11 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
               backgroundColor: Colors.black,
               body: Stack(
                 children: [
-                  Video(
-                    controller: _controller,
-                    controls: null,
+                  Positioned.fill(
+                    child: Video(
+                      controller: _controller,
+                      controls: null,
+                    ),
                   ),
                   // Transparent layer for long-press and tap-to-show.
                   Row(
@@ -221,18 +223,28 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
                       ),
                     ],
                   ),
-                  IgnorePointer(
-                    ignoring: !_overlayVisible,
-                    child: AnimatedOpacity(
-                      opacity: _overlayVisible ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 300),
-                      child: _buildTopBar(),
+                  Positioned(
+                    top: 8,
+                    left: 0,
+                    right: 0,
+                    child: IgnorePointer(
+                      ignoring: !_overlayVisible,
+                      child: AnimatedOpacity(
+                        opacity: _overlayVisible ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 300),
+                        child: _buildTopBar(),
+                      ),
                     ),
                   ),
-                  AnimatedOpacity(
-                    opacity: _speedBoost && !_overlayVisible ? 1.0 : 0.0,
-                    duration: const Duration(milliseconds: 300),
-                    child: _buildSpeedBadge(),
+                  Positioned(
+                    top: 12,
+                    left: 0,
+                    right: 0,
+                    child: AnimatedOpacity(
+                      opacity: _speedBoost && !_overlayVisible ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 300),
+                      child: _buildSpeedBadge(),
+                    ),
                   ),
                   _buildControlsBar(),
                 ],
@@ -315,22 +327,17 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
   }
 
   Widget _buildSpeedBadge() {
-    return const Positioned(
-      top: 12,
-      left: 0,
-      right: 0,
-      child: Center(
-        child: Material(
-          color: Color(0x44000000),
-          shape: StadiumBorder(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            child: Text('2x',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700)),
-          ),
+    return const Center(
+      child: Material(
+        color: Color(0x44000000),
+        shape: StadiumBorder(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Text('2x',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700)),
         ),
       ),
     );
@@ -351,67 +358,61 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
   }
 
   Widget _buildTopBar() {
-    return Positioned(
-      top: 8,
-      left: 0,
-      right: 0,
-      child: SafeArea(
-        bottom: false,
-        child: Row(
-          children: [
-            const SizedBox(width: 8),
-            Material(
+    return SafeArea(
+      bottom: false,
+      child: Row(
+        children: [
+          const SizedBox(width: 8),
+          Material(
+            color: Color(0x44000000),
+            shape: const CircleBorder(),
+            child: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white, size: 24),
+              onPressed: _close,
+              tooltip: AppLocalizations.of(context)!.closePlayer,
+            ),
+          ),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
               color: Color(0x44000000),
-              shape: const CircleBorder(),
-              child: IconButton(
-                icon: const Icon(Icons.close, color: Colors.white, size: 24),
-                onPressed: _close,
-                tooltip: AppLocalizations.of(context)!.closePlayer,
-              ),
+              borderRadius: BorderRadius.circular(12),
             ),
-            const Spacer(),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Color(0x44000000),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Text(
-                '${_formatDuration(_positionSec)} / ${_formatDuration(_durationSec)}',
-                style: const TextStyle(color: Colors.white, fontSize: 13),
-              ),
+            child: Text(
+              '${_formatDuration(_positionSec)} / ${_formatDuration(_durationSec)}',
+              style: const TextStyle(color: Colors.white, fontSize: 13),
             ),
-            if (_speedBoost)
-              Padding(
-                padding: const EdgeInsets.only(left: 4),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Color(0x44000000),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Text('2x',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700)),
+          ),
+          if (_speedBoost)
+            Padding(
+              padding: const EdgeInsets.only(left: 4),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Color(0x44000000),
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              ),
-            const Spacer(),
-            Material(
-              color: Color(0x44000000),
-              shape: const CircleBorder(),
-              child: IconButton(
-                icon: const Icon(Icons.fast_forward,
-                    color: Colors.white, size: 24),
-                onPressed: _jump80,
-                tooltip: AppLocalizations.of(context)!.skipJump80,
+                child: const Text('2x',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700)),
               ),
             ),
-            const SizedBox(width: 8),
-          ],
-        ),
+          const Spacer(),
+          Material(
+            color: Color(0x44000000),
+            shape: const CircleBorder(),
+            child: IconButton(
+              icon:
+                  const Icon(Icons.fast_forward, color: Colors.white, size: 24),
+              onPressed: _jump80,
+              tooltip: AppLocalizations.of(context)!.skipJump80,
+            ),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
     );
   }

@@ -50,7 +50,7 @@ class AnimeCoverImage extends StatelessWidget {
           l.launchBrowserForPassword,
           style: TextStyle(
             backgroundColor: Theme.of(context).colorScheme.primary,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimary,
             fontSize: 18,
           ),
         ),

@@ -254,50 +254,56 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
         child: AnimatedOpacity(
           opacity: _overlayVisible ? 1.0 : 0.0,
           duration: const Duration(milliseconds: 300),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          decoration: const BoxDecoration(
-            color: Color(0x44000000),
-            borderRadius: BorderRadius.all(Radius.circular(100)),
-          ),
-          clipBehavior: Clip.antiAlias,
-          child: Row(
-            children: [
-              IconButton(
-                icon: Icon(
-                  _playing ? Icons.pause : Icons.play_arrow,
-                  color: Colors.white,
-                  size: 28,
-                ),
-                onPressed: _togglePlay,
-                tooltip: AppLocalizations.of(context)!.clickToPlay,
-              ),
-              Expanded(
-                child: SliderTheme(
-                  data: const SliderThemeData(
-                    trackHeight: 3,
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
-                    overlayShape: RoundSliderOverlayShape(overlayRadius: 12),
-                    activeTrackColor: Colors.pink,
-                    inactiveTrackColor: Color(0x29FF69B4),
-                    thumbColor: Colors.pink,
-                    overlayColor: Color(0x29FF69B4),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: const BoxDecoration(
+              color: Color(0x44000000),
+              borderRadius: BorderRadius.all(Radius.circular(100)),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(
+                    _playing ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                    size: 28,
                   ),
-                  child: Slider(
-                    value: _durationSec > 0
-                        ? (_positionSec / _durationSec).clamp(0.0, 1.0)
-                        : 0.0,
-                    onChanged: (v) {
-                      _player
-                          .seek(Duration(seconds: (v * _durationSec).round()));
-                    },
+                  onPressed: _togglePlay,
+                  tooltip: AppLocalizations.of(context)!.clickToPlay,
+                ),
+                Expanded(
+                  child: SliderTheme(
+                    data: SliderThemeData(
+                      trackHeight: 3,
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 12),
+                      activeTrackColor: Theme.of(context).colorScheme.primary,
+                      inactiveTrackColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.16),
+                      thumbColor: Theme.of(context).colorScheme.primary,
+                      overlayColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: 0.16),
+                    ),
+                    child: Slider(
+                      value: _durationSec > 0
+                          ? (_positionSec / _durationSec).clamp(0.0, 1.0)
+                          : 0.0,
+                      onChanged: (v) {
+                        _player.seek(
+                            Duration(seconds: (v * _durationSec).round()));
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

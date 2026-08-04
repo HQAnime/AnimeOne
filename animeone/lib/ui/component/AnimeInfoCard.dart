@@ -34,9 +34,9 @@ class AnimeInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
-    final first = isDark ? Colors.grey[900] : Colors.white;
-    final second = isDark ? Colors.grey[800] : Colors.grey[200];
+    final scheme = Theme.of(context).colorScheme;
+    final first = scheme.surface;
+    final second = scheme.surfaceContainer;
 
     return Material(
       color: index % 2 == 0 ? first : second,

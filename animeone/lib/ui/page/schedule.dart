@@ -62,6 +62,8 @@ class _ScheduleState extends State<Schedule>
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
           bottom: TabBar(
@@ -81,7 +83,7 @@ class _ScheduleState extends State<Schedule>
             child: FractionallySizedBox(
               widthFactor: 0.7,
               child: MaterialButton(
-                color: Colors.white,
+                color: scheme.surfaceContainerHighest,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -99,10 +101,10 @@ class _ScheduleState extends State<Schedule>
                   fit: BoxFit.scaleDown,
                   child: Text(
                     global.getSeasonName(AppLocalizations.of(context)!),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
-                      color: Colors.black87,
+                      color: scheme.onSurface,
                     ),
                   ),
                 ),

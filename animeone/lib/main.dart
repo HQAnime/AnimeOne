@@ -114,21 +114,21 @@ class _MyAppState extends State<MyApp> {
   /// the pink brand otherwise. The cached scheme is null until the platform
   /// reports one (and on platforms without dynamic color, e.g. pre-Android 12).
   ThemeData _buildTheme(Brightness brightness) {
-    final dynamicScheme = brightness == Brightness.light
-        ? _lightDynamic
-        : _darkDynamic;
+    final dynamicScheme =
+        brightness == Brightness.light ? _lightDynamic : _darkDynamic;
     final useDynamic = !kIsWeb &&
         defaultTargetPlatform == TargetPlatform.android &&
         GlobalData.dynamicColorNotifier.value &&
         dynamicScheme != null;
     final scheme = useDynamic
         ? dynamicScheme
-        : ColorScheme.fromSeed(
-            seedColor: Colors.pink, brightness: brightness);
+        : ColorScheme.fromSeed(seedColor: Colors.pink, brightness: brightness);
     return ThemeData(
       brightness: brightness,
       colorScheme: scheme,
+      iconTheme: IconThemeData(color: scheme.primary),
       appBarTheme: AppBarTheme(
+        iconTheme: IconThemeData(color: scheme.primary),
         // Let Material 3 render the app bar with the default surface color so
         // it matches other dynamic-color apps instead of a saturated primary.
         systemOverlayStyle: brightness == Brightness.light

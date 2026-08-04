@@ -102,7 +102,7 @@ class _WatchHistoryState extends State<WatchHistory> {
                               ? Icons.check_circle
                               : Icons.play_circle_outline,
                           color: entry.done
-                              ? Colors.green
+                              ? Theme.of(context).colorScheme.tertiary
                               : Theme.of(context).colorScheme.secondary,
                         ),
                   title: TranslatedText(

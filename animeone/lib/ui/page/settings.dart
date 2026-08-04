@@ -39,7 +39,8 @@ class Settings extends StatelessWidget {
             },
             title: Text(l.supportDevTitle),
             subtitle: Text(l.supportDevSubtitle),
-            trailing: const Icon(Icons.favorite, color: Colors.red),
+            trailing: Icon(Icons.favorite,
+                color: Theme.of(context).colorScheme.error),
           ),
           const Divider(),
           Expanded(
@@ -98,29 +99,30 @@ class Settings extends StatelessWidget {
                 ),
                 if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android)
                   StatefulBuilder(
-                  builder: (context, setInnerState) {
-                    final dynamicColor = GlobalData.dynamicColorNotifier.value;
-                    return ListTile(
-                      title: Text(l.dynamicColor),
-                      subtitle: Text(l.dynamicColorSubtitle),
-                      onTap: () {
-                        GlobalData().setDynamicColor(!dynamicColor);
-                        setInnerState(() {});
-                      },
-                      trailing: Transform.translate(
-                        offset: const Offset(8, 0),
-                        child: Checkbox(
-                          value: dynamicColor,
-                          activeColor: Theme.of(context).colorScheme.primary,
-                          onChanged: (v) {
-                            GlobalData().setDynamicColor(v ?? true);
-                            setInnerState(() {});
-                          },
+                    builder: (context, setInnerState) {
+                      final dynamicColor =
+                          GlobalData.dynamicColorNotifier.value;
+                      return ListTile(
+                        title: Text(l.dynamicColor),
+                        subtitle: Text(l.dynamicColorSubtitle),
+                        onTap: () {
+                          GlobalData().setDynamicColor(!dynamicColor);
+                          setInnerState(() {});
+                        },
+                        trailing: Transform.translate(
+                          offset: const Offset(8, 0),
+                          child: Checkbox(
+                            value: dynamicColor,
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            onChanged: (v) {
+                              GlobalData().setDynamicColor(v ?? true);
+                              setInnerState(() {});
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
+                      );
+                    },
+                  ),
                 const Divider(),
                 StatefulBuilder(
                   builder: (context, setInnerState) {

@@ -53,7 +53,7 @@ class _AnimeListState extends State<AnimeList> {
           Ink.image(
             image: const AssetImage('lib/assets/icon/logo.png'),
             colorFilter: ColorFilter.mode(
-              Theme.of(context).colorScheme.onSurface,
+              Theme.of(context).colorScheme.primary,
               BlendMode.srcIn,
             ),
             width: 32,

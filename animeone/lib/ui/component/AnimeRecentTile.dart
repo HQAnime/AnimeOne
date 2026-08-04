@@ -38,8 +38,8 @@ class AnimeRecentTile extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 16),
                 child: entry.done
-                    ? const Icon(Icons.check_circle,
-                        color: Colors.green, size: 20)
+                    ? Icon(Icons.check_circle,
+                        color: Theme.of(context).colorScheme.tertiary, size: 20)
                     : Text(
                         '${(entry.progress * 100).toStringAsFixed(0)}%',
                         style: TextStyle(

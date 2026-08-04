@@ -24,11 +24,14 @@ class AnimeRecentTile extends StatelessWidget {
         return Row(
           children: [
             Expanded(
-              child: AnimeButton(
-                basic: recent,
-                recent: true,
-                autofocus: autofocus,
-                translate: true,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 48),
+                child: AnimeButton(
+                  basic: recent,
+                  recent: true,
+                  autofocus: autofocus,
+                  translate: true,
+                ),
               ),
             ),
             if (entry != null)

@@ -56,8 +56,8 @@ class _AnimeListState extends State<AnimeList> {
               Theme.of(context).colorScheme.onSurface,
               BlendMode.srcIn,
             ),
-            width: 64,
-            height: 64,
+            width: 32,
+            height: 32,
             child: Tooltip(
               message: AppLocalizations.of(context)!.aboutAnimeOne,
               child: InkWell(

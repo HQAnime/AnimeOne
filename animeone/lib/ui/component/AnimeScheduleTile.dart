@@ -18,7 +18,10 @@ class AnimeScheduleTile extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: AnimeButton(basic: schedule),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: AnimeButton(basic: schedule),
+          ),
         ),
         IconButton(
           tooltip: AppLocalizations.of(context)!

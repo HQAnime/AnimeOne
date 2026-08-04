@@ -42,6 +42,7 @@ dependencies:
   media_kit_libs_linux: ^1.2.1
   media_kit_libs_android_video: ^1.2.6
   dynamic_color: ^1.8.1
+  liquid_glass_widgets: ^0.29.1
 
 dev_dependencies:
   flutter_test:
@@ -88,5 +89,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-

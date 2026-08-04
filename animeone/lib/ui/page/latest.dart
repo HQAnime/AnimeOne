@@ -71,8 +71,8 @@ class _LatestState extends State<Latest> {
               Theme.of(context).colorScheme.onSurface,
               BlendMode.srcIn,
             ),
-            width: 28,
-            height: 28,
+            width: 32,
+            height: 32,
             child: Tooltip(
               message: l.aboutAnimeOne,
               child: InkWell(

@@ -50,27 +50,33 @@ class _AnimeListState extends State<AnimeList> {
           ],
         ),
         actions: <Widget>[
-          Ink.image(
-            image: const AssetImage('lib/assets/icon/logo.png'),
-            colorFilter: ColorFilter.mode(
-              Theme.of(context).colorScheme.primary,
-              BlendMode.srcIn,
-            ),
-            width: 32,
-            height: 32,
+          InkWell(
+            borderRadius: BorderRadius.circular(24),
+            onTap: () {
+              // Go to information page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Settings(),
+                ),
+              );
+            },
             child: Tooltip(
               message: AppLocalizations.of(context)!.aboutAnimeOne,
-              child: InkWell(
-                onTap: () {
-                  // Go to information page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Settings(),
+              child: SizedBox(
+                width: 48,
+                height: 48,
+                child: Center(
+                  child: Ink.image(
+                    image: const AssetImage('lib/assets/icon/logo.png'),
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).colorScheme.primary,
+                      BlendMode.srcIn,
                     ),
-                  );
-                },
-                child: null,
+                    width: 32,
+                    height: 32,
+                  ),
+                ),
               ),
             ),
           ),

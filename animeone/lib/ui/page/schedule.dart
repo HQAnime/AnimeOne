@@ -7,6 +7,7 @@ import 'package:animeone/ui/component/AnimeScheduleTile.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/page/desktop_player.dart';
 import 'package:flutter/material.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({super.key});
@@ -82,13 +83,8 @@ class _ScheduleState extends State<Schedule>
             padding: const EdgeInsets.only(top: 2, bottom: 2),
             child: FractionallySizedBox(
               widthFactor: 0.7,
-              child: MaterialButton(
-                color: scheme.surfaceContainerHighest,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                visualDensity: VisualDensity.compact,
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -97,14 +93,20 @@ class _ScheduleState extends State<Schedule>
                     ),
                   );
                 },
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    global.getSeasonName(AppLocalizations.of(context)!),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: scheme.onSurface,
+                child: GlassContainer(
+                  quality: GlassQuality.minimal,
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  shape: const LiquidRoundedRectangle(borderRadius: 20),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      global.getSeasonName(AppLocalizations.of(context)!),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: scheme.onSurface,
+                      ),
                     ),
                   ),
                 ),

@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 
 /// Entry point of this app
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MediaKit.ensureInitialized();
+  await LiquidGlassWidgets.initialize();
 
   // setup logger and make sure it only prints in debug mode
   Logger.root.level = Level.ALL; // defaults to Level.INFO
@@ -22,7 +24,15 @@ void main() {
     }
   });
 
-  runApp(const MyApp());
+  runApp(LiquidGlassWidgets.wrap(
+    child: const MyApp(),
+    adaptiveQuality: true,
+    theme: GlassThemeData.simple(
+      blur: 10,
+      thickness: 30,
+      quality: GlassQuality.minimal,
+    ),
+  ));
 }
 
 class _PopIntent extends Intent {

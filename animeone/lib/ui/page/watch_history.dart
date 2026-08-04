@@ -47,6 +47,13 @@ class _WatchHistoryState extends State<WatchHistory> {
     return '$m:$s';
   }
 
+  void _openEpisode(String link) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Anime(link: link)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context)!;
@@ -109,9 +116,22 @@ class _WatchHistoryState extends State<WatchHistory> {
                     originalText: entry.episodeName,
                     maxLines: 1,
                   ),
-                  subtitle: Text(
-                    l.watchHistorySubtitle(_fmtDuration(entry.positionSec),
-                        _fmtDuration(entry.durationSec), pct),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        l.watchHistorySubtitle(_fmtDuration(entry.positionSec),
+                            _fmtDuration(entry.durationSec), pct),
+                      ),
+                      const SizedBox(height: 4),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          visualDensity: VisualDensity.compact,
+                        ),
+                        child: Text(l.allEpisodes),
+                        onPressed: () => _openEpisode(entry.episodeLink),
+                      ),
+                    ],
                   ),
                   onTap: _loadingIndex != null
                       ? null

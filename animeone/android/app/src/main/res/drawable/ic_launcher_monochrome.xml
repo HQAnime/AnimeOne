@@ -1,0 +1,7 @@
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="28%"
+    android:insetTop="28%"
+    android:insetRight="28%"
+    android:insetBottom="28%">
+    <bitmap android:src="@drawable/ic_launcher_monochrome_bitmap" />
+</inset>

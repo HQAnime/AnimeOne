@@ -1,8 +1,10 @@
 package org.github.henryquan.animeone
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.webkit.CookieManager
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +36,11 @@ class WebActivity : AppCompatActivity() {
         webView.settings.javaScriptEnabled = true
         // Cloudflare's challenge (turnstile) needs DOM storage
         webView.settings.domStorageEnabled = true
+        // Match the app's light/dark theme in the web content (API 29+).
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            webView.settings.forceDark =
+                if (dark) WebSettings.FORCE_DARK_ON else WebSettings.FORCE_DARK_OFF
+        }
         webView.clearCache(false)
         // Set up client to get cookie
         webView.webViewClient = WebClient(this)

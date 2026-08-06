@@ -36,7 +36,8 @@ struct WebviewContext {
   HWND host = nullptr;
   webview_t w = nullptr;
   int attempts = 0;
-  const int max_attempts = 60;  // ~60 seconds at one poll per second
+  bool cleared = false;  // cookie jar cleared before first navigation
+  const int max_attempts = 30;  // ~30 seconds at one poll per second
 };
 
 // Diagnostic log next to the executable so it is easy to find.
@@ -90,6 +91,36 @@ std::string UrlEncode(const std::string& s) {
 }
 
 void DeliverResult(WebviewContext* ctx);
+
+// Reads the WebView2 user agent synchronously.
+std::string FetchUserAgent(webview_t w) {
+  std::string ua;
+  auto* controller = static_cast<ICoreWebView2Controller*>(
+      webview_get_native_handle(w, WEBVIEW_NATIVE_HANDLE_KIND_BROWSER_CONTROLLER));
+  if (controller != nullptr) {
+    ICoreWebView2* webview = nullptr;
+    if (SUCCEEDED(controller->get_CoreWebView2(&webview)) &&
+        webview != nullptr) {
+      ICoreWebView2Settings* settings = nullptr;
+      if (SUCCEEDED(webview->get_Settings(&settings)) && settings != nullptr) {
+        ICoreWebView2Settings2* settings2 = nullptr;
+        if (SUCCEEDED(settings->QueryInterface(__uuidof(ICoreWebView2Settings2),
+                                               reinterpret_cast<void**>(&settings2))) &&
+            settings2 != nullptr) {
+          LPWSTR agent = nullptr;
+          if (SUCCEEDED(settings2->get_UserAgent(&agent)) && agent != nullptr) {
+            ua = ToNarrow(agent);
+            CoTaskMemFree(agent);
+          }
+          settings2->Release();
+        }
+        settings->Release();
+      }
+      webview->Release();
+    }
+  }
+  return ua;
+}
 
 // Poll step scheduled on the webview thread: asks the cookie manager for the
 // site's cookies and checks for cf_clearance.
@@ -151,42 +182,15 @@ struct CookieListHandler : public ICoreWebView2GetCookiesCompletedHandler {
     if (cookie.find("cf_clearance") != std::string::npos ||
         ctx->attempts >= ctx->max_attempts) {
       Log("poll finished, cookie=" + cookie);
-      // Grab the browser user agent so Dart requests look consistent.
-      std::string ua;
-      auto* controller = static_cast<ICoreWebView2Controller*>(
-          webview_get_native_handle(ctx->w,
-                                    WEBVIEW_NATIVE_HANDLE_KIND_BROWSER_CONTROLLER));
-      if (controller != nullptr) {
-        ICoreWebView2* webview = nullptr;
-        if (SUCCEEDED(controller->get_CoreWebView2(&webview)) &&
-            webview != nullptr) {
-          ICoreWebView2Settings* settings = nullptr;
-          if (SUCCEEDED(webview->get_Settings(&settings)) &&
-              settings != nullptr) {
-            // get_UserAgent lives on ICoreWebView2Settings2.
-            ICoreWebView2Settings2* settings2 = nullptr;
-            if (SUCCEEDED(settings->QueryInterface(
-                    __uuidof(ICoreWebView2Settings2),
-                    reinterpret_cast<void**>(&settings2))) &&
-                settings2 != nullptr) {
-              LPWSTR agent = nullptr;
-              if (SUCCEEDED(settings2->get_UserAgent(&agent)) &&
-                  agent != nullptr) {
-                ua = ToNarrow(agent);
-                CoTaskMemFree(agent);
-              }
-              settings2->Release();
-            }
-            settings->Release();
-          }
-          webview->Release();
-        }
-      }
-      ctx->blob = UrlEncode(cookie) + "|" + UrlEncode(ua);
+      ctx->blob = UrlEncode(cookie) + "|" + UrlEncode(FetchUserAgent(ctx->w));
       DeliverResult(ctx);
     } else {
       ctx->attempts++;
       Log("poll " + std::to_string(ctx->attempts) + ": no cf_clearance yet");
+      // Give the page/challenge real time to load: without this delay the
+      // poll loop spins through all attempts in under a second and the
+      // window closes before the site has even loaded.
+      ::Sleep(1000);
       webview_dispatch(ctx->w, PollCookieStep, ctx);
     }
     return S_OK;
@@ -224,6 +228,20 @@ void PollCookieStep(webview_t w, void* arg) {
     return;
   }
   webview2->Release();
+
+  // First step: wipe the jar so the site must re-issue a fresh cf_clearance
+  // (a cookie from a previous run is likely expired).
+  if (!ctx->cleared) {
+    ctx->cleared = true;
+    manager->DeleteAllCookies();  // fire-and-forget in this SDK version
+    Log("cookie jar cleared");
+    ::Sleep(500);  // let the deletion land before loading the site
+    webview_navigate(w, ctx->link.c_str());
+    webview_dispatch(w, PollCookieStep, ctx);
+    manager->Release();
+    return;
+  }
+
   auto url = ToWide(ctx->link);
   // refs starts at 1 (ours); WebView2 AddRefs on receipt, and the final
   // Release after Invoke destroys the handler.
@@ -250,9 +268,11 @@ void RunWebview(WebviewContext* ctx) {
   ctx->w = webview_create(0, nullptr);
   Log(ctx->w != nullptr ? "webview created" : "webview create FAILED");
   if (ctx->w != nullptr) {
-    webview_set_title(ctx->w, "AnimeOne - Cloudflare verification");
+    webview_set_title(
+        ctx->w, "AnimeOne - Cloudflare verification (click the checkbox if shown)");
     webview_set_size(ctx->w, 480, 640, WEBVIEW_HINT_NONE);
-    webview_navigate(ctx->w, ctx->link.c_str());
+    // Navigation happens after the cookie jar is cleared (see the first
+    // poll step), so the site re-issues a fresh cf_clearance.
     // Start the cookie polling once the webview event loop is running.
     webview_dispatch(ctx->w, PollCookieStep, ctx);
     webview_run(ctx->w);

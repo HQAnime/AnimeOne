@@ -48,6 +48,31 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+  msix: ^3.16.8
+
+# Windows app icon, generated from the Android launcher icon (192x192):
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  windows:
+    generate: true
+    image_path: "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    icon_size: 256
+
+# Windows MSIX packaging:
+#   flutter build windows --release
+#   dart run msix:create
+msix_config:
+  display_name: AnimeOne
+  publisher_display_name: AnimeOne
+  identity_name: org.github.henryquan.animeone
+  msix_version: 1.0.0.0
+  # Build unsigned; sign with a real code-signing certificate (e.g. SignPath
+  # free OSS signing) so the package installs on every machine:
+  #   dart run msix:create --sign-msix false
+  sign_msix: false
+  install_certificate: false
+  build_windows: false
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

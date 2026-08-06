@@ -17,12 +17,15 @@ class ErrorButton extends StatelessWidget {
     final l = AppLocalizations.of(context)!;
     String finalMsg = '${l.error404}\n\n${msg ?? ''}';
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(finalMsg, textAlign: TextAlign.center),
-          renderFixButton(context),
-        ],
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(finalMsg, textAlign: TextAlign.center),
+            renderFixButton(context),
+          ],
+        ),
       ),
     );
   }

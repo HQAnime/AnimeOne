@@ -4,4 +4,6 @@
 **/.plugin_symlinks/
 **/generated_plugins.cmake
 **/GeneratedPluginRegistrant.*
+**/generated_plugin_registrant.cc
+**/generated_plugin_registrant.h
 animeone/.flutter-plugins-dependencies

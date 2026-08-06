@@ -14,7 +14,7 @@ class AnimeOne {
 
   /// If native channel is supported
   bool _isSupported() {
-    return Platform.isAndroid;
+    return Platform.isAndroid || Platform.isWindows;
   }
 
   Future? _invokeMethod(String method, [dynamic arguments]) async {
@@ -41,6 +41,18 @@ class AnimeOne {
       {'link': GlobalData.requestCookieLink, 'dark': dark},
     ) as List;
 
+    // Windows hands back one URL-encoded "cookie|userAgent" blob. Split on
+    // the literal separator BEFORE decoding, so a %7C inside the content
+    // cannot be mistaken for the separator.
+    if (Platform.isWindows) {
+      final blob = list[0] as String;
+      final sep = blob.indexOf('|');
+      if (sep < 0) return ['', ''];
+      return [
+        Uri.decodeComponent(blob.substring(0, sep)),
+        Uri.decodeComponent(blob.substring(sep + 1)),
+      ];
+    }
     return list.map((e) => e as String).toList();
   }
 
@@ -53,6 +65,9 @@ class AnimeOne {
         final data = GlobalData();
         data.updateCookie(cookie);
         data.updateUserAgent(userAgent);
+        // Refetch failed data with the new cookie (Android restarts the app
+        // anyway; desktop reloads in place).
+        data.refreshData();
 
         // restart if successful, only show the error if it failed
         restartApp();

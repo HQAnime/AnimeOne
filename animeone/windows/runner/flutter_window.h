@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "cookie_bridge.h"
 #include "win32_window.h"
 
 // A window that does nothing but host a Flutter view.

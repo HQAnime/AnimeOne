@@ -31,9 +31,9 @@ android {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "org.github.henryquan.animeone"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 35
-        versionCode 119
-        versionName "1.1.9"
+        targetSdkVersion 36
+        versionCode 120
+        versionName "1.2.0"
     }
 
     signingConfigs {
@@ -51,9 +51,11 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig keystorePropertiesFile.exists()
-                    ? signingConfigs.release
-                    : signingConfigs.debug
+            if (keystorePropertiesFile.exists()) {
+                signingConfig signingConfigs.release
+            } else {
+                signingConfig signingConfigs.debug
+            }
         }
     }
     namespace 'org.github.henryquan.animeone'

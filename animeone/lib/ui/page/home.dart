@@ -27,7 +27,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    GlobalData.dataNotifier.addListener(_onDataRefresh);
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    GlobalData.dataNotifier.removeListener(_onDataRefresh);
+    super.dispose();
+  }
+
+  /// Reload everything when the bypass saves a fresh cookie (Android restarts
+  /// the app instead, so this mainly matters on desktop).
+  void _onDataRefresh() {
+    if (mounted) _loadData();
   }
 
   void _loadData() {
@@ -121,76 +134,81 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return Stack(
         children: <Widget>[
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  l.loadFailed,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Text(
-                  l.retryMessage,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                SizedBox.fromSize(size: const Size.fromHeight(24)),
-                Text(
-                  l.errorMessage,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    error,
+            child: SingleChildScrollView(
+              // Extra bottom padding so the details button (pinned to the
+              // bottom of the stack) does not overlap the auto fix button.
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 80),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    l.loadFailed,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  Text(
+                    l.retryMessage,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                ),
-                SizedBox.fromSize(size: const Size.fromHeight(24)),
-                Text(
-                  l.whatNow,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                TextButton(
-                  child: Text(l.openInBrowser),
-                  onPressed: () => launchUrlString(GlobalData.domain),
-                ),
-                Text(
-                  l.or,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                TextButton(
-                  child: Text(l.checkUpdate),
-                  onPressed: () {
-                    GlobalData().checkGithubUpdate().then((_) {
-                      if (!mounted) return;
-                      GlobalData()
-                          .getGithubUpdate()
-                          ?.checkUpdate(context, showAlertWhenNoUpdate: true);
-                    });
-                  },
-                ),
-                Text(
-                  l.or,
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                TextButton(
-                  child: Text(
-                    l.tryFix,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  SizedBox.fromSize(size: const Size.fromHeight(24)),
+                  Text(
+                    l.errorMessage,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
-                  onPressed: () {
-                    if (GlobalData.requestCookieLink?.isEmpty ?? true) {
-                      GlobalData.requestCookieLink = GlobalData.domain;
-                    }
-                    final channel = AnimeOne();
-                    channel.bypassWebsiteCheck(context);
-                  },
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      error,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  ),
+                  SizedBox.fromSize(size: const Size.fromHeight(24)),
+                  Text(
+                    l.whatNow,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                  TextButton(
+                    child: Text(l.openInBrowser),
+                    onPressed: () => launchUrlString(GlobalData.domain),
+                  ),
+                  Text(
+                    l.or,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextButton(
+                    child: Text(l.checkUpdate),
+                    onPressed: () {
+                      GlobalData().checkGithubUpdate().then((_) {
+                        if (!mounted) return;
+                        GlobalData()
+                            .getGithubUpdate()
+                            ?.checkUpdate(context, showAlertWhenNoUpdate: true);
+                      });
+                    },
+                  ),
+                  Text(
+                    l.or,
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  TextButton(
+                    child: Text(
+                      l.tryFix,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: () {
+                      if (GlobalData.requestCookieLink?.isEmpty ?? true) {
+                        GlobalData.requestCookieLink = GlobalData.domain;
+                      }
+                      final channel = AnimeOne();
+                      channel.bypassWebsiteCheck(context);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(

@@ -68,12 +68,18 @@ class GlobalData {
   static final historyNotifier = ValueNotifier<int>(0);
   static final darkModeNotifier = ValueNotifier<bool>(false);
   static final dynamicColorNotifier = ValueNotifier<bool>(true);
+  // Fired when the Cloudflare bypass saves a new cookie, so pages that
+  // failed to load can refetch with the fresh cookie.
+  static final dataNotifier = ValueNotifier<int>(0);
   double getFontScale() => _fontScale;
   void setFontScale(double v) {
     _fontScale = v;
     prefs.setDouble(fontScaleKey, v);
     fontScaleNotifier.value = v;
   }
+
+  /// Ask listeners (e.g. the home page) to reload their data.
+  void refreshData() => dataNotifier.value++;
 
   void initFontScale() {
     _fontScale = prefs.getDouble(fontScaleKey) ?? 1.0;

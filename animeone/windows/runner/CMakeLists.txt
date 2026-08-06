@@ -7,6 +7,7 @@ project(runner LANGUAGES CXX)
 #
 # Any new source files that you add to the application should be added here.
 add_executable(${BINARY_NAME} WIN32
+  "cookie_bridge.cpp"
   "flutter_window.cpp"
   "main.cpp"
   "utils.cpp"
@@ -35,6 +36,22 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
 target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
+
+# webview submodule: a tiny cross-platform WebView2/WebKit wrapper used by the
+# Cloudflare bypass (cookie collection) on desktop.
+set(WEBVIEW_BUILD_SHARED_LIBRARY OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_BUILD_STATIC_LIBRARY ON CACHE BOOL "" FORCE)
+set(WEBVIEW_BUILD_AMALGAMATION OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_INSTALL_TARGETS OFF CACHE BOOL "" FORCE)
+set(WEBVIEW_ENABLE_PACKAGING OFF CACHE BOOL "" FORCE)
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../../webview" webview)
+target_link_libraries(${BINARY_NAME} PRIVATE webview::core_static)
+# The webview submodule fetches the WebView2 SDK headers from NuGet; make
+# sure the runner can see them for the cookie bridge's direct WebView2 calls.
+target_include_directories(${BINARY_NAME} PRIVATE "${MSWebView2_INCLUDE_DIR}")
 
 # Run the Flutter tool portions of the build. This must not be removed.
 add_dependencies(${BINARY_NAME} flutter_assemble)

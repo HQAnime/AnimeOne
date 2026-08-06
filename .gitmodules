@@ -1,0 +1,3 @@
+[submodule "animeone/webview"]
+	path = animeone/webview
+	url = https://github.com/webview/webview.git

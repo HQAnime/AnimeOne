@@ -6,7 +6,7 @@ import 'package:html/dom.dart';
 
 /// This class parses all anime available from the site by requesting to
 class AnimeListParserV2 extends BasicParser {
-  AnimeListParserV2() : super('https://d1zquzjgwo9yb.cloudfront.net/?_=');
+  AnimeListParserV2() : super('https://anime1.me/animelist.json?_=');
 
   @override
   List<AnimeInfo> parseHTML(Document? body) {

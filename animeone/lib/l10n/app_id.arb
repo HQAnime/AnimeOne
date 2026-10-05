@@ -141,5 +141,9 @@
   "ova": "OVA",
   "oad": "OAD",
   "seasonSingleFormat": "{year}{season}",
-  "watchHistorySubtitle": "{position} / {duration}（{percent}%）"
+  "watchHistorySubtitle": "{position} / {duration}（{percent}%）",
+  "watchHistoryEpisodeCount": "{count} episode",
+  "askChatGPT": "Tanya ChatGPT",
+  "askChatGPTPrompt": "Ceritakan tentang anime \"{name}\". Sebutkan genre dan tahun rilis pertamanya, serta apakah anime ini diadaptasi dari manga, light novel, gim, atau karya lain, atau merupakan anime orisinal. Berikan ringkasan cerita singkat tanpa spoiler agar saya bisa memutuskan apakah anime ini cocok untuk saya. Nyatakan jika ada informasi yang belum pasti.",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

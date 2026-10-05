@@ -1,4 +1,5 @@
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeCoverImage.dart';
@@ -47,13 +48,17 @@ class AnimeEntryCard extends StatelessWidget {
             video: entry.needPassword() ? null : entry.getVideo(),
             pageLink: entry.link ?? pageUrl,
             episodeName: entry.formattedName(),
+            animeLink: entry.allEpisodes ?? pageUrl,
+            animeName: WatchEntry.animeTitle(entry.formattedName() ?? ''),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Row(
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 4,
               children: <Widget>[
                 renderAllEpisode(context),
-                renderNextEpisode(context)
+                renderNextEpisode(context),
               ],
             ),
           ),
@@ -72,16 +77,19 @@ class AnimeEntryCard extends StatelessWidget {
     return l.progressFormat((p * 100).toStringAsFixed(0));
   }
 
-  /// Render all episode if exists or should be shown
+  /// Render all episode if exists or should be shown.
+  /// Hide it when it points to the page we are already on, otherwise tapping
+  /// it would stack the same all-episode screen over and over.
   Widget renderAllEpisode(BuildContext context) {
-    if (showEpisode == true && entry.allEpisodes != null) {
+    final allEpisodes = entry.allEpisodes;
+    if (showEpisode == true && allEpisodes != null && allEpisodes != pageUrl) {
       return AnimeFlatButton(
         child: Text(AppLocalizations.of(context)!.allEpisodes),
         onPressed: () {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Anime(link: entry.allEpisodes),
+              builder: (context) => Anime(link: allEpisodes),
             ),
           );
         },
@@ -96,6 +104,7 @@ class AnimeEntryCard extends StatelessWidget {
     // Check if this is the last episode
     if (showEpisode == true &&
         entry.nextEpisode != null &&
+        entry.nextEpisode != pageUrl &&
         entry.hasNextEpisode()) {
       return AnimeFlatButton(
         child: Text(AppLocalizations.of(context)!.nextEpisode),

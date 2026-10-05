@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:animeone/core/GlobalData.dart';
+import 'package:animeone/core/WatchEntry.dart';
 import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// This class handles anime page
 /// - One episode
@@ -58,15 +60,18 @@ class _AnimeState extends State<Anime> {
   @override
   void dispose() {
     GlobalData.historyNotifier.removeListener(_onHistoryChanged);
+    controller?.dispose();
     super.dispose();
   }
 
   void _onHistoryChanged() {
+    if (!mounted) return;
     setState(() {});
   }
 
   /// Get entries from link (support page)
   void _getEntry() {
+    if (!mounted) return;
     setState(() {
       canLoadMore = false;
     });
@@ -81,6 +86,7 @@ class _AnimeState extends State<Anime> {
 
     parser = AnimePageParser(rLink);
     parser.downloadHTML().then((d) {
+      if (!mounted) return;
       if (d == null) {
         // Stop loading more data
         hasMoreData = false;
@@ -109,6 +115,7 @@ class _AnimeState extends State<Anime> {
         });
       }
     }).catchError((error) {
+      if (!mounted) return;
       // Something is broken
       setState(() {
         hasError = error.toString();
@@ -136,7 +143,7 @@ class _AnimeState extends State<Anime> {
       return Scaffold(
         appBar: AppBar(
           title: Text(title),
-          actions: <Widget>[renderSearch()],
+          actions: <Widget>[renderSearch(), renderAskChatGPT()],
         ),
         body: FocusTraversalGroup(
           policy: OrderedTraversalPolicy(),
@@ -159,6 +166,47 @@ class _AnimeState extends State<Anime> {
     }
   }
 
+  Widget renderAskChatGPT() {
+    if (widget.seasonal != null || entries.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final episodeName = entries.first.formattedName() ?? '';
+    final animeName = WatchEntry.animeTitle(episodeName) ?? episodeName;
+    if (animeName.trim().isEmpty) return const SizedBox.shrink();
+
+    final l = AppLocalizations.of(context)!;
+    return IconButton(
+      icon: const Icon(Icons.chat_outlined),
+      tooltip: l.askChatGPT,
+      onPressed: () async {
+        final uri = Uri.https('chatgpt.com', '/', {
+          'q': l.askChatGPTPrompt(animeName),
+        });
+        var launched = false;
+        try {
+          launched = await launchUrl(
+            uri,
+            mode: LaunchMode.inAppBrowserView,
+          );
+          if (!launched) {
+            launched = await launchUrl(
+              uri,
+              mode: LaunchMode.externalApplication,
+            );
+          }
+        } catch (_) {
+          launched = false;
+        }
+        if (!launched && mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l.loadFailed)),
+          );
+        }
+      },
+    );
+  }
+
   /// Render differently with different number of elements
   Widget renderBody() {
     if (entries.isEmpty) {
@@ -168,7 +216,7 @@ class _AnimeState extends State<Anime> {
           builder: (BuildContext context, BoxConstraints constraints) {
         return Center(
           child: SizedBox(
-            width: constraints.maxHeight,
+            width: min(constraints.maxWidth, constraints.maxHeight),
             child: AnimeEntryCard(
               entry: entries.first,
               showEpisode: true,
@@ -232,6 +280,7 @@ class _AnimeState extends State<Anime> {
 
   /// Load more anime here
   void loadMore() {
+    if (!mounted) return;
     if ((controller?.position.extentAfter ?? 10) < 10 &&
         entries.length % 14 == 0 &&
         hasMoreData) {

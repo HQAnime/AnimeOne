@@ -141,5 +141,9 @@
   "ova": "OVA",
   "oad": "OAD",
   "seasonSingleFormat": "{year}{season}",
-  "watchHistorySubtitle": "{position} / {duration}（{percent}%）"
+  "watchHistorySubtitle": "{position} / {duration}（{percent}%）",
+  "watchHistoryEpisodeCount": "총 {count}화",
+  "askChatGPT": "ChatGPT에 질문하기",
+  "askChatGPTPrompt": "애니메이션 \"{name}\"에 대해 알려 주세요. 장르와 첫 방영 연도, 만화·라이트노벨·게임 등 원작이 있는 작품인지 아니면 오리지널 애니메이션인지 설명해 주세요. 볼지 판단할 수 있도록 스포일러 없이 짧은 줄거리를 소개해 주세요. 확실하지 않은 정보는 불확실하다고 밝혀 주세요.",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

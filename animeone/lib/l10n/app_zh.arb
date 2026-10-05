@@ -195,5 +195,14 @@
       "duration": {},
       "percent": {}
     }
-  }
+  },
+  "watchHistoryEpisodeCount": "共 {count} 集",
+  "@watchHistoryEpisodeCount": {
+    "placeholders": {
+      "count": {}
+    }
+  },
+  "askChatGPT": "詢問 ChatGPT",
+  "askChatGPTPrompt": "請介紹動畫「{name}」：說明它的類型、首播年份，以及它是改編自漫畫、輕小說、遊戲或其他作品，還是原創動畫。請用簡短且不劇透的方式介紹故事，讓我判斷是否適合觀看；不確定的資訊請註明。",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

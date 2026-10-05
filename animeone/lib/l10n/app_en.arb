@@ -141,5 +141,9 @@
   "ova": "OVA",
   "oad": "OAD",
   "seasonSingleFormat": "{year}{season}",
-  "watchHistorySubtitle": "{position} / {duration} ({percent}%)"
+  "watchHistorySubtitle": "{position} / {duration} ({percent}%)",
+  "watchHistoryEpisodeCount": "{count} episodes",
+  "askChatGPT": "Ask ChatGPT",
+  "askChatGPTPrompt": "Tell me about the anime \"{name}\". Identify its genres and original release year, and whether it is based on a manga, light novel, game, or another work, or is an original anime. Give a short spoiler-free story summary so I can decide whether it suits me. If details are uncertain, say so.",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

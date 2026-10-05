@@ -141,5 +141,9 @@
   "ova": "OVA",
   "oad": "OAD",
   "seasonSingleFormat": "{year}{season}",
-  "watchHistorySubtitle": "{position} / {duration}（{percent}%）"
+  "watchHistorySubtitle": "{position} / {duration}（{percent}%）",
+  "watchHistoryEpisodeCount": "全{count}話",
+  "askChatGPT": "ChatGPTに質問",
+  "askChatGPTPrompt": "アニメ「{name}」について教えてください。ジャンルと初回放送年、漫画・ライトノベル・ゲームなどを原作とする作品か、完全オリジナル作品かを説明してください。視聴するか判断できるよう、ネタバレなしで短くあらすじを紹介してください。不確かな情報はその旨を明記してください。",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

@@ -12,11 +12,15 @@ class AnimeCoverImage extends StatelessWidget {
     required this.video,
     this.pageLink,
     this.episodeName,
+    this.animeLink,
+    this.animeName,
   });
 
   final AnimeVideo? video;
   final String? pageLink;
   final String? episodeName;
+  final String? animeLink;
+  final String? animeName;
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +99,8 @@ class AnimeCoverImage extends StatelessWidget {
                     headers: headers,
                     episodeLink: pageLink,
                     episodeName: episodeName,
+                    animeLink: animeLink,
+                    animeName: animeName,
                   ),
                 ),
               );

@@ -141,5 +141,9 @@
   "ova": "OVA",
   "oad": "OAD",
   "seasonSingleFormat": "{year}{season}",
-  "watchHistorySubtitle": "{position} / {duration}（{percent}%）"
+  "watchHistorySubtitle": "{position} / {duration}（{percent}%）",
+  "watchHistoryEpisodeCount": "{count} серий",
+  "askChatGPT": "Спросить ChatGPT",
+  "askChatGPTPrompt": "Расскажи об аниме «{name}»: укажи жанры и год первого выхода, а также основано ли оно на манге, ранобэ, игре или другом произведении либо является оригинальным аниме. Кратко опиши сюжет без спойлеров, чтобы я мог(ла) решить, подходит ли оно мне. Если какие-то сведения неточны или неизвестны, отметь это.",
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
 }

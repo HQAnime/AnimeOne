@@ -13,6 +13,8 @@ class DesktopPlayer extends StatefulWidget {
   final Map<String, String>? headers;
   final String? episodeLink;
   final String? episodeName;
+  final String? animeLink;
+  final String? animeName;
 
   const DesktopPlayer({
     super.key,
@@ -20,6 +22,8 @@ class DesktopPlayer extends StatefulWidget {
     this.headers,
     this.episodeLink,
     this.episodeName,
+    this.animeLink,
+    this.animeName,
   });
 
   @override
@@ -96,6 +100,8 @@ class _DesktopPlayerState extends State<DesktopPlayer> {
     _global.saveWatchEntry(WatchEntry(
       episodeLink: widget.episodeLink!,
       episodeName: widget.episodeName ?? widget.url,
+      animeLink: widget.animeLink,
+      animeName: widget.animeName,
       positionSec: _positionSec,
       durationSec: _durationSec,
       done: done,

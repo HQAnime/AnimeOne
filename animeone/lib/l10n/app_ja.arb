@@ -145,5 +145,11 @@
   "watchHistoryEpisodeCount": "全{count}話",
   "askChatGPT": "ChatGPTに質問",
   "askChatGPTPrompt": "アニメ「{name}」について教えてください。ジャンルと初回放送年、漫画・ライトノベル・ゲームなどを原作とする作品か、完全オリジナル作品かを説明してください。視聴するか判断できるよう、ネタバレなしで短くあらすじを紹介してください。不確かな情報はその旨を明記してください。",
-  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } },
+  "askChatGPTSeasonPrompt": "以下は今期「{season}」に放送中のアニメです：{names}。ジャンルとテーマごとに分類し、各グループとその中の作品を簡単に紹介してください。各作品について、ジャンル、初回放送年、漫画・ライトノベル・ゲームなどの原作があるか、オリジナル作品かを説明してください。ネタバレは避け、日本語で回答してください。不確かな情報はその旨を明記してください。",
+  "@askChatGPTSeasonPrompt": { "placeholders": { "season": {}, "names": {} } },
+  "askChatGPTLatestPrompt": "以下は最近更新されたアニメのタイトルです：{names}。それぞれを簡単に紹介し、必要に応じて似た作品をまとめてください。ジャンルとネタバレなしの短いあらすじを添えて、視聴するか判断できるようにしてください。日本語で回答してください。不確かな情報はその旨を明記してください。",
+  "@askChatGPTLatestPrompt": { "placeholders": { "names": {} } },
+  "enableAskChatGPT": "ChatGPT に質問",
+  "enableAskChatGPTSubtitle": "アニメ・シーズン・最新話のページに「ChatGPT に質問」ボタンを表示します"
 }

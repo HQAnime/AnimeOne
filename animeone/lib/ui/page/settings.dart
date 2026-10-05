@@ -123,6 +123,30 @@ class Settings extends StatelessWidget {
                       );
                     },
                   ),
+                StatefulBuilder(
+                  builder: (context, setInnerState) {
+                    final enabled = GlobalData.askChatGPTNotifier.value;
+                    return ListTile(
+                      title: Text(l.enableAskChatGPT),
+                      subtitle: Text(l.enableAskChatGPTSubtitle),
+                      onTap: () {
+                        GlobalData().setAskChatGPT(!enabled);
+                        setInnerState(() {});
+                      },
+                      trailing: Transform.translate(
+                        offset: const Offset(8, 0),
+                        child: Checkbox(
+                          value: enabled,
+                          activeColor: Theme.of(context).colorScheme.primary,
+                          onChanged: (v) {
+                            GlobalData().setAskChatGPT(v ?? true);
+                            setInnerState(() {});
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
                 const Divider(),
                 StatefulBuilder(
                   builder: (context, setInnerState) {

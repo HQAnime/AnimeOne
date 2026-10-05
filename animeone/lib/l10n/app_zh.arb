@@ -204,5 +204,11 @@
   },
   "askChatGPT": "詢問 ChatGPT",
   "askChatGPTPrompt": "請介紹動畫「{name}」：說明它的類型、首播年份，以及它是改編自漫畫、輕小說、遊戲或其他作品，還是原創動畫。請用簡短且不劇透的方式介紹故事，讓我判斷是否適合觀看；不確定的資訊請註明。",
-  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } },
+  "askChatGPTSeasonPrompt": "以下為 {season} 正在播出的動畫：{names}。請依類型與主題分組，並簡短介紹每一組及其中的動畫。每部作品請說明類型、首播年份，以及是改編自漫畫、輕小說、遊戲或其他作品，還是原創動畫。請避免劇透，並以繁體中文回答；不確定的資訊請註明。",
+  "@askChatGPTSeasonPrompt": { "placeholders": { "season": {}, "names": {} } },
+  "askChatGPTLatestPrompt": "以下是最近更新的動畫標題：{names}。請逐一簡短介紹，並在合適時將相似的作品分組。請說明類型並提供不劇透的簡短介紹，讓我判斷是否適合觀看。請以繁體中文回答；不確定的資訊請註明。",
+  "@askChatGPTLatestPrompt": { "placeholders": { "names": {} } },
+  "enableAskChatGPT": "詢問 ChatGPT",
+  "enableAskChatGPTSubtitle": "在動畫、季度新番與最新上架頁面顯示「詢問 ChatGPT」按鈕"
 }

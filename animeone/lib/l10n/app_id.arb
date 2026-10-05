@@ -145,5 +145,11 @@
   "watchHistoryEpisodeCount": "{count} episode",
   "askChatGPT": "Tanya ChatGPT",
   "askChatGPTPrompt": "Ceritakan tentang anime \"{name}\". Sebutkan genre dan tahun rilis pertamanya, serta apakah anime ini diadaptasi dari manga, light novel, gim, atau karya lain, atau merupakan anime orisinal. Berikan ringkasan cerita singkat tanpa spoiler agar saya bisa memutuskan apakah anime ini cocok untuk saya. Nyatakan jika ada informasi yang belum pasti.",
-  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } },
+  "askChatGPTSeasonPrompt": "Berikut adalah anime yang sedang tayang pada musim {season}: {names}. Kelompokkan berdasarkan genre dan tema, lalu perkenalkan setiap kelompok dan judul di dalamnya secara singkat. Untuk setiap judul, sebutkan genre, tahun rilis pertamanya, serta apakah diadaptasi dari manga, light novel, gim, atau merupakan karya orisinal. Hindari spoiler. Jawab dalam bahasa Indonesia. Nyatakan jika ada informasi yang belum pasti.",
+  "@askChatGPTSeasonPrompt": { "placeholders": { "season": {}, "names": {} } },
+  "askChatGPTLatestPrompt": "Berikut adalah judul episode anime terbaru: {names}. Perkenalkan masing-masing secara singkat dan kelompokkan judul yang serupa bila membantu. Sebutkan genre dan ringkasan singkat tanpa spoiler agar saya bisa memutuskan apa yang ingin ditonton. Jawab dalam bahasa Indonesia. Nyatakan jika ada informasi yang belum pasti.",
+  "@askChatGPTLatestPrompt": { "placeholders": { "names": {} } },
+  "enableAskChatGPT": "Tanya ChatGPT",
+  "enableAskChatGPTSubtitle": "Tampilkan tombol Tanya ChatGPT di halaman anime, musim, dan terbaru"
 }

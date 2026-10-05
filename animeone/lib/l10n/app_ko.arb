@@ -145,5 +145,11 @@
   "watchHistoryEpisodeCount": "총 {count}화",
   "askChatGPT": "ChatGPT에 질문하기",
   "askChatGPTPrompt": "애니메이션 \"{name}\"에 대해 알려 주세요. 장르와 첫 방영 연도, 만화·라이트노벨·게임 등 원작이 있는 작품인지 아니면 오리지널 애니메이션인지 설명해 주세요. 볼지 판단할 수 있도록 스포일러 없이 짧은 줄거리를 소개해 주세요. 확실하지 않은 정보는 불확실하다고 밝혀 주세요.",
-  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } },
+  "askChatGPTSeasonPrompt": "다음은 {season} 시즌에 방영 중인 애니메이션입니다: {names}. 장르와 주제별로 묶고, 각 그룹과 그 안의 작품을 간단히 소개해 주세요. 각 작품의 장르, 첫 방영 연도, 만화·라이트노벨·게임 등 원작 여부 또는 오리지널 작품인지 설명해 주세요. 스포일러는 피하고 한국어로 답해 주세요. 확실하지 않은 정보는 불확실하다고 밝혀 주세요.",
+  "@askChatGPTSeasonPrompt": { "placeholders": { "season": {}, "names": {} } },
+  "askChatGPTLatestPrompt": "다음은 최근 업데이트된 애니메이션 제목입니다: {names}. 각각을 간단히 소개하고, 필요하면 비슷한 작품끼리 묶어 주세요. 장르와 스포일러 없는 짧은 줄거리를 알려 주어 제가 볼지 판단할 수 있게 해 주세요. 한국어로 답해 주세요. 확실하지 않은 정보는 불확실하다고 밝혀 주세요.",
+  "@askChatGPTLatestPrompt": { "placeholders": { "names": {} } },
+  "enableAskChatGPT": "ChatGPT에 질문하기",
+  "enableAskChatGPTSubtitle": "애니메이션, 시즌, 최신 페이지에 'ChatGPT에 질문하기' 버튼을 표시합니다"
 }

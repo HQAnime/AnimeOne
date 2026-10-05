@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeRecent.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeRecentTile.dart';
+import 'package:animeone/ui/component/AskChatGPTButton.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:animeone/ui/page/settings.dart';
 import 'package:animeone/ui/page/support.dart';
@@ -64,6 +65,18 @@ class _LatestState extends State<Latest> {
             icon: const Icon(Icons.refresh),
             tooltip: l.refreshLatest,
             onPressed: () => loadRecentAnime(),
+          ),
+          AskChatGPTButton(
+            buildPrompt: (context, l) {
+              final names = list
+                  .map((r) => r.name?.trim())
+                  .whereType<String>()
+                  .where((n) => n.isNotEmpty)
+                  .toSet()
+                  .toList();
+              if (names.isEmpty) return null;
+              return l.askChatGPTLatestPrompt(names.join(', '));
+            },
           ),
           InkWell(
             borderRadius: BorderRadius.circular(24),

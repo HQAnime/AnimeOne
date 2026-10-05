@@ -4,6 +4,7 @@ import 'package:animeone/core/anime/AnimeVideo.dart';
 import 'package:animeone/core/parser/VideoSourceParser.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeScheduleTile.dart';
+import 'package:animeone/ui/component/AskChatGPTButton.dart';
 import 'package:animeone/ui/page/anime.dart';
 import 'package:animeone/ui/page/desktop_player.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,22 @@ class _ScheduleState extends State<Schedule>
                   );
                 }
               },
-            )
+            ),
+            AskChatGPTButton(
+              buildPrompt: (context, l) {
+                final names = schedules
+                    .map((s) => s.name?.trim())
+                    .whereType<String>()
+                    .where((n) => n.isNotEmpty)
+                    .toSet()
+                    .toList();
+                if (names.isEmpty) return null;
+                return l.askChatGPTSeasonPrompt(
+                  global.getSeasonName(l),
+                  names.join(', '),
+                );
+              },
+            ),
           ]),
       body: FocusTraversalGroup(
         policy: OrderedTraversalPolicy(),

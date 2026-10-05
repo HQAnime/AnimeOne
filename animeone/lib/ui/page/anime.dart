@@ -6,9 +6,9 @@ import 'package:animeone/core/anime/AnimeEntry.dart';
 import 'package:animeone/core/parser/AnimePageParser.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeEntryCard.dart';
+import 'package:animeone/ui/component/AskChatGPTButton.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// This class handles anime page
 /// - One episode
@@ -171,38 +171,12 @@ class _AnimeState extends State<Anime> {
       return const SizedBox.shrink();
     }
 
-    final episodeName = entries.first.formattedName() ?? '';
-    final animeName = WatchEntry.animeTitle(episodeName) ?? episodeName;
-    if (animeName.trim().isEmpty) return const SizedBox.shrink();
-
-    final l = AppLocalizations.of(context)!;
-    return IconButton(
-      icon: const Icon(Icons.chat_outlined),
-      tooltip: l.askChatGPT,
-      onPressed: () async {
-        final uri = Uri.https('chatgpt.com', '/', {
-          'q': l.askChatGPTPrompt(animeName),
-        });
-        var launched = false;
-        try {
-          launched = await launchUrl(
-            uri,
-            mode: LaunchMode.inAppBrowserView,
-          );
-          if (!launched) {
-            launched = await launchUrl(
-              uri,
-              mode: LaunchMode.externalApplication,
-            );
-          }
-        } catch (_) {
-          launched = false;
-        }
-        if (!launched && mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l.loadFailed)),
-          );
-        }
+    return AskChatGPTButton(
+      buildPrompt: (context, l) {
+        final episodeName = entries.first.formattedName() ?? '';
+        final animeName = WatchEntry.animeTitle(episodeName) ?? episodeName;
+        if (animeName.trim().isEmpty) return null;
+        return l.askChatGPTPrompt(animeName);
       },
     );
   }

@@ -59,6 +59,7 @@ class GlobalData {
   static const historyKey = 'AnimeOne:WatchHistory';
   static const darkModeKey = 'AnimeOne:ForceDark';
   static const dynamicColorKey = 'AnimeOne:DynamicColor';
+  static const askChatGPTKey = 'AnimeOne:AskChatGPT';
   static const localeKey = 'AnimeOne:Locale';
   static final localeNotifier = ValueNotifier<Locale?>(null);
 
@@ -68,6 +69,7 @@ class GlobalData {
   static final historyNotifier = ValueNotifier<int>(0);
   static final darkModeNotifier = ValueNotifier<bool>(false);
   static final dynamicColorNotifier = ValueNotifier<bool>(true);
+  static final askChatGPTNotifier = ValueNotifier<bool>(true);
   // Fired when the Cloudflare bypass saves a new cookie, so pages that
   // failed to load can refetch with the fresh cookie.
   static final dataNotifier = ValueNotifier<int>(0);
@@ -106,6 +108,16 @@ class GlobalData {
     dynamicColorNotifier.value = prefs.getBool(dynamicColorKey) ?? true;
   }
 
+  bool getAskChatGPT() => askChatGPTNotifier.value;
+  void setAskChatGPT(bool v) {
+    prefs.setBool(askChatGPTKey, v);
+    askChatGPTNotifier.value = v;
+  }
+
+  void initAskChatGPT() {
+    askChatGPTNotifier.value = prefs.getBool(askChatGPTKey) ?? true;
+  }
+
   Locale? getLocale() => _locale;
   void setLocale(String code) {
     _locale = Locale(code);
@@ -117,9 +129,7 @@ class GlobalData {
     // A user-chosen locale wins; otherwise default to the device locale so a
     // matching entry is pre-selected on first launch.
     final code = prefs.getString(localeKey);
-    _locale = code != null
-        ? Locale(code)
-        : PlatformDispatcher.instance.locale;
+    _locale = code != null ? Locale(code) : PlatformDispatcher.instance.locale;
     localeNotifier.value = _locale;
   }
 
@@ -260,6 +270,8 @@ class GlobalData {
     initDarkMode();
     // Dynamic color
     initDynamicColor();
+    // Ask ChatGPT button
+    initAskChatGPT();
     // Locale
     initLocale();
     // Translation

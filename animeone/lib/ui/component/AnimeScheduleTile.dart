@@ -2,6 +2,7 @@ import 'package:animeone/core/GlobalData.dart';
 import 'package:animeone/core/anime/AnimeSchedule.dart';
 import 'package:animeone/l10n/app_localizations.dart';
 import 'package:animeone/ui/component/AnimeButton.dart';
+import 'package:animeone/ui/component/AskChatGPTButton.dart';
 import 'package:flutter/material.dart';
 
 class AnimeScheduleTile extends StatelessWidget {
@@ -28,7 +29,14 @@ class AnimeScheduleTile extends StatelessWidget {
               .wikipediaSearchAnime(schedule.name ?? '??'),
           icon: const Icon(Icons.info_outline),
           onPressed: () => global.getWikipediaLink(schedule.name),
-        )
+        ),
+        AskChatGPTButton(
+          buildPrompt: (context, l) {
+            final name = schedule.name?.trim();
+            if (name == null || name.isEmpty) return null;
+            return l.askChatGPTPrompt(name);
+          },
+        ),
       ],
     );
   }

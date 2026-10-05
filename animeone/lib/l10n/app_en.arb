@@ -145,5 +145,11 @@
   "watchHistoryEpisodeCount": "{count} episodes",
   "askChatGPT": "Ask ChatGPT",
   "askChatGPTPrompt": "Tell me about the anime \"{name}\". Identify its genres and original release year, and whether it is based on a manga, light novel, game, or another work, or is an original anime. Give a short spoiler-free story summary so I can decide whether it suits me. If details are uncertain, say so.",
-  "@askChatGPTPrompt": { "placeholders": { "name": {} } }
+  "@askChatGPTPrompt": { "placeholders": { "name": {} } },
+  "askChatGPTSeasonPrompt": "These anime are airing in the {season} season: {names}. Group them by genre and theme and briefly introduce each group and the titles in it. For each title, mention its genre, original release year, and whether it is based on a manga, light novel, game, or is an original work. Keep it spoiler-free. Reply in English. If any details are uncertain, say so.",
+  "@askChatGPTSeasonPrompt": { "placeholders": { "season": {}, "names": {} } },
+  "askChatGPTLatestPrompt": "Here are the titles of the latest anime episodes: {names}. Briefly introduce each one and group similar titles together when it helps. Mention the genre and give a short spoiler-free summary so I can decide what to watch. Reply in English. If any details are uncertain, say so.",
+  "@askChatGPTLatestPrompt": { "placeholders": { "names": {} } },
+  "enableAskChatGPT": "Ask ChatGPT",
+  "enableAskChatGPTSubtitle": "Show the Ask ChatGPT button on anime, season and latest pages"
 }

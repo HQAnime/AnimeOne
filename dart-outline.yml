@@ -1,0 +1,174 @@
+# Additional outline extractor definitions for Dart.
+# Loaded by: ast-grep outline <file> --outline-rules dart-outline.yml
+#
+# Rule schema (per ast-grep's SerializableOutlineRule):
+#   id            unique rule id
+#   language      target language
+#   role          item (top-level) or member (nested under a parent)
+#   parentRuleIds rules whose matches are parents of this rule's matches
+#   symbolType    outline symbol type
+#   name          label template; $META bound via pattern in `rule`
+#   rule          ast-grep structural rule (kind / has / all / any)
+
+id: dart-class
+language: dart
+role: item
+symbolType: class
+name: $NAME
+rule:
+  kind: class_declaration
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-mixin
+language: dart
+role: item
+symbolType: interface
+name: $NAME
+rule:
+  kind: mixin_declaration
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-enum
+language: dart
+role: item
+symbolType: enum
+name: $NAME
+rule:
+  kind: enum_declaration
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-extension
+language: dart
+role: item
+symbolType: class
+name: $NAME
+rule:
+  kind: extension_declaration
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-top-function
+language: dart
+role: item
+symbolType: function
+name: $NAME
+rule:
+  kind: function_declaration
+  all:
+    - has:
+        kind: function_signature
+        has:
+          field: name
+          pattern: $NAME
+    - has:
+        kind: function_signature
+        has:
+          field: parameters
+          pattern: $PARAMS
+---
+id: dart-method
+language: dart
+role: member
+parentRuleIds: [dart-class, dart-mixin, dart-extension]
+symbolType: method
+name: $NAME
+rule:
+  kind: function_signature
+  all:
+    - has:
+        field: name
+        pattern: $NAME
+    - has:
+        field: parameters
+        pattern: $PARAMS
+---
+id: dart-constructor
+language: dart
+role: member
+parentRuleIds: [dart-class, dart-mixin, dart-extension]
+symbolType: constructor
+name: $NAME
+rule:
+  any:
+    # Default and `const` constructors are wrapped in a `declaration`,
+    # but use different signature kinds.
+    - kind: declaration
+      all:
+        - has:
+            any:
+              - kind: constructor_signature
+              - kind: constant_constructor_signature
+            has:
+              field: name
+              pattern: $NAME
+        - has:
+            any:
+              - kind: constructor_signature
+              - kind: constant_constructor_signature
+            has:
+              field: parameters
+              pattern: $PARAMS
+    # Factory constructors are not wrapped in a `declaration`.
+    - kind: factory_constructor_signature
+      all:
+        - has:
+            field: name
+            pattern: $NAME
+        - has:
+            field: parameters
+            pattern: $PARAMS
+    - kind: redirecting_factory_constructor_signature
+      all:
+        - has:
+            field: name
+            pattern: $NAME
+        - has:
+            field: parameters
+            pattern: $PARAMS
+---
+id: dart-getter
+language: dart
+role: member
+parentRuleIds: [dart-class, dart-mixin, dart-extension]
+symbolType: property
+name: $NAME
+rule:
+  kind: getter_signature
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-setter
+language: dart
+role: member
+parentRuleIds: [dart-class, dart-mixin, dart-extension]
+symbolType: property
+name: $NAME
+rule:
+  kind: setter_signature
+  has:
+    field: name
+    pattern: $NAME
+---
+id: dart-field
+language: dart
+role: member
+parentRuleIds: [dart-class, dart-mixin, dart-extension]
+symbolType: field
+name: $NAME
+rule:
+  kind: declaration
+  has:
+    kind: initialized_identifier_list
+    has:
+      kind: initialized_identifier
+      has:
+        kind: identifier
+        pattern: $NAME

@@ -401,11 +401,16 @@ class GlobalData {
     final parser = AnimeListParserV2();
     Document? doc = await parser.downloadHTML();
     // Check if it is valid
-    if (doc != null) {
-      _animeList = parser.parseHTML(doc);
-      if (_animeList.isNotEmpty) {
-        prefs.setString(animeList, jsonEncode(_animeList));
-      }
+    if (doc == null) return;
+    try {
+      final list = parser.parseHTML(doc);
+      // Keep the cached list if the page was not the real list (e.g. a
+      // Cloudflare challenge returning 200 with HTML).
+      if (list.isEmpty) return;
+      _animeList = list;
+      prefs.setString(animeList, jsonEncode(_animeList));
+    } catch (e, s) {
+      _logger.severe('Failed to parse anime list, keeping cache', e, s);
     }
   }
 
@@ -413,20 +418,35 @@ class GlobalData {
     final link = getScheduleLink();
     final parser = AnimeScheduleParser(link);
     final body = await parser.downloadHTML();
-    _animeScheduleList = parser.parseHTML(body);
-    _introductory = parser.parseIntroductoryVideo(body);
-    // Only save it if it is valid
-    if (_animeScheduleList.isNotEmpty) {
+    // A failed request must never wipe the cached schedule or the intro video:
+    // that used to leave long-term users with empty data until a rebuild.
+    if (body == null) return;
+    try {
+      final list = parser.parseHTML(body);
+      if (list.isEmpty) return;
+      _animeScheduleList = list;
+      final intro = parser.parseIntroductoryVideo(body);
+      if (intro != null) _introductory = intro;
       prefs.setString(animeScedule, jsonEncode(_animeScheduleList));
+      if (_introductory != null) {
+        prefs.setString(scheduleIntroVideo, jsonEncode(_introductory));
+      }
+    } catch (e, s) {
+      _logger.severe('Failed to parse schedule, keeping cache', e, s);
     }
-    prefs.setString(scheduleIntroVideo, jsonEncode(_introductory));
   }
 
   /// Load recent anime
   Future getRecentAnime() async {
     _recentParser = AnimeRecentParser(GlobalData.domain);
     final body = await _recentParser.downloadHTML();
-    _recentList = _recentParser.parseHTML(body);
+    if (body == null) return;
+    try {
+      _recentList = _recentParser.parseHTML(body);
+    } catch (e, s) {
+      // The latest list is not important enough to fail the whole app.
+      _logger.severe('Failed to parse recent anime', e, s);
+    }
   }
 
   /// launchUrlString wikipedia page for anime

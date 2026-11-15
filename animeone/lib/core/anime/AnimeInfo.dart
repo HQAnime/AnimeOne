@@ -50,6 +50,9 @@ class AnimeInfo extends AnimeBasic {
         super.fromJson();
 
   AnimeInfo.fromList(List list) : super.fromJson(null) {
+    if (list.length < 6) {
+      throw ArgumentError('AnimeInfo - invalid entry: $list');
+    }
     // The ID is the link
     link = 'https://anime1.me/?cat=${list[0]}';
     name = list[1];

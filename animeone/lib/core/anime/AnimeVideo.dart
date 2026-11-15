@@ -7,16 +7,34 @@ class AnimeVideo {
   final String? video;
   int? image;
 
-  // From 3 -> 9
-  final _covers = List.generate(7, (i) => i + 3);
+  /// Cover images bundled under `lib/assets/cover`.
+  static const _covers = [3, 4, 5, 6, 7, 8, 9];
+
+  /// Asset used when the cover number is unknown or cannot be loaded.
+  static const fallbackCover = 'lib/assets/cover/3.jpg';
+
+  static int randomCover() => _covers[Random().nextInt(_covers.length)];
+
+  static bool hasCover(int? image) => image != null && _covers.contains(image);
+
+  static String coverAsset(int? image) =>
+      hasCover(image) ? 'lib/assets/cover/$image.jpg' : fallbackCover;
 
   AnimeVideo(this.video) {
-    image = _covers[Random().nextInt(6)];
+    image = randomCover();
   }
 
   AnimeVideo.fromJson(Map<String, dynamic> json)
       : video = json['video'],
-        image = json['image'];
+        image = _coverFromJson(json['image']);
+
+  /// Keep a cached cover only when it points at a bundled asset; otherwise an
+  /// old/corrupt value would request a missing image ("Asset not found").
+  static int _coverFromJson(dynamic value) {
+    final parsed = value is int ? value : int.tryParse('$value');
+    if (parsed != null && _covers.contains(parsed)) return parsed;
+    return randomCover();
+  }
 
   Map<String, dynamic> toJson() => {
         'video': video,

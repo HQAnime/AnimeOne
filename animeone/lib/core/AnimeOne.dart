@@ -41,6 +41,9 @@ class AnimeOne {
       {'link': GlobalData.requestCookieLink, 'dark': dark},
     ) as List;
 
+    // Nothing came back (user closed the webview, native error...).
+    if (list.isEmpty) return ['', ''];
+
     // Windows hands back one URL-encoded "cookie|userAgent" blob. Split on
     // the literal separator BEFORE decoding, so a %7C inside the content
     // cannot be mistaken for the separator.
@@ -58,6 +61,7 @@ class AnimeOne {
 
   void bypassWebsiteCheck(BuildContext context) {
     _getAnimeOneCookie()?.then((output) {
+      if (output.length < 2) return;
       final cookie = output[0];
       final userAgent = output[1];
       if (cookie.isNotEmpty && cookie.contains('cf_clearance')) {

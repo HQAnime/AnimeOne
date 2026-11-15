@@ -21,8 +21,32 @@ Future<void> main() async {
     if (kDebugMode) {
       final message = '${record.loggerName}: ${record.message}';
       print('${record.level.name}|$message');
+      final error = record.error;
+      if (error != null) print(error);
+      final stack = record.stackTrace;
+      if (stack != null) print(stack);
     }
   });
+
+  // Framework errors (layout overflows, failed asset loads, build errors...)
+  // are otherwise only shown on screen in release, losing the stack trace.
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    Logger('FlutterError').severe(
+      details.exceptionAsString(),
+      details.exception,
+      details.stack,
+    );
+  };
+
+  // Uncaught asynchronous errors are the usual reason for an "unrecoverable"
+  // error page: nothing listens to the future so the stack is thrown away.
+  // Log it, and in debug let it propagate so failures surface immediately.
+  PlatformDispatcher.instance.onError = (error, stack) {
+    Logger('Uncaught').severe('Uncaught async error', error, stack);
+    debugPrintStack(label: error.toString(), stackTrace: stack);
+    return !kDebugMode;
+  };
 
   runApp(LiquidGlassWidgets.wrap(
     child: const MyApp(),

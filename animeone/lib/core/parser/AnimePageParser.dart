@@ -32,7 +32,11 @@ class AnimePageParser extends BasicParser {
 
   /// Get full link instead of /cat for going toi next page
   String? getFullLink(Document body) {
-    final link = body.getElementsByClassName('cat-links').first;
-    return link.nodes[1].attributes['href'];
+    final links = body.getElementsByClassName('cat-links');
+    if (links.isEmpty) return null;
+    final nodes = links.first.nodes;
+    // The first node is the label, the second one is the <a> link.
+    if (nodes.length < 2) return null;
+    return nodes[1].attributes['href'];
   }
 }

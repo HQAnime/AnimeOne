@@ -34,7 +34,12 @@ class AnimeCoverImage extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: FittedBox(
-                child: Image.asset('lib/assets/cover/${video?.image}.jpg'),
+                child: Image.asset(
+                  AnimeVideo.coverAsset(video?.image),
+                  // A missing/renamed asset must not take the whole page down.
+                  errorBuilder: (context, error, stackTrace) =>
+                      Image.asset(AnimeVideo.fallbackCover),
+                ),
               ),
             ),
           ),

@@ -12,8 +12,14 @@ class AnimeScheduleParser extends BasicParser {
     List<AnimeSchedule> schedules = [];
 
     final tables = body?.getElementsByTagName('table');
-    final tbody = tables?.first.nodes[1];
-    for (final tr in tbody?.nodes ?? []) {
+    if (tables == null || tables.isEmpty) return schedules;
+    final nodes = tables.first.nodes;
+    // The schedule is inside the second child (usually <tbody>). A shorter
+    // table means this is not the schedule page (e.g. a CF challenge page);
+    // indexing blindly used to throw RangeError: Only valid value is 0: 1.
+    if (nodes.length < 2) return schedules;
+    final tbody = nodes[1];
+    for (final tr in tbody.nodes) {
       // anime1.me is also one line (so check the length to prevent it)
       if (tr.nodes.length > 1) {
         // It is in order so use an index to indicate the date

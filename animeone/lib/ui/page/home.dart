@@ -6,7 +6,9 @@ import 'package:animeone/ui/page/latest.dart';
 import 'package:animeone/ui/page/list.dart';
 import 'package:animeone/ui/page/schedule.dart';
 import 'package:animeone/ui/page/watch_history.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class HomePage extends StatefulWidget {
@@ -88,8 +90,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       setState(() {
         loading = false;
       });
-    }).catchError((e) {
+    }).catchError((Object e, StackTrace s) {
+      // Keep the stack: without it a parse/index bug (e.g. RangeError) turns
+      // into an unexplained error page that survives every retry.
+      Logger('HomePage').severe('Failed to load data', e, s);
+      // In debug, crash with the original traceback.
+      if (kDebugMode) {
+        Error.throwWithStackTrace(e, s);
+      }
+      if (!mounted) return;
       setState(() {
+        loading = false;
         error = e.toString();
       });
     });

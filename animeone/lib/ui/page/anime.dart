@@ -9,6 +9,7 @@ import 'package:animeone/ui/component/AnimeEntryCard.dart';
 import 'package:animeone/ui/component/AskChatGPTButton.dart';
 import 'package:animeone/ui/component/ErrorButton.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 /// This class handles anime page
 /// - One episode
@@ -114,7 +115,8 @@ class _AnimeState extends State<Anime> {
           // Don't auto play here, it can be quite annoying
         });
       }
-    }).catchError((error) {
+    }).catchError((Object error, StackTrace s) {
+      Logger('AnimePage').severe('Failed to load anime page', error, s);
       if (!mounted) return;
       // Something is broken
       setState(() {

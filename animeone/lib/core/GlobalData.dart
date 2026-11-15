@@ -309,7 +309,6 @@ class GlobalData {
     String? update = prefs.getString(lastUpdate);
     if (update == null) {
       // Init update
-      prefs.setString(lastUpdate, DateTime.now().toIso8601String());
       shouldUpdate = true;
     } else {
       final now = DateTime.now();
@@ -317,15 +316,12 @@ class GlobalData {
         // Update if today is 1st Jan/Apr/Jul/Oct
         final newSeasonMonth = [1, 4, 7, 10];
         if (newSeasonMonth.contains(now.month)) {
-          prefs.setString(lastUpdate, now.toIso8601String());
           shouldUpdate = true;
         }
       } else {
         final diff = now.difference(DateTime.parse(update));
         // Check for update once a wekk
         if (diff.inDays >= 7) {
-          // Remember to save new date!
-          prefs.setString(lastUpdate, now.toIso8601String());
           shouldUpdate = true;
         }
       }
@@ -337,50 +333,80 @@ class GlobalData {
       await checkGithubUpdate();
 
       // Load anime list
-      await _getAnimeList();
+      final listOk = await _getAnimeList();
 
       // Load anime schedule
-      await _getAnimeScedule();
+      final scheduleOk = await _getAnimeScedule();
+
+      // Only remember the attempt when it really worked. Saving the date
+      // before fetching is what left users staring at an empty schedule for
+      // a whole week after one failed (or Cloudflare) response.
+      if (listOk && scheduleOk) {
+        prefs.setString(lastUpdate, DateTime.now().toIso8601String());
+      }
     } else {
       // if anime list has been loaded but somehow, it failed
       // you need to reset the list so that it won't have duplicates
       _resetList();
-
-      // Load everything from storage
-      final animeListJson = prefs.getString(animeList);
-      if (animeListJson == null) {
-        // cache it again if not found
-        await _getAnimeList();
-      } else {
-        List<dynamic> savedAnimeList = jsonDecode(animeListJson);
-        for (final json in savedAnimeList) {
-          _animeList.add(AnimeInfo.fromJson(json));
-        }
-      }
-
-      // Same as anime list
-      final scheduleListJson = prefs.getString(animeScedule);
-      if (scheduleListJson == null) {
-        // cache it again if not found
-        await _getAnimeScedule();
-      } else {
-        List<dynamic> savedScheduleList = jsonDecode(scheduleListJson);
-        for (final json in savedScheduleList) {
-          _animeScheduleList.add(AnimeSchedule.fromJson(json));
-        }
-      }
-
-      final introductionString = prefs.getString(scheduleIntroVideo);
-      // New anime introduction isn't that important so it is fine to fail
-      if (introductionString != null && introductionString != "null") {
-        _introductory = AnimeVideo.fromJson(
-          jsonDecode(introductionString),
-        );
-      }
     }
+
+    // Fill in whatever the network could not provide from the cache.
+    _loadFromPrefs();
+
+    // Older builds could store an empty list, and a refresh is only attempted
+    // once a week, so an empty schedule would otherwise stay empty forever.
+    // Retry on launch instead of waiting for the next weekly window.
+    if (_animeList.isEmpty) await _getAnimeList();
+    if (_animeScheduleList.isEmpty) await _getAnimeScedule();
 
     // Load recent anime, you always need to load this
     await getRecentAnime();
+  }
+
+  /// Load the cached anime list, schedule and intro video. Anything already
+  /// fetched during this launch is kept.
+  void _loadFromPrefs() {
+    if (_animeList.isEmpty) {
+      final animeListJson = prefs.getString(animeList);
+      if (animeListJson != null) {
+        try {
+          final savedAnimeList = jsonDecode(animeListJson) as List;
+          for (final json in savedAnimeList) {
+            _animeList.add(AnimeInfo.fromJson(json));
+          }
+        } catch (e, s) {
+          _logger.severe('Failed to read cached anime list', e, s);
+        }
+      }
+    }
+
+    if (_animeScheduleList.isEmpty) {
+      final scheduleListJson = prefs.getString(animeScedule);
+      if (scheduleListJson != null) {
+        try {
+          final savedScheduleList = jsonDecode(scheduleListJson) as List;
+          for (final json in savedScheduleList) {
+            _animeScheduleList.add(AnimeSchedule.fromJson(json));
+          }
+        } catch (e, s) {
+          _logger.severe('Failed to read cached schedule', e, s);
+        }
+      }
+    }
+
+    if (_introductory == null) {
+      final introductionString = prefs.getString(scheduleIntroVideo);
+      // New anime introduction isn't that important so it is fine to fail
+      if (introductionString != null && introductionString != "null") {
+        try {
+          _introductory = AnimeVideo.fromJson(
+            jsonDecode(introductionString),
+          );
+        } catch (e, s) {
+          _logger.severe('Failed to read cached intro video', e, s);
+        }
+      }
+    }
   }
 
   void _resetList() {
@@ -397,33 +423,37 @@ class GlobalData {
     }
   }
 
-  Future _getAnimeList() async {
+  /// Returns true when the list was fetched and parsed successfully.
+  Future<bool> _getAnimeList() async {
     final parser = AnimeListParserV2();
     Document? doc = await parser.downloadHTML();
     // Check if it is valid
-    if (doc == null) return;
+    if (doc == null) return false;
     try {
       final list = parser.parseHTML(doc);
       // Keep the cached list if the page was not the real list (e.g. a
       // Cloudflare challenge returning 200 with HTML).
-      if (list.isEmpty) return;
+      if (list.isEmpty) return false;
       _animeList = list;
       prefs.setString(animeList, jsonEncode(_animeList));
+      return true;
     } catch (e, s) {
       _logger.severe('Failed to parse anime list, keeping cache', e, s);
+      return false;
     }
   }
 
-  Future _getAnimeScedule() async {
+  /// Returns true when the schedule was fetched and parsed successfully.
+  Future<bool> _getAnimeScedule() async {
     final link = getScheduleLink();
     final parser = AnimeScheduleParser(link);
     final body = await parser.downloadHTML();
     // A failed request must never wipe the cached schedule or the intro video:
     // that used to leave long-term users with empty data until a rebuild.
-    if (body == null) return;
+    if (body == null) return false;
     try {
       final list = parser.parseHTML(body);
-      if (list.isEmpty) return;
+      if (list.isEmpty) return false;
       _animeScheduleList = list;
       final intro = parser.parseIntroductoryVideo(body);
       if (intro != null) _introductory = intro;
@@ -431,8 +461,10 @@ class GlobalData {
       if (_introductory != null) {
         prefs.setString(scheduleIntroVideo, jsonEncode(_introductory));
       }
+      return true;
     } catch (e, s) {
       _logger.severe('Failed to parse schedule, keeping cache', e, s);
+      return false;
     }
   }
 

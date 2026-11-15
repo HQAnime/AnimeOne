@@ -13,21 +13,21 @@ class AnimeScheduleParser extends BasicParser {
 
     final tables = body?.getElementsByTagName('table');
     if (tables == null || tables.isEmpty) return schedules;
-    final nodes = tables.first.nodes;
-    // The schedule is inside the second child (usually <tbody>). A shorter
-    // table means this is not the schedule page (e.g. a CF challenge page);
-    // indexing blindly used to throw RangeError: Only valid value is 0: 1.
-    if (nodes.length < 2) return schedules;
-    final tbody = nodes[1];
-    for (final tr in tbody.nodes) {
-      // anime1.me is also one line (so check the length to prevent it)
-      if (tr.nodes.length > 1) {
-        // It is in order so use an index to indicate the date
-        int i = 0;
-        for (final td in tr.nodes) {
-          AnimeSchedule t = AnimeSchedule(td, i++);
-          if (t.valid()) schedules.add(t);
-        }
+
+    // The site sometimes ships the table without <tbody>, so all rows live
+    // directly under <thead>. Looking up nodes[1] then threw
+    // "RangeError: Only valid value is 0: 1" (or, with a guard, returned an
+    // empty schedule). Walk every row and only accept the 7 day cells.
+    final rows = tables.first.getElementsByTagName('tr');
+    for (final tr in rows) {
+      final cells =
+          tr.children.where((c) => c.localName == 'td').toList(growable: false);
+      // Header rows use <th> and the footer uses one colspan cell.
+      if (cells.length < 7) continue;
+      // It is in order so use an index to indicate the date
+      for (int i = 0; i < 7; i++) {
+        final t = AnimeSchedule(cells[i], i);
+        if (t.valid()) schedules.add(t);
       }
     }
 
